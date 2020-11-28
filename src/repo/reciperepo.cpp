@@ -3,13 +3,15 @@
 #include <QtSql/QSqlQuery>
 
 
-RecipeRepository::RecipeRepository(const QString &connection) {
-    if(!connection.isEmpty()) {
+RecipeRepository::RecipeRepository(const QString &connection)
+{
+    if (!connection.isEmpty()) {
         bsfDbConfig.setDatabaseName(connection);
     }
 }
 
-QVector<Recipe> RecipeRepository::getRecipes() {
+QVector<Recipe> RecipeRepository::getRecipes()
+{
     QVector<Recipe> recipeList;
     QString queryString = "SELECT id, description FROM recipe";
 
@@ -35,12 +37,14 @@ QVector<Recipe> RecipeRepository::getRecipes() {
     return recipeList;
 }
 
-Recipe RecipeRepository::getRecipeWithComponents(int id) {
+Recipe RecipeRepository::getRecipeWithComponents(int id)
+{
     Recipe recipe;
-    QString queryString = "SELECT r.id AS r_id, r.description, c.id AS component_id, c.component, rp.target_weight, rp.margin_value FROM recipe r "
-                          "INNER JOIN recipe_components rp ON  r.id = rp.recipe_id "
-                          "INNER JOIN component c ON rp.component_id = c.id "
-                          "WHERE r.id =:id ";
+    QString queryString =
+        "SELECT r.id AS r_id, r.description, c.id AS component_id, c.component, rp.target_weight, rp.margin_value FROM recipe r "
+        "INNER JOIN recipe_components rp ON  r.id = rp.recipe_id "
+        "INNER JOIN component c ON rp.component_id = c.id "
+        "WHERE r.id =:id ";
 
     try {
         QSqlDatabase db;
@@ -74,7 +78,8 @@ Recipe RecipeRepository::getRecipeWithComponents(int id) {
     return Recipe(0);
 }
 
-Recipe RecipeRepository::getRecipe(int id) {
+Recipe RecipeRepository::getRecipe(int id)
+{
     Recipe recipe;
     QString queryString = "SELECT id, description FROM recipe WHERE id =:id ";
 
@@ -101,7 +106,8 @@ Recipe RecipeRepository::getRecipe(int id) {
     return Recipe(0);
 }
 
-void RecipeRepository::addComponent(Component &comp, QVector<Component>& compList, QSqlQuery&query) {
+void RecipeRepository::addComponent(Component &comp, QVector<Component> &compList, QSqlQuery &query)
+{
     comp = Component(query.value("component_id").toInt());
     comp.setComponent(query.value("component").toString());
     comp.setTargetWeight(query.value("target_weight").toInt());

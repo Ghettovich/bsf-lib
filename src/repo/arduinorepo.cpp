@@ -6,13 +6,15 @@
 #include <QtSql/QSqlQueryModel>
 #include <QtSql/QSqlQuery>
 
-ArduinoRepository::ArduinoRepository(const QString &connection) {
-    if(!connection.isEmpty()) {
+ArduinoRepository::ArduinoRepository(const QString &connection)
+{
+    if (!connection.isEmpty()) {
         bsfDbConfig.setDatabaseName(connection);
     }
 };
 
-QVector<Arduino> ArduinoRepository::getAllActiveArduino() {
+QVector<Arduino> ArduinoRepository::getAllActiveArduino()
+{
     QString queryString = "SELECT id, name, ipaddress, port, description FROM arduino";
     QVector<Arduino> arduinoList;
 
@@ -35,13 +37,15 @@ QVector<Arduino> ArduinoRepository::getAllActiveArduino() {
         }
 
         db.close();
-    } catch (std::exception &e) {
+    }
+    catch (std::exception &e) {
         printf("%s", e.what());
     }
     return arduinoList;
 }
 
-QList<QTreeWidgetItem *> ArduinoRepository::getArduinoTreeWidgets() {
+QList<QTreeWidgetItem *> ArduinoRepository::getArduinoTreeWidgets()
+{
     QString queryString = "SELECT id, name FROM arduino";
     QList<QTreeWidgetItem *> arduinoTreeWidgetItemList;
 
@@ -65,14 +69,16 @@ QList<QTreeWidgetItem *> ArduinoRepository::getArduinoTreeWidgets() {
 
         db.close();
 
-    } catch (std::exception &e) {
+    }
+    catch (std::exception &e) {
         printf("%s", e.what());
     }
 
     return arduinoTreeWidgetItemList;
 }
 
-Arduino ArduinoRepository::getArduino(int id) {
+Arduino ArduinoRepository::getArduino(int id)
+{
     Arduino arduino;
     QString queryString = "SELECT id, name, ipaddress, port, description FROM arduino WHERE id =:id";
 
@@ -96,15 +102,18 @@ Arduino ArduinoRepository::getArduino(int id) {
         }
 
         db.close();
-    } catch (std::exception &e) {
+    }
+    catch (std::exception &e) {
         printf("%s", e.what());
     }
 
     return Arduino(0);
 }
 
-void ArduinoRepository::updateArduino(const Arduino &arduinoDevice) {
-    QString queryString = "UPDATE arduino SET description=:desc, ipaddress=:ipaddress, name=:name, port=:port WHERE id=:id";
+void ArduinoRepository::updateArduino(const Arduino &arduinoDevice)
+{
+    QString
+        queryString = "UPDATE arduino SET description=:desc, ipaddress=:ipaddress, name=:name, port=:port WHERE id=:id";
 
     try {
         if (arduinoDevice.getId() > 0) {
@@ -124,19 +133,22 @@ void ArduinoRepository::updateArduino(const Arduino &arduinoDevice) {
             db.close();
         }
 
-    } catch (std::exception &e) {
+    }
+    catch (std::exception &e) {
         printf("%s", e.what());
     }
 }
 
-Arduino ArduinoRepository::getActiveArduinoWithIODevices(int arduinoId) {
-    QString queryString = "SELECT io.arduino_id, ard.description AS ard_desc, ard.ipaddress, ard.name, ard.port, io.id AS io_id, io.type_id, io.action_id, io.description AS io_desc, io_dev_type.type AS io_type, act.code, act.url, act.description AS act_desc "
-                          "FROM io_device io "
-                          "INNER JOIN io_device_type io_dev_type ON io.type_id = io_dev_type.id "
-                          "INNER JOIN arduino ard ON ard.id = io.arduino_id "
-                          "INNER JOIN action act ON act.id = io.action_id "
-                          "WHERE ard.id =:id "
-                          "ORDER BY io.arduino_id ";
+Arduino ArduinoRepository::getActiveArduinoWithIODevices(int arduinoId)
+{
+    QString queryString =
+        "SELECT io.arduino_id, ard.description AS ard_desc, ard.ipaddress, ard.name, ard.port, io.id AS io_id, io.type_id, io.action_id, io.description AS io_desc, io_dev_type.type AS io_type, act.code, act.url, act.description AS act_desc "
+        "FROM io_device io "
+        "INNER JOIN io_device_type io_dev_type ON io.type_id = io_dev_type.id "
+        "INNER JOIN arduino ard ON ard.id = io.arduino_id "
+        "INNER JOIN action act ON act.id = io.action_id "
+        "WHERE ard.id =:id "
+        "ORDER BY io.arduino_id ";
     try {
         QSqlDatabase db;
         bsfDbConfig.setSqlDatabase(db);
@@ -147,14 +159,14 @@ Arduino ArduinoRepository::getActiveArduinoWithIODevices(int arduinoId) {
         query.bindValue(":id", arduinoId);
         query.exec();
 
-        if(query.first()) {
+        if (query.first()) {
             Arduino arduino(query.value("arduino_id").toInt());
             arduino.setDesc(query.value("ard_desc").toString());
             arduino.setIpAddress(query.value("ipaddress").toString());
             arduino.setName(query.value("name").toString());
             arduino.setPort(query.value("port").toInt());
 
-            while(query.next()) {
+            while (query.next()) {
                 IODevice *ioDevice = createIODeviceFromResult(query);
                 arduino.addIODevice(ioDevice);
             }
@@ -162,25 +174,29 @@ Arduino ArduinoRepository::getActiveArduinoWithIODevices(int arduinoId) {
             return arduino;
         }
 
-    } catch (std::exception &e) {
+    }
+    catch (std::exception &e) {
         printf("%s", e.what());
     }
 
     return Arduino(0);
 }
 
-IODevice *ArduinoRepository::createIODeviceFromResult(const QSqlQuery& query) {
+IODevice *ArduinoRepository::createIODeviceFromResult(const QSqlQuery &query)
+{
     IODevice *ioDevice = nullptr;
     // IODeviceType properties
     IODeviceType ioDeviceType = IODeviceType(query.value("type_id").toInt());
     ioDeviceType.setType(query.value("io_type").toString());
     IODeviceType::identifyIODeviceTypeEnum(ioDeviceType);
 
-    if(ioDeviceType.getIODeviceType() == IODeviceType::DETECTIONSENSOR) {
+    if (ioDeviceType.getIODeviceType() == IODeviceType::DETECTIONSENSOR) {
         ioDevice = new DetectionSensor(query.value("io_id").toInt(), IODevice::HIGH);
-    } else if (ioDeviceType.getIODeviceType() == IODeviceType::RELAY) {
+    }
+    else if (ioDeviceType.getIODeviceType() == IODeviceType::RELAY) {
         ioDevice = new Relay(query.value("io_id").toInt(), IODevice::HIGH);
-    } else if (ioDeviceType.getIODeviceType() == IODeviceType::WEIGHTSENSOR) {
+    }
+    else if (ioDeviceType.getIODeviceType() == IODeviceType::WEIGHTSENSOR) {
         ioDevice = new WeightSensor(query.value("io_id").toInt(), IODevice::HIGH);
     }
     else {
@@ -192,11 +208,12 @@ IODevice *ArduinoRepository::createIODeviceFromResult(const QSqlQuery& query) {
     action.setUrl(query.value("url").toString());
     action.setDescription(query.value("act_desc").toString());
     // call setters after null pointer check
-    if(ioDevice != nullptr) {
+    if (ioDevice != nullptr) {
         ioDevice->setIoDeviceType(ioDeviceType);
         ioDevice->setAction(action);
         return ioDevice;
-    } else {
+    }
+    else {
         return nullptr;
     }
 }

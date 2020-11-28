@@ -4,12 +4,14 @@
 #include <QObject>
 #include <QtCore/QString>
 
-class BafaLog {
+class BafaLog
+{
 
-    Q_GADGET
+Q_GADGET
 
 public:
-    enum LOG_SEVERITY {
+    enum LOG_SEVERITY
+    {
         UNKNOWN, ERROR, WARNING, INFO
     };
     Q_ENUM(LOG_SEVERITY);

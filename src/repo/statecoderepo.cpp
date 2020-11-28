@@ -2,13 +2,15 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/qsqlquerymodel.h>
 
-StateCodeRepository::StateCodeRepository(const QString& connection) {
-    if(!connection.isEmpty()) {
+StateCodeRepository::StateCodeRepository(const QString &connection)
+{
+    if (!connection.isEmpty()) {
         bsfDbConfig.setDatabaseName(connection);
     }
 }
 
-StateCode StateCodeRepository::getStateCode(int stateCodeId) {
+StateCode StateCodeRepository::getStateCode(int stateCodeId)
+{
     QString queryString = "SELECT id, message, status_message FROM state_code WHERE id =:id ";
 
     try {
@@ -31,7 +33,8 @@ StateCode StateCodeRepository::getStateCode(int stateCodeId) {
 
             return stateCode;
         }
-    } catch (std::exception &e) {
+    }
+    catch (std::exception &e) {
         printf("%s", e.what());
     }
 

@@ -3,7 +3,8 @@
 
 #include "iodevice.h"
 
-class Relay : public IODevice {
+class Relay: public IODevice
+{
 
 public:
     Relay(int id, IO_DEVICE_HIGH_LOW deviceState);

@@ -4,13 +4,15 @@
 #include <QtSql/QSqlQuery>
 
 
-ActionArduinoRepository::ActionArduinoRepository(const QString &connection) {
-    if(!connection.isEmpty()) {
+ActionArduinoRepository::ActionArduinoRepository(const QString &connection)
+{
+    if (!connection.isEmpty()) {
         bsfDbConfig.setDatabaseName(connection);
     }
 }
 
-QVector<Action> ActionArduinoRepository::getArduinoAction(int arduino_id) {
+QVector<Action> ActionArduinoRepository::getArduinoAction(int arduino_id)
+{
     QVector<Action> arduinoActions = QVector<Action>();
     QString queryString = "SELECT act.id, act.code, act.description "
                           "FROM action act "

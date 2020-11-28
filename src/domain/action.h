@@ -3,17 +3,18 @@
 
 #include <QtCore/QString>
 
-class Action {
+class Action
+{
 
 public:
     Action(int id = 0);
     int getId();
     QString getCode() const;
-    void setCode(const QString&);
+    void setCode(const QString &);
     QString getUrl() const;
-    void setUrl(const QString&);
+    void setUrl(const QString &);
     QString getDescription() const;
-    void setDescription(const QString&);
+    void setDescription(const QString &);
 
 private:
     int id;

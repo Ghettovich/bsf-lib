@@ -2,13 +2,15 @@
 #include <QtSql/QSqlQueryModel>
 #include <QtSql/QSqlQuery>
 
-ComponentRepo::ComponentRepo(const QString &connection) {
-    if(!connection.isEmpty()) {
+ComponentRepo::ComponentRepo(const QString &connection)
+{
+    if (!connection.isEmpty()) {
         bsfDbConfig.setDatabaseName(connection);
     }
 }
 
-QVector<Component> ComponentRepo::getComponentsFromRecipe(int recipeId) {
+QVector<Component> ComponentRepo::getComponentsFromRecipe(int recipeId)
+{
     QVector<Component> componentList;
     QString queryString = "SELECT c.id AS comp_id, c.component, rp.target_weight "
                           "FROM component c INNER JOIN recipe_components rp ON c.id = rp.component_id"

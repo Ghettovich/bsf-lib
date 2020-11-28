@@ -7,12 +7,14 @@
 #include <QtCore/QString>
 #include <QtCore/QUrl>
 
-class Arduino {
+class Arduino
+{
 
-    Q_GADGET
+Q_GADGET
 
 public:
-    enum ARDUINO_STATE {
+    enum ARDUINO_STATE
+    {
         // Unkown and ready shared
         UNKOWN = -1,
         READY = 0,
@@ -47,8 +49,8 @@ public:
     bool hasRelayIODevices();
     bool hasWeightSensorIODevices();
     bool hasDetectionSensorIODevices();
-    void updateIODeviceList(const QVector<IODevice *>&);
-    QUrl generateQUrl(const QString& location = "") const;
+    void updateIODeviceList(const QVector<IODevice *> &);
+    QUrl generateQUrl(const QString &location = "") const;
 
 private:
     int id;

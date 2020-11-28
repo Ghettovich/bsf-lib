@@ -6,7 +6,8 @@
 #include <QtCore/QString>
 #include <QtCore/QJsonObject>
 
-class Recipe {
+class Recipe
+{
 
 public:
     Recipe(int id = 0);

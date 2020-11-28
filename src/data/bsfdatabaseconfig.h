@@ -4,7 +4,8 @@
 #include <QtCore/QString>
 #include <QtSql/QSqlDatabase>
 
-class BsfDbconfig {
+class BsfDbconfig
+{
 
 public:
     BsfDbconfig();
@@ -14,7 +15,7 @@ public:
     void initDatabaseConnection();
 
     void setDatabaseName(const QString &);
-    void setSqlDatabase(QSqlDatabase&);
+    void setSqlDatabase(QSqlDatabase &);
 
 private:
     QString databaseName = "";

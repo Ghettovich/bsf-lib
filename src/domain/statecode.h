@@ -4,7 +4,8 @@
 #include <QObject>
 #include <QtCore/QString>
 
-class StateCode {
+class StateCode
+{
 
 public:
 

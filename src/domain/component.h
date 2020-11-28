@@ -4,12 +4,14 @@
 #include <QObject>
 #include <QtCore/QString>
 
-class Component {
+class Component
+{
 
-    Q_GADGET
+Q_GADGET
 
 public:
-    enum COMPONENT {
+    enum COMPONENT
+    {
         UNKNOWN_COMP = -1,
         WATER = 1,
         SAND = 2,

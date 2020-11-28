@@ -5,20 +5,23 @@
 #include <QtCore/QDateTime>
 #include <QMetaEnum>
 
-LogRepository::LogRepository(const QString &connection) {
-    if(!connection.isEmpty()) {
+LogRepository::LogRepository(const QString &connection)
+{
+    if (!connection.isEmpty()) {
         bsfDbConfig.setDatabaseName(connection);
     }
 }
 
-void LogRepository::addLog(const QString &logMsg, BafaLog::LOG_SEVERITY logSeverity) {
+void LogRepository::addLog(const QString &logMsg, BafaLog::LOG_SEVERITY logSeverity)
+{
     BafaLog newLog = BafaLog();
     newLog.setLog(logMsg);
     newLog.setLogSeverity(logSeverity);
     insert(newLog);
 }
 
-QVector<BafaLog> LogRepository::createBsfLogList() {
+QVector<BafaLog> LogRepository::createBsfLogList()
+{
     QVector<BafaLog> logList = QVector<BafaLog>();
     QString queryString = "SELECT id, logtype, log, logdatetime FROM log";
 
@@ -41,14 +44,16 @@ QVector<BafaLog> LogRepository::createBsfLogList() {
 
         db.close();
 
-    } catch (std::exception &e) {
+    }
+    catch (std::exception &e) {
         qDebug("%s", e.what());
     }
 
     return logList;
 }
 
-void LogRepository::insert(BafaLog &log) {
+void LogRepository::insert(BafaLog &log)
+{
     log.determineLogSeverity();
     BsfDbconfig bsfDbconfig = BsfDbconfig();
 

@@ -7,13 +7,15 @@
 #include <relay.h>
 #include <weightcensor.h>
 
-IODeviceRepository::IODeviceRepository(const QString &connection) {
-    if(!connection.isEmpty()) {
+IODeviceRepository::IODeviceRepository(const QString &connection)
+{
+    if (!connection.isEmpty()) {
         bsfDbConfig.setDatabaseName(connection);
     }
 }
 
-IODeviceType IODeviceRepository::getIODeviceType(int ioDeviceTypeId) {
+IODeviceType IODeviceRepository::getIODeviceType(int ioDeviceTypeId)
+{
     QString queryString = "SELECT  id, type, description "
                           "FROM io_device_type "
                           "WHERE id =:id";
@@ -36,14 +38,16 @@ IODeviceType IODeviceRepository::getIODeviceType(int ioDeviceTypeId) {
             return ioDeviceType;
         }
 
-    } catch (std::exception &e) {
+    }
+    catch (std::exception &e) {
         printf("\n%s", e.what());
     }
 
     return IODeviceType(0);
 }
 
-QVector<IODeviceType> IODeviceRepository::getArduinoIODeviceTypes(int id) {
+QVector<IODeviceType> IODeviceRepository::getArduinoIODeviceTypes(int id)
+{
     QVector<IODeviceType> ioDeviceTypeList = QVector<IODeviceType>();
     QString queryString = "SELECT io_device_type.id, io_device_type.type "
                           "FROM io_device_type INNER JOIN io_device ON io_device.type_id = io_device_type.id "
@@ -69,14 +73,16 @@ QVector<IODeviceType> IODeviceRepository::getArduinoIODeviceTypes(int id) {
         }
 
         db.close();
-    } catch (std::exception &e) {
+    }
+    catch (std::exception &e) {
         printf("\n%s", e.what());
     }
 
     return ioDeviceTypeList;
 }
 
-QList<QTreeWidgetItem *> IODeviceRepository::getIODeviceTreeWidgets(IODeviceType::IO_DEVICE_TYPE ioDeviceType) {
+QList<QTreeWidgetItem *> IODeviceRepository::getIODeviceTreeWidgets(IODeviceType::IO_DEVICE_TYPE ioDeviceType)
+{
     QList<QTreeWidgetItem *> ioDeviceListViewStructList;
     QString queryString = "SELECT io.id AS io_id, io.description AS io_desc "
                           "FROM io_device io "
@@ -91,7 +97,7 @@ QList<QTreeWidgetItem *> IODeviceRepository::getIODeviceTreeWidgets(IODeviceType
 
         db.open();
         query.prepare(queryString);
-        query.bindValue(":type_id", (int)ioDeviceType);
+        query.bindValue(":type_id", (int) ioDeviceType);
 
         query.exec();
 
@@ -106,22 +112,26 @@ QList<QTreeWidgetItem *> IODeviceRepository::getIODeviceTreeWidgets(IODeviceType
 
         db.close();
 
-    } catch (std::exception &e) {
+    }
+    catch (std::exception &e) {
         printf("\n%s", e.what());
     }
 
     return ioDeviceListViewStructList;
 }
 
-QVector<IODevice *> IODeviceRepository::getArduinoIODeviceList(int arduinoId, int ioDeviceTypeId, IODeviceType::IO_DEVICE_TYPE ioDeviceType) {
+QVector<IODevice *>
+IODeviceRepository::getArduinoIODeviceList(int arduinoId, int ioDeviceTypeId, IODeviceType::IO_DEVICE_TYPE ioDeviceType)
+{
     QVector<IODevice *> ioDeviceList;
-    QString queryString = "SELECT io.id AS io_id, io.arduino_id, io.type_id, io.action_id, io.description AS io_desc, io_dev_type.type AS io_type, ard.description AS ard_desc, ard.ipaddress, ard.name, ard.port, act.code, act.url, act.description AS act_desc "
-                          "FROM io_device io "
-                          "INNER JOIN io_device_type io_dev_type ON io.type_id = io_dev_type.id "
-                          "INNER JOIN arduino ard ON ard.id = io.arduino_id "
-                          "INNER JOIN action act ON act.id = io.action_id "
-                          "WHERE io.type_id =:type_id AND io.arduino_id =:arduino_id "
-                          "ORDER BY io.action_id";
+    QString queryString =
+        "SELECT io.id AS io_id, io.arduino_id, io.type_id, io.action_id, io.description AS io_desc, io_dev_type.type AS io_type, ard.description AS ard_desc, ard.ipaddress, ard.name, ard.port, act.code, act.url, act.description AS act_desc "
+        "FROM io_device io "
+        "INNER JOIN io_device_type io_dev_type ON io.type_id = io_dev_type.id "
+        "INNER JOIN arduino ard ON ard.id = io.arduino_id "
+        "INNER JOIN action act ON act.id = io.action_id "
+        "WHERE io.type_id =:type_id AND io.arduino_id =:arduino_id "
+        "ORDER BY io.action_id";
 
     try {
         if (ioDeviceTypeId > 0 && arduinoId > 0) {
@@ -154,13 +164,15 @@ QVector<IODevice *> IODeviceRepository::getArduinoIODeviceList(int arduinoId, in
 
             db.close();
         }
-    } catch (std::exception &e) {
+    }
+    catch (std::exception &e) {
         printf("\n%s", e.what());
     }
 
     return ioDeviceList;
 }
-void IODeviceRepository::createRelayList(QSqlQuery &query, QVector<IODevice *> & list) {
+void IODeviceRepository::createRelayList(QSqlQuery &query, QVector<IODevice *> &list)
+{
     while (query.next()) {
         auto relay = new Relay(query.value("io_id").toInt(), IODevice::HIGH);
         relay->setDescription(query.value("io_desc").toString());
@@ -186,7 +198,8 @@ void IODeviceRepository::createRelayList(QSqlQuery &query, QVector<IODevice *> &
         list.append(relay);
     }
 }
-void IODeviceRepository::createDetectionSensorList(QSqlQuery &query, QVector<IODevice *> & list) {
+void IODeviceRepository::createDetectionSensorList(QSqlQuery &query, QVector<IODevice *> &list)
+{
     while (query.next()) {
         auto detectionSensor = new DetectionSensor(query.value("io_id").toInt(), IODevice::HIGH);
         detectionSensor->setDescription(query.value("io_desc").toString());
@@ -213,7 +226,8 @@ void IODeviceRepository::createDetectionSensorList(QSqlQuery &query, QVector<IOD
     }
 }
 
-void IODeviceRepository::createWeightSensorList(QSqlQuery & query,  QVector<IODevice *>& list) {
+void IODeviceRepository::createWeightSensorList(QSqlQuery &query, QVector<IODevice *> &list)
+{
     while (query.next()) {
         auto weightSensorDevice = new WeightSensor(query.value("io_id").toInt(), IODevice::HIGH);
         weightSensorDevice->setDescription(query.value("io_desc").toString());

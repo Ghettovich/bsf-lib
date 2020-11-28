@@ -4,7 +4,8 @@
 #include "iodevice.h"
 
 
-class DetectionSensor : public IODevice {
+class DetectionSensor: public IODevice
+{
 
 public:
     DetectionSensor(int id, IO_DEVICE_HIGH_LOW deviceState);

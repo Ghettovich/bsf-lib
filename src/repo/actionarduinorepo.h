@@ -6,7 +6,8 @@
 #include <QtCore/QVector>
 #include <QtSql/QSqlDatabase>
 
-class ActionArduinoRepository {
+class ActionArduinoRepository
+{
 
 public:
     ActionArduinoRepository(const QString & = "");

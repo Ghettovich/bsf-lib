@@ -1,42 +1,53 @@
 
 #include "component.h"
 
-Component::Component(int id) : componentId(id) {
+Component::Component(int id)
+    : componentId(id)
+{
 }
 
-int Component::getComponentId() const {
+int Component::getComponentId() const
+{
     return componentId;
 }
 
-void Component::setComponentId(int _componentId) {
+void Component::setComponentId(int _componentId)
+{
     Component::componentId = _componentId;
 }
 
-const QString &Component::getComponent() const {
+const QString &Component::getComponent() const
+{
     return component;
 }
 
-void Component::setComponent(const QString &_component) {
+void Component::setComponent(const QString &_component)
+{
     Component::component = _component;
 }
 
-int Component::getTargetWeight() const {
+int Component::getTargetWeight() const
+{
     return targetWeight;
 }
 
-void Component::setTargetWeight(int _targetWeight) {
+void Component::setTargetWeight(int _targetWeight)
+{
     targetWeight = _targetWeight;
 }
 
-Component::COMPONENT Component::getRecipeComponent() const {
+Component::COMPONENT Component::getRecipeComponent() const
+{
     return recipeComponent;
 }
 
-void Component::setRecipeComponent(Component::COMPONENT _recipeComponent) {
+void Component::setRecipeComponent(Component::COMPONENT _recipeComponent)
+{
     recipeComponent = _recipeComponent;
 }
 
-Component::COMPONENT Component::identifyComponent(int componentType) const {
+Component::COMPONENT Component::identifyComponent(int componentType) const
+{
     switch (componentType) {
         case Component::WATER :
             return WATER;
@@ -49,10 +60,12 @@ Component::COMPONENT Component::identifyComponent(int componentType) const {
     }
 }
 
-int Component::getMarginValue() const {
+int Component::getMarginValue() const
+{
     return marginValue;
 }
 
-void Component::setMarginValue(int _marginValue) {
+void Component::setMarginValue(int _marginValue)
+{
     marginValue = _marginValue;
 }

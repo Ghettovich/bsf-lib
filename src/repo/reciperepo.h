@@ -6,7 +6,8 @@
 #include <QtSql/QSqlDatabase>
 #include <QtCore/QVector>
 
-class RecipeRepository {
+class RecipeRepository
+{
 
 public:
     explicit RecipeRepository(const QString &connection = "");
@@ -16,7 +17,7 @@ public:
 
 private:
     BsfDbconfig bsfDbConfig;
-    void addComponent(Component&, QVector<Component>&, QSqlQuery&);
+    void addComponent(Component &, QVector<Component> &, QSqlQuery &);
 
 };
 #endif //BSF_RECIPEREPO_H

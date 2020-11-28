@@ -12,12 +12,14 @@
 
 class Arduino;
 
-class IODevice {
+class IODevice
+{
 
 Q_GADGET
 
 public:
-    enum IO_DEVICE_HIGH_LOW {
+    enum IO_DEVICE_HIGH_LOW
+    {
         LOW, HIGH
     };
     Q_ENUM(IO_DEVICE_HIGH_LOW);

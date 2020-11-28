@@ -5,9 +5,9 @@
 #include "iodevice.h"
 #include <QObject>
 
-class WeightSensor : public IODevice
+class WeightSensor: public IODevice
 {
-    Q_GADGET
+Q_GADGET
 
 public:
     WeightSensor(int, IO_DEVICE_HIGH_LOW);

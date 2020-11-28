@@ -10,10 +10,11 @@
 #include <QtSql/QSqlQuery>
 #include <QtWidgets/QTreeWidgetItem>
 
-class IODeviceRepository {
+class IODeviceRepository
+{
 
 public:
-    explicit IODeviceRepository(const QString& connection = "");
+    explicit IODeviceRepository(const QString &connection = "");
     IODeviceType getIODeviceType(int ioDeviceTyperId);
     QVector<IODeviceType> getArduinoIODeviceTypes(int id);
     QVector<IODevice *> getArduinoIODeviceList(int arduinoId, int ioDeviceTypeId, IODeviceType::IO_DEVICE_TYPE);
@@ -21,9 +22,9 @@ public:
 
 private:
     BsfDbconfig bsfDbConfig;
-    void createRelayList(QSqlQuery&, QVector<IODevice *>&);
-    void createWeightSensorList(QSqlQuery&, QVector<IODevice *>&);
-    void createDetectionSensorList(QSqlQuery&, QVector<IODevice *>&);
+    void createRelayList(QSqlQuery &, QVector<IODevice *> &);
+    void createWeightSensorList(QSqlQuery &, QVector<IODevice *> &);
+    void createDetectionSensorList(QSqlQuery &, QVector<IODevice *> &);
 };
 
 

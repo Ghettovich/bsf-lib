@@ -6,10 +6,11 @@
 #include <QtCore/QVector>
 #include <QtSql/QSqlDatabase>
 
-class ComponentRepo {
+class ComponentRepo
+{
 
 public:
-    ComponentRepo(const QString& connection = "");
+    ComponentRepo(const QString &connection = "");
     QVector<Component> getComponentsFromRecipe(int);
 
 private:
