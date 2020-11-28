@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GroupBoxBinRecipeStatus</class>
+ <widget class="QWidget" name="GroupBoxBinRecipeStatus">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>867</width>
+    <height>734</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>GroupBox</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="6,0,0,0,0,0,0">
+      <item row="0" column="0" colspan="3">
+       <widget class="QLCDNumber" name="lcdNumberBinRecipeWeight"/>
+      </item>
+      <item row="1" column="0" colspan="7">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Current Recipe Info</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="7">
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3" colspan="4">
+       <widget class="QTreeView" name="treeViewRecipeLogs"/>
+      </item>
+      <item row="5" column="0" colspan="7">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="pushButtonReport">
+          <property name="minimumSize">
+           <size>
+            <width>190</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Report</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonRequestState">
+          <property name="text">
+           <string>Request state</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonAbort">
+          <property name="text">
+           <string>Abort</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButtonProceed">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Proceed</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

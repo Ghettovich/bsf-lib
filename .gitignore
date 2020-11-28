@@ -1,0 +1,14 @@
+/cmake-build-debug/
+
+### IntelliJ IDEA ###
+.idea
+/CMakeLists.txt.user
+
+### Add debug output folders from cmake to ignore (set from IDE)
+/cmake-build-debug-coverage
+/cmake-build-debug
+
+
+# ignore model views for now
+/src/ui/model
+/src/ui/views/
