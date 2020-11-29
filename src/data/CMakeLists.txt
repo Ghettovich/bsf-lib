@@ -28,7 +28,7 @@ target_link_libraries(data PUBLIC
 target_include_directories(data
         PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-        "$<INSTALL_INTERFACE:include/data>")
+        "$<INSTALL_INTERFACE:include>")
 
 install(TARGETS data
         EXPORT dataTargets

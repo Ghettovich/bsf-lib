@@ -9,12 +9,13 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 #option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 
 # find Qt5 and required components | Qt5_DIR
-find_package(Qt5 COMPONENTS Widgets DBus Core Sql Network REQUIRED)
+find_package(Qt5 COMPONENTS Widgets DBus Core Sql Network Mqtt REQUIRED)
 
 if (Qt5Widgets_FOUND)
 
     add_subdirectory(data)
     add_subdirectory(domain)
+    #add_subdirectory(mqtt)
     add_subdirectory(repo)
     add_subdirectory(ui)
 
