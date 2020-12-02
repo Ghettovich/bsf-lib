@@ -15,7 +15,7 @@ if (Qt5Widgets_FOUND)
 
     add_subdirectory(data)
     add_subdirectory(domain)
-    #add_subdirectory(mqtt)
+    add_subdirectory(mqtt)
     add_subdirectory(repo)
     add_subdirectory(ui)
 

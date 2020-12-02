@@ -6,10 +6,11 @@ namespace Ui
 class GroupBoxLiftUpDown;
 }
 
-#include <QObject>
+#include <iodevice.h>
+#include <QtWidgets/QWidget>
+#include <MqttClient.h>
 #include <QtMqtt/QMqttMessage>
 #include <QtMqtt/QMqttSubscription>
-#include <QtWidgets/QWidget>
 
 class GroupBoxLiftUpDown: public QWidget
 {
@@ -18,9 +19,10 @@ Q_OBJECT
 
 public:
     GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f);
-    GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f, QMqttSubscription *sub);
-    void init();
+    GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f, MqttClient *_m_client);
     virtual ~GroupBoxLiftUpDown();
+    void init();
+    void setProximityBinLoadSubscription(QMqttSubscription *sub);
 
 public slots:
     void onUpdateMessage(const QMqttMessage &msg);
@@ -28,7 +30,10 @@ public slots:
 
 private:
     Ui::GroupBoxLiftUpDown *ui = nullptr;
-    QMqttSubscription *m_sub;
+    MqttClient *m_client = nullptr;
+    QMqttSubscription *m_sub = nullptr;
+    IODevice *relayBinLiftUp;
+    IODevice *relayBinLiftDown;
 
 private slots:
     void onClickPushButtonLiftDown();

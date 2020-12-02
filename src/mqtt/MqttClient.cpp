@@ -9,23 +9,9 @@ MqttClient::MqttClient(QObject *parent)
     m_client->setHostname("localhost");
     m_client->setPort(1883);
 
-
-    connect(m_client, &QMqttClient::stateChanged, this, &MqttClient::onUpdateLogStateChange);
+    connect(m_client, &QMqttClient::stateChanged, this, &MqttClient::onStateChanged);
     connect(m_client, &QMqttClient::disconnected, this, &MqttClient::onBrokerDisconnected);
-
-    connect(m_client,
-            &QMqttClient::messageReceived,
-            this,
-            [this](const QByteArray &message, const QMqttTopicName &topic)
-            {
-                const QString content = QDateTime::currentDateTime().toString()
-                    + QLatin1String(" Received Topic: ")
-                    + topic.name()
-                    + QLatin1String(" Message: ")
-                    + message
-                    + QLatin1Char('\n');
-                qDebug() << content;
-            });
+    connect(m_client, &QMqttClient::messageReceived, this, &MqttClient::onMessageReceived);
 
     connect(m_client, &QMqttClient::pingResponseReceived, this, [this]()
     {
@@ -35,37 +21,80 @@ MqttClient::MqttClient(QObject *parent)
         qDebug() << content;
     });
 }
-void MqttClient::publish(const QString &topicName)
+QMqttClient::ClientState MqttClient::getClientState() const
+{
+    return m_client->state();
+}
+void MqttClient::connectToHost()
+{
+    if(m_client->state() == QMqttClient::Disconnected &&
+        m_client->state() != QMqttClient::Connecting) {
+        m_client->connectToHost();
+    }
+}
+void MqttClient::publish(const QString &topicName, const QString &message)
 {
     QMqttTopicName topic(topicName);
 
     if (m_client->publish(topic,
-                          "{\"relay\":30}",
+                          message.toLocal8Bit(),
                           0,
                           true) == -1) {
         qDebug() << "Failed to publish D:!";
     }
 }
-void MqttClient::subscribe(const QString &topic)
+QMqttSubscription *MqttClient::subscribe(const QString &topic)
 {
     auto subscription = m_client->subscribe(topic, 0);
     if (!subscription) {
-        qDebug() << "Error, could not sub!";
-        return;
+        qDebug() << "Error, could not sub D:!";
+        return nullptr;
     }
-//    auto subWindow = new SubscriptionWindow(subscription);
-//    subWindow->setWindowTitle(subscription->topic().filter());
-//    subWindow->show();
-}
-void MqttClient::onUpdateLogStateChange()
-{
-    const QString content = QDateTime::currentDateTime().toString()
-        + QLatin1String(": State Change")
-        + QString::number(m_client->state())
-        + QLatin1Char('\n');
-    qDebug() << content;
+    return subscription;
 }
 void MqttClient::onBrokerDisconnected()
 {
     qDebug() << "Broker disconnected!";
+}
+void MqttClient::onStateChanged()
+{
+    qDebug() << "on state changed triggered...";
+    switch (m_client->state()) {
+
+        case QMqttClient::Disconnected: {
+            const QString content = QDateTime::currentDateTime().toString()
+                + QLatin1String(": State Change Disconnected ")
+                + QString::number(m_client->state())
+                + QLatin1Char('\n');
+            qDebug() << content;
+            break;
+        }
+        case QMqttClient::Connecting: {
+            const QString content = QDateTime::currentDateTime().toString()
+                + QLatin1String(": State Change Conecting ... ")
+                + QString::number(m_client->state())
+                + QLatin1Char('\n');
+            qDebug() << content;
+            break;
+        }
+        case QMqttClient::Connected: {
+            emit brokerConnected();
+            const QString content = QDateTime::currentDateTime().toString()
+                + QLatin1String(": !!! State Change Connected! ")
+                + QString::number(m_client->state())
+                + QLatin1Char('\n');
+            qDebug() << content;
+            break;
+        }
+    }
+}
+void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicName &topic)
+{
+    const QString content = QDateTime::currentDateTime().toString()
+        + QLatin1String(" Received Topic: ")
+        + topic.name()
+        + QLatin1String(" Message: ")
+        + message
+        + QLatin1Char('\n');
+    qDebug() << content;
 }

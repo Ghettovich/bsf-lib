@@ -2,10 +2,11 @@ cmake_minimum_required(VERSION 3.13...3.18)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+# Needed for creating export
 include(CMakePackageConfigHelpers)
 
 # find Qt5 and required components | Qt5_DIR
-find_package(Qt5 COMPONENTS Core Network Mqtt REQUIRED)
+find_package(Qt5 COMPONENTS Mqtt REQUIRED)
 
 if (Qt5Widgets_FOUND)
 
@@ -25,8 +26,6 @@ if (Qt5Widgets_FOUND)
 
     # Linkes files with QT
     target_link_libraries(mqttclient PUBLIC
-            Qt5::Core
-            Qt5::Network
             Qt5::Mqtt
             )
 

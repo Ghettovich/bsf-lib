@@ -11,7 +11,7 @@ include(CMakePackageConfigHelpers)
 include_directories(${CMAKE_SOURCE_DIR}/lib)
 
 # find Qt5 and required components | Qt5_DIR
-find_package(Qt5 COMPONENTS Core Widgets Network REQUIRED)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 # HEADER LIST
 set(HEADER_LIST
@@ -42,6 +42,7 @@ add_library(ui
 
 target_link_libraries(ui PUBLIC
         domain
+        mqttclient
         Qt5::Widgets)
 
 target_include_directories(ui
