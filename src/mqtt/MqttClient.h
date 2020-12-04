@@ -22,7 +22,7 @@ public:
 public slots:
     void onBrokerDisconnected();
     void onStateChanged();
-    void onMessageReceived(const QByteArray &message, const QMqttTopicName &topic);
+    //void onMessageReceived(const QByteArray &message, const QMqttTopicName &topic);
 
 private:
     QMqttClient *m_client;

@@ -43,6 +43,7 @@ add_library(ui
 target_link_libraries(ui PUBLIC
         domain
         mqttclient
+        parser
         Qt5::Widgets)
 
 target_include_directories(ui

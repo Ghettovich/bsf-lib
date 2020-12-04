@@ -1,6 +1,7 @@
 #include "ui_groupboxliftupdown.h"
 #include "GroupBoxLiftUpDown.h"
 #include <relay.h>
+#include <transformpayload.h>
 
 GroupBoxLiftUpDown::GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f)
     :
@@ -19,8 +20,11 @@ GroupBoxLiftUpDown::GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f
 {
     ui->setupUi(this);
 
-    relayBinLiftDown = new Relay(0, IODevice::LOW);
-    relayBinLiftUp = new Relay(0, IODevice::LOW);
+    relayBinLiftDown = new Relay(31, IODevice::LOW);
+    relayBinLiftUp = new Relay(30, IODevice::LOW);
+
+    proximityBinDrop = new DetectionSensor(10, IODevice::HIGH);
+    proximityBinLoad = new DetectionSensor(11, IODevice::HIGH);
 
     init();
 }
@@ -43,7 +47,14 @@ void GroupBoxLiftUpDown::init()
 }
 void GroupBoxLiftUpDown::onUpdateMessage(const QMqttMessage &msg)
 {
-    qDebug() << msg.payload();
+    TransformPayload parser;
+    QVector<IODevice *> proximities = parser.parseProximitySensors(msg.payload());
+
+    for(const auto sensor : proximities) {
+
+    }
+
+    qDebug() << "Proximities = " << msg.payload();
 }
 void GroupBoxLiftUpDown::onUpdateStatus(QMqttSubscription::SubscriptionState state)
 {
@@ -67,7 +78,7 @@ void GroupBoxLiftUpDown::onUpdateStatus(QMqttSubscription::SubscriptionState sta
 }
 void GroupBoxLiftUpDown::onUpdateMessageRelayStates(const QMqttMessage &msg)
 {
-    qDebug() << msg.payload();
+    qDebug() << "Relays = " << msg.payload();
 }
 void GroupBoxLiftUpDown::onUpdateStatusRelayStates(QMqttSubscription::SubscriptionState state)
 {
@@ -92,17 +103,17 @@ void GroupBoxLiftUpDown::onUpdateStatusRelayStates(QMqttSubscription::Subscripti
 void GroupBoxLiftUpDown::onClickPushButtonLiftDown()
 {
     QJsonObject jsonPayload;
-    jsonPayload["toggle"] = 31;
+    jsonPayload["toggle"] = relayBinLiftDown->getId();
 
-    m_client->publish("toggle/relay", jsonPayload);
+    m_client->publish("/toggle/relay", jsonPayload);
     printf("\ndown clicked");
 }
 void GroupBoxLiftUpDown::onClickPushButtonLiftUp()
 {
     QJsonObject jsonPayload;
-    jsonPayload["toggle"] = 30;
+    jsonPayload["toggle"] = relayBinLiftUp->getId();
 
-    m_client->publish("toggle/relay", jsonPayload);
+    m_client->publish("/toggle/relay", jsonPayload);
     printf("\nUp clicked");
 }
 void GroupBoxLiftUpDown::setProximityBinLoadSubscription(QMqttSubscription *sub)

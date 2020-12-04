@@ -39,6 +39,8 @@ private:
     QMqttSubscription *relayStateSub = nullptr;
     IODevice *relayBinLiftUp;
     IODevice *relayBinLiftDown;
+    IODevice *proximityBinLoad;
+    IODevice *proximityBinDrop;
 
 private slots:
     void onClickPushButtonLiftDown();

@@ -11,7 +11,7 @@ MqttClient::MqttClient(QObject *parent)
 
     connect(m_client, &QMqttClient::stateChanged, this, &MqttClient::onStateChanged);
     connect(m_client, &QMqttClient::disconnected, this, &MqttClient::onBrokerDisconnected);
-    connect(m_client, &QMqttClient::messageReceived, this, &MqttClient::onMessageReceived);
+    //connect(m_client, &QMqttClient::messageReceived, this, &MqttClient::onMessageReceived);
 
     connect(m_client, &QMqttClient::pingResponseReceived, this, [this]()
     {
@@ -39,7 +39,7 @@ void MqttClient::publish(const QString &topicName, const QString &message)
     if (m_client->publish(topic,
                           message.toLocal8Bit(),
                           0,
-                          true) == -1) {
+                          false) == -1) {
         qDebug() << "Failed to publish D:!";
     }
 }
@@ -50,7 +50,7 @@ void MqttClient::publish(const QString &topic, const QJsonObject &jsonObject)
     if (m_client->publish(topic,
                           doc.toJson(),
                           1,
-                          true) == -1) {
+                          false) == -1) {
         qDebug() << "Failed to publish D:!";
     }
 }
@@ -99,13 +99,13 @@ void MqttClient::onStateChanged()
         }
     }
 }
-void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicName &topic)
-{
-    const QString content = QDateTime::currentDateTime().toString()
-        + QLatin1String(" Received Topic: ")
-        + topic.name()
-        + QLatin1String(" Message: ")
-        + message
-        + QLatin1Char('\n');
-    qDebug() << content;
-}
+//void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicName &topic)
+//{
+//    const QString content = QDateTime::currentDateTime().toString()
+//        + QLatin1String(" Received Topic: ")
+//        + topic.name()
+//        + QLatin1String(" Message: ")
+//        + message
+//        + QLatin1Char('\n');
+//    qDebug() << content;
+//}
