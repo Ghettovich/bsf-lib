@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QtMqtt/QMqttClient>
+#include <QtCore/QJsonObject>
+#include <QtCore/QJsonDocument>
 
 class MqttClient: public QObject
 {
@@ -13,6 +15,7 @@ public:
     explicit MqttClient(QObject *parent);
     void connectToHost();
     void publish(const QString &topic, const QString &message);
+    void publish(const QString &topic, const QJsonObject &jsonObject);
     QMqttSubscription *subscribe(const QString &topic);
     QMqttClient::ClientState getClientState() const;
 
@@ -23,6 +26,7 @@ public slots:
 
 private:
     QMqttClient *m_client;
+    QJsonDocument doc;
 
 signals:
     void brokerConnected();

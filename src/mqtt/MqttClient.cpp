@@ -43,9 +43,20 @@ void MqttClient::publish(const QString &topicName, const QString &message)
         qDebug() << "Failed to publish D:!";
     }
 }
+void MqttClient::publish(const QString &topic, const QJsonObject &jsonObject)
+{
+    doc = QJsonDocument(jsonObject);
+
+    if (m_client->publish(topic,
+                          doc.toJson(),
+                          1,
+                          true) == -1) {
+        qDebug() << "Failed to publish D:!";
+    }
+}
 QMqttSubscription *MqttClient::subscribe(const QString &topic)
 {
-    auto subscription = m_client->subscribe(topic, 0);
+    auto subscription = m_client->subscribe(topic, 1);
     if (!subscription) {
         qDebug() << "Error, could not sub D:!";
         return nullptr;

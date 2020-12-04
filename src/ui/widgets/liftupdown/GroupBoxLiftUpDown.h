@@ -23,15 +23,20 @@ public:
     virtual ~GroupBoxLiftUpDown();
     void init();
     void setProximityBinLoadSubscription(QMqttSubscription *sub);
+    void setRelayStateSubscription(QMqttSubscription *sub);
 
 public slots:
     void onUpdateMessage(const QMqttMessage &msg);
     void onUpdateStatus(QMqttSubscription::SubscriptionState state);
 
+    void onUpdateMessageRelayStates(const QMqttMessage &msg);
+    void onUpdateStatusRelayStates(QMqttSubscription::SubscriptionState state);
+
 private:
     Ui::GroupBoxLiftUpDown *ui = nullptr;
     MqttClient *m_client = nullptr;
-    QMqttSubscription *m_sub = nullptr;
+    QMqttSubscription *proximitySub = nullptr;
+    QMqttSubscription *relayStateSub = nullptr;
     IODevice *relayBinLiftUp;
     IODevice *relayBinLiftDown;
 
