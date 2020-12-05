@@ -22,8 +22,6 @@ GroupBoxLiftUpDown::GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f
 
     relayBinLiftDown = new Relay(31, IODevice::LOW);
     relayBinLiftUp = new Relay(30, IODevice::LOW);
-
-    proximityBinDrop = new DetectionSensor(10, IODevice::HIGH);
     proximityBinLoad = new DetectionSensor(11, IODevice::HIGH);
 
     init();
@@ -39,6 +37,8 @@ GroupBoxLiftUpDown::~GroupBoxLiftUpDown()
 
 void GroupBoxLiftUpDown::init()
 {
+    ui->labelProximityBinLoadStatus->setText("");
+    setProximityBinLoadStatusLabel();
     connect(ui->pushButtonLiftDown, &QPushButton::clicked,
             this, &GroupBoxLiftUpDown::onClickPushButtonLiftDown);
 
@@ -51,10 +51,14 @@ void GroupBoxLiftUpDown::onUpdateMessage(const QMqttMessage &msg)
     QVector<IODevice *> proximities = parser.parseProximitySensors(msg.payload());
 
     for(const auto sensor : proximities) {
-
+        if(sensor->getId() == proximityBinLoad->getId()) {
+            proximityBinLoad->setDeviceState(sensor->getDeviceState());
+            break;
+        }
     }
 
-    qDebug() << "Proximities = " << msg.payload();
+    setProximityBinLoadStatusLabel();
+    //qDebug() << "Proximities = " << msg.payload();
 }
 void GroupBoxLiftUpDown::onUpdateStatus(QMqttSubscription::SubscriptionState state)
 {
@@ -145,5 +149,13 @@ void GroupBoxLiftUpDown::setRelayStateSubscription(QMqttSubscription *sub)
     });
 
     qDebug() << "Created relay subscription";
+}
+void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel()
+{
+    if(proximityBinLoad->getDeviceState() == IODevice::HIGH) {
+        ui->labelProximityBinLoadStatus->setStyleSheet("QLabel { background-color : red }");
+    } else if(proximityBinLoad->getDeviceState() == IODevice::LOW) {
+        ui->labelProximityBinLoadStatus->setStyleSheet("QLabel { background-color : green }");
+    }
 }
 

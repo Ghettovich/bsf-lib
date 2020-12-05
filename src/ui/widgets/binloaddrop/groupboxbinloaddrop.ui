@@ -54,7 +54,7 @@
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QLabel" name="labelRelayBinLoadDropStatus">
+       <widget class="QLabel" name="labelProximityBinDropStatus">
         <property name="text">
          <string>Status</string>
         </property>

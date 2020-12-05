@@ -40,7 +40,8 @@ private:
     IODevice *relayBinLiftUp;
     IODevice *relayBinLiftDown;
     IODevice *proximityBinLoad;
-    IODevice *proximityBinDrop;
+
+    void setProximityBinLoadStatusLabel();
 
 private slots:
     void onClickPushButtonLiftDown();
