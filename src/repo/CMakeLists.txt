@@ -5,15 +5,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 include(CMakePackageConfigHelpers)
 
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/src/")
-
-# find upstream packages
-find_package(data)
-find_package(domain)
-
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Core Sql REQUIRED)
-
 
 if (Qt5Widgets_FOUND)
 
@@ -37,19 +30,21 @@ if (Qt5Widgets_FOUND)
             statecoderepo.cpp
             ${HEADER_LIST})
 
+    # Set the property version pkconfig
+    set_property(TARGET repo PROPERTY VERSION 1.0)
+
     # Linkes files with QT
     target_link_libraries(repo
             PRIVATE
-            data::data
-            domain::domain
+            data
+            domain
             Qt5::Core
             Qt5::Sql)
 
     target_include_directories(repo
             PUBLIC
-
-            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-            "$<INSTALL_INTERFACE:include>")
+            "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>"
+            "$<INSTALL_INTERFACE:include/repo>")
 
     install(TARGETS repo
             EXPORT repoTargets
@@ -65,7 +60,7 @@ if (Qt5Widgets_FOUND)
     install(EXPORT repoTargets
             FILE repoTargets.cmake
             NAMESPACE repo::
-            DESTINATION lib/cmake
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/repo
             )
 
     configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
@@ -75,7 +70,7 @@ if (Qt5Widgets_FOUND)
 
     install(FILES
             "${CMAKE_CURRENT_BINARY_DIR}/repoConfig.cmake"
-            "${CMAKE_CURRENT_BINARY_DIR}/repoConfig.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/repoConfigVersion.cmake"
             DESTINATION lib/cmake)
 
     # generate the version file for the config file
@@ -89,9 +84,6 @@ if (Qt5Widgets_FOUND)
             FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/repoTargets.cmake"
             NAMESPACE repo::
             )
-
-    target_link_libraries(bsf PUBLIC
-            repo)
 
 else (!Qt5Widgets_FOUND)
     # OOPS

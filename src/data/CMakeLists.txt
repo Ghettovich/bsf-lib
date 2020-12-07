@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.13...3.18)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(AUTOGEN_TARGET_DEPENDS data)
 
 include(CMakePackageConfigHelpers)
 
@@ -31,7 +32,7 @@ if (Qt5Widgets_FOUND)
     target_include_directories(data
             PUBLIC
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-            "$<INSTALL_INTERFACE:include>")
+            "$<INSTALL_INTERFACE:include/data>")
 
     install(TARGETS data
             EXPORT dataTargets
@@ -47,7 +48,7 @@ if (Qt5Widgets_FOUND)
     install(EXPORT dataTargets
             FILE dataTargets.cmake
             NAMESPACE data::
-            DESTINATION lib/cmake
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/data
             )
 
     install(TARGETS data DESTINATION lib)
@@ -72,10 +73,8 @@ if (Qt5Widgets_FOUND)
 
     export(EXPORT dataTargets
             FILE "${CMAKE_CURRENT_BINARY_DIR}/dataTargets.cmake"
-            NAMESPACE data::)
-
-    target_link_libraries(bsf PUBLIC
-            data)
+            NAMESPACE data::
+            )
 
 else (!Qt5Widgets_FOUND)
 # OOPS

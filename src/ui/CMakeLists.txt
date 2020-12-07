@@ -8,13 +8,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Needed for creating export
 include(CMakePackageConfigHelpers)
 
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/src/")
-
-find_package(domain)
-find_package(mqttclient
-        PATHS "${CMAKE_BINARY_DIR}/src/mqtt")
-
 #include_directories(${CMAKE_SOURCE_DIR}/lib)
+
 
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
@@ -32,7 +27,7 @@ if (Qt5Widgets_FOUND)
             widgets/recipeconfig/GroupBoxRecipeConfig.h
             )
 
-    add_library(ui
+    add_library(ui SHARED
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.cpp
             widgets/beltfeeders/groupboxbeltfeeders.ui
@@ -48,16 +43,24 @@ if (Qt5Widgets_FOUND)
             widgets/recipeconfig/groupboxrecipeconfig.ui
             )
 
+    # Set the property version pkconfig
+    set_property(TARGET ui PROPERTY VERSION 1.0)
+
     target_link_libraries(ui
+            INTERFACE
+            domain
+            mqtt
             PRIVATE
-            domain::domain
-            mqttclient::mqttclient
             Qt5::Widgets)
 
     target_include_directories(ui
             PUBLIC
-            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-            "$<INSTALL_INTERFACE:include>")
+            "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>"
+            "$<INSTALL_INTERFACE:include/ui>"
+            PRIVATE
+            ${CMAKE_SOURCE_DIR}/src/domain
+            ${CMAKE_SOURCE_DIR}/src/mqtt
+            )
 
     install(TARGETS ui
             EXPORT uiTargets
@@ -73,7 +76,7 @@ if (Qt5Widgets_FOUND)
     install(EXPORT uiTargets
             FILE uiTargets.cmake
             NAMESPACE ui::
-            DESTINATION lib/cmake
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ui
             )
 
     install(TARGETS ui DESTINATION lib)
@@ -96,11 +99,8 @@ if (Qt5Widgets_FOUND)
     )
 
     export(EXPORT uiTargets
-            FILE "${CMAKE_CURRENT_BINARY_DIR}/uiTargets.cmake"
+            FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/uiTargets.cmake"
             NAMESPACE ui::)
-
-    target_link_libraries(bsf PUBLIC
-            ui)
 
 else (!Qt5Widgets_FOUND)
 # OOPS

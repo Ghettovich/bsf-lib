@@ -1,12 +1,9 @@
 cmake_minimum_required(VERSION 3.7...3.18)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(AUTOGEN_TARGET_DEPENDS parser)
 
 include(CMakePackageConfigHelpers)
-
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/src/")
-
-find_package(domain)
 
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Core REQUIRED)
@@ -18,7 +15,7 @@ if (Qt5Widgets_FOUND)
             transformpayload.h)
 
     # TARGET SOURCES
-    add_library(parser
+    add_library(parser SHARED
             transformpayload.cpp
             ${HEADER_LIST})
 
@@ -28,13 +25,13 @@ if (Qt5Widgets_FOUND)
     # Linkes files with QT
     target_link_libraries(parser
             PRIVATE
-            domain::domain
+            domain
             Qt5::Core)
 
     target_include_directories(parser
             PUBLIC
-            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-            "$<INSTALL_INTERFACE:include>")
+            "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>"
+            "$<INSTALL_INTERFACE:include/parser>")
 
     install(TARGETS parser
             EXPORT parserTargets
@@ -50,10 +47,10 @@ if (Qt5Widgets_FOUND)
     install(EXPORT parserTargets
             FILE parserTargets.cmake
             NAMESPACE parser::
-            DESTINATION lib/cmake
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/parser
             )
 
-    install(TARGETS parser DESTINATION include)
+    install(TARGETS parser DESTINATION lib)
 
     configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
             "${CMAKE_CURRENT_BINARY_DIR}/parserConfig.cmake"
@@ -76,11 +73,6 @@ if (Qt5Widgets_FOUND)
     export(EXPORT parserTargets
             FILE "${CMAKE_CURRENT_BINARY_DIR}/parserTargets.cmake"
             NAMESPACE parser::
-            )
-
-    target_link_libraries(bsf PUBLIC
-            parser
-            Qt5::Core
             )
 
 else (!Qt5Widgets_FOUND)

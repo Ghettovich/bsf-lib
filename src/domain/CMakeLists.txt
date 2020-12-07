@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.13...3.18)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(AUTOGEN_TARGET_DEPENDS domain)
 
 # Needed for creating export
 include(CMakePackageConfigHelpers)
@@ -53,7 +54,7 @@ if (Qt5Widgets_FOUND)
     target_include_directories(domain
             PUBLIC
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-            "$<INSTALL_INTERFACE:include>")
+            "$<INSTALL_INTERFACE:include/domain>")
 
     install(TARGETS domain
             EXPORT domainTargets
@@ -69,7 +70,7 @@ if (Qt5Widgets_FOUND)
     install(EXPORT domainTargets
             FILE domainTargets.cmake
             NAMESPACE domain::
-            DESTINATION lib/cmake
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/domain
             )
 
     install(TARGETS domain DESTINATION lib)
@@ -95,9 +96,6 @@ if (Qt5Widgets_FOUND)
     export(EXPORT domainTargets
             FILE "${CMAKE_CURRENT_BINARY_DIR}/domainTargets.cmake"
             NAMESPACE domain::)
-
-    target_link_libraries(bsf PUBLIC
-            domain)
 
 else (!Qt5Widgets_FOUND)
 # OOPS
