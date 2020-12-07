@@ -1,28 +1,18 @@
 #include "ui_groupboxliftupdown.h"
 #include "GroupBoxLiftUpDown.h"
-#include <relay.h>
-#include <transformpayload.h>
+#include <BsfWidgetEnum.h>
 
-GroupBoxLiftUpDown::GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f)
-    :
-    QWidget(parent, f), ui(new Ui::GroupBoxLiftUpDown)
-{
-    ui->setupUi(this);
-
-    relayBinLiftUp = new Relay(30, IODevice::LOW);
-    relayBinLiftDown = new Relay(31, IODevice::LOW);
-
-    init();
-}
 GroupBoxLiftUpDown::GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f, MqttClient *_m_client)
     :
     QWidget(parent, f), ui(new Ui::GroupBoxLiftUpDown), m_client(_m_client)
 {
     ui->setupUi(this);
+    QVariant formId = WIDGET_TYPES::GROUPBOX_LIFT_UP_DOWN;
+    this->setProperty("formId", formId);
 
-    relayBinLiftDown = new Relay(31, IODevice::LOW);
-    relayBinLiftUp = new Relay(30, IODevice::LOW);
-    proximityBinLoad = new DetectionSensor(11, IODevice::HIGH);
+    relayBinLiftDown = new Relay(31, IODevice::LOW); // Digital
+    relayBinLiftUp = new Relay(30, IODevice::LOW); // Digital
+    proximityBinLoad = new DetectionSensor(11, IODevice::HIGH); // PULL UP (HIGH = OFF!)
 
     init();
 }
@@ -39,70 +29,14 @@ void GroupBoxLiftUpDown::init()
 {
     ui->labelProximityBinLoadStatus->setText("");
     setProximityBinLoadStatusLabel();
+    setLiftDownButtonState();
+    setLiftUpButtonState();
+
     connect(ui->pushButtonLiftDown, &QPushButton::clicked,
             this, &GroupBoxLiftUpDown::onClickPushButtonLiftDown);
 
     connect(ui->pushButtonLiftUp, &QPushButton::clicked,
             this, &GroupBoxLiftUpDown::onClickPushButtonLiftUp);
-}
-void GroupBoxLiftUpDown::onUpdateMessage(const QMqttMessage &msg)
-{
-    TransformPayload parser;
-    QVector<IODevice *> proximities = parser.parseProximitySensors(msg.payload());
-
-    for(const auto sensor : proximities) {
-        if(sensor->getId() == proximityBinLoad->getId()) {
-            proximityBinLoad->setDeviceState(sensor->getDeviceState());
-            break;
-        }
-    }
-
-    setProximityBinLoadStatusLabel();
-    //qDebug() << "Proximities = " << msg.payload();
-}
-void GroupBoxLiftUpDown::onUpdateStatus(QMqttSubscription::SubscriptionState state)
-{
-    switch (state) {
-        case QMqttSubscription::Unsubscribed:
-            qDebug() << (QLatin1String("Unsubscribed"));
-            break;
-        case QMqttSubscription::SubscriptionPending:
-            qDebug() << (QLatin1String("Pending"));
-            break;
-        case QMqttSubscription::Subscribed:
-            qDebug() << (QLatin1String("Subscribed"));
-            break;
-        case QMqttSubscription::Error:
-            qDebug() << (QLatin1String("Error"));
-            break;
-        default:
-            qDebug() << (QLatin1String("--Unknown--"));
-            break;
-    }
-}
-void GroupBoxLiftUpDown::onUpdateMessageRelayStates(const QMqttMessage &msg)
-{
-    qDebug() << "Relays = " << msg.payload();
-}
-void GroupBoxLiftUpDown::onUpdateStatusRelayStates(QMqttSubscription::SubscriptionState state)
-{
-    switch (state) {
-        case QMqttSubscription::Unsubscribed:
-            qDebug() << (QLatin1String("Unsubscribed"));
-            break;
-        case QMqttSubscription::SubscriptionPending:
-            qDebug() << (QLatin1String("Pending"));
-            break;
-        case QMqttSubscription::Subscribed:
-            qDebug() << (QLatin1String("Subscribed"));
-            break;
-        case QMqttSubscription::Error:
-            qDebug() << (QLatin1String("Error"));
-            break;
-        default:
-            qDebug() << (QLatin1String("--Unknown--"));
-            break;
-    }
 }
 void GroupBoxLiftUpDown::onClickPushButtonLiftDown()
 {
@@ -120,42 +54,57 @@ void GroupBoxLiftUpDown::onClickPushButtonLiftUp()
     m_client->publish("/toggle/relay", jsonPayload);
     printf("\nUp clicked");
 }
-void GroupBoxLiftUpDown::setProximityBinLoadSubscription(QMqttSubscription *sub)
-{
-    proximitySub = sub;
-    onUpdateStatus(proximitySub->state());
-    connect(proximitySub, &QMqttSubscription::messageReceived,
-            this, &GroupBoxLiftUpDown::onUpdateMessage);
-    connect(proximitySub, &QMqttSubscription::stateChanged,
-            this, &GroupBoxLiftUpDown::onUpdateStatus);
-    connect(proximitySub, &QMqttSubscription::qosChanged, [this](quint8 qos)
-    {
-        qDebug() << (QString::number(qos));
-    });
-
-    qDebug() << "Created subscription";
-}
-void GroupBoxLiftUpDown::setRelayStateSubscription(QMqttSubscription *sub)
-{
-    relayStateSub = sub;
-    onUpdateStatusRelayStates(relayStateSub->state());
-    connect(relayStateSub, &QMqttSubscription::messageReceived,
-            this, &GroupBoxLiftUpDown::onUpdateMessageRelayStates);
-    connect(relayStateSub, &QMqttSubscription::stateChanged,
-            this, &GroupBoxLiftUpDown::onUpdateStatusRelayStates);
-    connect(relayStateSub, &QMqttSubscription::qosChanged, [this](quint8 qos)
-    {
-        qDebug() << (QString::number(qos));
-    });
-
-    qDebug() << "Created relay subscription";
-}
 void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel()
 {
     if(proximityBinLoad->getDeviceState() == IODevice::HIGH) {
         ui->labelProximityBinLoadStatus->setStyleSheet("QLabel { background-color : red }");
     } else if(proximityBinLoad->getDeviceState() == IODevice::LOW) {
         ui->labelProximityBinLoadStatus->setStyleSheet("QLabel { background-color : green }");
+    }
+}
+void GroupBoxLiftUpDown::setLiftUpButtonState()
+{
+    if(relayBinLiftUp->isDeviceStateLOW()) {
+        ui->pushButtonLiftUp->setStyleSheet("QLabel { background-color : green }");
+    } else {
+        ui->pushButtonLiftUp->setStyleSheet("QLabel { background-color : red }");
+    }
+}
+void GroupBoxLiftUpDown::setLiftDownButtonState()
+{
+    if(relayBinLiftDown->isDeviceStateLOW()) {
+        ui->pushButtonLiftUp->setStyleSheet("QLabel { background-color : green }");
+    } else {
+        ui->pushButtonLiftUp->setStyleSheet("QLabel { background-color : red }");
+    }
+}
+void GroupBoxLiftUpDown::updateRelayStates(const Relay &_relay)
+{
+    if(_relay.getId() == relayBinLiftUp->getId()) {
+        relayBinLiftUp->setDeviceState(_relay.getDeviceState());
+        setLiftUpButtonState();
+    } else if (_relay.getId() == relayBinLiftDown->getId()) {
+        relayBinLiftDown->setDeviceState(_relay.getDeviceState());
+        setLiftDownButtonState();
+    }
+}
+void GroupBoxLiftUpDown::updateProximityState(const DetectionSensor &_detectionSensor)
+{
+    if(proximityBinLoad->getId() == _detectionSensor.getId()) {
+        proximityBinLoad->setDeviceState(_detectionSensor.getDeviceState());
+        setProximityBinLoadStatusLabel();
+    }
+}
+void GroupBoxLiftUpDown::onUpdateIODevices(const QVector<IODevice *> &iodeviceList)
+{
+    for(const auto iodevice : iodeviceList) {
+        if(typeid(iodevice) == typeid(Relay)) {
+            Relay relay = dynamic_cast<Relay&>(*iodevice);
+            updateRelayStates(relay);
+        } else if (typeid(iodevice) == typeid(DetectionSensor)) {
+            DetectionSensor proximity = dynamic_cast<DetectionSensor&>(*iodevice);
+            updateProximityState(proximity);
+        }
     }
 }
 

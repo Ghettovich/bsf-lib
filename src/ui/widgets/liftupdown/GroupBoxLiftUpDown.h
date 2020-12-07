@@ -7,6 +7,8 @@ class GroupBoxLiftUpDown;
 }
 
 #include <iodevice.h>
+#include <relay.h>
+#include <detectionsensor.h>
 #include <QtWidgets/QWidget>
 #include <MqttClient.h>
 #include <QtMqtt/QMqttMessage>
@@ -18,19 +20,18 @@ class GroupBoxLiftUpDown: public QWidget
 Q_OBJECT
 
 public:
-    GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f);
     GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f, MqttClient *_m_client);
     virtual ~GroupBoxLiftUpDown();
     void init();
-    void setProximityBinLoadSubscription(QMqttSubscription *sub);
-    void setRelayStateSubscription(QMqttSubscription *sub);
 
 public slots:
-    void onUpdateMessage(const QMqttMessage &msg);
-    void onUpdateStatus(QMqttSubscription::SubscriptionState state);
+    void onUpdateIODevices(const QVector<IODevice *> &iodeviceList);
 
-    void onUpdateMessageRelayStates(const QMqttMessage &msg);
-    void onUpdateStatusRelayStates(QMqttSubscription::SubscriptionState state);
+//    void onUpdateMessage(const QMqttMessage &msg);
+//    void onUpdateStatus(QMqttSubscription::SubscriptionState state);
+//
+//    void onUpdateMessageRelayStates(const QMqttMessage &msg);
+//    void onUpdateStatusRelayStates(QMqttSubscription::SubscriptionState state);
 
 private:
     Ui::GroupBoxLiftUpDown *ui = nullptr;
@@ -42,6 +43,10 @@ private:
     IODevice *proximityBinLoad;
 
     void setProximityBinLoadStatusLabel();
+    void setLiftUpButtonState();
+    void setLiftDownButtonState();
+    void updateRelayStates(const Relay &_relay);
+    void updateProximityState(const DetectionSensor &_detectionSensor);
 
 private slots:
     void onClickPushButtonLiftDown();

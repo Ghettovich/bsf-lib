@@ -7,68 +7,77 @@ include(CMakePackageConfigHelpers)
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Core Sql REQUIRED)
 
-# HEADER LIST
-set(HEADER_LIST
-        bsfdatabaseconfig.h)
+if (Qt5Widgets_FOUND)
 
-# TARGET MAIN LIB
-add_library(data SHARED
-        bsfdatabaseconfig.cpp
-        ${HEADER_LIST})
+    # HEADER LIST
+    set(HEADER_LIST
+            bsfdatabaseconfig.h)
 
-# Set the property version pkconfig
-set_property(TARGET data PROPERTY VERSION 1.0)
+    # TARGET MAIN LIB
+    add_library(data SHARED
+            bsfdatabaseconfig.cpp
+            ${HEADER_LIST})
 
-# Linkes files with QT
-target_link_libraries(data PUBLIC
-        Qt5::Core
-        Qt5::Sql)
+    # Set the property version pkconfig
+    set_property(TARGET data PROPERTY VERSION 1.0)
 
-# Define rules for exporting domain
-target_include_directories(data
-        PUBLIC
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-        "$<INSTALL_INTERFACE:include>")
+    # Linkes files with QT
+    target_link_libraries(data
+            PRIVATE
+            Qt5::Core
+            Qt5::Sql)
 
-install(TARGETS data
-        EXPORT dataTargets
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        RUNTIME DESTINATION bin
-        INCLUDES DESTINATION include
-        )
+    # Define rules for exporting domain
+    target_include_directories(data
+            PUBLIC
+            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
+            "$<INSTALL_INTERFACE:include>")
 
-# install header file
-install(FILES ${HEADER_FILES} DESTINATION include)
+    install(TARGETS data
+            EXPORT dataTargets
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib
+            RUNTIME DESTINATION bin
+            INCLUDES DESTINATION include
+            )
 
-install(EXPORT dataTargets
-        FILE dataTargets.cmake
-        NAMESPACE data::
-        DESTINATION lib/cmake
-        )
+    # install header file
+    install(FILES ${HEADER_FILES} DESTINATION include)
 
-install(TARGETS data DESTINATION lib)
+    install(EXPORT dataTargets
+            FILE dataTargets.cmake
+            NAMESPACE data::
+            DESTINATION lib/cmake
+            )
 
-configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-        "${CMAKE_CURRENT_BINARY_DIR}/dataConfig.cmake"
-        INSTALL_DESTINATION lib/cmake
-        )
+    install(TARGETS data DESTINATION lib)
 
-install(FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/dataConfig.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/dataConfigVersion.cmake"
-        DESTINATION lib/cmake
-        )
+    configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+            "${CMAKE_CURRENT_BINARY_DIR}/dataConfig.cmake"
+            INSTALL_DESTINATION lib/cmake
+            )
 
-# generate the version file for the config file
-write_basic_package_version_file(
-        "${CMAKE_CURRENT_BINARY_DIR}/dataConfigVersion.cmake"
-        VERSION "1.0"
-        COMPATIBILITY AnyNewerVersion
-)
+    install(FILES
+            "${CMAKE_CURRENT_BINARY_DIR}/dataConfig.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/dataConfigVersion.cmake"
+            DESTINATION lib/cmake
+            )
 
-export(EXPORT dataTargets
-        FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/dataTargets.cmake")
+    # generate the version file for the config file
+    write_basic_package_version_file(
+            "${CMAKE_CURRENT_BINARY_DIR}/dataConfigVersion.cmake"
+            VERSION "1.0"
+            COMPATIBILITY AnyNewerVersion
+    )
 
-#target_link_libraries(bsflib PUBLIC
-#        data)
+    export(EXPORT dataTargets
+            FILE "${CMAKE_CURRENT_BINARY_DIR}/dataTargets.cmake"
+            NAMESPACE data::)
+
+    target_link_libraries(bsf PUBLIC
+            data)
+
+else (!Qt5Widgets_FOUND)
+# OOPS
+message("could not find qt widgets")
+endif (Qt5Widgets_FOUND)

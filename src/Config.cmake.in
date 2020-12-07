@@ -1,0 +1,27 @@
+@PACKAGE_INIT@
+## PROJECT_LIBRARIES is filled-in during the package build. in this case : lib1,lib2
+set(@PROJECT_NAME@_LIBRARIES @PROJECT_LIBRARIES@)
+
+
+
+## The public variables to be used by the client project:
+#PROJECT_NAME_INCLUDE_DIRS is all the include paths
+#PROJECT_NAME_LIBRARIES is the name of all the libraries
+
+unset(@PROJECT_NAME@_INCLUDE_DIRS)
+foreach(INCLUDE_DIR ${INCLUDE_DIRS})
+    set_and_check(@PROJECT_NAME@_INCLUDE_DIR ${INCLUDE_DIR})
+    list(APPEND @PROJECT_NAME@_INCLUDE_DIRS ${@PROJECT_NAME@_INCLUDE_DIR})
+endforeach()
+
+## PACKAGE_PACKAGE_DIRNAME_include is filled-in during the package build
+foreach(lib ${@PROJECT_NAME@_LIBRARIES})
+    list(APPEND INCLUDE_DIRS @PACKAGE_PACKAGE_DIRNAME_include@/${lib})
+endforeach(lib)
+
+# Looks up the information about the exported targets in this package
+foreach(lib ${@PROJECT_NAME@_LIBRARIES})
+    if(NOT TARGET ${lib})
+        include(@PACKAGE_PACKAGE_DIRNAME_lib@/${lib}/${lib}Exports.cmake)
+    endif()
+endforeach(lib)

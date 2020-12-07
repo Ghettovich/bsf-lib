@@ -7,4 +7,4 @@ find_dependency(domain REQUIRED)
 
 include("${CMAKE_CURRENT_LIST_DIR}/repoTargets.cmake")
 
-check_required_components(repoTargets)
+check_required_components(data, domain, repoTargets)

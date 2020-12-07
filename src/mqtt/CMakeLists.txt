@@ -5,6 +5,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Needed for creating export
 include(CMakePackageConfigHelpers)
 
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/src/")
+
+find_package(domain)
+
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Mqtt REQUIRED)
 
@@ -25,7 +29,9 @@ if (Qt5Widgets_FOUND)
     set_property(TARGET mqttclient PROPERTY VERSION 1.0)
 
     # Linkes files with QT
-    target_link_libraries(mqttclient PUBLIC
+    target_link_libraries(mqttclient
+            PUBLIC
+            domain::domain
             Qt5::Mqtt
             )
 
@@ -73,7 +79,12 @@ if (Qt5Widgets_FOUND)
     )
 
     export(EXPORT mqttclientTargets
-            FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/mqttclientTargets.cmake")
+            FILE "${CMAKE_CURRENT_BINARY_DIR}/mqttclientTargets.cmake"
+            NAMESPACE mqttclient::)
+
+    target_link_libraries(bsf PUBLIC
+            mqttclient)
+
 
 else (!Qt5Widgets_FOUND)
     # OOPS

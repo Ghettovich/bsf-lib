@@ -13,6 +13,8 @@ find_package(Qt5 COMPONENTS Widgets DBus Core Sql Network Mqtt REQUIRED)
 
 if (Qt5Widgets_FOUND)
 
+    add_library(bsf SHARED "")
+
     add_subdirectory(data)
     add_subdirectory(domain)
     add_subdirectory(mqtt)
@@ -20,7 +22,26 @@ if (Qt5Widgets_FOUND)
     add_subdirectory(repo)
     add_subdirectory(ui)
 
-    #install(EXPORT bsflibTargets DESTINATION lib)
+    install(TARGETS bsf
+            EXPORT bsfTargets
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib
+            RUNTIME DESTINATION bin
+            INCLUDES DESTINATION include
+            )
+
+    install(TARGETS bsf DESTINATION include)
+
+    configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+            "${CMAKE_CURRENT_BINARY_DIR}/bsfConfig.cmake"
+            INSTALL_DESTINATION lib/cmake
+            )
+
+    install(FILES
+            "${CMAKE_CURRENT_BINARY_DIR}/bsfConfig.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/bsfConfigVersion.cmake"
+            DESTINATION lib/cmake
+            )
 
 else (!Qt5Widgets_FOUND)
     # OOPS
