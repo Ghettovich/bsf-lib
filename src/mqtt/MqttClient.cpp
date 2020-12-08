@@ -4,8 +4,8 @@
 #include <QString>
 #include <QtMqtt/QMqttClient>
 #include <QtWidgets/QMessageBox>
-#include <GroupBoxLiftUpDown.h>
-#include <GroupBoxBinLoadDrop.h>
+#include <ui/widgets/liftupdown/GroupBoxLiftUpDown.h>
+#include <ui/widgets/binloaddrop/GroupBoxBinLoadDrop.h>
 
 MqttClient::MqttClient(QObject *parent)
     : QObject(parent)

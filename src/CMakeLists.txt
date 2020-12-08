@@ -5,6 +5,9 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+# Needed for creating export
+include(CMakePackageConfigHelpers)
+
 # SET OPTION FOR SHARED LIBRARIES
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 
@@ -13,41 +16,54 @@ find_package(Qt5 COMPONENTS Widgets DBus Core Sql Network Mqtt REQUIRED)
 
 if (Qt5Widgets_FOUND)
 
-    #add_library(bsf SHARED "")
+    add_library(bsf SHARED "")
 
     add_subdirectory(data)
     add_subdirectory(domain)
     add_subdirectory(parser)
-    add_subdirectory(mqtt)
     add_subdirectory(repo)
+    add_subdirectory(mqtt)
     add_subdirectory(ui)
 
-#    target_include_directories(bsf
-#            PUBLIC
-#            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-#            "$<INSTALL_INTERFACE:include>"
-#            )
-#
-#    install(TARGETS bsf
-#            EXPORT bsfTargets
-#            LIBRARY DESTINATION lib
-#            ARCHIVE DESTINATION lib
-#            RUNTIME DESTINATION bin
-#            INCLUDES DESTINATION include
-#            )
-#
-#    install(FILES ${bsf_INCLUDE_DIR} DESTINATION include)
-#
-#    configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-#            "${CMAKE_CURRENT_BINARY_DIR}/bsfConfig.cmake"
-#            INSTALL_DESTINATION lib/cmake
-#            )
-#
-#    install(FILES
-#            "${CMAKE_CURRENT_BINARY_DIR}/bsfConfig.cmake"
-#            "${CMAKE_CURRENT_BINARY_DIR}/bsfConfigVersion.cmake"
-#            DESTINATION lib/cmake
-#            )
+    get_target_property(DOMAIN_INCLUDES bsf INCLUDE_DIRECTORIES)
+
+    target_include_directories(bsf
+            PUBLIC
+            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR};${DOMAIN_INCLUDES}>"
+            "$<INSTALL_INTERFACE:include>"
+            )
+
+    install(TARGETS bsf
+            EXPORT bsfTargets
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib
+            RUNTIME DESTINATION bin
+            INCLUDES DESTINATION include
+            )
+
+    install(FILES bsf DESTINATION include)
+
+    install(EXPORT bsfTargets
+            FILE bsfTargets.cmake
+            NAMESPACE bsf::
+            DESTINATION lib/cmake
+            )
+
+    configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+            "${PROJECT_BINARY_DIR}/bsfConfig.cmake"
+            INSTALL_DESTINATION lib/cmake
+            )
+
+    install(FILES
+            "${PROJECT_BINARY_DIR}/bsfConfig.cmake"
+            "${PROJECT_BINARY_DIR}/bsfConfigVersion.cmake"
+            DESTINATION lib/cmake
+            )
+
+    export(EXPORT bsfTargets
+            FILE "${PROJECT_BINARY_DIR}/bsfTargets.cmake"
+            NAMESPACE bsf::
+            )
 
 else (!Qt5Widgets_FOUND)
     # OOPS

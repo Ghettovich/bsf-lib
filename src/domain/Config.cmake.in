@@ -1,5 +1,0 @@
-@PACKAGE_INIT@
-
-include("${CMAKE_CURRENT_LIST_DIR}/domainTargets.cmake")
-
-check_required_components(domainTargets)

@@ -8,8 +8,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Needed for creating export
 include(CMakePackageConfigHelpers)
 
-#include_directories(${CMAKE_SOURCE_DIR}/lib)
+#list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/src/")
 
+#find_package(domain 1.0 REQUIRED)
+#find_package(mqtt 1.0 REQUIRED)
 
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
@@ -27,7 +29,7 @@ if (Qt5Widgets_FOUND)
             widgets/recipeconfig/GroupBoxRecipeConfig.h
             )
 
-    add_library(ui SHARED
+    target_sources(bsf PRIVATE
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.cpp
             widgets/beltfeeders/groupboxbeltfeeders.ui
@@ -41,66 +43,63 @@ if (Qt5Widgets_FOUND)
             widgets/liftupdown/groupboxliftupdown.ui
             widgets/recipeconfig/GroupBoxRecipeConfig.cpp
             widgets/recipeconfig/groupboxrecipeconfig.ui
+            # HEADER LIST
+            PRIVATE
+            ${HEADER_LIST}
             )
 
     # Set the property version pkconfig
-    set_property(TARGET ui PROPERTY VERSION 1.0)
+    #set_property(TARGET ui PROPERTY VERSION 1.0)
 
-    target_link_libraries(ui
-            INTERFACE
-            domain
-            mqtt
-            PRIVATE
-            Qt5::Widgets)
-
-    target_include_directories(ui
+    target_link_libraries(bsf
             PUBLIC
-            "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>"
-            "$<INSTALL_INTERFACE:include/ui>"
-            PRIVATE
-            ${CMAKE_SOURCE_DIR}/src/domain
-            ${CMAKE_SOURCE_DIR}/src/mqtt
+            Qt5::Widgets
             )
 
-    install(TARGETS ui
-            EXPORT uiTargets
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib
-            RUNTIME DESTINATION bin
-            INCLUDES DESTINATION include
+    target_include_directories(bsf
+            PUBLIC
+            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
             )
 
-    # install header file
-    install(FILES ${HEADER_FILES} DESTINATION include)
-
-    install(EXPORT uiTargets
-            FILE uiTargets.cmake
-            NAMESPACE ui::
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ui
-            )
-
-    install(TARGETS ui DESTINATION lib)
-
-    configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-            "${CMAKE_CURRENT_BINARY_DIR}/uiConfig.cmake"
-            INSTALL_DESTINATION lib/cmake
-            )
-
-    install(FILES
-            "${CMAKE_CURRENT_BINARY_DIR}/uiConfig.cmake"
-            "${CMAKE_CURRENT_BINARY_DIR}/uiConfigVersion.cmake"
-            DESTINATION lib/cmake)
-
-    # generate the version file for the config file
-    write_basic_package_version_file(
-            "${CMAKE_CURRENT_BINARY_DIR}/uiConfigVersion.cmake"
-            VERSION "1.0"
-            COMPATIBILITY AnyNewerVersion
-    )
-
-    export(EXPORT uiTargets
-            FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/uiTargets.cmake"
-            NAMESPACE ui::)
+#    install(TARGETS ui
+#            EXPORT uiTargets
+#            LIBRARY DESTINATION lib
+#            ARCHIVE DESTINATION lib
+#            RUNTIME DESTINATION bin
+#            INCLUDES DESTINATION include
+#            )
+#
+#    # install header file
+#    install(FILES ${HEADER_FILES} DESTINATION include)
+#
+#    install(EXPORT uiTargets
+#            FILE uiTargets.cmake
+#            NAMESPACE ui::
+#            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ui
+#            )
+#
+#    install(TARGETS ui DESTINATION lib)
+#
+#    configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
+#            "${CMAKE_CURRENT_BINARY_DIR}/uiConfig.cmake"
+#            INSTALL_DESTINATION lib/cmake
+#            )
+#
+#    install(FILES
+#            "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/uiConfig.cmake"
+#            "${PROJECT_BINARY_DIR}/uiConfigVersion.cmake"
+#            DESTINATION lib/cmake)
+#
+#    # generate the version file for the config file
+#    write_basic_package_version_file(
+#            "${CMAKE_CURRENT_BINARY_DIR}/uiConfigVersion.cmake"
+#            VERSION "1.0"
+#            COMPATIBILITY AnyNewerVersion
+#    )
+#
+#    export(EXPORT uiTargets
+#            FILE "${CMAKE_CURRENT_BINARY_DIR}/uiTargets.cmake"
+#            NAMESPACE ui::)
 
 else (!Qt5Widgets_FOUND)
 # OOPS
