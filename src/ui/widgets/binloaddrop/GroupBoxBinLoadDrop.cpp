@@ -44,22 +44,22 @@ void GroupBoxBinLoadDrop::setProximityBinDropLabelStatus()
 void GroupBoxBinLoadDrop::setBinLoadButtonState()
 {
     if (relayBinLoad->isDeviceStateLOW()) {
-        ui->pushButtonBinLoadRelay->setText("OFF");
+        ui->pushButtonBinLoadRelay->setText("ON");
         ui->pushButtonBinLoadRelay->setStyleSheet("QPushButton { background-color : green }");
     }
     else {
-        ui->pushButtonBinLoadRelay->setText("ON");
+        ui->pushButtonBinLoadRelay->setText("OFF");
         ui->pushButtonBinLoadRelay->setStyleSheet("QPushButton { background-color : red }");
     }
 }
 void GroupBoxBinLoadDrop::setBinDropButtonState()
 {
     if (relayBinDrop->isDeviceStateLOW()) {
-        ui->pushButtonBinDropRelay->setText("OFF");
+        ui->pushButtonBinDropRelay->setText("ON");
         ui->pushButtonBinDropRelay->setStyleSheet("QPushButton { background-color : green }");
     }
     else {
-        ui->pushButtonBinDropRelay->setText("ON");
+        ui->pushButtonBinDropRelay->setText("OFF");
         ui->pushButtonBinDropRelay->setStyleSheet("QPushButton { background-color : red }");
     }
 }

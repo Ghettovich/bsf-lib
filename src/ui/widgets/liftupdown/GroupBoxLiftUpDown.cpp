@@ -65,22 +65,22 @@ void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel()
 void GroupBoxLiftUpDown::setLiftUpButtonState()
 {
     if (relayBinLiftUp->isDeviceStateLOW()) {
-        ui->pushButtonLiftUp->setText("OFF");
+        ui->pushButtonLiftUp->setText("ON");
         ui->pushButtonLiftUp->setStyleSheet("QPushButton { background-color : green }");
     }
     else {
-        ui->pushButtonLiftUp->setText("ON");
+        ui->pushButtonLiftUp->setText("OFF");
         ui->pushButtonLiftUp->setStyleSheet("QPushButton { background-color : red }");
     }
 }
 void GroupBoxLiftUpDown::setLiftDownButtonState()
 {
     if (relayBinLiftDown->isDeviceStateLOW()) {
-        ui->pushButtonLiftDown->setText("OFF");
+        ui->pushButtonLiftDown->setText("ON");
         ui->pushButtonLiftDown->setStyleSheet("QPushButton { background-color : green }");
     }
     else {
-        ui->pushButtonLiftDown->setText("ON");
+        ui->pushButtonLiftDown->setText("OFF");
         ui->pushButtonLiftDown->setStyleSheet("QPushButton { background-color : red }");
     }
 }
