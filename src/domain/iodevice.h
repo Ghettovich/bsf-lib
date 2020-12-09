@@ -44,13 +44,14 @@ public:
 
 private:
     int id = 0;
-    IO_DEVICE_HIGH_LOW deviceState;
     QString description;
     Arduino *arduino;
     Action action;
     IODeviceType ioDeviceType;
     Recipe recipe;
 
+protected:
+    IO_DEVICE_HIGH_LOW deviceState;
 };
 
 #endif // IODEVICE_H

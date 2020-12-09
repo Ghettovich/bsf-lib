@@ -37,17 +37,6 @@ void MqttClient::connectToHost()
         m_client->connectToHost();
     }
 }
-void MqttClient::publish(const QString &topicName, const QString &message)
-{
-    QMqttTopicName topic(topicName);
-
-    if (m_client->publish(topic,
-                          message.toLocal8Bit(),
-                          0,
-                          false) == -1) {
-        qDebug() << "Failed to publish D:!";
-    }
-}
 void MqttClient::publish(const QString &topic, const QJsonObject &jsonObject)
 {
     doc = QJsonDocument(jsonObject);
@@ -152,6 +141,12 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
     TransformPayload parser;
     QVector<IODevice *> iodeviceList;
 
+//    parseMessagePayload(topic.name(), message, iodeviceList);
+//
+//    if(!iodeviceList.empty()) {
+//        updateSubscribedWidgets(topic.name(), iodeviceList);
+//    }
+
     if(QString::compare(topic.name(), "/proximity/lift") ||
         QString::compare(topic.name(), "/relay/states")) {
 
@@ -180,9 +175,8 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
                 }
             }
         }
-
     }
-
+//
     const QString content = QDateTime::currentDateTime().toString()
         + QLatin1String(" Received Topic: ")
         + topic.name()
@@ -191,7 +185,41 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
         + QLatin1Char('\n');
     qDebug() << content;
 }
-void MqttClient::updateSubscribedWidgets(const QString &topic)
+void MqttClient::updateSubscribedWidgets(const QMqttTopicName &topic, const QVector<IODevice *> &iodeviceList)
 {
+    QMapIterator<int, QStringList> i(widgetSubscriptionMap);
 
+    while (i.hasNext()) {
+        i.next();
+
+        if(i.value().contains(topic.name())) {
+
+            for(const auto widget : widgetList) {
+
+                switch (widget->property("formId").toInt()) {
+                    case WIDGET_TYPES::GROUPBOX_LIFT_UP_DOWN: {
+                        auto formGroupBox = dynamic_cast<GroupBoxLiftUpDown*>(widget);
+                        formGroupBox->onUpdateIODevices(iodeviceList);
+                        break;
+                    }
+                    case WIDGET_TYPES::GROUPBOX_BIN_LOAD_DROP: {
+                        auto formGroupBox = dynamic_cast<GroupBoxBinLoadDrop*>(widget);
+                        formGroupBox->onUpdateIODevices(iodeviceList);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+void MqttClient::parseMessagePayload(const QMqttTopicName &topic, const QByteArray &payload, QVector<IODevice *> &iodeviceList)
+{
+    TransformPayload parser;
+    qDebug() << topic;
+
+    if(QString::compare(topic.name(), "/proximity/lift")) {
+        iodeviceList = parser.parseProximitySensors(payload);
+    } else if(QString::compare(topic.name(), "/relay/states")) {
+        iodeviceList = parser.parseRelayStates(payload);
+    }
 }

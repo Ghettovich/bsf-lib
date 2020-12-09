@@ -1,5 +1,7 @@
 #include "ui_groupboxliftupdown.h"
 #include "GroupBoxLiftUpDown.h"
+#include <typeinfo>
+#include <string>
 #include <BsfWidgetEnum.h>
 
 GroupBoxLiftUpDown::GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f, MqttClient *_m_client)
@@ -19,9 +21,6 @@ GroupBoxLiftUpDown::GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f
 
 GroupBoxLiftUpDown::~GroupBoxLiftUpDown()
 {
-    if(!proximitySub) {
-        proximitySub->unsubscribe();
-    }
     delete ui;
 }
 
@@ -56,55 +55,53 @@ void GroupBoxLiftUpDown::onClickPushButtonLiftUp()
 }
 void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel()
 {
-    if(proximityBinLoad->getDeviceState() == IODevice::HIGH) {
-        ui->labelProximityBinLoadStatus->setStyleSheet("QLabel { background-color : red }");
-    } else if(proximityBinLoad->getDeviceState() == IODevice::LOW) {
+    if (proximityBinLoad->isDeviceStateLOW()) {
         ui->labelProximityBinLoadStatus->setStyleSheet("QLabel { background-color : green }");
+    }
+    else {
+        ui->labelProximityBinLoadStatus->setStyleSheet("QLabel { background-color : red }");
     }
 }
 void GroupBoxLiftUpDown::setLiftUpButtonState()
 {
-    if(relayBinLiftUp->isDeviceStateLOW()) {
-        ui->pushButtonLiftUp->setStyleSheet("QLabel { background-color : green }");
-    } else {
-        ui->pushButtonLiftUp->setStyleSheet("QLabel { background-color : red }");
+    if (relayBinLiftUp->isDeviceStateLOW()) {
+        ui->pushButtonLiftUp->setText("OFF");
+        ui->pushButtonLiftUp->setStyleSheet("QPushButton { background-color : green }");
+    }
+    else {
+        ui->pushButtonLiftUp->setText("ON");
+        ui->pushButtonLiftUp->setStyleSheet("QPushButton { background-color : red }");
     }
 }
 void GroupBoxLiftUpDown::setLiftDownButtonState()
 {
-    if(relayBinLiftDown->isDeviceStateLOW()) {
-        ui->pushButtonLiftUp->setStyleSheet("QLabel { background-color : green }");
-    } else {
-        ui->pushButtonLiftUp->setStyleSheet("QLabel { background-color : red }");
+    if (relayBinLiftDown->isDeviceStateLOW()) {
+        ui->pushButtonLiftDown->setText("OFF");
+        ui->pushButtonLiftDown->setStyleSheet("QPushButton { background-color : green }");
     }
-}
-void GroupBoxLiftUpDown::updateRelayStates(const Relay &_relay)
-{
-    if(_relay.getId() == relayBinLiftUp->getId()) {
-        relayBinLiftUp->setDeviceState(_relay.getDeviceState());
-        setLiftUpButtonState();
-    } else if (_relay.getId() == relayBinLiftDown->getId()) {
-        relayBinLiftDown->setDeviceState(_relay.getDeviceState());
-        setLiftDownButtonState();
-    }
-}
-void GroupBoxLiftUpDown::updateProximityState(const DetectionSensor &_detectionSensor)
-{
-    if(proximityBinLoad->getId() == _detectionSensor.getId()) {
-        proximityBinLoad->setDeviceState(_detectionSensor.getDeviceState());
-        setProximityBinLoadStatusLabel();
+    else {
+        ui->pushButtonLiftDown->setText("ON");
+        ui->pushButtonLiftDown->setStyleSheet("QPushButton { background-color : red }");
     }
 }
 void GroupBoxLiftUpDown::onUpdateIODevices(const QVector<IODevice *> &iodeviceList)
 {
-    for(const auto iodevice : iodeviceList) {
-        if(typeid(iodevice) == typeid(Relay)) {
-            Relay relay = dynamic_cast<Relay&>(*iodevice);
-            updateRelayStates(relay);
-        } else if (typeid(iodevice) == typeid(DetectionSensor)) {
-            DetectionSensor proximity = dynamic_cast<DetectionSensor&>(*iodevice);
-            updateProximityState(proximity);
+    for (auto iodevice : iodeviceList) {
+        if (iodevice->getId() == proximityBinLoad->getId()) {
+            proximityBinLoad->setDeviceState(iodevice->getDeviceState());
         }
+        else if (iodevice->getId() == relayBinLiftUp->getId()) {
+            relayBinLiftUp->setDeviceState(iodevice->getDeviceState());
+        }
+        else if (iodevice->getId() == relayBinLiftDown->getId()) {
+            relayBinLiftDown->setDeviceState(iodevice->getDeviceState());
+        }
+    }
+
+    if (!iodeviceList.empty()) {
+        setLiftDownButtonState();
+        setLiftUpButtonState();
+        setProximityBinLoadStatusLabel();
     }
 }
 

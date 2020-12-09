@@ -27,17 +27,9 @@ public:
 public slots:
     void onUpdateIODevices(const QVector<IODevice *> &iodeviceList);
 
-//    void onUpdateMessage(const QMqttMessage &msg);
-//    void onUpdateStatus(QMqttSubscription::SubscriptionState state);
-//
-//    void onUpdateMessageRelayStates(const QMqttMessage &msg);
-//    void onUpdateStatusRelayStates(QMqttSubscription::SubscriptionState state);
-
 private:
     Ui::GroupBoxLiftUpDown *ui = nullptr;
     MqttClient *m_client = nullptr;
-    QMqttSubscription *proximitySub = nullptr;
-    QMqttSubscription *relayStateSub = nullptr;
     IODevice *relayBinLiftUp;
     IODevice *relayBinLiftDown;
     IODevice *proximityBinLoad;
@@ -45,8 +37,6 @@ private:
     void setProximityBinLoadStatusLabel();
     void setLiftUpButtonState();
     void setLiftDownButtonState();
-    void updateRelayStates(const Relay &_relay);
-    void updateProximityState(const DetectionSensor &_detectionSensor);
 
 private slots:
     void onClickPushButtonLiftDown();

@@ -18,7 +18,6 @@ Q_OBJECT
 public:
     explicit MqttClient(QObject *parent);
     void connectToHost();
-    void publish(const QString &topic, const QString &message);
     void publish(const QString &topic, const QJsonObject &jsonObject);
     void addSubscription(const QString &topic, quint8 QoS);
     void addSubscription(const QString &topic, quint8 QoS, QWidget *widget);
@@ -38,11 +37,11 @@ private:
     QList<QWidget *> widgetList;
     QMap<int, QStringList> widgetSubscriptionMap;
 
-    void updateSubscribedWidgets(const QString &topic);
+    void parseMessagePayload(const QMqttTopicName &topic, const QByteArray &payload, QVector<IODevice *> &iodeviceList);
+    void updateSubscribedWidgets(const QMqttTopicName &topic, const QVector<IODevice *> &iodeviceList);
 
 signals:
     void brokerConnected();
-    void receivedNewIODeviceStates(const QVector<IODevice *> &iodeviceList);
 };
 
 

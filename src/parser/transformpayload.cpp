@@ -12,13 +12,34 @@ QVector<IODevice *> TransformPayload::parseProximitySensors(const QByteArray &pa
             QJsonObject ioDeviceObject = proximitiesArray[i].toObject();
             if (ioDeviceObject.contains("id")) {
                 auto detectSensor = new DetectionSensor(ioDeviceObject["id"].toInt(),
-                                                        ioDeviceObject["low"].toInt() == 0 ? IODevice::HIGH : IODevice::LOW);
+                                                        ioDeviceObject["low"].toInt() == 1 ? IODevice::LOW : IODevice::HIGH);
                 proximities.append(detectSensor);
             }
         }
     }
 
     return proximities;
+}
+
+QVector<IODevice *> TransformPayload::parseRelayStates(const QByteArray &payload)
+{
+    QVector<IODevice *> relays;
+    QJsonDocument jsonDocument(QJsonDocument::fromJson(payload));
+
+    if(validateJsonDocument(jsonDocument)) {
+        QJsonArray relayArray(jsonDocument["relays"].toArray());
+
+        for (int i = 0; i < relayArray.size(); i++) {
+            QJsonObject ioDeviceObject = relayArray[i].toObject();
+            if (ioDeviceObject.contains("id")) {
+                auto relay = new Relay(ioDeviceObject["id"].toInt(),
+                                                        ioDeviceObject["low"].toInt() == 1 ? IODevice::LOW : IODevice::HIGH);
+                relays.append(relay);
+            }
+        }
+    }
+
+    return relays;
 }
 
 void TransformPayload::updateArduinoWithPayload(int &_arduinoId, Arduino::ARDUINO_STATE &newState,

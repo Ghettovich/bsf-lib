@@ -29,17 +29,10 @@ public:
 public slots:
     void onUpdateIODevices(const QVector<IODevice *> &iodeviceList);
 
-//    void onUpdateMessage(const QMqttMessage &msg);
-//    void onUpdateStatus(QMqttSubscription::SubscriptionState state);
-//
-//    void onUpdateMessageRelayStates(const QMqttMessage &msg);
-//    void onUpdateStatusRelayStates(QMqttSubscription::SubscriptionState state);
-
 private:
+    const QString toggleRelayTopic = "/toggle/relay";
     Ui::GroupBoxBinLoadDrop *ui = nullptr;
     MqttClient *m_client = nullptr;
-//    QMqttSubscription *proximitySub = nullptr;
-//    QMqttSubscription *relayStateSub = nullptr;
     IODevice *relayBinLoad = nullptr;
     IODevice *relayBinDrop = nullptr;
     IODevice *proximityBinDrop = nullptr;
@@ -47,8 +40,6 @@ private:
     void setProximityBinDropLabelStatus();
     void setBinLoadButtonState();
     void setBinDropButtonState();
-    void updateRelayStates(const Relay &_relay);
-    void updateProximityState(const DetectionSensor &_detectionSensor);
 
 private slots:
     void onClickPushButtonBinLoad();

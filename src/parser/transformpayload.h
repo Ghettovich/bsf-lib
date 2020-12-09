@@ -23,6 +23,7 @@ public:
     Q_ENUM(ARDUINO_TYPE);
 
     QVector<IODevice *> parseProximitySensors(const QByteArray &payload);
+    QVector<IODevice *> parseRelayStates(const QByteArray &payload);
 
 
     void updateArduinoWithPayload(int&, Arduino::ARDUINO_STATE&, QVector<IODevice *>&, const QByteArray&);
