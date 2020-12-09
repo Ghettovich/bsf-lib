@@ -24,13 +24,13 @@ public:
     explicit GroupBoxBinLoadDrop(QWidget *parent, const Qt::WindowFlags &f, MqttClient *_m_client);
     virtual ~GroupBoxBinLoadDrop();
     void init();
-    //void createSubscriptions();
 
 public slots:
     void onUpdateIODevices(const QVector<IODevice *> &iodeviceList);
 
 private:
     const QString toggleRelayTopic = "/toggle/relay";
+    //MaterialRegular fonts;
     Ui::GroupBoxBinLoadDrop *ui = nullptr;
     MqttClient *m_client = nullptr;
     IODevice *relayBinLoad = nullptr;

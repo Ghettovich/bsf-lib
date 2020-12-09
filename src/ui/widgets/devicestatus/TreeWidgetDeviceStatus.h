@@ -5,6 +5,7 @@ namespace Ui {
     class TreeWidgetDeviceStatus;
 }
 
+#include <iodevice.h>
 #include <QObject>
 #include <QtCore/QList>
 #include <QtCore/QStringList>
@@ -17,6 +18,7 @@ class TreeWidgetDeviceStatus : public QWidget {
 
 public:
     TreeWidgetDeviceStatus(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
+    void onUpdateIODevices(const QVector<IODevice *> &iodeviceList);
 
 private:
     const QStringList &headers;

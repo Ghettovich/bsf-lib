@@ -8,11 +8,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Needed for creating export
 include(CMakePackageConfigHelpers)
 
-#list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/src/")
-
-#find_package(domain 1.0 REQUIRED)
-#find_package(mqtt 1.0 REQUIRED)
-
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
@@ -20,6 +15,9 @@ if (Qt5Widgets_FOUND)
 
     # HEADER LIST
     set(HEADER_LIST
+            # FONTS
+            fonts/MaterialRegular.h
+            fonts/QFontIcon.h
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.h
             widgets/binloaddrop/GroupBoxBinLoadDrop.h
@@ -30,6 +28,10 @@ if (Qt5Widgets_FOUND)
             )
 
     target_sources(bsf PRIVATE
+            # FONTS
+            resource/theme.qrc
+            fonts/MaterialRegular.cpp
+            fonts/QFontIcon.cpp
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.cpp
             widgets/beltfeeders/groupboxbeltfeeders.ui
@@ -47,9 +49,6 @@ if (Qt5Widgets_FOUND)
             PRIVATE
             ${HEADER_LIST}
             )
-
-    # Set the property version pkconfig
-    #set_property(TARGET ui PROPERTY VERSION 1.0)
 
     target_link_libraries(bsf
             PUBLIC

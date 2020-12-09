@@ -1,6 +1,9 @@
 #include "ui_groupboxbinloaddrop.h"
 #include "GroupBoxBinLoadDrop.h"
 #include <BsfWidgetEnum.h>
+#include <QColor>
+#include <QPalette>
+#include <fonts/QFontIcon.h>
 
 GroupBoxBinLoadDrop::GroupBoxBinLoadDrop(QWidget *parent, const Qt::WindowFlags &f, MqttClient *_m_client)
     :
@@ -43,24 +46,29 @@ void GroupBoxBinLoadDrop::setProximityBinDropLabelStatus()
 }
 void GroupBoxBinLoadDrop::setBinLoadButtonState()
 {
+    QFontIcon::addFont(":/fonts/MaterialIcons-Regular.ttf");
+    QIcon bolt = QFontIcon::icon(0xE932, Qt::red, "Material Design");
+
+    ui->pushButtonBinLoadRelay->setIcon(bolt);
+
     if (relayBinLoad->isDeviceStateLOW()) {
         ui->pushButtonBinLoadRelay->setText("ON");
-        ui->pushButtonBinLoadRelay->setStyleSheet("QPushButton { background-color : green }");
+        //ui->pushButtonBinLoadRelay->setStyleSheet("QPushButton { background-color : green }");
     }
     else {
         ui->pushButtonBinLoadRelay->setText("OFF");
-        ui->pushButtonBinLoadRelay->setStyleSheet("QPushButton { background-color : red }");
+        //ui->pushButtonBinLoadRelay->setStyleSheet("QPushButton { background-color : red }");
     }
 }
 void GroupBoxBinLoadDrop::setBinDropButtonState()
 {
     if (relayBinDrop->isDeviceStateLOW()) {
         ui->pushButtonBinDropRelay->setText("ON");
-        ui->pushButtonBinDropRelay->setStyleSheet("QPushButton { background-color : green }");
+        //ui->pushButtonBinDropRelay->setStyleSheet("QPushButton { background-color : green }");
     }
     else {
         ui->pushButtonBinDropRelay->setText("OFF");
-        ui->pushButtonBinDropRelay->setStyleSheet("QPushButton { background-color : red }");
+        //ui->pushButtonBinDropRelay->setStyleSheet("QPushButton { background-color : red }");
     }
 }
 void GroupBoxBinLoadDrop::onClickPushButtonBinLoad()
