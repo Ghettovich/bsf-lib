@@ -1,12 +1,30 @@
 #include "MaterialRegular.h"
 MaterialRegular::MaterialRegular()
 {
-    int id = QFontDatabase::addApplicationFont(fontLocation);
-    QString family = QFontDatabase::applicationFontFamilies(id).at(0);
-    materialRegularFont = QFont(family);
+    QFontIcon::addFont(fontLocation);
 }
-QFont MaterialRegular::materialRegular()
+QIcon MaterialRegular::icon(const QChar &code, const QColor &baseColor)
 {
-    return materialRegularFont;
+    return QFontIcon::icon(code, baseColor, familyName);
+}
+QIcon MaterialRegular::boltIcon(const QColor &baseColor)
+{
+    return QFontIcon::icon(boltIconCode, baseColor, familyName);
+}
+QIcon MaterialRegular::visibilityIcon(const QColor &baseColor)
+{
+    return QFontIcon::icon(visibilityIconCode, baseColor, familyName);
+}
+QIcon MaterialRegular::visibilityOffIcon(const QColor &baseColor)
+{
+    return QFontIcon::icon(visibilityOffIconCode, baseColor, familyName);
+}
+QIcon MaterialRegular::powerIcon(const QColor &baseColor)
+{
+    return QFontIcon::icon(powerIconCode, baseColor, familyName);
+}
+QIcon MaterialRegular::powerOffIcon(const QColor &baseColor)
+{
+    return QFontIcon::icon(powerOffIconCode, baseColor, familyName);
 }
 

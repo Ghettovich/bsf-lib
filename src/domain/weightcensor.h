@@ -13,6 +13,7 @@ public:
     WeightSensor(int, IO_DEVICE_HIGH_LOW);
     void updateRecipeWithComponentData(int, int);
     bool isDeviceStateLOW() const override;
+    bool isDeviceOn() const override;
 
 //private:
 //    Recipe recipe;

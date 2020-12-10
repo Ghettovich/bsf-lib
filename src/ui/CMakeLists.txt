@@ -22,9 +22,11 @@ if (Qt5Widgets_FOUND)
             widgets/beltfeeders/GroupBoxBeltFeeders.h
             widgets/binloaddrop/GroupBoxBinLoadDrop.h
             widgets/binrecipestatus/GroupBoxBinRecipeStatus.h
-            widgets/devicestatus/TreeWidgetDeviceStatus.h
+            widgets/devicestatus/WidgetDeviceStatus.h
             widgets/liftupdown/GroupBoxLiftUpDown.h
             widgets/recipeconfig/GroupBoxRecipeConfig.h
+            widgets/statusproximities/ProximityTreeWidget.h
+            widgets/statusrelays/RelayTreeWidget.h
             )
 
     target_sources(bsf PRIVATE
@@ -39,12 +41,15 @@ if (Qt5Widgets_FOUND)
             widgets/binloaddrop/groupboxbinloaddrop.ui
             widgets/binrecipestatus/GroupBoxBinRecipeStatus.cpp
             widgets/binrecipestatus/groupboxbinrecipestatus.ui
-            widgets/devicestatus/TreeWidgetDeviceStatus.cpp
-            widgets/devicestatus/treewidgetdevicestatus.ui
+            widgets/devicestatus/WidgetDeviceStatus.cpp
             widgets/liftupdown/GroupBoxLiftUpDown.cpp
             widgets/liftupdown/groupboxliftupdown.ui
             widgets/recipeconfig/GroupBoxRecipeConfig.cpp
             widgets/recipeconfig/groupboxrecipeconfig.ui
+            widgets/statusproximities/ProximityTreeWidget.cpp
+            widgets/statusproximities/proximitytreewidget.ui
+            widgets/statusrelays/RelayTreeWidget.cpp
+            widgets/statusrelays/relaytreewidget.ui
             # HEADER LIST
             PRIVATE
             ${HEADER_LIST}
@@ -59,46 +64,6 @@ if (Qt5Widgets_FOUND)
             PUBLIC
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
             )
-
-#    install(TARGETS ui
-#            EXPORT uiTargets
-#            LIBRARY DESTINATION lib
-#            ARCHIVE DESTINATION lib
-#            RUNTIME DESTINATION bin
-#            INCLUDES DESTINATION include
-#            )
-#
-#    # install header file
-#    install(FILES ${HEADER_FILES} DESTINATION include)
-#
-#    install(EXPORT uiTargets
-#            FILE uiTargets.cmake
-#            NAMESPACE ui::
-#            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/ui
-#            )
-#
-#    install(TARGETS ui DESTINATION lib)
-#
-#    configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-#            "${CMAKE_CURRENT_BINARY_DIR}/uiConfig.cmake"
-#            INSTALL_DESTINATION lib/cmake
-#            )
-#
-#    install(FILES
-#            "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/uiConfig.cmake"
-#            "${PROJECT_BINARY_DIR}/uiConfigVersion.cmake"
-#            DESTINATION lib/cmake)
-#
-#    # generate the version file for the config file
-#    write_basic_package_version_file(
-#            "${CMAKE_CURRENT_BINARY_DIR}/uiConfigVersion.cmake"
-#            VERSION "1.0"
-#            COMPATIBILITY AnyNewerVersion
-#    )
-#
-#    export(EXPORT uiTargets
-#            FILE "${CMAKE_CURRENT_BINARY_DIR}/uiTargets.cmake"
-#            NAMESPACE ui::)
 
 else (!Qt5Widgets_FOUND)
 # OOPS

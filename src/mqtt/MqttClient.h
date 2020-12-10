@@ -20,7 +20,7 @@ public:
     void connectToHost();
     void publish(const QString &topic, const QJsonObject &jsonObject);
     void addSubscription(const QString &topic, quint8 QoS);
-    void addSubscription(const QString &topic, quint8 QoS, QWidget *widget);
+    void addIODeviceSubscription(const QString &topic, quint8 QoS, QWidget *widget);
     QMqttSubscription *subscribe(const QString &topic);
     QMqttSubscription *subscription(const QString &topic);
     QMqttClient::ClientState getClientState() const;
@@ -31,17 +31,18 @@ public slots:
     void onMessageReceived(const QByteArray &message, const QMqttTopicName &topic);
 
 private:
-    QList<QMqttSubscription *> subscriptionList;
     QMqttClient *m_client;
     QJsonDocument doc;
-    QList<QWidget *> widgetList;
+    QList<QMqttSubscription *> subscriptionList;
     QMap<int, QStringList> widgetSubscriptionMap;
 
+    void createIODeviceWidgetSubscriptions(QWidget *widget);
     void parseMessagePayload(const QMqttTopicName &topic, const QByteArray &payload, QVector<IODevice *> &iodeviceList);
-    void updateSubscribedWidgets(const QMqttTopicName &topic, const QVector<IODevice *> &iodeviceList);
 
 signals:
     void brokerConnected();
+    void newIODeviceStates(const QVector<IODevice *> &iodeviceList);
+    //void newRelayStates(const QVector<IODevice *> &iodeviceList);
 };
 
 

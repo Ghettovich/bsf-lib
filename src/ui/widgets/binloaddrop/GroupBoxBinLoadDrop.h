@@ -6,14 +6,13 @@ namespace Ui
 class GroupBoxBinLoadDrop;
 }
 
-#include <QObject>
 #include <iodevice.h>
 #include <relay.h>
 #include <detectionsensor.h>
-#include <QtWidgets/QWidget>
 #include <MqttClient.h>
-#include <QtMqtt/QMqttMessage>
-#include <QtMqtt/QMqttSubscription>
+#include <fonts/MaterialRegular.h>
+#include <QObject>
+#include <QtWidgets/QWidget>
 
 class GroupBoxBinLoadDrop: public QWidget
 {
@@ -30,8 +29,8 @@ public slots:
 
 private:
     const QString toggleRelayTopic = "/toggle/relay";
-    //MaterialRegular fonts;
     Ui::GroupBoxBinLoadDrop *ui = nullptr;
+    MaterialRegular materialRegular;
     MqttClient *m_client = nullptr;
     IODevice *relayBinLoad = nullptr;
     IODevice *relayBinDrop = nullptr;

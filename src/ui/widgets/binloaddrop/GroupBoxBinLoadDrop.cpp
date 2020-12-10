@@ -1,9 +1,6 @@
 #include "ui_groupboxbinloaddrop.h"
 #include "GroupBoxBinLoadDrop.h"
 #include <BsfWidgetEnum.h>
-#include <QColor>
-#include <QPalette>
-#include <fonts/QFontIcon.h>
 
 GroupBoxBinLoadDrop::GroupBoxBinLoadDrop(QWidget *parent, const Qt::WindowFlags &f, MqttClient *_m_client)
     :
@@ -26,6 +23,7 @@ GroupBoxBinLoadDrop::~GroupBoxBinLoadDrop()
 void GroupBoxBinLoadDrop::init()
 {
     ui->labelProximityBinDropStatus->setText("");
+
     setProximityBinDropLabelStatus();
     setBinLoadButtonState();
     setBinDropButtonState();
@@ -38,37 +36,32 @@ void GroupBoxBinLoadDrop::init()
 void GroupBoxBinLoadDrop::setProximityBinDropLabelStatus()
 {
     if (proximityBinDrop->isDeviceStateLOW()) {
-        ui->labelProximityBinDropStatus->setStyleSheet("QLabel { background-color : green }");
+        ui->labelProximityBinDropStatus->setPixmap(materialRegular.visibilityIcon(Qt::lightGray).pixmap(48,48));
     }
     else {
-        ui->labelProximityBinDropStatus->setStyleSheet("QLabel { background-color : red }");
+        ui->labelProximityBinDropStatus->setPixmap(materialRegular.visibilityOffIcon(Qt::darkGray).pixmap(48,48));
     }
 }
 void GroupBoxBinLoadDrop::setBinLoadButtonState()
 {
-    QFontIcon::addFont(":/fonts/MaterialIcons-Regular.ttf");
-    QIcon bolt = QFontIcon::icon(0xE932, Qt::red, "Material Design");
-
-    ui->pushButtonBinLoadRelay->setIcon(bolt);
-
     if (relayBinLoad->isDeviceStateLOW()) {
+        ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::green));
         ui->pushButtonBinLoadRelay->setText("ON");
-        //ui->pushButtonBinLoadRelay->setStyleSheet("QPushButton { background-color : green }");
     }
     else {
+        ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::red));
         ui->pushButtonBinLoadRelay->setText("OFF");
-        //ui->pushButtonBinLoadRelay->setStyleSheet("QPushButton { background-color : red }");
     }
 }
 void GroupBoxBinLoadDrop::setBinDropButtonState()
 {
     if (relayBinDrop->isDeviceStateLOW()) {
+        ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::green));
         ui->pushButtonBinDropRelay->setText("ON");
-        //ui->pushButtonBinDropRelay->setStyleSheet("QPushButton { background-color : green }");
     }
     else {
+        ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::red));
         ui->pushButtonBinDropRelay->setText("OFF");
-        //ui->pushButtonBinDropRelay->setStyleSheet("QPushButton { background-color : red }");
     }
 }
 void GroupBoxBinLoadDrop::onClickPushButtonBinLoad()

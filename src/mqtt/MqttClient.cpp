@@ -4,8 +4,10 @@
 #include <QString>
 #include <QtMqtt/QMqttClient>
 #include <QtWidgets/QMessageBox>
-#include <ui/widgets/liftupdown/GroupBoxLiftUpDown.h>
-#include <ui/widgets/binloaddrop/GroupBoxBinLoadDrop.h>
+#include <widgets/liftupdown/GroupBoxLiftUpDown.h>
+#include <widgets/binloaddrop/GroupBoxBinLoadDrop.h>
+#include <widgets/statusproximities/ProximityTreeWidget.h>
+#include <widgets/statusrelays/RelayTreeWidget.h>
 
 MqttClient::MqttClient(QObject *parent)
     : QObject(parent)
@@ -57,7 +59,7 @@ void MqttClient::addSubscription(const QString &topic, quint8 QoS)
         subscriptionList.append(subscription);
     }
 }
-void MqttClient::addSubscription(const QString &topic, quint8 QoS, QWidget *widget)
+void MqttClient::addIODeviceSubscription(const QString &topic, quint8 QoS, QWidget *widget)
 {
     auto subscription = this->subscription(topic);
 
@@ -69,15 +71,8 @@ void MqttClient::addSubscription(const QString &topic, quint8 QoS, QWidget *widg
             qDebug() << "Error, could not sub D:!";
     }
 
-    if(widgetSubscriptionMap.contains(widget->property("formId").toInt())) {
-        widgetSubscriptionMap.find(widget->property("formId").toInt()).value().append(topic);
-    } else {
-        QStringList subStringList;
-        subStringList.append(topic);
-
-        // ID of widget is not found in hash map, insert it and add to list
-        widgetSubscriptionMap.insert(widget->property("formId").toInt(), subStringList);
-        widgetList.append(widget);
+    if(!widgetSubscriptionMap.contains(widget->property("formId").toInt())) {
+        createIODeviceWidgetSubscriptions(widget);
     }
 }
 QMqttSubscription *MqttClient::subscribe(const QString &topic)
@@ -143,7 +138,8 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
     parseMessagePayload(topic.name(), message, iodeviceList);
 
     if(!iodeviceList.empty()) {
-        updateSubscribedWidgets(topic.name(), iodeviceList);
+        //updateSubscribedWidgets(topic.name(), iodeviceList);
+        emit newIODeviceStates(iodeviceList);
     }
 
 //    const QString content = QDateTime::currentDateTime().toString()
@@ -154,30 +150,28 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
 //        + QLatin1Char('\n');
 //    qDebug() << content;
 }
-void MqttClient::updateSubscribedWidgets(const QMqttTopicName &topic, const QVector<IODevice *> &iodeviceList)
+void MqttClient::createIODeviceWidgetSubscriptions(QWidget *widget)
 {
-    QMapIterator<int, QStringList> i(widgetSubscriptionMap);
-
-    while (i.hasNext()) {
-        i.next();
-
-        if(i.value().contains(topic.name())) {
-
-            for(const auto widget : widgetList) {
-
-                switch (widget->property("formId").toInt()) {
-                    case WIDGET_TYPES::GROUPBOX_LIFT_UP_DOWN: {
-                        auto formGroupBox = dynamic_cast<GroupBoxLiftUpDown*>(widget);
-                        formGroupBox->onUpdateIODevices(iodeviceList);
-                        break;
-                    }
-                    case WIDGET_TYPES::GROUPBOX_BIN_LOAD_DROP: {
-                        auto formGroupBox = dynamic_cast<GroupBoxBinLoadDrop*>(widget);
-                        formGroupBox->onUpdateIODevices(iodeviceList);
-                        break;
-                    }
-                }
-            }
+    switch (widget->property("formId").toInt()) {
+        case WIDGET_TYPES::GROUPBOX_LIFT_UP_DOWN: {
+            connect(this, &MqttClient::newIODeviceStates,
+                    dynamic_cast<GroupBoxLiftUpDown*>(widget), &GroupBoxLiftUpDown::onUpdateIODevices);
+            break;
+        }
+        case WIDGET_TYPES::GROUPBOX_BIN_LOAD_DROP: {
+            connect(this, &MqttClient::newIODeviceStates,
+                    dynamic_cast<GroupBoxBinLoadDrop*>(widget), &GroupBoxBinLoadDrop::onUpdateIODevices);
+            break;
+        }
+        case WIDGET_TYPES::TREEWIDGET_PROXITY_STATUS: {
+            connect(this, &MqttClient::newIODeviceStates,
+                    dynamic_cast<ProximityTreeWidget*>(widget), &ProximityTreeWidget::onUpdateIODevices);
+            break;
+        }
+        case WIDGET_TYPES::TREEWIDGET_RELAY_STATUS: {
+            connect(this, &MqttClient::newIODeviceStates,
+                    dynamic_cast<RelayTreeWidget*>(widget), &RelayTreeWidget::onUpdateIODevices);
+            break;
         }
     }
 }

@@ -9,3 +9,7 @@ bool Relay::isDeviceStateLOW() const
 {
     return deviceState == LOW;
 }
+bool Relay::isDeviceOn() const
+{
+    return deviceState == LOW;
+}

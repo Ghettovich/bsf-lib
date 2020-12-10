@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TreeWidgetDeviceStatus</class>
- <widget class="QWidget" name="TreeWidgetDeviceStatus">
+ <class>RelayTreeWidget</class>
+ <widget class="QWidget" name="RelayTreeWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -22,6 +22,9 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTreeWidget" name="treeWidget">
+     <property name="columnCount">
+      <number>1</number>
+     </property>
      <column>
       <property name="text">
        <string notr="true">1</string>

@@ -10,7 +10,7 @@ class DetectionSensor: public IODevice
 public:
     DetectionSensor(int id, IO_DEVICE_HIGH_LOW deviceState);
     bool isDeviceStateLOW() const override;
-
+    bool isDeviceOn() const override;
 };
 
 

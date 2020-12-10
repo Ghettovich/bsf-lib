@@ -5,6 +5,7 @@
 #include <weightcensor.h>
 #include <QtSql/QSqlQueryModel>
 #include <QtSql/QSqlQuery>
+#include <fonts/MaterialRegular.h>
 
 ArduinoRepository::ArduinoRepository(const QString &connection)
 {
@@ -46,6 +47,7 @@ QVector<Arduino> ArduinoRepository::getAllActiveArduino()
 
 QList<QTreeWidgetItem *> ArduinoRepository::getArduinoTreeWidgets()
 {
+    MaterialRegular materialRegular;
     QString queryString = "SELECT id, name FROM arduino";
     QList<QTreeWidgetItem *> arduinoTreeWidgetItemList;
 
@@ -61,8 +63,10 @@ QList<QTreeWidgetItem *> ArduinoRepository::getArduinoTreeWidgets()
         while (query.next()) {
             auto treeWidgetItem = new QTreeWidgetItem;
             treeWidgetItem->setData(0, Qt::UserRole, query.value("id").toInt());
-            treeWidgetItem->setData(1, Qt::DisplayRole, IODevice::IO_DEVICE_HIGH_LOW::LOW);
-            treeWidgetItem->setData(2, Qt::DisplayRole, query.value("name").toString());
+            treeWidgetItem->setData(1, Qt::UserRole, IODeviceType::ARDUINO);
+            treeWidgetItem->setData(2, Qt::UserRole, IODevice::IO_DEVICE_HIGH_LOW::LOW);
+            treeWidgetItem->setIcon(2, materialRegular.powerOffIcon());
+            treeWidgetItem->setData(3, Qt::DisplayRole, query.value("name").toString());
 
             arduinoTreeWidgetItemList.append(treeWidgetItem);
         }

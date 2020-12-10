@@ -10,3 +10,7 @@ bool DetectionSensor::isDeviceStateLOW() const
 {
     return deviceState == LOW;
 }
+bool DetectionSensor::isDeviceOn() const
+{
+    return deviceState == LOW;
+}

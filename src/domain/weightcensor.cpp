@@ -13,3 +13,8 @@ bool WeightSensor::isDeviceStateLOW() const
 {
     return getDeviceState() == LOW;
 }
+bool WeightSensor::isDeviceOn() const
+{
+    return getDeviceState() == HIGH;
+}
+

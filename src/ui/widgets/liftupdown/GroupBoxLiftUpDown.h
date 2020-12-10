@@ -6,13 +6,12 @@ namespace Ui
 class GroupBoxLiftUpDown;
 }
 
+#include <MqttClient.h>
 #include <iodevice.h>
 #include <relay.h>
 #include <detectionsensor.h>
+#include <fonts/MaterialRegular.h>
 #include <QtWidgets/QWidget>
-#include <MqttClient.h>
-#include <QtMqtt/QMqttMessage>
-#include <QtMqtt/QMqttSubscription>
 
 class GroupBoxLiftUpDown: public QWidget
 {
@@ -30,6 +29,7 @@ public slots:
 private:
     Ui::GroupBoxLiftUpDown *ui = nullptr;
     MqttClient *m_client = nullptr;
+    MaterialRegular materialRegular;
     IODevice *relayBinLiftUp;
     IODevice *relayBinLiftDown;
     IODevice *proximityBinLoad;

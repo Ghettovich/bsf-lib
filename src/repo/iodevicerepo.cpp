@@ -6,6 +6,7 @@
 #include <detectionsensor.h>
 #include <relay.h>
 #include <weightcensor.h>
+#include <fonts/MaterialRegular.h>
 
 IODeviceRepository::IODeviceRepository(const QString &connection)
 {
@@ -83,6 +84,7 @@ QVector<IODeviceType> IODeviceRepository::getArduinoIODeviceTypes(int id)
 
 QList<QTreeWidgetItem *> IODeviceRepository::getIODeviceTreeWidgets(IODeviceType::IO_DEVICE_TYPE ioDeviceType)
 {
+    MaterialRegular materialRegular;
     QList<QTreeWidgetItem *> ioDeviceListViewStructList;
     QString queryString = "SELECT io.id AS io_id, io.description AS io_desc "
                           "FROM io_device io "
@@ -104,8 +106,17 @@ QList<QTreeWidgetItem *> IODeviceRepository::getIODeviceTreeWidgets(IODeviceType
         while (query.next()) {
             auto treeWidgetItem = new QTreeWidgetItem;
             treeWidgetItem->setData(0, Qt::UserRole, query.value("io_id").toInt());
-            treeWidgetItem->setData(1, Qt::DisplayRole, IODevice::IO_DEVICE_HIGH_LOW::LOW);
-            treeWidgetItem->setData(2, Qt::DisplayRole, query.value("io_desc").toString());
+            treeWidgetItem->setData(1, Qt::UserRole, ioDeviceType);
+
+            if(ioDeviceType == IODeviceType::DETECTIONSENSOR) {
+                treeWidgetItem->setData(2, Qt::UserRole, IODevice::IO_DEVICE_HIGH_LOW::HIGH);
+                treeWidgetItem->setIcon(2, materialRegular.visibilityOffIcon());
+            } else if (ioDeviceType == IODeviceType::RELAY) {
+                treeWidgetItem->setData(2, Qt::UserRole, IODevice::IO_DEVICE_HIGH_LOW::HIGH);
+                treeWidgetItem->setIcon(2, materialRegular.boltIcon(Qt::red));
+            }
+
+            treeWidgetItem->setData(3, Qt::DisplayRole, query.value("io_desc").toString());
 
             ioDeviceListViewStructList.append(treeWidgetItem);
         }
