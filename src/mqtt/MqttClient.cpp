@@ -138,7 +138,6 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
     parseMessagePayload(topic.name(), message, iodeviceList);
 
     if(!iodeviceList.empty()) {
-        //updateSubscribedWidgets(topic.name(), iodeviceList);
         emit newIODeviceStates(iodeviceList);
     }
 

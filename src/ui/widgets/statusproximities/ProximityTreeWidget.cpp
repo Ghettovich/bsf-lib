@@ -24,8 +24,6 @@ void ProximityTreeWidget::initForm()
 }
 void ProximityTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceList)
 {
-    qDebug() << "Count = " << ui->treeWidget->topLevelItemCount();
-
     for (int i =0; i < ui->treeWidget->topLevelItemCount(); i++) {
         const auto treeWidgetItem = ui->treeWidget->topLevelItem(i);
         QVariant id = treeWidgetItem->data(0, Qt::UserRole);

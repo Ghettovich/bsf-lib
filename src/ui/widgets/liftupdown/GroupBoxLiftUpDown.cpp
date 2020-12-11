@@ -10,8 +10,8 @@ GroupBoxLiftUpDown::GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f
     QVariant formId = WIDGET_TYPES::GROUPBOX_LIFT_UP_DOWN;
     this->setProperty("formId", formId);
 
-    relayBinLiftDown = new Relay(31, IODevice::LOW); // Digital
-    relayBinLiftUp = new Relay(30, IODevice::LOW); // Digital
+    relayBinLiftDown = new Relay(31, IODevice::HIGH); // Digital
+    relayBinLiftUp = new Relay(30, IODevice::HIGH); // Digital
     proximityBinLoad = new DetectionSensor(11, IODevice::HIGH); // PULL UP (HIGH = OFF!)
 
     init();
@@ -40,20 +40,18 @@ void GroupBoxLiftUpDown::onClickPushButtonLiftDown()
     QJsonObject jsonPayload;
     jsonPayload["toggle"] = relayBinLiftDown->getId();
 
-    m_client->publish("/toggle/relay", jsonPayload);
-    printf("\ndown clicked");
+    m_client->publish(toggleRelayTopic, jsonPayload);
 }
 void GroupBoxLiftUpDown::onClickPushButtonLiftUp()
 {
     QJsonObject jsonPayload;
     jsonPayload["toggle"] = relayBinLiftUp->getId();
 
-    m_client->publish("/toggle/relay", jsonPayload);
-    printf("\nUp clicked");
+    m_client->publish(toggleRelayTopic, jsonPayload);
 }
 void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel()
 {
-    if (proximityBinLoad->isDeviceStateLOW()) {
+    if (proximityBinLoad->isDeviceOn()) {
         ui->labelProximityBinLoadStatus->setPixmap(materialRegular.visibilityIcon(Qt::lightGray).pixmap(48,48));
     }
     else {
@@ -62,7 +60,7 @@ void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel()
 }
 void GroupBoxLiftUpDown::setLiftUpButtonState()
 {
-    if (relayBinLiftUp->isDeviceStateLOW()) {
+    if (!relayBinLiftUp->isDeviceOn()) {
         ui->pushButtonLiftUp->setText("ON");
         ui->pushButtonLiftUp->setIcon(materialRegular.boltIcon(Qt::green));
     }
@@ -73,7 +71,7 @@ void GroupBoxLiftUpDown::setLiftUpButtonState()
 }
 void GroupBoxLiftUpDown::setLiftDownButtonState()
 {
-    if (relayBinLiftDown->isDeviceStateLOW()) {
+    if (!relayBinLiftDown->isDeviceOn()) {
         ui->pushButtonLiftDown->setText("ON");
         ui->pushButtonLiftDown->setIcon(materialRegular.boltIcon(Qt::green));
     }

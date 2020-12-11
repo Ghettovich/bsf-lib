@@ -10,8 +10,8 @@ GroupBoxBinLoadDrop::GroupBoxBinLoadDrop(QWidget *parent, const Qt::WindowFlags 
     QVariant formId = WIDGET_TYPES::GROUPBOX_BIN_LOAD_DROP;
     this->setProperty("formId", formId);
 
-    relayBinLoad = new Relay(32, IODevice::LOW); // Digital
-    relayBinDrop = new Relay(33, IODevice::LOW); // Digital
+    relayBinLoad = new Relay(32, IODevice::HIGH); // Digital
+    relayBinDrop = new Relay(33, IODevice::HIGH); // Digital
     proximityBinDrop = new DetectionSensor(10, IODevice::HIGH); // PULL UP (HIGH = OFF!)
 
     init();
@@ -35,7 +35,7 @@ void GroupBoxBinLoadDrop::init()
 }
 void GroupBoxBinLoadDrop::setProximityBinDropLabelStatus()
 {
-    if (proximityBinDrop->isDeviceStateLOW()) {
+    if (proximityBinDrop->isDeviceOn()) {
         ui->labelProximityBinDropStatus->setPixmap(materialRegular.visibilityIcon(Qt::lightGray).pixmap(48,48));
     }
     else {
@@ -44,7 +44,7 @@ void GroupBoxBinLoadDrop::setProximityBinDropLabelStatus()
 }
 void GroupBoxBinLoadDrop::setBinLoadButtonState()
 {
-    if (relayBinLoad->isDeviceStateLOW()) {
+    if (!relayBinLoad->isDeviceOn()) {
         ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::green));
         ui->pushButtonBinLoadRelay->setText("ON");
     }
@@ -55,7 +55,7 @@ void GroupBoxBinLoadDrop::setBinLoadButtonState()
 }
 void GroupBoxBinLoadDrop::setBinDropButtonState()
 {
-    if (relayBinDrop->isDeviceStateLOW()) {
+    if (!relayBinDrop->isDeviceOn()) {
         ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::green));
         ui->pushButtonBinDropRelay->setText("ON");
     }

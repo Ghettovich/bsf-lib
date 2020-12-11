@@ -24,8 +24,6 @@ void RelayTreeWidget::initForm()
 }
 void RelayTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceList)
 {
-    qDebug() << "Count = " << ui->treeWidget->topLevelItemCount();
-
     for (int i =0; i < ui->treeWidget->topLevelItemCount(); i++) {
         const auto treeWidgetItem = ui->treeWidget->topLevelItem(i);
         QVariant id = treeWidgetItem->data(0, Qt::UserRole);
@@ -34,10 +32,10 @@ void RelayTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceList)
             if (iodevice->getId() == id.toInt()) {
 
                 if(iodevice->isDeviceOn()) {
-                    treeWidgetItem->setIcon(2, materialRegular.boltIcon(Qt::red));
+                    treeWidgetItem->setIcon(2, materialRegular.boltIcon(Qt::green));
                 }
                 else {
-                    treeWidgetItem->setIcon(2, materialRegular.boltIcon(Qt::green));
+                    treeWidgetItem->setIcon(2, materialRegular.boltIcon(Qt::red));
                 }
 
                 break;
