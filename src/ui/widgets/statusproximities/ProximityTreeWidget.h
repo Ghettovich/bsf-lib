@@ -6,7 +6,7 @@ class ProximityTreeWidget;
 }
 
 #include <iodevice.h>
-#include <widgets/devicestatus/WidgetDeviceStatus.h>
+#include <widgets/devicestatus/IOWidgetStatusInterface.h>
 #include <QMap>
 #include <QObject>
 #include <QtCore/QList>
@@ -15,9 +15,11 @@ class ProximityTreeWidget;
 #include <QtWidgets/QWidget>
 #include <fonts/MaterialRegular.h>
 
-class ProximityTreeWidget: public QWidget, public WidgetDeviceStatus {
+class ProximityTreeWidget: public IOWidgetStatusInterface {
 
 Q_OBJECT
+//Q_PLUGIN_METADATA(IID "plugins.IOWidgetStatusInterface_iid")
+Q_INTERFACES(IOWidgetStatusInterface)
 
 public:
     ProximityTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
@@ -30,7 +32,6 @@ private:
     const QList<QTreeWidgetItem *> &treeWidgets;
     Ui::ProximityTreeWidget *ui = nullptr;
     MaterialRegular materialRegular;
-
     void initForm();
 };
 

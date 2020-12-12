@@ -6,7 +6,7 @@ class RelayTreeWidget;
 }
 
 #include <iodevice.h>
-#include <widgets/devicestatus/WidgetDeviceStatus.h>
+#include <widgets/devicestatus/IOWidgetStatusInterface.h>
 #include <QMap>
 #include <QObject>
 #include <QtCore/QList>
@@ -15,9 +15,11 @@ class RelayTreeWidget;
 #include <QtWidgets/QWidget>
 #include <fonts/MaterialRegular.h>
 
-class RelayTreeWidget: public QWidget, public WidgetDeviceStatus {
+class RelayTreeWidget: public IOWidgetStatusInterface {
 
 Q_OBJECT
+//Q_PLUGIN_METADATA(IID "plugins.IOWidgetStatusInterface")
+Q_INTERFACES(IOWidgetStatusInterface)
 
 public:
     RelayTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);

@@ -11,20 +11,21 @@ class GroupBoxLiftUpDown;
 #include <relay.h>
 #include <detectionsensor.h>
 #include <fonts/MaterialRegular.h>
+#include <widgets/devicestatus/IOWidgetStatusInterface.h>
 #include <QtWidgets/QWidget>
 
-class GroupBoxLiftUpDown: public QWidget
+class GroupBoxLiftUpDown: public IOWidgetStatusInterface
 {
-
-Q_OBJECT
+    Q_OBJECT
+    Q_INTERFACES(IOWidgetStatusInterface)
 
 public:
-    GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f, MqttClient *_m_client);
+    explicit GroupBoxLiftUpDown(MqttClient *_m_client);
     virtual ~GroupBoxLiftUpDown();
     void init();
 
 public slots:
-    void onUpdateIODevices(const QVector<IODevice *> &iodeviceList);
+    void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
 private:
     Ui::GroupBoxLiftUpDown *ui = nullptr;

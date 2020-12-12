@@ -3,12 +3,6 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(AUTOGEN_TARGET_DEPENDS parser)
 
-include(CMakePackageConfigHelpers)
-
-#list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/src/")
-#
-#find_package(domain 1.0 REQUIRED)
-
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Core REQUIRED)
 

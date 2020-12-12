@@ -4,10 +4,7 @@
 #include <QString>
 #include <QtMqtt/QMqttClient>
 #include <QtWidgets/QMessageBox>
-#include <widgets/liftupdown/GroupBoxLiftUpDown.h>
-#include <widgets/binloaddrop/GroupBoxBinLoadDrop.h>
-#include <widgets/statusproximities/ProximityTreeWidget.h>
-#include <widgets/statusrelays/RelayTreeWidget.h>
+#include <widgets/devicestatus/IOWidgetStatusInterface.h>
 
 MqttClient::MqttClient(QObject *parent)
     : QObject(parent)
@@ -82,6 +79,7 @@ QMqttSubscription *MqttClient::subscribe(const QString &topic)
         qDebug() << "Error, could not sub D:!";
         return nullptr;
     }
+
     return subscription;
 }
 QMqttSubscription *MqttClient::subscription(const QString &topic)
@@ -123,7 +121,7 @@ void MqttClient::onStateChanged()
         case QMqttClient::Connected: {
             emit brokerConnected();
             const QString content = QDateTime::currentDateTime().toString()
-                + QLatin1String(": !!! State Change Connected! ")
+                + QLatin1String(": State Change Connected! ")
                 + QString::number(m_client->state())
                 + QLatin1Char('\n');
             qDebug() << content;
@@ -134,7 +132,6 @@ void MqttClient::onStateChanged()
 void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicName &topic)
 {
     QVector<IODevice *> iodeviceList;
-
     parseMessagePayload(topic.name(), message, iodeviceList);
 
     if(!iodeviceList.empty()) {
@@ -151,28 +148,11 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
 }
 void MqttClient::createIODeviceWidgetSubscriptions(QWidget *widget)
 {
-    switch (widget->property("formId").toInt()) {
-        case WIDGET_TYPES::GROUPBOX_LIFT_UP_DOWN: {
-            connect(this, &MqttClient::newIODeviceStates,
-                    dynamic_cast<GroupBoxLiftUpDown*>(widget), &GroupBoxLiftUpDown::onUpdateIODevices);
-            break;
-        }
-        case WIDGET_TYPES::GROUPBOX_BIN_LOAD_DROP: {
-            connect(this, &MqttClient::newIODeviceStates,
-                    dynamic_cast<GroupBoxBinLoadDrop*>(widget), &GroupBoxBinLoadDrop::onUpdateIODevices);
-            break;
-        }
-        case WIDGET_TYPES::TREEWIDGET_PROXITY_STATUS: {
-            connect(this, &MqttClient::newIODeviceStates,
-                    dynamic_cast<ProximityTreeWidget*>(widget), &ProximityTreeWidget::onUpdateIODevices);
-            break;
-        }
-        case WIDGET_TYPES::TREEWIDGET_RELAY_STATUS: {
-            connect(this, &MqttClient::newIODeviceStates,
-                    dynamic_cast<RelayTreeWidget*>(widget), &RelayTreeWidget::onUpdateIODevices);
-            break;
-        }
-    }
+    IOWidgetStatusInterface *widgetDeviceStatusInterface =
+        qobject_cast<IOWidgetStatusInterface*>(widget);
+
+    connect(this, &MqttClient::newIODeviceStates,
+            widgetDeviceStatusInterface, &IOWidgetStatusInterface::onUpdateIODevices);
 }
 void MqttClient::parseMessagePayload(const QMqttTopicName &topic, const QByteArray &payload, QVector<IODevice *> &iodeviceList)
 {

@@ -2,9 +2,9 @@
 #include "GroupBoxBinLoadDrop.h"
 #include <BsfWidgetEnum.h>
 
-GroupBoxBinLoadDrop::GroupBoxBinLoadDrop(QWidget *parent, const Qt::WindowFlags &f, MqttClient *_m_client)
+GroupBoxBinLoadDrop::GroupBoxBinLoadDrop(MqttClient *_m_client)
     :
-    QWidget(parent, f), ui(new Ui::GroupBoxBinLoadDrop), m_client(_m_client)
+    ui(new Ui::GroupBoxBinLoadDrop), m_client(_m_client)
 {
     ui->setupUi(this);
     QVariant formId = WIDGET_TYPES::GROUPBOX_BIN_LOAD_DROP;

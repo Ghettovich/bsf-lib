@@ -20,7 +20,8 @@ if (Qt5Widgets_FOUND)
             recipe.h
             relay.h
             statecode.h
-            weightcensor.h)
+            weightcensor.h
+            )
 
     # TARGET SOURCES
     target_sources(bsf
@@ -40,10 +41,8 @@ if (Qt5Widgets_FOUND)
             BsfWidgetEnum.h
             # HEADER LIST
             PRIVATE
-            ${HEADER_LIST})
-
-    # Set the property version pkconfig
-    #set_property(TARGET domain PROPERTY VERSION 1.0)
+            ${HEADER_LIST}
+            )
 
     # Link files with QT
     target_link_libraries(bsf
@@ -56,48 +55,6 @@ if (Qt5Widgets_FOUND)
             PUBLIC
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
             )
-
-#    install(TARGETS domain
-#            EXPORT domainTargets
-#            LIBRARY DESTINATION lib
-#            ARCHIVE DESTINATION lib
-#            RUNTIME DESTINATION bin
-#            INCLUDES DESTINATION include
-#            )
-#
-#    # install header file
-#    install(FILES ${HEADER_FILES} DESTINATION include)
-#
-#    install(EXPORT domainTargets
-#            FILE domainTargets.cmake
-#            NAMESPACE domain::
-#            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/domain
-#            )
-#
-#    install(TARGETS domain DESTINATION lib)
-#
-#    configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in
-#            "${CMAKE_CURRENT_BINARY_DIR}/domainConfig.cmake"
-#            INSTALL_DESTINATION lib/cmake
-#            )
-#
-#    install(FILES
-#            "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/domainConfig.cmake"
-#            "${PROJECT_BINARY_DIR}/domainConfigVersion.cmake"
-#            DESTINATION lib/cmake
-#            )
-#
-#    # generate the version file for the config file
-#    write_basic_package_version_file(
-#            "${CMAKE_CURRENT_BINARY_DIR}/domainConfigVersion.cmake"
-#            VERSION "1.0"
-#            COMPATIBILITY AnyNewerVersion
-#    )
-#
-#    export(EXPORT domainTargets
-#            FILE "${CMAKE_CURRENT_BINARY_DIR}/domainTargets.cmake"
-#            NAMESPACE domain::
-#            )
 
 else (!Qt5Widgets_FOUND)
     # OOPS

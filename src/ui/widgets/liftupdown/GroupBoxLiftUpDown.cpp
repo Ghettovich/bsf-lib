@@ -2,9 +2,9 @@
 #include "GroupBoxLiftUpDown.h"
 #include <BsfWidgetEnum.h>
 
-GroupBoxLiftUpDown::GroupBoxLiftUpDown(QWidget *parent, const Qt::WindowFlags &f, MqttClient *_m_client)
+GroupBoxLiftUpDown::GroupBoxLiftUpDown(MqttClient *_m_client)
     :
-    QWidget(parent, f), ui(new Ui::GroupBoxLiftUpDown), m_client(_m_client)
+    ui(new Ui::GroupBoxLiftUpDown), m_client(_m_client)
 {
     ui->setupUi(this);
     QVariant formId = WIDGET_TYPES::GROUPBOX_LIFT_UP_DOWN;

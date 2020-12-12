@@ -22,7 +22,7 @@ if (Qt5Widgets_FOUND)
             widgets/beltfeeders/GroupBoxBeltFeeders.h
             widgets/binloaddrop/GroupBoxBinLoadDrop.h
             widgets/binrecipestatus/GroupBoxBinRecipeStatus.h
-            widgets/devicestatus/WidgetDeviceStatus.h
+            widgets/devicestatus/IOWidgetStatusInterface.h
             widgets/liftupdown/GroupBoxLiftUpDown.h
             widgets/recipeconfig/GroupBoxRecipeConfig.h
             widgets/statusproximities/ProximityTreeWidget.h
@@ -41,7 +41,7 @@ if (Qt5Widgets_FOUND)
             widgets/binloaddrop/groupboxbinloaddrop.ui
             widgets/binrecipestatus/GroupBoxBinRecipeStatus.cpp
             widgets/binrecipestatus/groupboxbinrecipestatus.ui
-            widgets/devicestatus/WidgetDeviceStatus.cpp
+            widgets/devicestatus/IOWidgetStatusInterface.cpp
             widgets/liftupdown/GroupBoxLiftUpDown.cpp
             widgets/liftupdown/groupboxliftupdown.ui
             widgets/recipeconfig/GroupBoxRecipeConfig.cpp

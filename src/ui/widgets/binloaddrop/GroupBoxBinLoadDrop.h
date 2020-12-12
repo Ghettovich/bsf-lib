@@ -7,6 +7,7 @@ class GroupBoxBinLoadDrop;
 }
 
 #include <iodevice.h>
+#include <widgets/devicestatus/IOWidgetStatusInterface.h>
 #include <relay.h>
 #include <detectionsensor.h>
 #include <MqttClient.h>
@@ -14,18 +15,18 @@ class GroupBoxBinLoadDrop;
 #include <QObject>
 #include <QtWidgets/QWidget>
 
-class GroupBoxBinLoadDrop: public QWidget
+class GroupBoxBinLoadDrop: public IOWidgetStatusInterface
 {
-
-Q_OBJECT
+    Q_OBJECT
+    Q_INTERFACES(IOWidgetStatusInterface)
 
 public:
-    explicit GroupBoxBinLoadDrop(QWidget *parent, const Qt::WindowFlags &f, MqttClient *_m_client);
+    explicit GroupBoxBinLoadDrop(MqttClient *_m_client);
     virtual ~GroupBoxBinLoadDrop();
     void init();
 
 public slots:
-    void onUpdateIODevices(const QVector<IODevice *> &iodeviceList);
+    void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
 private:
     const QString toggleRelayTopic = "/toggle/relay";
