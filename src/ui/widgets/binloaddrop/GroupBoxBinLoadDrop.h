@@ -29,7 +29,6 @@ public slots:
     void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
 private:
-    const QString toggleRelayTopic = "/toggle/relay";
     Ui::GroupBoxBinLoadDrop *ui = nullptr;
     MaterialRegular materialRegular;
     MqttClient *m_client = nullptr;

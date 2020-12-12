@@ -37,17 +37,11 @@ void GroupBoxLiftUpDown::init()
 }
 void GroupBoxLiftUpDown::onClickPushButtonLiftDown()
 {
-    QJsonObject jsonPayload;
-    jsonPayload["toggle"] = relayBinLiftDown->getId();
-
-    m_client->publish(toggleRelayTopic, jsonPayload);
+    m_client->publishToggleRelay(relayBinLiftDown);
 }
 void GroupBoxLiftUpDown::onClickPushButtonLiftUp()
 {
-    QJsonObject jsonPayload;
-    jsonPayload["toggle"] = relayBinLiftUp->getId();
-
-    m_client->publish(toggleRelayTopic, jsonPayload);
+    m_client->publishToggleRelay(relayBinLiftUp);
 }
 void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel()
 {
@@ -61,22 +55,22 @@ void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel()
 void GroupBoxLiftUpDown::setLiftUpButtonState()
 {
     if (!relayBinLiftUp->isDeviceOn()) {
-        ui->pushButtonLiftUp->setText("ON");
+        ui->pushButtonLiftUp->setText("UP ON");
         ui->pushButtonLiftUp->setIcon(materialRegular.boltIcon(Qt::green));
     }
     else {
-        ui->pushButtonLiftUp->setText("OFF");
+        ui->pushButtonLiftUp->setText("UP OFF");
         ui->pushButtonLiftUp->setIcon(materialRegular.boltIcon(Qt::red));
     }
 }
 void GroupBoxLiftUpDown::setLiftDownButtonState()
 {
     if (!relayBinLiftDown->isDeviceOn()) {
-        ui->pushButtonLiftDown->setText("ON");
+        ui->pushButtonLiftDown->setText("DOWN ON");
         ui->pushButtonLiftDown->setIcon(materialRegular.boltIcon(Qt::green));
     }
     else {
-        ui->pushButtonLiftDown->setText("OFF");
+        ui->pushButtonLiftDown->setText("DOWN OFF");
         ui->pushButtonLiftDown->setIcon(materialRegular.boltIcon(Qt::red));
     }
 }

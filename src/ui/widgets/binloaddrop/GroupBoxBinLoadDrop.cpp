@@ -46,37 +46,31 @@ void GroupBoxBinLoadDrop::setBinLoadButtonState()
 {
     if (!relayBinLoad->isDeviceOn()) {
         ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::green));
-        ui->pushButtonBinLoadRelay->setText("ON");
+        ui->pushButtonBinLoadRelay->setText("LOAD ON");
     }
     else {
         ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::red));
-        ui->pushButtonBinLoadRelay->setText("OFF");
+        ui->pushButtonBinLoadRelay->setText("LOAD OFF");
     }
 }
 void GroupBoxBinLoadDrop::setBinDropButtonState()
 {
     if (!relayBinDrop->isDeviceOn()) {
         ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::green));
-        ui->pushButtonBinDropRelay->setText("ON");
+        ui->pushButtonBinDropRelay->setText("DROP ON");
     }
     else {
         ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::red));
-        ui->pushButtonBinDropRelay->setText("OFF");
+        ui->pushButtonBinDropRelay->setText("DROP OFF");
     }
 }
 void GroupBoxBinLoadDrop::onClickPushButtonBinLoad()
 {
-    QJsonObject jsonPayload;
-    jsonPayload["toggle"] = relayBinLoad->getId();
-
-    m_client->publish(toggleRelayTopic, jsonPayload);
+    m_client->publishToggleRelay(relayBinLoad);
 }
 void GroupBoxBinLoadDrop::onClickPushButtonBinDrop()
 {
-    QJsonObject jsonPayload;
-    jsonPayload["toggle"] = relayBinDrop->getId();
-
-    m_client->publish(toggleRelayTopic, jsonPayload);
+    m_client->publishToggleRelay(relayBinDrop);
 }
 void GroupBoxBinLoadDrop::onUpdateIODevices(const QVector<IODevice *> &iodeviceList)
 {

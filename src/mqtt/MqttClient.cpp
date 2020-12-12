@@ -36,24 +36,19 @@ void MqttClient::connectToHost()
         m_client->connectToHost();
     }
 }
-void MqttClient::publish(const QString &topic, const QJsonObject &jsonObject)
+void MqttClient::publishToggleRelay(IODevice *iodevice)
 {
-    doc = QJsonDocument(jsonObject);
+    quint8 QoS = 1;
+    QJsonObject jsonPayload;
+    jsonPayload["toggle"] = iodevice->getId();
 
-    if (m_client->publish(topic,
+    doc = QJsonDocument(jsonPayload);
+
+    if (m_client->publish(toggleRelayTopic,
                           doc.toJson(),
-                          1,
+                          QoS,
                           false) == -1) {
-        qDebug() << "Failed to publish D:!";
-    }
-}
-void MqttClient::addSubscription(const QString &topic, quint8 QoS)
-{
-    auto subscription = m_client->subscribe(topic, QoS);
-    if (!subscription) {
-        qDebug() << "Error, could not sub D:!";
-    } else {
-        subscriptionList.append(subscription);
+
     }
 }
 void MqttClient::addIODeviceSubscription(const QString &topic, quint8 QoS, QWidget *widget)
@@ -71,16 +66,6 @@ void MqttClient::addIODeviceSubscription(const QString &topic, quint8 QoS, QWidg
     if(!widgetSubscriptionMap.contains(widget->property("formId").toInt())) {
         createIODeviceWidgetSubscriptions(widget);
     }
-}
-QMqttSubscription *MqttClient::subscribe(const QString &topic)
-{
-    auto subscription = m_client->subscribe(topic, 1);
-    if (!subscription) {
-        qDebug() << "Error, could not sub D:!";
-        return nullptr;
-    }
-
-    return subscription;
 }
 QMqttSubscription *MqttClient::subscription(const QString &topic)
 {

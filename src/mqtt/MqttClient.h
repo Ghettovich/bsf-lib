@@ -2,6 +2,7 @@
 #define BSF_LIB_MQTTCLIENT_H
 
 #include <iodevice.h>
+#include <relay.h>
 #include <QObject>
 #include <QtCore/QList>
 #include <QtCore/QJsonObject>
@@ -18,10 +19,8 @@ Q_OBJECT
 public:
     explicit MqttClient(QObject *parent);
     void connectToHost();
-    void publish(const QString &topic, const QJsonObject &jsonObject);
-    void addSubscription(const QString &topic, quint8 QoS);
+    void publishToggleRelay(IODevice *iodevice);
     void addIODeviceSubscription(const QString &topic, quint8 QoS, QWidget *widget);
-    QMqttSubscription *subscribe(const QString &topic);
     QMqttSubscription *subscription(const QString &topic);
     QMqttClient::ClientState getClientState() const;
 
@@ -35,6 +34,7 @@ private:
     QJsonDocument doc;
     QList<QMqttSubscription *> subscriptionList;
     QMap<int, QStringList> widgetSubscriptionMap;
+    const QString toggleRelayTopic = "/toggle/relay";
 
     void createIODeviceWidgetSubscriptions(QWidget *widget);
     void parseMessagePayload(const QMqttTopicName &topic, const QByteArray &payload, QVector<IODevice *> &iodeviceList);
@@ -42,7 +42,6 @@ private:
 signals:
     void brokerConnected();
     void newIODeviceStates(const QVector<IODevice *> &iodeviceList);
-    //void newRelayStates(const QVector<IODevice *> &iodeviceList);
 };
 
 

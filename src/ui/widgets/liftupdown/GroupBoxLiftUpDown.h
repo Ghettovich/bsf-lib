@@ -30,7 +30,6 @@ public slots:
 private:
     Ui::GroupBoxLiftUpDown *ui = nullptr;
     MqttClient *m_client = nullptr;
-    const QString toggleRelayTopic = "/toggle/relay";
     MaterialRegular materialRegular;
     IODevice *relayBinLiftUp;
     IODevice *relayBinLiftDown;
