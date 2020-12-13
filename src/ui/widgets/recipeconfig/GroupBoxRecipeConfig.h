@@ -5,7 +5,10 @@ namespace Ui {
     class GroupBoxRecipeConfig;
 }
 
+#include <recipe.h>
+#include <MqttClient.h>
 #include <QObject>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QWidget>
 
 class GroupBoxRecipeConfig : public QWidget {
@@ -13,11 +16,20 @@ class GroupBoxRecipeConfig : public QWidget {
 Q_OBJECT
 
 public:
-    GroupBoxRecipeConfig(QWidget *parent, const Qt::WindowFlags &f);
+    explicit GroupBoxRecipeConfig(MqttClient *_m_client);
     virtual ~GroupBoxRecipeConfig();
 
+public slots:
+    void onChangeRecipeComboBox(int index);
+
 private:
+    Recipe selectedRecipe;
+    MqttClient *m_client;
     Ui::GroupBoxRecipeConfig *ui = nullptr;
+
+    void init();
+    void createRecipeComboBox();
+    void createRecipeComponentsTable();
 };
 
 

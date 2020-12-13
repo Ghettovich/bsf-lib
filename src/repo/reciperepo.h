@@ -1,10 +1,11 @@
 #ifndef BSF_RECIPEREPO_H
 #define BSF_RECIPEREPO_H
 
-#include <bsfdatabaseconfig.h>
 #include <recipe.h>
-#include <QtSql/QSqlDatabase>
+#include <bsfdatabaseconfig.h>
+#include <QtCore/QList>
 #include <QtCore/QVector>
+#include <QtSql/QSqlDatabase>
 
 class RecipeRepository
 {

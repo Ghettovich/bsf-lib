@@ -48,7 +48,34 @@ void MqttClient::publishToggleRelay(IODevice *iodevice)
                           doc.toJson(),
                           QoS,
                           false) == -1) {
+    }
+}
+void MqttClient::publishRecipe(const Recipe& recipe)
+{
+    quint8 QoS = 1;
+    QJsonObject jsonPayloadObject;
+    jsonPayloadObject["recipeId"] = recipe.getId();
+    jsonPayloadObject["componentSize"] = recipe.targetComponentMap.size();
 
+    QJsonArray componentArray;
+    QMapIterator<int, int> i(recipe.targetComponentMap);
+
+    while (i.hasNext()) {
+        i.next();
+        QJsonObject componentObject;
+        componentObject["id"] = i.key();
+        componentObject["weight"] = i.value();
+        componentArray.append(componentObject);
+    }
+
+    jsonPayloadObject["components"] = componentArray;
+
+    doc = QJsonDocument(jsonPayloadObject);
+
+    if (m_client->publish(toggleRelayTopic,
+                          doc.toJson(),
+                          QoS,
+                          false) == -1) {
     }
 }
 void MqttClient::addIODeviceSubscription(const QString &topic, quint8 QoS, QWidget *widget)

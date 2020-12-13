@@ -23,7 +23,6 @@ public:
     void updateWeightForComponent(int, int);
     void initComponentMaps();
     void updateComponents(const QVector<Component> &compList);
-    void writeJson(QJsonObject &);
     bool isRecipeTargetMet();
 
 private:
