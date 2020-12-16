@@ -19,17 +19,17 @@ public:
     explicit GroupBoxRecipeConfig(MqttClient *_m_client);
     virtual ~GroupBoxRecipeConfig();
 
-public slots:
-    void onChangeRecipeComboBox(int index);
-
 private:
     Recipe selectedRecipe;
     MqttClient *m_client;
     Ui::GroupBoxRecipeConfig *ui = nullptr;
-
     void init();
     void createRecipeComboBox();
     void createRecipeComponentsTable();
+
+private slots:
+    void onChangeRecipeComboBox(int index);
+    void onClickButtonPublishRecipe();
 };
 
 

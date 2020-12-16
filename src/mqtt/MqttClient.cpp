@@ -55,24 +55,12 @@ void MqttClient::publishRecipe(const Recipe& recipe)
     quint8 QoS = 1;
     QJsonObject jsonPayloadObject;
     jsonPayloadObject["recipeId"] = recipe.getId();
-    jsonPayloadObject["componentSize"] = recipe.targetComponentMap.size();
-
-    QJsonArray componentArray;
-    QMapIterator<int, int> i(recipe.targetComponentMap);
-
-    while (i.hasNext()) {
-        i.next();
-        QJsonObject componentObject;
-        componentObject["id"] = i.key();
-        componentObject["weight"] = i.value();
-        componentArray.append(componentObject);
-    }
-
-    jsonPayloadObject["components"] = componentArray;
+    jsonPayloadObject["componentId"] = recipe.componentList.first().getComponentId();
+    jsonPayloadObject["targetWeight"] = recipe.componentList.first().getTargetWeight();
 
     doc = QJsonDocument(jsonPayloadObject);
 
-    if (m_client->publish(toggleRelayTopic,
+    if (m_client->publish(configureRecipeTopic,
                           doc.toJson(),
                           QoS,
                           false) == -1) {

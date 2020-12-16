@@ -6,6 +6,7 @@
 #include <QtCore/QList>
 #include <QtCore/QVector>
 #include <QtSql/QSqlDatabase>
+#include <QTreeWidgetItem>
 
 class RecipeRepository
 {
@@ -15,6 +16,7 @@ public:
     Recipe getRecipe(int);
     Recipe getRecipeWithComponents(int);
     QVector<Recipe> getRecipes();
+    QList<QTreeWidgetItem *> getRecipesTreeWidgetList();
 
 private:
     BsfDbconfig bsfDbConfig;

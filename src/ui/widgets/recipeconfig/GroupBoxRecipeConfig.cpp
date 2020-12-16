@@ -15,6 +15,9 @@ GroupBoxRecipeConfig::~GroupBoxRecipeConfig() {
 }
 void GroupBoxRecipeConfig::init()
 {
+    connect(ui->pushButtonPublishRecipe, &QPushButton::clicked,
+            this, &GroupBoxRecipeConfig::onClickButtonPublishRecipe);
+
     createRecipeComboBox();
 }
 void GroupBoxRecipeConfig::createRecipeComboBox()
@@ -69,4 +72,8 @@ void GroupBoxRecipeConfig::createRecipeComponentsTable()
         tableWidgetItem->setTextAlignment(Qt::AlignRight);
         ui->tableWidgetRecipeComponents->setItem(i, 2, tableWidgetItem);
     }
+}
+void GroupBoxRecipeConfig::onClickButtonPublishRecipe()
+{
+    m_client->publishRecipe(selectedRecipe);
 }

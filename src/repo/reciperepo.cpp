@@ -116,5 +116,31 @@ void RecipeRepository::addComponent(Component &comp, QVector<Component> &compLis
 
     compList.append(comp);
 }
+QList<QTreeWidgetItem *> RecipeRepository::getRecipesTreeWidgetList()
+{
+    QList<QTreeWidgetItem *> recipeTreeWidgets;
+    QString queryString = "SELECT id, description FROM recipe";
+
+    try {
+        QSqlDatabase db;
+        bsfDbConfig.setSqlDatabase(db);
+        QSqlQuery query(db);
+        db.open();
+
+        if (query.exec(queryString)) {
+            while (query.next()) {
+                auto treeWidgetItem = new QTreeWidgetItem;
+                treeWidgetItem->setData(0, Qt::UserRole, query.value("id").toInt());
+                treeWidgetItem->setData(0, Qt::DisplayRole, query.value("description").toString());
+                recipeTreeWidgets.append(treeWidgetItem);
+            }
+        }
+    }
+    catch (std::exception &e) {
+        qDebug("%s", e.what());
+    }
+
+    return recipeTreeWidgets;
+}
 
 
