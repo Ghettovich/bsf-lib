@@ -24,6 +24,7 @@ public:
 
     QVector<IODevice *> parseProximitySensors(const QByteArray &payload);
     QVector<IODevice *> parseRelayStates(const QByteArray &payload);
+    WeightSensor *parseRecipeData(const QByteArray &payload);
 
 private:
     bool validateJsonDocument(QJsonDocument&);

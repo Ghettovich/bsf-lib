@@ -78,8 +78,27 @@ void MqttClient::addIODeviceSubscription(const QString &topic, quint8 QoS, QWidg
             qDebug() << "Error, could not sub D:!";
     }
 
-    if(!widgetSubscriptionMap.contains(widget->property("formId").toInt())) {
+    if(!iodeviceWidgetSubscriptionMap.contains(widget->property("formId").toInt())) {
         createIODeviceWidgetSubscriptions(widget);
+    }
+}
+void MqttClient::addRecipeDataSubscription(quint8 QoS, QWidget *widget)
+{
+    auto subscription = this->subscription(recipeDataTopic);
+
+    if (!subscription) {
+        subscription = m_client->subscribe(recipeDataTopic, QoS);
+        subscriptionList.append(subscription);
+
+        if (!subscription)
+            qDebug() << "Error, could not sub D:!";
+    }
+
+    if(!recipeWidgetSubscriptionMap.contains(widget->property("formId").toInt())) {
+
+        // ToDo: create class for Scale (ui), initialize weight sensor and add signal/slot
+        // for updating values based on interface
+
     }
 }
 QMqttSubscription *MqttClient::subscription(const QString &topic)
@@ -131,12 +150,22 @@ void MqttClient::onStateChanged()
 }
 void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicName &topic)
 {
-    QVector<IODevice *> iodeviceList;
-    parseMessagePayload(topic.name(), message, iodeviceList);
+    if(QString::compare(topic.name(), proximityLiftTopic) == 0 ||
+        QString::compare(topic.name(), relayStatesTopic)) {
 
-    if(!iodeviceList.empty()) {
-        emit newIODeviceStates(iodeviceList);
+        QVector<IODevice *> iodeviceList;
+        parseMessagePayload(topic.name(), message, iodeviceList);
+
+        if(!iodeviceList.empty()) {
+            emit newIODeviceStates(iodeviceList);
+        }
+    } else if(QString::compare(topic.name(), recipeDataTopic)) {
+        TransformPayload parser;
+        WeightSensor *weightSensor = parser.parseRecipeData(message);
+        emit newRecipeData(weightSensor);
     }
+
+
 
 //    const QString content = QDateTime::currentDateTime().toString()
 //        + QLatin1String(" Received Topic: ")
@@ -146,6 +175,11 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
 //        + QLatin1Char('\n');
 //    qDebug() << content;
 }
+void MqttClient::createRecipeWidgetSubscriptions(QWidget *)
+{
+
+}
+
 void MqttClient::createIODeviceWidgetSubscriptions(QWidget *widget)
 {
     IOWidgetStatusInterface *widgetDeviceStatusInterface =
@@ -158,9 +192,9 @@ void MqttClient::parseMessagePayload(const QMqttTopicName &topic, const QByteArr
 {
     TransformPayload parser;
 
-    if(QString::compare(topic.name(), "/proximity/lift") == 0) {
+    if(QString::compare(topic.name(), proximityLiftTopic) == 0) {
         iodeviceList = parser.parseProximitySensors(payload);
-    } else if(QString::compare(topic.name(), "/relay/states") == 0) {
+    } else if(QString::compare(topic.name(), relayStatesTopic) == 0) {
         iodeviceList = parser.parseRelayStates(payload);
     }
 }

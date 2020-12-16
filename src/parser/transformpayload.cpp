@@ -42,6 +42,24 @@ QVector<IODevice *> TransformPayload::parseRelayStates(const QByteArray &payload
     return relays;
 }
 
+WeightSensor *TransformPayload::parseRecipeData(const QByteArray &payload)
+{
+    WeightSensor *weightSensor = nullptr;
+    QJsonDocument jsonDocument(QJsonDocument::fromJson(payload));
+
+    if(validateJsonDocument(jsonDocument)) {
+        Component component;
+
+        component = Component(jsonDocument["cid"].toInt()
+            ,jsonDocument["rid"].toInt());
+        component.setCurrentWeight(jsonDocument["weight"].toInt());
+
+        weightSensor = new WeightSensor(component);
+    }
+
+
+    return weightSensor;
+}
 bool TransformPayload::validateJsonDocument(QJsonDocument &jsonDocument) {
     auto parseError = new QJsonParseError;
     if (jsonDocument.isNull()) {

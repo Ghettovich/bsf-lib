@@ -1,11 +1,15 @@
 #include "ui_groupboxrecipeconfig.h"
 #include "GroupBoxRecipeConfig.h"
 #include <reciperepo.h>
+#include <BsfWidgetEnum.h>
 
 GroupBoxRecipeConfig::GroupBoxRecipeConfig(MqttClient *_m_client) :
         m_client(_m_client)
         , ui(new Ui::GroupBoxRecipeConfig){
     ui->setupUi(this);
+
+    QVariant formId = WIDGET_TYPES::GROUPBOX_RECIPE_CONFIG;
+    this->setProperty("formId", formId);
 
     init();
 }

@@ -3,6 +3,7 @@
 
 #include "recipe.h"
 #include "iodevice.h"
+#include "component.h"
 #include <QObject>
 
 class WeightSensor: public IODevice
@@ -10,13 +11,15 @@ class WeightSensor: public IODevice
 Q_GADGET
 
 public:
-    WeightSensor(int, IO_DEVICE_HIGH_LOW);
+    WeightSensor(Component component);
+    int getCurrentWeightForComponent() const;
+    void setCurrentWeightForComponent(int weight);
     void updateRecipeWithComponentData(int, int);
     bool isDeviceStateLOW() const override;
     bool isDeviceOn() const override;
 
-//private:
-//    Recipe recipe;
+private:
+    Component component;
 };
 
 #endif // WEIGHTCENSOR_H

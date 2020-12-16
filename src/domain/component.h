@@ -20,12 +20,16 @@ public:
     Q_ENUM(COMPONENT);
 
     explicit Component(int id = 0);
+    Component(int componentId, int recipeId);
     int getComponentId() const;
     void setComponentId(int _componentId);
+    int getRecipeId() const;
     const QString &getComponent() const;
     void setComponent(const QString &_component);
     int getTargetWeight() const;
     void setTargetWeight(int targetWeight);
+    int getCurrentWeight() const;
+    void setCurrentWeight(int currentWeight);
     int getMarginValue() const;
     void setMarginValue(int marginValue);
 
@@ -35,8 +39,10 @@ public:
 
 private:
     int componentId;
+    int recipeId;
     QString component;
     int targetWeight;
+    int currentWeight;
     int marginValue;
     COMPONENT recipeComponent;
 };
