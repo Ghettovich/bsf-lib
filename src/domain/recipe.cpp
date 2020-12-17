@@ -77,3 +77,7 @@ void Recipe::setSelectedComponent(Component::COMPONENT _component)
 {
     selectedComponent = _component;
 }
+void Recipe::addComponent(const Component& c)
+{
+    componentList.append(c);
+}

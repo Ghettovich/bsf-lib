@@ -79,7 +79,13 @@ void MqttClient::addIODeviceSubscription(const QString &topic, quint8 QoS, QWidg
     }
 
     if(!iodeviceWidgetSubscriptionMap.contains(widget->property("formId").toInt())) {
+        QStringList subTopicList;
+        subTopicList.append(topic);
+
+        iodeviceWidgetSubscriptionMap.insert(widget->property("formId").toInt(), subTopicList);
         createIODeviceWidgetSubscriptions(widget);
+    } else {
+        iodeviceWidgetSubscriptionMap.find(widget->property("formId").toInt())->append(topic);
     }
 }
 void MqttClient::addRecipeDataSubscription(quint8 QoS, QWidget *widget)
@@ -96,9 +102,11 @@ void MqttClient::addRecipeDataSubscription(quint8 QoS, QWidget *widget)
 
     if(!recipeWidgetSubscriptionMap.contains(widget->property("formId").toInt())) {
 
-        // ToDo: create class for Scale (ui), initialize weight sensor and add signal/slot
-        // for updating values based on interface
+        QStringList subTopicList;
+        subTopicList.append(recipeDataTopic);
 
+        recipeWidgetSubscriptionMap.insert(widget->property("formId").toInt(), subTopicList);
+        createRecipeWidgetSubscriptions(widget);
     }
 }
 QMqttSubscription *MqttClient::subscription(const QString &topic)
@@ -150,22 +158,20 @@ void MqttClient::onStateChanged()
 }
 void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicName &topic)
 {
+    TransformPayload parser;
+
     if(QString::compare(topic.name(), proximityLiftTopic) == 0 ||
-        QString::compare(topic.name(), relayStatesTopic)) {
+        QString::compare(topic.name(), relayStatesTopic) == 0) {
 
         QVector<IODevice *> iodeviceList;
-        parseMessagePayload(topic.name(), message, iodeviceList);
+        iodeviceList = parser.parseIODevices(message);
 
-        if(!iodeviceList.empty()) {
-            emit newIODeviceStates(iodeviceList);
-        }
-    } else if(QString::compare(topic.name(), recipeDataTopic)) {
-        TransformPayload parser;
+        emit newIODeviceStates(iodeviceList);
+    } else if(QString::compare(topic.name(), recipeDataTopic) == 0) {
+
         WeightSensor *weightSensor = parser.parseRecipeData(message);
-        emit newRecipeData(weightSensor);
+        emit newIODeviceState(weightSensor);
     }
-
-
 
 //    const QString content = QDateTime::currentDateTime().toString()
 //        + QLatin1String(" Received Topic: ")
@@ -175,9 +181,13 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
 //        + QLatin1Char('\n');
 //    qDebug() << content;
 }
-void MqttClient::createRecipeWidgetSubscriptions(QWidget *)
+void MqttClient::createRecipeWidgetSubscriptions(QWidget *widget)
 {
+    IOWidgetStatusInterface *widgetDeviceStatusInterface =
+        qobject_cast<IOWidgetStatusInterface*>(widget);
 
+    connect(this, &MqttClient::newIODeviceState,
+            widgetDeviceStatusInterface, &IOWidgetStatusInterface::onUpdateIODevice);
 }
 
 void MqttClient::createIODeviceWidgetSubscriptions(QWidget *widget)
@@ -187,14 +197,4 @@ void MqttClient::createIODeviceWidgetSubscriptions(QWidget *widget)
 
     connect(this, &MqttClient::newIODeviceStates,
             widgetDeviceStatusInterface, &IOWidgetStatusInterface::onUpdateIODevices);
-}
-void MqttClient::parseMessagePayload(const QMqttTopicName &topic, const QByteArray &payload, QVector<IODevice *> &iodeviceList)
-{
-    TransformPayload parser;
-
-    if(QString::compare(topic.name(), proximityLiftTopic) == 0) {
-        iodeviceList = parser.parseProximitySensors(payload);
-    } else if(QString::compare(topic.name(), relayStatesTopic) == 0) {
-        iodeviceList = parser.parseRelayStates(payload);
-    }
 }

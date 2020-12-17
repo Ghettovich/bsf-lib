@@ -23,6 +23,7 @@ public:
     explicit GroupBoxBeltFeeders(MqttClient *_m_client);
 
 public slots:
+    void onUpdateIODevice(const IODevice *ioDevice) override;
     void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
 private:

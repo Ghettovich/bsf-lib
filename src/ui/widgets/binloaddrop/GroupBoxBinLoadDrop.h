@@ -26,6 +26,7 @@ public:
     void init();
 
 public slots:
+    void onUpdateIODevice(const IODevice *ioDevice) override;
     void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
 private:

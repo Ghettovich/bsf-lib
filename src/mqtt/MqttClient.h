@@ -48,12 +48,11 @@ private:
 
     void createIODeviceWidgetSubscriptions(QWidget *widget);
     void createRecipeWidgetSubscriptions(QWidget *);
-    void parseMessagePayload(const QMqttTopicName &topic, const QByteArray &payload, QVector<IODevice *> &iodeviceList);
 
 signals:
     void brokerConnected();
+    void newIODeviceState(const IODevice *ioDevice);
     void newIODeviceStates(const QVector<IODevice *> &iodeviceList);
-    void newRecipeData(const WeightSensor *weightSensor);
 };
 
 

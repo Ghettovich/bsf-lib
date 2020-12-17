@@ -43,3 +43,7 @@ void ProximityTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceL
         }
     }
 }
+void ProximityTreeWidget::onUpdateIODevice(const IODevice *ioDevice)
+{
+
+}

@@ -22,11 +22,12 @@ public:
     };
     Q_ENUM(ARDUINO_TYPE);
 
-    QVector<IODevice *> parseProximitySensors(const QByteArray &payload);
-    QVector<IODevice *> parseRelayStates(const QByteArray &payload);
+    QVector<IODevice *> parseIODevices(const QByteArray &payload);
     WeightSensor *parseRecipeData(const QByteArray &payload);
 
 private:
     bool validateJsonDocument(QJsonDocument&);
+    QVector<IODevice *> addProximitiesToArray(const QJsonArray &jsonArray);
+    QVector<IODevice *> addRelaysToArray(const QJsonArray &jsonArray);
 };
 #endif //BSF_TRANSFORMPAYLOAD_H

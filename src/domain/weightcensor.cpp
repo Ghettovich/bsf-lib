@@ -1,10 +1,9 @@
 #include "weightcensor.h"
 #include <utility>
 
-WeightSensor::WeightSensor(Component _component)
+WeightSensor::WeightSensor(int _id, IO_DEVICE_HIGH_LOW state) :
+        IODevice(_id, state)
 {
-    this->deviceState = HIGH;
-    component = std::move(_component);
 }
 void WeightSensor::updateRecipeWithComponentData(int componentId, int weight)
 {
@@ -25,5 +24,9 @@ int WeightSensor::getCurrentWeightForComponent() const
 void WeightSensor::setCurrentWeightForComponent(int weight)
 {
     component.setCurrentWeight(weight);
+}
+void WeightSensor::setComponent(Component c)
+{
+    component = std::move(c);
 }
 

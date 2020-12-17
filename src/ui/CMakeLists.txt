@@ -18,6 +18,8 @@ if (Qt5Widgets_FOUND)
             # FONTS
             fonts/MaterialRegular.h
             fonts/QFontIcon.h
+            # SCALE
+            widgets/scale/Scale.h
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.h
             widgets/binloaddrop/GroupBoxBinLoadDrop.h
@@ -50,6 +52,9 @@ if (Qt5Widgets_FOUND)
             widgets/statusproximities/proximitytreewidget.ui
             widgets/statusrelays/RelayTreeWidget.cpp
             widgets/statusrelays/relaytreewidget.ui
+            # SCALE
+            widgets/scale/Scale.cpp
+            widgets/scale/scale.ui
             # HEADER LIST
             PRIVATE
             ${HEADER_LIST}

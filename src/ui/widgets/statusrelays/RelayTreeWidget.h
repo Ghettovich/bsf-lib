@@ -25,6 +25,7 @@ public:
     RelayTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
 
 public slots:
+    void onUpdateIODevice(const IODevice *ioDevice) override;
     void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
 private:

@@ -1,45 +1,24 @@
 #include "transformpayload.h"
 
-QVector<IODevice *> TransformPayload::parseProximitySensors(const QByteArray &payload)
+QVector<IODevice *> TransformPayload::parseIODevices(const QByteArray &payload)
 {
-    QVector<IODevice *> proximities;
+    QVector<IODevice *> iodevices;
     QJsonDocument jsonDocument(QJsonDocument::fromJson(payload));
 
     if(validateJsonDocument(jsonDocument)) {
-        QJsonArray proximitiesArray(jsonDocument["proximities"].toArray());
+        QJsonArray ioDeviceArray;
 
-        for (int i = 0; i < proximitiesArray.size(); i++) {
-            QJsonObject ioDeviceObject = proximitiesArray[i].toObject();
-            if (ioDeviceObject.contains("id")) {
-                auto detectSensor = new DetectionSensor(ioDeviceObject["id"].toInt(),
-                                                        ioDeviceObject["low"].toInt() == 1 ? IODevice::LOW : IODevice::HIGH);
-                proximities.append(detectSensor);
-            }
+        if(jsonDocument["proximities"].isArray()) {
+            ioDeviceArray = jsonDocument["proximities"].toArray();
+            iodevices = addProximitiesToArray(ioDeviceArray);
+        } else if (jsonDocument["relays"].isArray()) {
+            ioDeviceArray = jsonDocument["relays"].toArray();
+            iodevices = addRelaysToArray(ioDeviceArray);
         }
+
     }
 
-    return proximities;
-}
-
-QVector<IODevice *> TransformPayload::parseRelayStates(const QByteArray &payload)
-{
-    QVector<IODevice *> relays;
-    QJsonDocument jsonDocument(QJsonDocument::fromJson(payload));
-
-    if(validateJsonDocument(jsonDocument)) {
-        QJsonArray relayArray(jsonDocument["relays"].toArray());
-
-        for (int i = 0; i < relayArray.size(); i++) {
-            QJsonObject ioDeviceObject = relayArray[i].toObject();
-            if (ioDeviceObject.contains("id")) {
-                auto relay = new Relay(ioDeviceObject["id"].toInt(),
-                                                        ioDeviceObject["low"].toInt() == 1 ? IODevice::LOW : IODevice::HIGH);
-                relays.append(relay);
-            }
-        }
-    }
-
-    return relays;
+    return iodevices;
 }
 
 WeightSensor *TransformPayload::parseRecipeData(const QByteArray &payload)
@@ -48,15 +27,15 @@ WeightSensor *TransformPayload::parseRecipeData(const QByteArray &payload)
     QJsonDocument jsonDocument(QJsonDocument::fromJson(payload));
 
     if(validateJsonDocument(jsonDocument)) {
+        weightSensor = new WeightSensor(jsonDocument["did"].toInt(), IODevice::HIGH);
         Component component;
 
         component = Component(jsonDocument["cid"].toInt()
             ,jsonDocument["rid"].toInt());
         component.setCurrentWeight(jsonDocument["weight"].toInt());
 
-        weightSensor = new WeightSensor(component);
+        weightSensor->setComponent(component);
     }
-
 
     return weightSensor;
 }
@@ -74,4 +53,34 @@ bool TransformPayload::validateJsonDocument(QJsonDocument &jsonDocument) {
     }
 
     return true;
+}
+QVector<IODevice *> TransformPayload::addProximitiesToArray(const QJsonArray &jsonArray)
+{
+    QVector<IODevice *> proximities;
+
+    for (const auto & i : jsonArray) {
+        QJsonObject ioDeviceObject = i.toObject();
+        if (ioDeviceObject.contains("id")) {
+            auto detectSensor = new DetectionSensor(ioDeviceObject["id"].toInt(),
+                                                    ioDeviceObject["low"].toInt() == 1 ? IODevice::LOW : IODevice::HIGH);
+            proximities.append(detectSensor);
+        }
+    }
+
+    return proximities;
+}
+QVector<IODevice *> TransformPayload::addRelaysToArray(const QJsonArray &jsonArray)
+{
+    QVector<IODevice *> relays;
+
+    for (const auto & i : jsonArray) {
+        QJsonObject ioDeviceObject = i.toObject();
+        if (ioDeviceObject.contains("id")) {
+            auto relay = new Relay(ioDeviceObject["id"].toInt(),
+                                   ioDeviceObject["low"].toInt() == 1 ? IODevice::LOW : IODevice::HIGH);
+            relays.append(relay);
+        }
+    }
+
+    return relays;
 }

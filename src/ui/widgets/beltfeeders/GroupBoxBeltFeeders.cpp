@@ -156,3 +156,7 @@ void GroupBoxBeltFeeders::onClickPushButtonFeeder2Reverse()
 {
     m_client->publishToggleRelay(relayFeeder2Reverse);
 }
+void GroupBoxBeltFeeders::onUpdateIODevice(const IODevice *ioDevice)
+{
+
+}

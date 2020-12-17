@@ -22,6 +22,7 @@ public:
     QMap<int, int> actualComponentMap;
     void updateWeightForComponent(int, int);
     void initComponentMaps();
+    void addComponent(const Component& c);
     void updateComponents(const QVector<Component> &compList);
     bool isRecipeTargetMet();
 
