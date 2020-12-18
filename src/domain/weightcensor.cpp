@@ -5,10 +5,6 @@ WeightSensor::WeightSensor(int _id, IO_DEVICE_HIGH_LOW state) :
         IODevice(_id, state)
 {
 }
-void WeightSensor::updateRecipeWithComponentData(int componentId, int weight)
-{
-    getRecipe().updateWeightForComponent(componentId, weight);
-}
 bool WeightSensor::isDeviceStateLOW() const
 {
     return getDeviceState() == LOW;
@@ -28,5 +24,9 @@ void WeightSensor::setCurrentWeightForComponent(int weight)
 void WeightSensor::setComponent(Component c)
 {
     component = std::move(c);
+}
+Component WeightSensor::getComponent() const
+{
+    return component;
 }
 

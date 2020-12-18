@@ -11,7 +11,7 @@ class GroupBoxLiftUpDown;
 #include <relay.h>
 #include <detectionsensor.h>
 #include <fonts/MaterialRegular.h>
-#include <widgets/devicestatus/IOWidgetStatusInterface.h>
+#include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
 #include <QtWidgets/QWidget>
 
 class GroupBoxLiftUpDown: public IOWidgetStatusInterface
@@ -25,7 +25,6 @@ public:
     void init();
 
 public slots:
-    void onUpdateIODevice(const IODevice *ioDevice) override;
     void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
 private:

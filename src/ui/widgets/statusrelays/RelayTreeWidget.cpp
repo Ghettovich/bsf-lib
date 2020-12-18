@@ -43,7 +43,3 @@ void RelayTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceList)
         }
     }
 }
-void RelayTreeWidget::onUpdateIODevice(const IODevice *ioDevice)
-{
-
-}

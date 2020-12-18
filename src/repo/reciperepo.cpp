@@ -67,7 +67,6 @@ Recipe RecipeRepository::getRecipeWithComponents(int id)
                 addComponent(comp, recipe.componentList, query);
             }
 
-            recipe.initComponentMaps();
             return recipe;
         }
     }

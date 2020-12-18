@@ -92,7 +92,3 @@ void GroupBoxBinLoadDrop::onUpdateIODevices(const QVector<IODevice *> &iodeviceL
         setProximityBinDropLabelStatus();
     }
 }
-void GroupBoxBinLoadDrop::onUpdateIODevice(const IODevice *ioDevice)
-{
-
-}

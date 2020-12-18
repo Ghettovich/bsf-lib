@@ -10,13 +10,13 @@ class Scale;
 #include <weightcensor.h>
 #include <MqttClient.h>
 #include <fonts/MaterialRegular.h>
-#include <widgets/devicestatus/IOWidgetStatusInterface.h>
+#include <widgets/interfaces/RecipeStatusInterface.h>
 #include <QtWidgets/QWidget>
 
-class Scale: public IOWidgetStatusInterface
+class Scale: public RecipeStatusInterface
 {
     Q_OBJECT
-    Q_INTERFACES(IOWidgetStatusInterface)
+    Q_INTERFACES(RecipeStatusInterface)
 
 public:
     explicit Scale(MqttClient *_m_client);
@@ -24,16 +24,17 @@ public:
 
 public slots:
     void onSelectRecipeChanged(const Recipe &recipe);
-    void onUpdateIODevice(const IODevice *ioDevice) override;
-    void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
+    void onUpdateIODevice(const WeightSensor *sensor) override;
 
 private:
     Ui::Scale *ui = nullptr;
     MqttClient *m_client = nullptr;
     IODevice *weightSensor = nullptr;
     Recipe selectedRecipe;
+    Component activeComponent;
 
     void createRecipeComponentTableWidget();
+    void setQLcdNumberDisplay();
 };
 
 

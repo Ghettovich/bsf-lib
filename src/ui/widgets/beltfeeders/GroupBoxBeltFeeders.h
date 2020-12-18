@@ -6,7 +6,7 @@ namespace Ui {
 }
 
 #include <iodevice.h>
-#include <widgets/devicestatus/IOWidgetStatusInterface.h>
+#include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
 #include <detectionsensor.h>
 #include <MqttClient.h>
 #include <fonts/MaterialRegular.h>
@@ -23,7 +23,6 @@ public:
     explicit GroupBoxBeltFeeders(MqttClient *_m_client);
 
 public slots:
-    void onUpdateIODevice(const IODevice *ioDevice) override;
     void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
 private:

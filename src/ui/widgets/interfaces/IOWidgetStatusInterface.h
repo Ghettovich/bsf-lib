@@ -6,6 +6,7 @@
 #include <QVector>
 #include <QWidget>
 #include <QtPlugin>
+#include <weightcensor.h>
 
 class IOWidgetStatusInterface : public QWidget
 {
@@ -13,7 +14,6 @@ class IOWidgetStatusInterface : public QWidget
 
 public:
     virtual ~IOWidgetStatusInterface() {};
-    virtual void onUpdateIODevice(const IODevice *ioDevice) = 0;
     virtual void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) = 0;
 };
 

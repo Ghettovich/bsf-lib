@@ -94,7 +94,4 @@ void GroupBoxLiftUpDown::onUpdateIODevices(const QVector<IODevice *> &iodeviceLi
         setProximityBinLoadStatusLabel();
     }
 }
-void GroupBoxLiftUpDown::onUpdateIODevice(const IODevice *ioDevice)
-{
-}
 

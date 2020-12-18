@@ -4,7 +4,8 @@
 #include <QString>
 #include <QtMqtt/QMqttClient>
 #include <QtWidgets/QMessageBox>
-#include <widgets/devicestatus/IOWidgetStatusInterface.h>
+#include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
+#include <widgets/interfaces/RecipeStatusInterface.h>
 
 MqttClient::MqttClient(QObject *parent)
     : QObject(parent)
@@ -170,7 +171,7 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
     } else if(QString::compare(topic.name(), recipeDataTopic) == 0) {
 
         WeightSensor *weightSensor = parser.parseRecipeData(message);
-        emit newIODeviceState(weightSensor);
+        emit newDataForScale(weightSensor);
     }
 
 //    const QString content = QDateTime::currentDateTime().toString()
@@ -183,11 +184,11 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
 }
 void MqttClient::createRecipeWidgetSubscriptions(QWidget *widget)
 {
-    IOWidgetStatusInterface *widgetDeviceStatusInterface =
-        qobject_cast<IOWidgetStatusInterface*>(widget);
+    RecipeStatusInterface *recipeStatusInterface =
+        qobject_cast<RecipeStatusInterface*>(widget);
 
-    connect(this, &MqttClient::newIODeviceState,
-            widgetDeviceStatusInterface, &IOWidgetStatusInterface::onUpdateIODevice);
+    connect(this, &MqttClient::newDataForScale,
+            recipeStatusInterface, &RecipeStatusInterface::onUpdateIODevice);
 }
 
 void MqttClient::createIODeviceWidgetSubscriptions(QWidget *widget)

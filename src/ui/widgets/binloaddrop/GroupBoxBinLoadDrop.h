@@ -7,7 +7,7 @@ class GroupBoxBinLoadDrop;
 }
 
 #include <iodevice.h>
-#include <widgets/devicestatus/IOWidgetStatusInterface.h>
+#include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
 #include <relay.h>
 #include <detectionsensor.h>
 #include <MqttClient.h>
@@ -26,7 +26,6 @@ public:
     void init();
 
 public slots:
-    void onUpdateIODevice(const IODevice *ioDevice) override;
     void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
 private:

@@ -6,7 +6,7 @@ class ProximityTreeWidget;
 }
 
 #include <iodevice.h>
-#include <widgets/devicestatus/IOWidgetStatusInterface.h>
+#include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
 #include <QMap>
 #include <QObject>
 #include <QtCore/QList>
@@ -18,14 +18,12 @@ class ProximityTreeWidget;
 class ProximityTreeWidget: public IOWidgetStatusInterface {
 
 Q_OBJECT
-//Q_PLUGIN_METADATA(IID "plugins.IOWidgetStatusInterface_iid")
 Q_INTERFACES(IOWidgetStatusInterface)
 
 public:
     ProximityTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
 
 public slots:
-    void onUpdateIODevice(const IODevice *ioDevice) override;
     void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
 private:

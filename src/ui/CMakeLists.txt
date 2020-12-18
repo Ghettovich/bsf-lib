@@ -20,11 +20,13 @@ if (Qt5Widgets_FOUND)
             fonts/QFontIcon.h
             # SCALE
             widgets/scale/Scale.h
+            # INTERFACES
+            widgets/interfaces/RecipeStatusInterface.h
+            widgets/interfaces/IOWidgetStatusInterface.h
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.h
             widgets/binloaddrop/GroupBoxBinLoadDrop.h
             widgets/binrecipestatus/GroupBoxBinRecipeStatus.h
-            widgets/devicestatus/IOWidgetStatusInterface.h
             widgets/liftupdown/GroupBoxLiftUpDown.h
             widgets/recipeconfig/GroupBoxRecipeConfig.h
             widgets/statusproximities/ProximityTreeWidget.h
@@ -36,6 +38,9 @@ if (Qt5Widgets_FOUND)
             resource/theme.qrc
             fonts/MaterialRegular.cpp
             fonts/QFontIcon.cpp
+            # INTERFACES
+            widgets/interfaces/RecipeStatusInterface.cpp
+            widgets/interfaces/IOWidgetStatusInterface.cpp
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.cpp
             widgets/beltfeeders/groupboxbeltfeeders.ui
@@ -43,7 +48,6 @@ if (Qt5Widgets_FOUND)
             widgets/binloaddrop/groupboxbinloaddrop.ui
             widgets/binrecipestatus/GroupBoxBinRecipeStatus.cpp
             widgets/binrecipestatus/groupboxbinrecipestatus.ui
-            widgets/devicestatus/IOWidgetStatusInterface.cpp
             widgets/liftupdown/GroupBoxLiftUpDown.cpp
             widgets/liftupdown/groupboxliftupdown.ui
             widgets/recipeconfig/GroupBoxRecipeConfig.cpp

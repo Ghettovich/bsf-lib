@@ -51,7 +51,7 @@ private:
 
 signals:
     void brokerConnected();
-    void newIODeviceState(const IODevice *ioDevice);
+    void newDataForScale(const WeightSensor *ioDevice);
     void newIODeviceStates(const QVector<IODevice *> &iodeviceList);
 };
 

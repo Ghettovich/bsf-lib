@@ -28,7 +28,6 @@ void Recipe::updateWeightForComponent(int componentId, int weight)
 
 void Recipe::initComponentMaps()
 {
-
     for (const auto &comp: componentList) {
         actualComponentMap.insert(comp.getComponentId(), 0);
         targetComponentMap.insert(comp.getComponentId(), comp.getTargetWeight());

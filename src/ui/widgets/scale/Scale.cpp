@@ -16,13 +16,27 @@ Scale::~Scale()
 {
     delete ui;
 }
-void Scale::onUpdateIODevices(const QVector<IODevice *> &iodeviceList)
+void Scale::onUpdateIODevice(const WeightSensor *sensor)
 {
-}
-void Scale::onUpdateIODevice(const IODevice *ioDevice)
-{
-    if(ioDevice->getId() == weightSensor->getId()) {
+    if(sensor->getId() == weightSensor->getId()) {
         qDebug() << "Scale id match";
+        qDebug() << "Component id = " << sensor->getComponent().getComponentId();
+
+        if(sensor->getComponent().getRecipeId() == selectedRecipe.getId()) {
+            selectedRecipe.updateWeightForComponent(sensor->getComponent().getComponentId()
+            , sensor->getComponent().getCurrentWeight());
+
+
+            if(activeComponent.getComponentId() != sensor->getComponent().getComponentId()) {
+                // update display based on new component
+            }
+
+            activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
+            setQLcdNumberDisplay();
+
+        } else {
+            // call broker for complete recipe and update accordingly
+        }
     }
 }
 void Scale::onSelectRecipeChanged(const Recipe &recipe)
@@ -34,7 +48,12 @@ void Scale::onSelectRecipeChanged(const Recipe &recipe)
         selectedRecipe.addComponent(comp);
     }
 
-    createRecipeComponentTableWidget();
+    if(!selectedRecipe.componentList.isEmpty()) {
+        selectedRecipe.initComponentMaps();
+        activeComponent = selectedRecipe.componentList.first();
+        createRecipeComponentTableWidget();
+    }
+    qDebug() << "Selected recipe components size = " << selectedRecipe.componentList.size();
 }
 void Scale::createRecipeComponentTableWidget()
 {
@@ -70,4 +89,8 @@ void Scale::createRecipeComponentTableWidget()
         tableWidgetItem->setTextAlignment(Qt::AlignRight);
         ui->tableWidget->setItem(i, 3, tableWidgetItem);
     }
+}
+void Scale::setQLcdNumberDisplay()
+{
+    ui->lcdNumber->display(activeComponent.getCurrentWeight());
 }
