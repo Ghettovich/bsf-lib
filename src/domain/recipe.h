@@ -25,6 +25,7 @@ public:
     void addComponent(const Component& c);
     void updateComponents(const QVector<Component> &compList);
     bool isRecipeTargetMet();
+    void findComponentWithId(int componentId, Component &component);
 
 private:
     int id = 0;

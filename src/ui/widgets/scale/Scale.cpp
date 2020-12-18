@@ -37,7 +37,6 @@ void Scale::onUpdateIODevice(const WeightSensor *sensor)
             activeComponentTableWidget->setData(Qt::DisplayRole, activeComponent.getCurrentWeight());
         }
 
-        qDebug() << "Scale id match";
         configuredRecipe.updateWeightForComponent(sensor->getComponent().getComponentId()
             , sensor->getComponent().getCurrentWeight());
 
@@ -89,9 +88,10 @@ void Scale::updateComponentWidgetTable()
     for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
 
         if(ui->tableWidget->item(i, 0)->data(Qt::UserRole).toInt() == activeComponent.getComponentId()) {
-            activeComponentTableWidget = ui->tableWidget->item(1, 2);
+            activeComponentTableWidget = ui->tableWidget->item(i, 2);
             activeComponentTableWidget->setData(Qt::UserRole, activeComponent.getComponentId());
             activeComponentTableWidget->setData(Qt::DisplayRole, activeComponent.getCurrentWeight());
+            break;
         }
     }
 }

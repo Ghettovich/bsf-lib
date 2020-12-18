@@ -80,3 +80,11 @@ void Recipe::addComponent(const Component& c)
 {
     componentList.append(c);
 }
+void Recipe::findComponentWithId(int componentId, Component &component)
+{
+    for(const auto &comp: componentList) {
+        if(comp.getComponentId() == componentId) {
+            component = comp;
+        }
+    }
+}

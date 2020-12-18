@@ -5,6 +5,7 @@ namespace Ui {
     class GroupBoxBinRecipeStatus;
 }
 
+#include <MqttClient.h>
 #include <QObject>
 #include <QtWidgets/QWidget>
 
@@ -13,11 +14,12 @@ class GroupBoxBinRecipeStatus : public QWidget {
     Q_OBJECT
 
 public:
-    explicit GroupBoxBinRecipeStatus(QWidget *parent, const Qt::WindowFlags &f);
+    explicit GroupBoxBinRecipeStatus(MqttClient *m_client);
     virtual ~GroupBoxBinRecipeStatus();
 
 private:
     Ui::GroupBoxBinRecipeStatus *ui = nullptr;
+    MqttClient *m_client = nullptr;
 };
 
 

@@ -19,28 +19,8 @@
      <property name="title">
       <string>GroupBox</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2" columnstretch="6,0,0,0,0,0,0">
-      <item row="0" column="0" colspan="3">
-       <widget class="QLCDNumber" name="lcdNumberBinRecipeWeight"/>
-      </item>
-      <item row="1" column="0" colspan="7">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Current Recipe Info</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" colspan="7">
-       <widget class="QTableWidget" name="tableWidget">
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3" colspan="4">
-       <widget class="QTreeView" name="treeViewRecipeLogs"/>
-      </item>
-      <item row="5" column="0" colspan="7">
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="2,4,1,4,0,0,0" columnstretch="0,0,0,0">
+      <item row="6" column="0" colspan="4">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QPushButton" name="pushButtonReport">
@@ -83,6 +63,37 @@
          </widget>
         </item>
        </layout>
+      </item>
+      <item row="2" column="0" colspan="4">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Current Recipe Info</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="radioButtonScale1">
+        <property name="text">
+         <string>Scale 1</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="4">
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="4">
+       <widget class="QLCDNumber" name="lcdNumberBinRecipeWeight"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QRadioButton" name="radioButtonScaleBin">
+        <property name="text">
+         <string>Scale bin</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

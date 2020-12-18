@@ -1,8 +1,8 @@
 #include "ui_groupboxbinrecipestatus.h"
 #include "GroupBoxBinRecipeStatus.h"
 
-GroupBoxBinRecipeStatus::GroupBoxBinRecipeStatus(QWidget *parent, const Qt::WindowFlags &f) :
-        QWidget(parent, f)
+GroupBoxBinRecipeStatus::GroupBoxBinRecipeStatus(MqttClient *_m_client) :
+        m_client(_m_client)
         , ui(new Ui::GroupBoxBinRecipeStatus){
     ui->setupUi(this);
 }
