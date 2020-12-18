@@ -67,13 +67,3 @@ void IODevice::setDeviceState(IODevice::IO_DEVICE_HIGH_LOW _deviceState)
 {
     deviceState = _deviceState;
 }
-
-void IODevice::setRecipe(const Recipe &_recipe)
-{
-    recipe = _recipe;
-}
-
-Recipe IODevice::getRecipe() const
-{
-    return recipe;
-}

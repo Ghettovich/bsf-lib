@@ -1,5 +1,6 @@
 #include "ui_scale.h"
 #include "Scale.h"
+#include <reciperepo.h>
 #include <weightcensor.h>
 #include <BsfWidgetEnum.h>
 
@@ -11,6 +12,7 @@ Scale::Scale(MqttClient *_m_client) :
     this->setProperty("formId", formId);
 
     weightSensor = new WeightSensor(1, IODevice::LOW);
+    activeComponentTableWidget = new QTableWidgetItem;
 }
 Scale::~Scale()
 {
@@ -19,41 +21,29 @@ Scale::~Scale()
 void Scale::onUpdateIODevice(const WeightSensor *sensor)
 {
     if(sensor->getId() == weightSensor->getId()) {
-        qDebug() << "Scale id match";
-        qDebug() << "Component id = " << sensor->getComponent().getComponentId();
 
-        if(sensor->getComponent().getRecipeId() == selectedRecipe.getId()) {
-            selectedRecipe.updateWeightForComponent(sensor->getComponent().getComponentId()
+        if(sensor->getComponent().getRecipeId() != configuredRecipe.getId()) {
+            RecipeRepository recipeRepository;
+            configuredRecipe = recipeRepository.getRecipeWithComponents(sensor->getComponent().getRecipeId());
+            createRecipeComponentTableWidget();
+        }
+
+        if(activeComponent.getComponentId() != sensor->getComponent().getComponentId()) {
+            activeComponent = Component(sensor->getComponent().getComponentId(),
+                                        sensor->getComponent().getRecipeId());
+            updateComponentWidgetTable();
+        } else if(activeComponent.getComponentId() == sensor->getComponent().getComponentId()) {
+            activeComponentTableWidget->setData(Qt::UserRole, activeComponent.getComponentId());
+            activeComponentTableWidget->setData(Qt::DisplayRole, activeComponent.getCurrentWeight());
+        }
+
+        qDebug() << "Scale id match";
+        configuredRecipe.updateWeightForComponent(sensor->getComponent().getComponentId()
             , sensor->getComponent().getCurrentWeight());
 
-
-            if(activeComponent.getComponentId() != sensor->getComponent().getComponentId()) {
-                // update display based on new component
-            }
-
-            activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
-            setQLcdNumberDisplay();
-
-        } else {
-            // call broker for complete recipe and update accordingly
-        }
+        activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
+        setQLcdNumberDisplay();
     }
-}
-void Scale::onSelectRecipeChanged(const Recipe &recipe)
-{
-    selectedRecipe = Recipe(recipe.getId());
-    selectedRecipe.setDescription(recipe.getDescription());
-
-    for(const auto& comp : recipe.componentList) {
-        selectedRecipe.addComponent(comp);
-    }
-
-    if(!selectedRecipe.componentList.isEmpty()) {
-        selectedRecipe.initComponentMaps();
-        activeComponent = selectedRecipe.componentList.first();
-        createRecipeComponentTableWidget();
-    }
-    qDebug() << "Selected recipe components size = " << selectedRecipe.componentList.size();
 }
 void Scale::createRecipeComponentTableWidget()
 {
@@ -68,8 +58,8 @@ void Scale::createRecipeComponentTableWidget()
         ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     }
 
-    for (int i = 0; i < selectedRecipe.componentList.size(); ++i) {
-        const auto &comp = selectedRecipe.componentList.at(i);
+    for (int i = 0; i < configuredRecipe.componentList.size(); ++i) {
+        const auto &comp = configuredRecipe.componentList.at(i);
         ui->tableWidget->insertRow(i);
 
         auto tableWidgetItem = new QTableWidgetItem(comp.getComponent(), Qt::DisplayRole);
@@ -93,4 +83,15 @@ void Scale::createRecipeComponentTableWidget()
 void Scale::setQLcdNumberDisplay()
 {
     ui->lcdNumber->display(activeComponent.getCurrentWeight());
+}
+void Scale::updateComponentWidgetTable()
+{
+    for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
+
+        if(ui->tableWidget->item(i, 0)->data(Qt::UserRole).toInt() == activeComponent.getComponentId()) {
+            activeComponentTableWidget = ui->tableWidget->item(1, 2);
+            activeComponentTableWidget->setData(Qt::UserRole, activeComponent.getComponentId());
+            activeComponentTableWidget->setData(Qt::DisplayRole, activeComponent.getCurrentWeight());
+        }
+    }
 }

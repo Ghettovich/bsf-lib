@@ -35,8 +35,6 @@ public:
     void setAction(const Action &_action);
     IODeviceType getIoDeviceType() const;
     void setIoDeviceType(const IODeviceType &_ioDeviceType);
-    Recipe getRecipe() const;
-    void setRecipe(const Recipe &recipe);
     IO_DEVICE_HIGH_LOW getDeviceState() const;
     void setDeviceState(IO_DEVICE_HIGH_LOW _deviceState);
 

@@ -51,13 +51,19 @@ void MqttClient::publishToggleRelay(IODevice *iodevice)
                           false) == -1) {
     }
 }
-void MqttClient::publishRecipe(const Recipe& recipe)
+void MqttClient::publishRecipe(const Recipe& recipe, const Component &component)
 {
     quint8 QoS = 1;
     QJsonObject jsonPayloadObject;
     jsonPayloadObject["recipeId"] = recipe.getId();
-    jsonPayloadObject["componentId"] = recipe.componentList.first().getComponentId();
-    jsonPayloadObject["targetWeight"] = recipe.componentList.first().getTargetWeight();
+
+    if(component.getComponentId() == 0) {
+        jsonPayloadObject["componentId"] = recipe.componentList.first().getComponentId();
+        jsonPayloadObject["targetWeight"] = recipe.componentList.first().getTargetWeight();
+    } else {
+        jsonPayloadObject["componentId"] = component.getComponentId();
+        jsonPayloadObject["targetWeight"] = component.getTargetWeight();
+    }
 
     doc = QJsonDocument(jsonPayloadObject);
 
