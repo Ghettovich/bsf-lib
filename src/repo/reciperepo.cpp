@@ -65,6 +65,7 @@ Recipe RecipeRepository::getRecipeWithComponents(int id)
 
             while (query.next()) {
                 addComponent(comp, recipe.componentList, query);
+                comp.setRecipeId(recipe.getId());
             }
 
             return recipe;

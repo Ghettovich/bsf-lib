@@ -22,6 +22,8 @@ void Scale::onUpdateIODevice(const WeightSensor *sensor)
 {
     if(sensor->getId() == weightSensor->getId()) {
 
+        qDebug() << "Recipe id from sensor = " << sensor->getComponent().getRecipeId();
+
         if(sensor->getComponent().getRecipeId() != configuredRecipe.getId()) {
             RecipeRepository recipeRepository;
             configuredRecipe = recipeRepository.getRecipeWithComponents(sensor->getComponent().getRecipeId());
@@ -29,9 +31,18 @@ void Scale::onUpdateIODevice(const WeightSensor *sensor)
         }
 
         if(activeComponent.getComponentId() != sensor->getComponent().getComponentId()) {
-            activeComponent = Component(sensor->getComponent().getComponentId(),
-                                        sensor->getComponent().getRecipeId());
+
+            for (const auto &comp: configuredRecipe.componentList) {
+                if(comp.getComponentId() == sensor->getComponent().getComponentId()) {
+                    activeComponent = comp;
+                    activeComponent.setComponentId(sensor->getComponent().getComponentId());
+                    activeComponent.setRecipeId(configuredRecipe.getId());
+                    break;
+                }
+            }
+
             updateComponentWidgetTable();
+
         } else if(activeComponent.getComponentId() == sensor->getComponent().getComponentId()) {
             activeComponentTableWidget->setData(Qt::UserRole, activeComponent.getComponentId());
             activeComponentTableWidget->setData(Qt::DisplayRole, activeComponent.getCurrentWeight());
@@ -42,6 +53,9 @@ void Scale::onUpdateIODevice(const WeightSensor *sensor)
 
         activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
         setQLcdNumberDisplay();
+
+        // SIGNALS
+        emit receivedComponent(activeComponent);
     }
 }
 void Scale::createRecipeComponentTableWidget()

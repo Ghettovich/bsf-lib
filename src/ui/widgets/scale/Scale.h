@@ -37,6 +37,9 @@ private:
     void createRecipeComponentTableWidget();
     void setQLcdNumberDisplay();
     void updateComponentWidgetTable();
+
+signals:
+    void receivedComponent(const Component &component);
 };
 
 

@@ -11,13 +11,11 @@ if (Qt5Widgets_FOUND)
     # HEADER LIST
     set(HEADER_LIST
             MqttClient.h
-            MqttSubscription.h
             )
 
     # TARGET MAIN LIB
     target_sources(bsf PRIVATE
             MqttClient.cpp
-            MqttSubscription.cpp
             # HEADER LIST
             PRIVATE
             ${HEADER_LIST}

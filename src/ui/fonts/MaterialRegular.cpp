@@ -27,4 +27,12 @@ QIcon MaterialRegular::powerOffIcon(const QColor &baseColor)
 {
     return QFontIcon::icon(powerOffIconCode, baseColor, familyName);
 }
+QIcon MaterialRegular::highlightOffIcon(const QColor &baseColor)
+{
+    return QFontIcon::icon(highlightOff, baseColor, familyName);
+}
+QIcon MaterialRegular::checkCircleOutlineIcon(const QColor &baseColor)
+{
+    return QFontIcon::icon(checkCircleOutline, baseColor, familyName);
+}
 

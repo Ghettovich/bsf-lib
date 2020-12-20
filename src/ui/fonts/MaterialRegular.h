@@ -17,6 +17,8 @@ public:
     QIcon visibilityOffIcon(const QColor &baseColor = Qt::darkGray);
     QIcon powerIcon(const QColor &baseColor = Qt::lightGray);
     QIcon powerOffIcon(const QColor &baseColor = Qt::lightGray);
+    QIcon highlightOffIcon(const QColor &baseColor);
+    QIcon checkCircleOutlineIcon(const QColor &baseColor);
 
 private:
     const QString familyName = "Material Design";
@@ -27,6 +29,9 @@ private:
     const QChar visibilityOffIconCode = 0xe8f5;
     const QChar powerIconCode = 0xe63c;
     const QChar powerOffIconCode = 0xe646;
+    const QChar highlightOff = 0xe888;
+    const QChar checkCircleOutline = 0xe92d;
+
 };
 
 

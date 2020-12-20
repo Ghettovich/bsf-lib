@@ -45,7 +45,6 @@ private:
     const QString proximityLiftTopic = "/proximity/lift";
     const QString relayStatesTopic = "/relay/states";
 
-
     void createIODeviceWidgetSubscriptions(QWidget *widget);
     void createRecipeWidgetSubscriptions(QWidget *);
 
