@@ -3,7 +3,8 @@
 
 
 #include "component.h"
-#include <QMap>
+#include <QtCore/QMap>
+#include <QtCore/QVector>
 #include <QtCore/QString>
 
 class Recipe
@@ -17,6 +18,7 @@ public:
     QVector<Component> componentList;
     QMap<int, int> actualComponentMap;
     void updateWeightForComponent(int, int);
+    int getTargetWeightForComponent(int componentId);
 
 private:
     int id = 0;

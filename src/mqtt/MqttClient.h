@@ -22,6 +22,7 @@ public:
     explicit MqttClient(QObject *parent);
     void connectToHost();
     void publishToggleRelay(IODevice *iodevice);
+    void publishConfirmComponent(const Component &component);
     void publishRecipe(const Recipe& recipe, const Component &component = Component(0));
     void addIODeviceSubscription(const QString &topic, quint8 QoS, QWidget *widget);
     void addRecipeDataSubscription(quint8 QoS, QWidget *widget);

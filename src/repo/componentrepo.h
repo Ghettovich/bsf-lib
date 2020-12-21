@@ -11,6 +11,7 @@ class ComponentRepo
 
 public:
     ComponentRepo(const QString &connection = "");
+    Component getComponentFromRecipe(int recipeId, int componentId);
     QVector<Component> getComponentsFromRecipe(int);
 
 private:

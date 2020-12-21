@@ -1,5 +1,4 @@
 #include "recipe.h"
-#include <QtCore/QJsonArray>
 
 Recipe::Recipe(int id)
     : id(id)
@@ -24,5 +23,18 @@ void Recipe::setDescription(const QString &_description)
 void Recipe::updateWeightForComponent(int componentId, int weight)
 {
     actualComponentMap.insert(componentId, weight);
+}
+int Recipe::getTargetWeightForComponent(int componentId)
+{
+    int targetWeight = 0;
+
+    for(const auto &comp: componentList) {
+        if(comp.getComponentId() == componentId) {
+            targetWeight = comp.getTargetWeight();
+            break;
+        }
+    }
+
+    return targetWeight;
 }
 

@@ -12,7 +12,7 @@ ComponentRepo::ComponentRepo(const QString &connection)
 QVector<Component> ComponentRepo::getComponentsFromRecipe(int recipeId)
 {
     QVector<Component> componentList;
-    QString queryString = "SELECT c.id AS comp_id, c.component, rp.target_weight "
+    QString queryString = "SELECT c.id AS comp_id, rp.recipe_id, c.component, rp.target_weight "
                           "FROM component c INNER JOIN recipe_components rp ON c.id = rp.component_id"
                           "WHERE rp.recipe_id :=id ";
 
@@ -42,4 +42,37 @@ QVector<Component> ComponentRepo::getComponentsFromRecipe(int recipeId)
     }
 
     return componentList;
+}
+Component ComponentRepo::getComponentFromRecipe(int recipeId, int componentId)
+{
+    Component comp(0);
+    QString queryString = "SELECT c.id AS comp_id, rp.recipe_id, c.component, rp.target_weight, rp.margin_value "
+                          "FROM component c INNER JOIN recipe_components rp ON c.id = rp.component_id"
+                          "WHERE rp.recipe_id :=recipeId AND comp_id :=compId";
+
+
+    try {
+        QSqlDatabase db;
+        bsfDbConfig.setSqlDatabase(db);
+        QSqlQuery query(db);
+
+        db.open();
+        query.prepare(queryString);
+        query.bindValue(":id", recipeId);
+        query.exec();
+
+        if (query.exec(queryString)) {
+            comp = Component(query.value("id").toInt());
+            comp.setComponent(query.value("component").toString());
+            comp.setTargetWeight(query.value("target_weigt").toInt());
+            comp.setMarginValue(query)
+
+
+        }
+
+    }
+    catch (std::exception &e) {
+        qDebug("%s", e.what());
+    }
+    return Component();
 }

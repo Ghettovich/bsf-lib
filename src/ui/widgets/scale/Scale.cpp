@@ -13,10 +13,23 @@ Scale::Scale(MqttClient *_m_client) :
 
     weightSensor = new WeightSensor(1, IODevice::LOW);
     activeComponentTableWidget = new QTableWidgetItem;
+
+    init();
 }
 Scale::~Scale()
 {
     delete ui;
+}
+void Scale::init()
+{
+    connect(ui->pushButtonTareScale, &QPushButton::clicked
+    , this, &Scale::onClickPushButtonTare);
+
+    connect(ui->pushButtonClearRecipe, &QPushButton::clicked
+        , this, &Scale::onClickPushButtonClearRecipe);
+
+    connect(ui->pushButtonConfirmRecipe, &QPushButton::clicked
+        , this, &Scale::onClickPushButtonConfirmRecipe);
 }
 void Scale::onUpdateIODevice(const WeightSensor *sensor)
 {
@@ -30,13 +43,15 @@ void Scale::onUpdateIODevice(const WeightSensor *sensor)
             createRecipeComponentTableWidget();
         }
 
-        if(activeComponent.getComponentId() != sensor->getComponent().getComponentId()) {
+        if(activeComponent.getComponentId() != sensor->getComponent().getComponentId() ||
+            sensor->getComponent().getRecipeId() != activeComponent.getRecipeId()) {
 
             for (const auto &comp: configuredRecipe.componentList) {
                 if(comp.getComponentId() == sensor->getComponent().getComponentId()) {
-                    activeComponent = comp;
+                    //activeComponent = comp;
                     activeComponent.setComponentId(sensor->getComponent().getComponentId());
-                    activeComponent.setRecipeId(configuredRecipe.getId());
+                    activeComponent.setRecipeId(sensor->getComponent().getRecipeId());
+                    activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
                     break;
                 }
             }
@@ -44,14 +59,13 @@ void Scale::onUpdateIODevice(const WeightSensor *sensor)
             updateComponentWidgetTable();
 
         } else if(activeComponent.getComponentId() == sensor->getComponent().getComponentId()) {
-            activeComponentTableWidget->setData(Qt::UserRole, activeComponent.getComponentId());
-            activeComponentTableWidget->setData(Qt::DisplayRole, activeComponent.getCurrentWeight());
+            activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
+            activeComponentTableWidget->setText(QString::number(activeComponent.getCurrentWeight()));
         }
 
         configuredRecipe.updateWeightForComponent(sensor->getComponent().getComponentId()
             , sensor->getComponent().getCurrentWeight());
 
-        activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
         setQLcdNumberDisplay();
 
         // SIGNALS
@@ -91,6 +105,10 @@ void Scale::createRecipeComponentTableWidget()
         tableWidgetItem = new QTableWidgetItem(QString::number(comp.getMarginValue()), Qt::DisplayRole);
         tableWidgetItem->setTextAlignment(Qt::AlignRight);
         ui->tableWidget->setItem(i, 3, tableWidgetItem);
+
+        if(comp.getComponentId() == activeComponent.getComponentId()) {
+            activeComponentTableWidget = tableWidgetItem;
+        }
     }
 }
 void Scale::setQLcdNumberDisplay()
@@ -108,4 +126,16 @@ void Scale::updateComponentWidgetTable()
             break;
         }
     }
+}
+void Scale::onClickPushButtonTare()
+{
+
+}
+void Scale::onClickPushButtonClearRecipe()
+{
+
+}
+void Scale::onClickPushButtonConfirmRecipe()
+{
+
 }

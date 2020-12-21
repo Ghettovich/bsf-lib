@@ -35,4 +35,19 @@ QIcon MaterialRegular::checkCircleOutlineIcon(const QColor &baseColor)
 {
     return QFontIcon::icon(checkCircleOutline, baseColor, familyName);
 }
-
+QIcon MaterialRegular::arrowCircleDownIcon(const QColor &baseColor)
+{
+    return QFontIcon::icon(arrowCircleDown, baseColor, familyName);
+}
+QIcon MaterialRegular::arrowCircleUpIcon(const QColor &baseColor)
+{
+    return QFontIcon::icon(arrowCircleUp, baseColor, familyName);
+}
+QIcon MaterialRegular::updateIcon(const QColor &baseColor)
+{
+    return QFontIcon::icon(update, baseColor, familyName);
+}
+QIcon MaterialRegular::updateDisabledIcon(const QColor &baseColor)
+{
+    return QFontIcon::icon(updateDisabled, baseColor, familyName);
+}

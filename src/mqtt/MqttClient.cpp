@@ -51,6 +51,22 @@ void MqttClient::publishToggleRelay(IODevice *iodevice)
                           false) == -1) {
     }
 }
+void MqttClient::publishConfirmComponent(const Component &component)
+{
+    quint8 QoS = 1;
+    QJsonObject jsonPayload;
+    jsonPayload["recipeId"] = component.getRecipeId();
+    jsonPayload["componentId"] = component.getComponentId();
+    jsonPayload["confirm"] = true;
+
+    doc = QJsonDocument(jsonPayload);
+
+    if (m_client->publish(configureRecipeTopic,
+                          doc.toJson(),
+                          QoS,
+                          false) == -1) {
+    }
+}
 void MqttClient::publishRecipe(const Recipe& recipe, const Component &component)
 {
     quint8 QoS = 1;

@@ -19,6 +19,10 @@ public:
     QIcon powerOffIcon(const QColor &baseColor = Qt::lightGray);
     QIcon highlightOffIcon(const QColor &baseColor);
     QIcon checkCircleOutlineIcon(const QColor &baseColor);
+    QIcon arrowCircleDownIcon(const QColor &baseColor = Qt::lightGray);
+    QIcon arrowCircleUpIcon(const QColor &baseColor = Qt::lightGray);
+    QIcon updateIcon(const QColor &baseColor = Qt::lightGray);
+    QIcon updateDisabledIcon(const QColor &baseColor = Qt::lightGray);
 
 private:
     const QString familyName = "Material Design";
@@ -31,7 +35,10 @@ private:
     const QChar powerOffIconCode = 0xe646;
     const QChar highlightOff = 0xe888;
     const QChar checkCircleOutline = 0xe92d;
-
+    const QChar arrowCircleDown = 0xf181;
+    const QChar arrowCircleUp = 0xf182;
+    const QChar update = 0xe923;
+    const QChar updateDisabled = 0xe075;
 };
 
 

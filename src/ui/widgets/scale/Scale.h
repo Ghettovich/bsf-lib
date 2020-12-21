@@ -22,6 +22,7 @@ class Scale: public RecipeStatusInterface
 public:
     explicit Scale(MqttClient *_m_client);
     virtual ~Scale();
+    void init();
 
 public slots:
     void onUpdateIODevice(const WeightSensor *sensor) override;
@@ -37,6 +38,11 @@ private:
     void createRecipeComponentTableWidget();
     void setQLcdNumberDisplay();
     void updateComponentWidgetTable();
+
+private slots:
+    void onClickPushButtonTare();
+    void onClickPushButtonClearRecipe();
+    void onClickPushButtonConfirmRecipe();
 
 signals:
     void receivedComponent(const Component &component);
