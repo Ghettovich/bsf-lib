@@ -37,4 +37,15 @@ int Recipe::getTargetWeightForComponent(int componentId)
 
     return targetWeight;
 }
+Component Recipe::getComponent(int componentId)
+{
+    for(auto &comp: componentList) {
+        if(comp.getComponentId() == componentId) {
+            return comp;
+        }
+    }
+
+
+    return Component(0);
+}
 

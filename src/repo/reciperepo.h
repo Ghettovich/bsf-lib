@@ -20,7 +20,7 @@ public:
 
 private:
     BsfDbconfig bsfDbConfig;
-    void addComponent(Component &, QVector<Component> &, QSqlQuery &);
+    void addComponent(int recipeId, Component &, QVector<Component> &, QSqlQuery &);
 
 };
 #endif //BSF_RECIPEREPO_H

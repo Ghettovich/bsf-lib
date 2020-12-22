@@ -35,8 +35,6 @@ void Scale::onUpdateIODevice(const WeightSensor *sensor)
 {
     if(sensor->getId() == weightSensor->getId()) {
 
-        qDebug() << "Recipe id from sensor = " << sensor->getComponent().getRecipeId();
-
         if(sensor->getComponent().getRecipeId() != configuredRecipe.getId()) {
             RecipeRepository recipeRepository;
             configuredRecipe = recipeRepository.getRecipeWithComponents(sensor->getComponent().getRecipeId());

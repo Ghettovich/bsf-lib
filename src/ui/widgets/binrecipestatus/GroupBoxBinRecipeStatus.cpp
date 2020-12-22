@@ -73,6 +73,10 @@ void GroupBoxBinRecipeStatus::createRecipeComponentTableWidget()
         tableWidgetItem = new QTableWidgetItem(QString::number(comp.getMarginValue()), Qt::DisplayRole);
         tableWidgetItem->setTextAlignment(Qt::AlignRight);
         ui->tableWidget->setItem(i, 3, tableWidgetItem);
+
+        if(comp.getComponentId() == activeComponent.getComponentId()) {
+            activeComponentTableWidget = tableWidgetItem;
+        }
     }
 }
 void GroupBoxBinRecipeStatus::setQLcdNumberDisplay()

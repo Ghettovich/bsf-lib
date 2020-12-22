@@ -61,11 +61,10 @@ Recipe RecipeRepository::getRecipeWithComponents(int id)
             recipe.setDescription(query.value("description").toString());
 
             Component comp;
-            addComponent(comp, recipe.componentList, query);
+            addComponent(recipe.getId(), comp, recipe.componentList, query);
 
             while (query.next()) {
-                addComponent(comp, recipe.componentList, query);
-                comp.setRecipeId(recipe.getId());
+                addComponent(recipe.getId(),comp, recipe.componentList, query);
             }
 
             return recipe;
@@ -106,9 +105,10 @@ Recipe RecipeRepository::getRecipe(int id)
     return Recipe(0);
 }
 
-void RecipeRepository::addComponent(Component &comp, QVector<Component> &compList, QSqlQuery &query)
+void RecipeRepository::addComponent(int recipeId, Component &comp, QVector<Component> &compList, QSqlQuery &query)
 {
     comp = Component(query.value("component_id").toInt());
+    comp.setRecipeId(recipeId);
     comp.setComponent(query.value("component").toString());
     comp.setTargetWeight(query.value("target_weight").toInt());
     comp.setMarginValue(query.value("margin_value").toInt());

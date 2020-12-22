@@ -19,6 +19,7 @@ public:
     QMap<int, int> actualComponentMap;
     void updateWeightForComponent(int, int);
     int getTargetWeightForComponent(int componentId);
+    Component getComponent(int componentId);
 
 private:
     int id = 0;
