@@ -5,6 +5,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+enable_testing(true)
+
 include_directories(../src)
 
 # SET OPTION FOR SHARED LIBRARIES
@@ -49,7 +51,7 @@ if (Qt5Widgets_FOUND)
             INCLUDES DESTINATION include
             )
 
-    install(FILES srcTestLib DESTINATION include)
+    install(FILES BsfTest DESTINATION include)
 
     install(EXPORT BsfTestTargets
             FILE BsfTestTargets.cmake
@@ -63,6 +65,15 @@ if (Qt5Widgets_FOUND)
             ${CMAKE_CURRENT_SOURCE_DIR}/resource/database/bsf.db
             ${CMAKE_CURRENT_BINARY_DIR}/resource/database/bsf.db
     )
+
+    add_test(NAME RecipeTest COMMAND BsfTest)
+    add_test(NAME TransformPayloadTest COMMAND BsfTest)
+    add_test(NAME ActionArduinoRepoTest COMMAND BsfTest)
+    add_test(NAME ArduinoRepoTest COMMAND BsfTest)
+    add_test(NAME IODeviceRepoTest COMMAND BsfTest)
+    add_test(NAME LogRepoTest COMMAND BsfTest)
+    add_test(NAME RecipeRepoTest COMMAND BsfTest)
+    add_test(NAME StateCodeRepoTest COMMAND BsfTest)
 
 else (!Qt5Widgets_FOUND)
     # OOPS

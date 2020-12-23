@@ -63,6 +63,8 @@ if (Qt5Widgets_FOUND)
             NAMESPACE bsf::
             )
 
+    add_test(BsfTest COMMAND BsfTest)
+
 else (!Qt5Widgets_FOUND)
     # OOPS
     message("could not find qt widgets")

@@ -4,6 +4,7 @@
 #include "../autotest/AutoTest.h"
 #include <QtCore/QObject>
 
+
 class RecipeTest : public QObject {
     Q_OBJECT
 
