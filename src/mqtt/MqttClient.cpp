@@ -197,13 +197,13 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
         emit newDataForScale(weightSensor);
     }
 
-//    const QString content = QDateTime::currentDateTime().toString()
-//        + QLatin1String(" Received Topic: ")
-//        + topic.name()
-//        + QLatin1String(" Message: ")
-//        + message
-//        + QLatin1Char('\n');
-//    qDebug() << content;
+    const QString content = QDateTime::currentDateTime().toString()
+        + QLatin1String(" Received Topic: ")
+        + topic.name()
+        + QLatin1String(" Message: ")
+        + message
+        + QLatin1Char('\n');
+    qDebug() << content;
 }
 void MqttClient::createRecipeWidgetSubscriptions(QWidget *widget)
 {

@@ -11,24 +11,32 @@ if (Qt5Widgets_FOUND)
 
     # HEADER LIST
     set(HEADER_LIST
-            tst_recipe.h)
+            tst_actionarduinorepo.h
+            tst_arduinorepo.h
+            tst_iodevicerepo.h
+            tst_logrepo.h
+            tst_reciperepo.h
+            tst_statecoderepo.h)
 
     # TARGET SOURCES
     target_sources(srcTestLib
             PRIVATE
-            tst_recipe.cpp
+            tst_actionarduinorepo.cpp
+            tst_arduinorepo.cpp
+            tst_iodevicerepo.cpp
+            tst_logrepo.cpp
+            tst_reciperepo.cpp
+            tst_statecoderepo.cpp
             PUBLIC
             ${HEADER_LIST})
 
     target_link_libraries(srcTestLib PUBLIC
             bsf
             Qt5::Test
-            Qt5::Core
-            )
+            Qt5::Core)
 
     target_include_directories(srcTestLib PUBLIC
-            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-            )
+            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>")
 
 else (!Qt5Widgets_FOUND)
     # OOPS

@@ -1,7 +1,7 @@
 #ifndef BSF_TST_RECIPE_H
 #define BSF_TST_RECIPE_H
 
-#include "DomainAutoTest.h"
+#include "../autotest/AutoTest.h"
 #include <QtCore/QObject>
 
 class RecipeTest : public QObject {

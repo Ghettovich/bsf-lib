@@ -17,23 +17,52 @@ if (Qt5Widgets_FOUND)
 
     add_library(srcTestLib SHARED "")
 
+    add_subdirectory(domain)
+    add_subdirectory(parser)
+    add_subdirectory(repo)
+
     # TARGET SOURCES
-    target_sources(srcTestLib
-            PRIVATE
+    add_executable(BsfTest
             autotest/AutoTest.cpp
-            PUBLIC
             autotest/AutoTest.h
+            resource/jsonPayload.qrc
             )
 
-    target_link_libraries(srcTestLib PUBLIC
+    target_link_libraries(BsfTest PUBLIC
             bsf
+            srcTestLib
             Qt5::Core
             Qt5::Test
             Qt5::Widgets
             )
 
-    add_subdirectory(domain)
+    target_include_directories(BsfTest
+            PUBLIC
+            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
+            )
 
+    install(TARGETS BsfTest
+            EXPORT BsfTestTargets
+            LIBRARY DESTINATION lib
+            ARCHIVE DESTINATION lib
+            RUNTIME DESTINATION bin
+            INCLUDES DESTINATION include
+            )
+
+    install(FILES srcTestLib DESTINATION include)
+
+    install(EXPORT BsfTestTargets
+            FILE BsfTestTargets.cmake
+            NAMESPACE bsfTest::
+            DESTINATION lib/cmake
+            )
+
+    add_custom_command(
+            TARGET BsfTest POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_CURRENT_SOURCE_DIR}/resource/database/bsf.db
+            ${CMAKE_CURRENT_BINARY_DIR}/resource/database/bsf.db
+    )
 
 else (!Qt5Widgets_FOUND)
     # OOPS
