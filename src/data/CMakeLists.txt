@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.13...3.18)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(AUTOGEN_TARGET_DEPENDS data)
 
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Core Sql REQUIRED)

@@ -1,4 +1,5 @@
 #include "transformpayload.h"
+#include <QDebug>
 
 QVector<IODevice *> TransformPayload::parseIODevices(const QByteArray &payload)
 {

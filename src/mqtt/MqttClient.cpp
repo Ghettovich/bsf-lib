@@ -2,6 +2,7 @@
 #include <BsfWidgetEnum.h>
 #include <transformpayload.h>
 #include <QString>
+#include <QDateTime>
 #include <QtMqtt/QMqttClient>
 #include <QtWidgets/QMessageBox>
 #include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
