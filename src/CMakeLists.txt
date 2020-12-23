@@ -25,11 +25,9 @@ if (Qt5Widgets_FOUND)
     add_subdirectory(mqtt)
     add_subdirectory(ui)
 
-    get_target_property(DOMAIN_INCLUDES bsf INCLUDE_DIRECTORIES)
-
     target_include_directories(bsf
             PUBLIC
-            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR};${DOMAIN_INCLUDES}>"
+            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
             "$<INSTALL_INTERFACE:include>"
             )
 
