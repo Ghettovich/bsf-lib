@@ -6,9 +6,10 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-list(APPEND CMAKE_PREFIX PATH "${PROJECT_BINARY_DIR}/../../")
+#list(APPEND CMAKE_PREFIX PATH "${PROJECT_BINARY_DIR}/../../")
 
-find_package(bsf REQUIRED)
+find_package(bsf REQUIRED
+        PATHS "${PROJECT_BINARY_DIR}/../../")
 
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Widgets Sql Network REQUIRED)
