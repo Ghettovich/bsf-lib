@@ -8,8 +8,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 #list(APPEND CMAKE_PREFIX PATH "${PROJECT_BINARY_DIR}/../../")
 
-find_package(bsf REQUIRED
-        PATHS "${PROJECT_BINARY_DIR}/../../")
+#find_package(bsf REQUIRED
+#        PATHS "${PROJECT_BINARY_DIR}/../../")
 
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Widgets DBus Core Sql Network Mqtt REQUIRED)
@@ -20,7 +20,7 @@ if (Qt5Widgets_FOUND)
     add_library(bsfOperator SHARED "")
 
     target_link_libraries(bsfOperator PUBLIC
-            bsf::bsf
+            bsf
             )
 
     # Add subdirectories

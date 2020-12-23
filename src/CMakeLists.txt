@@ -28,7 +28,7 @@ if (Qt5Widgets_FOUND)
     target_include_directories(bsf
             PUBLIC
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-            "$<INSTALL_INTERFACE:include>"
+            "$<INSTALL_INTERFACE:include/bsf>"
             )
 
     install(TARGETS bsf
@@ -62,8 +62,6 @@ if (Qt5Widgets_FOUND)
             FILE "${PROJECT_BINARY_DIR}/bsfTargets.cmake"
             NAMESPACE bsf::
             )
-
-    add_test(BsfTest COMMAND BsfTest)
 
 else (!Qt5Widgets_FOUND)
     # OOPS
