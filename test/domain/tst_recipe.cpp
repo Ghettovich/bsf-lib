@@ -1,5 +1,4 @@
 #include "tst_recipe.h"
-#include <QtTest/QTest>
 #include <recipe.h>
 
 DECLARE_TEST_RECIPE(RecipeTest)

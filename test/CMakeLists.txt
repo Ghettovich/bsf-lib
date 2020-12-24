@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.7...3.18)
+include(CTest)
 
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
@@ -13,7 +14,7 @@ include_directories(../src)
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 
 find_package(Qt5Test REQUIRED)
-find_package(Qt5 COMPONENTS Core Widgets Network Sql REQUIRED)
+find_package(Qt5 COMPONENTS Core DBus Widgets Network Sql REQUIRED)
 
 if (Qt5Widgets_FOUND)
 
@@ -36,6 +37,7 @@ if (Qt5Widgets_FOUND)
             Qt5::Core
             Qt5::Test
             Qt5::Widgets
+            Qt5::DBus
             )
 
     target_include_directories(BsfTest
