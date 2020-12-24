@@ -1,5 +1,7 @@
-#include <repo/logrepo.h>
 #include "tst_logrepo.h"
+#include <bafalog.h>
+#include <logrepo.h>
+#include <QtTest/QtTest>
 
 
 DECLARE_TEST_LOG_REPO(LogRepoTest)
