@@ -14,7 +14,7 @@ include_directories(../src)
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 
 find_package(Qt5Test REQUIRED)
-find_package(Qt5 COMPONENTS Core DBus Widgets Network Sql REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 if (Qt5Widgets_FOUND)
 
@@ -36,8 +36,6 @@ if (Qt5Widgets_FOUND)
             srcTestLib
             Qt5::Core
             Qt5::Test
-            Qt5::Widgets
-            Qt5::DBus
             )
 
     target_include_directories(BsfTest
