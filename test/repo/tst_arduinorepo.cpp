@@ -58,27 +58,5 @@ void ArduinoRepoTest::isArduinoFoundWithId() {
     QVERIFY(arduino.getId() == arduinoId);
 }
 
-/*
- * Checks wether the arduino is updated. Not really usefull since it will be the same next time the test runs.
- * Will be fixed once DML script can be deployed on the fly.
- * */
-void ArduinoRepoTest::isArduinoUpdated() {
-    // ARRANGE
-    int arduinoId = 1;
-    QString newValue = "Durp";
-    QDir dir(".");
-    const QString testConnection = dir.absolutePath().append("/resource/database/bsf.db");
-    ArduinoRepository arduinoRepository(testConnection);
-
-    // ACT
-    Arduino arduino = arduinoRepository.getArduino(arduinoId);
-    arduino.setName(newValue);
-    arduinoRepository.updateArduino(arduino);
-    arduino = arduinoRepository.getArduino(arduinoId);
-
-    // ASSERT
-    QVERIFY(arduino.getName() == newValue);
-}
-
 void ArduinoRepoTest::cleanupTestCase() {
 }

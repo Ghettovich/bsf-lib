@@ -13,8 +13,6 @@ private slots:
     void isActiveArduinoListGreaterThenZero();
     void isActiveArduinoIdNotZero();
     void isArduinoFoundWithId();
-    void isArduinoUpdated();
-
     void cleanupTestCase();
 
 };

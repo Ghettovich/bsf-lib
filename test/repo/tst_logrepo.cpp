@@ -37,6 +37,9 @@ void LogRepoTest::isLogListSizeIncreased() {
     logRepository.addLog("Hoi", BafaLog::INFO);
     QVector<BafaLog> secondLogList = logRepository.createBsfLogList();
 
+    printf("\nfirst size = %d\n", logList.size());
+    printf("\nsecond size = %d\n", secondLogList.size());
+
     // ASSERT
     QVERIFY(secondLogList.size() > logList.size());
 }
