@@ -1,4 +1,5 @@
 #include "logrepo.h"
+#include <bsfdatabaseconfig.h>
 #include <QtSql/QSqlQueryModel>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
