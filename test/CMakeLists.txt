@@ -43,22 +43,6 @@ if (Qt5Widgets_FOUND)
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
             )
 
-    install(TARGETS BsfTest
-            EXPORT BsfTestTargets
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib
-            RUNTIME DESTINATION bin
-            INCLUDES DESTINATION include
-            )
-
-    install(FILES BsfTest DESTINATION include)
-
-    install(EXPORT BsfTestTargets
-            FILE BsfTestTargets.cmake
-            NAMESPACE bsfTest::
-            DESTINATION lib/cmake
-            )
-
     add_custom_command(
             TARGET BsfTest POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy
