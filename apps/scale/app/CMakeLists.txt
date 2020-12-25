@@ -9,7 +9,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-include_directories(../src)
+#include_directories(../src)
 
 add_executable(BsfWeightstationApp
         ScaleApp.cpp

@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.7...3.18)
-include(CTest)
-
+project(bsf-test
+        VERSION 1.0
+        DESCRIPTION "Tests for libraries and apps."
+        )
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 enable_testing(true)
-
-# include src dir with bsf lib
-include_directories(../src)
+include(CTest)
 
 # SET OPTION FOR SHARED LIBRARIES
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)

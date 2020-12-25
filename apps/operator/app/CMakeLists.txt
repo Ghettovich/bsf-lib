@@ -8,7 +8,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt5 COMPONENTS Widgets Mqtt)
 
-include_directories(../src)
+#include_directories(../src)
 
 add_executable(OperatorAppExe
         OperatorApp.cpp)
