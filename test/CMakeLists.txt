@@ -8,6 +8,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 enable_testing(true)
 
+# include src dir with bsf lib
 include_directories(../src)
 
 # SET OPTION FOR SHARED LIBRARIES
