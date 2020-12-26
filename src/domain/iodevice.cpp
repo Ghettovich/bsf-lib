@@ -2,17 +2,17 @@
 #include <QMetaEnum>
 
 IODevice::IODevice(int id)
-    : id(id) {
+    : iodeviceId(id) {
   deviceState = IO_DEVICE_HIGH_LOW::LOW;
 }
 
 IODevice::IODevice(int id, IODevice::IO_DEVICE_HIGH_LOW _deviceState)
     :
-    id(id), deviceState(_deviceState) {
+    iodeviceId(id), deviceState(_deviceState) {
 }
 
 int IODevice::getId() const {
-  return id;
+  return iodeviceId;
 }
 
 QString IODevice::getDescription() const {

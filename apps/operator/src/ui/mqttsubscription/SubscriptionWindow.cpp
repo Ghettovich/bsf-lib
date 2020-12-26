@@ -2,7 +2,7 @@
 #include "SubscriptionWindow.h"
 
 SubscriptionWindow::SubscriptionWindow(QMqttSubscription *_m_sub)
-    : m_sub(_m_sub), ui(new Ui::SubscriptionWindow) {
+    : ui(new Ui::SubscriptionWindow), m_sub(_m_sub) {
   ui->setupUi(this);
 
   ui->labelSubscriptionDisplay->setText(m_sub->topic().filter());

@@ -39,7 +39,7 @@ class IODevice {
   virtual bool isDeviceOn() const = 0;
 
  private:
-  int id = 0;
+  int iodeviceId = 0;
   QString description;
   Arduino *arduino;
   Action action;

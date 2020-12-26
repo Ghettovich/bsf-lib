@@ -14,7 +14,7 @@ class SubscriptionWindow : public QWidget {
  Q_OBJECT
 
  public:
-  SubscriptionWindow(QMqttSubscription *m_sub);
+  explicit SubscriptionWindow(QMqttSubscription *m_sub);
   virtual ~SubscriptionWindow();
 
  public slots:
@@ -23,7 +23,7 @@ class SubscriptionWindow : public QWidget {
 
  private:
   Ui::SubscriptionWindow *ui = nullptr;
-  QMqttSubscription *m_sub;
+  QMqttSubscription *m_sub = nullptr;
 };
 
 #endif //SUBSCRIPTIONWINDOW_H

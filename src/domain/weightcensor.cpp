@@ -1,8 +1,8 @@
 #include "weightcensor.h"
 #include <utility>
 
-WeightSensor::WeightSensor(int _id, IO_DEVICE_HIGH_LOW state) :
-    IODevice(_id, state) {
+WeightSensor::WeightSensor(int weightSensorId, IO_DEVICE_HIGH_LOW state) :
+    IODevice(weightSensorId, state) {
 }
 
 bool WeightSensor::isDeviceStateLOW() const {

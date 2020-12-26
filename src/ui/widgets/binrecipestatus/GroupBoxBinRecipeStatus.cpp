@@ -4,7 +4,7 @@
 #include "GroupBoxBinRecipeStatus.h"
 
 GroupBoxBinRecipeStatus::GroupBoxBinRecipeStatus(MqttClient *_m_client) :
-    m_client(_m_client), ui(new Ui::GroupBoxBinRecipeStatus) {
+    ui(new Ui::GroupBoxBinRecipeStatus), m_client(_m_client) {
   ui->setupUi(this);
 
   QVariant formId = WIDGET_TYPES::SCALE_BIN;

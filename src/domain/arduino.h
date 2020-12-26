@@ -52,7 +52,7 @@ class Arduino {
   QUrl generateQUrl(const QString &location = "") const;
 
  private:
-  int id;
+  int arduinoId;
   qint16 port = 0;
   QString desc;
   QString ipAddress;

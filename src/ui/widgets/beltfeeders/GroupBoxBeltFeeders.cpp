@@ -4,7 +4,7 @@
 #include <BsfWidgetEnum.h>
 
 GroupBoxBeltFeeders::GroupBoxBeltFeeders(MqttClient *_m_client) :
-    m_client(_m_client), ui(new Ui::GroupBoxBeltFeeders) {
+    ui(new Ui::GroupBoxBeltFeeders), m_client(_m_client) {
   ui->setupUi(this);
   QVariant formId = WIDGET_TYPES::GROUPBOX_BELT_FEEDERS;
   this->setProperty("formId", formId);

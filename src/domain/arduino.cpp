@@ -2,7 +2,7 @@
 #include <QMetaEnum>
 
 Arduino::Arduino(int id)
-    : id(id) {
+    : arduinoId(id) {
   arduinoState = UNKOWN;
 }
 
@@ -39,7 +39,7 @@ void Arduino::setPort(qint16 _port) {
 }
 
 int Arduino::getId() const {
-  return id;
+  return arduinoId;
 }
 
 void Arduino::addIODevice(IODevice *ioDevice) {

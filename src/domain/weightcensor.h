@@ -10,7 +10,7 @@ class WeightSensor : public IODevice {
  Q_GADGET
 
  public:
-  WeightSensor(int id, IO_DEVICE_HIGH_LOW state);
+  WeightSensor(int weightSensorId, IO_DEVICE_HIGH_LOW state);
   void setComponent(Component c);
   Component getComponent() const;
   int getCurrentWeightForComponent() const;

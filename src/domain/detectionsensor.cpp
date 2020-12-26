@@ -1,8 +1,8 @@
 #include "detectionsensor.h"
 
-DetectionSensor::DetectionSensor(int id, IODevice::IO_DEVICE_HIGH_LOW deviceState)
+DetectionSensor::DetectionSensor(int detectionSensorId, IODevice::IO_DEVICE_HIGH_LOW deviceState)
     :
-    IODevice(id, deviceState) {
+    IODevice(detectionSensorId, deviceState) {
 
 }
 
