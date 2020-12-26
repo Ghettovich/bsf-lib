@@ -8,9 +8,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-enable_testing(true)
-include(CTest)
-
 # SET OPTION FOR SHARED LIBRARIES
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 

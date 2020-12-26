@@ -11,14 +11,6 @@ cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 set(CTEST_PROJECT_NAME CMake)
 set(dashboard_user_home "$ENV{HOME}")
 
-# Select the top dashboard directory.
-if(NOT DEFINED dashboard_root_name)
-    set(dashboard_root_name "My Tests")
-endif()
-if(NOT DEFINED CTEST_DASHBOARD_ROOT)
-    get_filename_component(CTEST_DASHBOARD_ROOT "${CTEST_SCRIPT_DIRECTORY}/../${dashboard_root_name}" ABSOLUTE)
-endif()
-
 # Select the model (Nightly, Experimental, Continuous).
 if(NOT DEFINED dashboard_model)
     set(dashboard_model Nightly)
@@ -28,10 +20,10 @@ if(NOT "${dashboard_model}" MATCHES "^(Nightly|Experimental|Continuous)$")
 endif()
 
 
-set(CTEST_PROJECT_NAME "First project")
+set(CTEST_PROJECT_NAME "bsf-lib")
 set(CTEST_NIGHTLY_START_TIME "20:53:00 UTC")
 
 set(CTEST_DROP_METHOD "http")
-set(CTEST_DROP_SITE "192.168.178.5:8082")
-set(CTEST_DROP_LOCATION "/cdash/submit.php?project=First+project")
+set(CTEST_DROP_SITE "192.168.178.5:8082/cdash")
+set(CTEST_DROP_LOCATION "/submit.php?project=bsf-lib")
 set(CTEST_DROP_SITE_CDASH TRUE)
