@@ -2,140 +2,121 @@
 #include <QMetaEnum>
 
 Arduino::Arduino(int id)
-    : id(id)
-{
-    arduinoState = UNKOWN;
+    : id(id) {
+  arduinoState = UNKOWN;
 }
 
-QString Arduino::getDesc() const
-{
-    return desc;
+QString Arduino::getDesc() const {
+  return desc;
 }
 
-void Arduino::setDesc(const QString &_desc)
-{
-    desc = _desc;
+void Arduino::setDesc(const QString &_desc) {
+  desc = _desc;
 }
 
-QString Arduino::getIpAddress() const
-{
-    return ipAddress;
+QString Arduino::getIpAddress() const {
+  return ipAddress;
 }
 
-void Arduino::setIpAddress(const QString &_ipAddress)
-{
-    ipAddress = _ipAddress;
+void Arduino::setIpAddress(const QString &_ipAddress) {
+  ipAddress = _ipAddress;
 }
 
-QString Arduino::getName() const
-{
-    return name;
+QString Arduino::getName() const {
+  return name;
 }
 
-void Arduino::setName(const QString &_name)
-{
-    name = _name;
+void Arduino::setName(const QString &_name) {
+  name = _name;
 }
 
-qint16 Arduino::getPort() const
-{
-    return port;
+qint16 Arduino::getPort() const {
+  return port;
 }
 
-void Arduino::setPort(qint16 _port)
-{
-    port = _port;
+void Arduino::setPort(qint16 _port) {
+  port = _port;
 }
 
-int Arduino::getId() const
-{
-    return id;
-}
-void Arduino::addIODevice(IODevice *ioDevice)
-{
-    ioDeviceList.append(ioDevice);
-}
-QString Arduino::getStatusMessage() const
-{
-    return statusMessage;
-}
-void Arduino::setStatusMessage(const QString &_statusMessage)
-{
-    statusMessage = _statusMessage;
+int Arduino::getId() const {
+  return id;
 }
 
-Arduino::ARDUINO_STATE Arduino::getArduinoState()
-{
-    return arduinoState;
+void Arduino::addIODevice(IODevice *ioDevice) {
+  ioDeviceList.append(ioDevice);
 }
 
-void Arduino::setArduinoState(Arduino::ARDUINO_STATE state)
-{
-    arduinoState = state;
+QString Arduino::getStatusMessage() const {
+  return statusMessage;
 }
 
-QVector<IODevice *> Arduino::getIoDeviceList()
-{
-    return ioDeviceList;
+void Arduino::setStatusMessage(const QString &_statusMessage) {
+  statusMessage = _statusMessage;
 }
 
-bool Arduino::hasRelayIODevices()
-{
-    for (auto dev : ioDeviceList) {
-        if (dev->getIoDeviceType().getIODeviceType() == IODeviceType::RELAY) {
-            return true;
-        }
+Arduino::ARDUINO_STATE Arduino::getArduinoState() {
+  return arduinoState;
+}
+
+void Arduino::setArduinoState(Arduino::ARDUINO_STATE state) {
+  arduinoState = state;
+}
+
+QVector<IODevice *> Arduino::getIoDeviceList() {
+  return ioDeviceList;
+}
+
+bool Arduino::hasRelayIODevices() {
+  for (auto dev : ioDeviceList) {
+    if (dev->getIoDeviceType().getIODeviceType() == IODeviceType::RELAY) {
+      return true;
     }
+  }
 
-    return false;
+  return false;
 }
 
-bool Arduino::hasWeightSensorIODevices()
-{
-    for (auto dev : ioDeviceList) {
-        if (dev->getIoDeviceType().getIODeviceType() == IODeviceType::WEIGHTSENSOR) {
-            return true;
-        }
+bool Arduino::hasWeightSensorIODevices() {
+  for (auto dev : ioDeviceList) {
+    if (dev->getIoDeviceType().getIODeviceType() == IODeviceType::WEIGHTSENSOR) {
+      return true;
     }
+  }
 
-    return false;
+  return false;
 }
 
-bool Arduino::hasDetectionSensorIODevices()
-{
-    for (auto dev : ioDeviceList) {
-        if (dev->getIoDeviceType().getIODeviceType() == IODeviceType::DETECTIONSENSOR) {
-            return true;
-        }
+bool Arduino::hasDetectionSensorIODevices() {
+  for (auto dev : ioDeviceList) {
+    if (dev->getIoDeviceType().getIODeviceType() == IODeviceType::DETECTIONSENSOR) {
+      return true;
     }
+  }
 
-    return false;
+  return false;
 }
 
-void Arduino::updateIODeviceList(const QVector<IODevice *> &_ioDeviceList)
-{
+void Arduino::updateIODeviceList(const QVector<IODevice *> &_ioDeviceList) {
 
-    for (auto ioDevice : ioDeviceList) {
-        for (auto ioDeviceWithNewState : _ioDeviceList) {
-            if (ioDevice->getId() == ioDeviceWithNewState->getId()) {
-                ioDevice->setDeviceState(ioDeviceWithNewState->getDeviceState());
-                break;
-            }
-        }
+  for (auto ioDevice : ioDeviceList) {
+    for (auto ioDeviceWithNewState : _ioDeviceList) {
+      if (ioDevice->getId() == ioDeviceWithNewState->getId()) {
+        ioDevice->setDeviceState(ioDeviceWithNewState->getDeviceState());
+        break;
+      }
     }
+  }
 }
 
-QUrl Arduino::generateQUrl(const QString &location) const
-{
-    QString url = QString("http://[");
-    if (location.isEmpty()) {
-        printf("\nGot empty location for generate URL");
-        url.append(ipAddress).append("]/");
-    }
-    else {
-        url.append(ipAddress).append("]/").append(location);
-    }
+QUrl Arduino::generateQUrl(const QString &location) const {
+  QString url = QString("http://[");
+  if (location.isEmpty()) {
+    printf("\nGot empty location for generate URL");
+    url.append(ipAddress).append("]/");
+  } else {
+    url.append(ipAddress).append("]/").append(location);
+  }
 
-    return QUrl(url);
+  return QUrl(url);
 }
 

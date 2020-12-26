@@ -4,37 +4,36 @@
 #include <QObject>
 #include <QtCore/QString>
 
-class BafaLog
-{
+class BafaLog {
 
-Q_GADGET
+ Q_GADGET
 
-public:
-    enum LOG_SEVERITY
-    {
-        UNKNOWN, ERROR, WARNING, INFO
-    };
-    Q_ENUM(LOG_SEVERITY);
+ public:
+  enum LOG_SEVERITY {
+    UNKNOWN, ERROR, WARNING, INFO
+  };
 
-    explicit BafaLog(int id = 0);
+  Q_ENUM(LOG_SEVERITY);
 
-    int getId() const;
-    int getLogType() const;
-    void setLogType(int severity);
-    qint64 getLogDateTime() const;
-    void setLogDateTime(qint64);
-    QString getLog() const;
-    void setLog(const QString &logMessage);
-    LOG_SEVERITY getLogSeverity() const;
-    void setLogSeverity(LOG_SEVERITY);
-    void determineLogSeverity();
+  explicit BafaLog(int id = 0);
 
-private:
-    int id;
-    int logType;
-    qint64 logDateTime;
-    QString log;
-    LOG_SEVERITY logSeverity;
+  int getId() const;
+  int getLogType() const;
+  void setLogType(int severity);
+  qint64 getLogDateTime() const;
+  void setLogDateTime(qint64);
+  QString getLog() const;
+  void setLog(const QString &logMessage);
+  LOG_SEVERITY getLogSeverity() const;
+  void setLogSeverity(LOG_SEVERITY);
+  void determineLogSeverity();
+
+ private:
+  int id;
+  int logType;
+  qint64 logDateTime;
+  QString log;
+  LOG_SEVERITY logSeverity;
 };
 
 #endif //BSF_BAFALOG_H

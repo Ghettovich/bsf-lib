@@ -6,14 +6,13 @@
 #include <QtCore/QVector>
 #include <QtSql/QSqlDatabase>
 
-class ActionArduinoRepository
-{
+class ActionArduinoRepository {
 
-public:
-    ActionArduinoRepository(const QString & = "");
-    QVector<Action> getArduinoAction(int arduino_id);
+ public:
+  ActionArduinoRepository(const QString & = "");
+  QVector<Action> getArduinoAction(int arduino_id);
 
-private:
-    BsfDbconfig bsfDbConfig;
+ private:
+  BsfDbconfig bsfDbConfig;
 };
 #endif //BSF_ACTIONARDUINOREPO_H

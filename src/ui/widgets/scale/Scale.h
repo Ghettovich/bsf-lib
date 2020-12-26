@@ -1,8 +1,7 @@
 #ifndef SCALE_H
 #define SCALE_H
 
-namespace Ui
-{
+namespace Ui {
 class Scale;
 }
 
@@ -14,39 +13,37 @@ class Scale;
 #include <QTableWidgetItem>
 #include <QtWidgets/QWidget>
 
-class Scale: public RecipeStatusInterface
-{
-    Q_OBJECT
-    Q_INTERFACES(RecipeStatusInterface)
+class Scale : public RecipeStatusInterface {
+ Q_OBJECT
+  Q_INTERFACES(RecipeStatusInterface)
 
-public:
-    explicit Scale(MqttClient *_m_client);
-    virtual ~Scale();
-    void init();
+ public:
+  explicit Scale(MqttClient *_m_client);
+  virtual ~Scale();
+  void init();
 
-public slots:
-    void onUpdateIODevice(const WeightSensor *sensor) override;
+ public slots:
+  void onUpdateIODevice(const WeightSensor *sensor) override;
 
-private:
-    Ui::Scale *ui = nullptr;
-    MqttClient *m_client = nullptr;
-    IODevice *weightSensor = nullptr;
-    QTableWidgetItem *activeComponentTableWidget = nullptr;
-    Recipe configuredRecipe = Recipe(0);
-    Component activeComponent = Component(0);
+ private:
+  Ui::Scale *ui = nullptr;
+  MqttClient *m_client = nullptr;
+  IODevice *weightSensor = nullptr;
+  QTableWidgetItem *activeComponentTableWidget = nullptr;
+  Recipe configuredRecipe = Recipe(0);
+  Component activeComponent = Component(0);
 
-    void createRecipeComponentTableWidget();
-    void setQLcdNumberDisplay();
-    void updateComponentWidgetTable();
+  void createRecipeComponentTableWidget();
+  void setQLcdNumberDisplay();
+  void updateComponentWidgetTable();
 
-private slots:
-    void onClickPushButtonTare();
-    void onClickPushButtonClearRecipe();
-    void onClickPushButtonConfirmRecipe();
+ private slots:
+  void onClickPushButtonTare();
+  void onClickPushButtonClearRecipe();
+  void onClickPushButtonConfirmRecipe();
 
-signals:
-    void receivedComponent(const Component &component);
+ signals:
+  void receivedComponent(const Component &component);
 };
-
 
 #endif //SCALE_H

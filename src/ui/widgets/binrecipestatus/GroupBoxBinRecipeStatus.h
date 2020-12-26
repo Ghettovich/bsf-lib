@@ -2,7 +2,7 @@
 #define BSF_LIB_GROUPBOXBINRECIPESTATUS_H
 
 namespace Ui {
-    class GroupBoxBinRecipeStatus;
+class GroupBoxBinRecipeStatus;
 }
 
 #include <iodevice.h>
@@ -16,29 +16,28 @@ namespace Ui {
 
 class GroupBoxBinRecipeStatus : public RecipeStatusInterface {
 
-    Q_OBJECT
-    Q_INTERFACES(RecipeStatusInterface)
+ Q_OBJECT
+  Q_INTERFACES(RecipeStatusInterface)
 
-public:
-    explicit GroupBoxBinRecipeStatus(MqttClient *m_client);
-    virtual ~GroupBoxBinRecipeStatus();
+ public:
+  explicit GroupBoxBinRecipeStatus(MqttClient *m_client);
+  virtual ~GroupBoxBinRecipeStatus();
 
-public slots:
-    void onUpdateIODevice(const WeightSensor *sensor) override;
+ public slots:
+  void onUpdateIODevice(const WeightSensor *sensor) override;
 
-private:
-    Ui::GroupBoxBinRecipeStatus *ui = nullptr;
-    MqttClient *m_client = nullptr;
-    IODevice *scale1 = nullptr;
-    //IODevice *scaleBin = nullptr;
-    Recipe selectedRecipe = Recipe(0);
-    Component activeComponent = Component(0);
-    QTableWidgetItem *activeComponentTableWidget = nullptr;
+ private:
+  Ui::GroupBoxBinRecipeStatus *ui = nullptr;
+  MqttClient *m_client = nullptr;
+  IODevice *scale1 = nullptr;
+  //IODevice *scaleBin = nullptr;
+  Recipe selectedRecipe = Recipe(0);
+  Component activeComponent = Component(0);
+  QTableWidgetItem *activeComponentTableWidget = nullptr;
 
-    void createRecipeComponentTableWidget();
-    void updateComponentWidgetTable();
-    void setQLcdNumberDisplay();
+  void createRecipeComponentTableWidget();
+  void updateComponentWidgetTable();
+  void setQLcdNumberDisplay();
 };
-
 
 #endif //BSF_LIB_GROUPBOXBINRECIPESTATUS_H

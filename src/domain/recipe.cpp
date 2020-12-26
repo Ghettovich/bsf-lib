@@ -1,51 +1,45 @@
 #include "recipe.h"
 
 Recipe::Recipe(int id)
-    : id(id)
-{
+    : id(id) {
 }
 
-int Recipe::getId() const
-{
-    return id;
+int Recipe::getId() const {
+  return id;
 }
 
-const QString &Recipe::getDescription() const
-{
-    return description;
+const QString &Recipe::getDescription() const {
+  return description;
 }
 
-void Recipe::setDescription(const QString &_description)
-{
-    description = _description;
+void Recipe::setDescription(const QString &_description) {
+  description = _description;
 }
 
-void Recipe::updateWeightForComponent(int componentId, int weight)
-{
-    actualComponentMap.insert(componentId, weight);
+void Recipe::updateWeightForComponent(int componentId, int weight) {
+  actualComponentMap.insert(componentId, weight);
 }
-int Recipe::getTargetWeightForComponent(int componentId)
-{
-    int targetWeight = 0;
 
-    for(const auto &comp: componentList) {
-        if(comp.getComponentId() == componentId) {
-            targetWeight = comp.getTargetWeight();
-            break;
-        }
+int Recipe::getTargetWeightForComponent(int componentId) {
+  int targetWeight = 0;
+
+  for (const auto &comp: componentList) {
+    if (comp.getComponentId() == componentId) {
+      targetWeight = comp.getTargetWeight();
+      break;
     }
+  }
 
-    return targetWeight;
+  return targetWeight;
 }
-Component Recipe::getComponent(int componentId)
-{
-    for(auto &comp: componentList) {
-        if(comp.getComponentId() == componentId) {
-            return comp;
-        }
+
+Component Recipe::getComponent(int componentId) {
+  for (auto &comp: componentList) {
+    if (comp.getComponentId() == componentId) {
+      return comp;
     }
+  }
 
-
-    return Component(0);
+  return Component(0);
 }
 

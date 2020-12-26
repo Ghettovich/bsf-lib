@@ -13,7 +13,7 @@ set(dashboard_user_home "$ENV{HOME}")
 
 # Select the model (Nightly, Experimental, Continuous).
 if(NOT DEFINED dashboard_model)
-    set(dashboard_model Continuous)
+    set(dashboard_model Nightly)
 endif()
 if(NOT "${dashboard_model}" MATCHES "^(Nightly|Experimental|Continuous)$")
     message(FATAL_ERROR "dashboard_model must be Nightly, Experimental, or Continuous")

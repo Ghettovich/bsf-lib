@@ -2,41 +2,39 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/qsqlquerymodel.h>
 
-StateCodeRepository::StateCodeRepository(const QString &connection)
-{
-    if (!connection.isEmpty()) {
-        bsfDbConfig.setDatabaseName(connection);
-    }
+StateCodeRepository::StateCodeRepository(const QString &connection) {
+  if (!connection.isEmpty()) {
+    bsfDbConfig.setDatabaseName(connection);
+  }
 }
 
-StateCode StateCodeRepository::getStateCode(int stateCodeId)
-{
-    QString queryString = "SELECT id, message, status_message FROM state_code WHERE id =:id ";
+StateCode StateCodeRepository::getStateCode(int stateCodeId) {
+  QString queryString = "SELECT id, message, status_message FROM state_code WHERE id =:id ";
 
-    try {
-        QSqlDatabase db;
+  try {
+    QSqlDatabase db;
 
-        bsfDbConfig.setSqlDatabase(db);
+    bsfDbConfig.setSqlDatabase(db);
 
-        //setDefaultDatabase(db);
-        QSqlQuery query(db);
+    //setDefaultDatabase(db);
+    QSqlQuery query(db);
 
-        db.open();
-        query.prepare(queryString);
-        query.bindValue(":id", stateCodeId);
-        query.exec();
+    db.open();
+    query.prepare(queryString);
+    query.bindValue(":id", stateCodeId);
+    query.exec();
 
-        if (query.first()) {
-            StateCode stateCode = StateCode(query.value("id").toInt());
-            stateCode.setMessage(query.value("message").toString());
-            stateCode.setStatusMessage(query.value("status_message").toString());
+    if (query.first()) {
+      StateCode stateCode = StateCode(query.value("id").toInt());
+      stateCode.setMessage(query.value("message").toString());
+      stateCode.setStatusMessage(query.value("status_message").toString());
 
-            return stateCode;
-        }
+      return stateCode;
     }
-    catch (std::exception &e) {
-        printf("%s", e.what());
-    }
+  }
+  catch (std::exception &e) {
+    printf("%s", e.what());
+  }
 
-    return StateCode(-1);
+  return StateCode(-1);
 }

@@ -1,155 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>OperatorMqttClient</class>
- <widget class="QWidget" name="OperatorMqttClient">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>442</width>
-    <height>632</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>GroupBox</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEditHost"/>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelHost">
-        <property name="text">
-         <string>Host</string>
+    <class>OperatorMqttClient</class>
+    <widget class="QWidget" name="OperatorMqttClient">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>442</width>
+                <height>632</height>
+            </rect>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelPort">
-        <property name="text">
-         <string>Port</string>
+        <property name="windowTitle">
+            <string>Form</string>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEditPort"/>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="pushButtonConnect">
-        <property name="text">
-         <string>Connect</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+                <widget class="QGroupBox" name="groupBox">
+                    <property name="title">
+                        <string>GroupBox</string>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_3">
+                        <item row="0" column="1">
+                            <widget class="QLineEdit" name="lineEditHost"/>
+                        </item>
+                        <item row="0" column="0">
+                            <widget class="QLabel" name="labelHost">
+                                <property name="text">
+                                    <string>Host</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item row="1" column="0">
+                            <widget class="QLabel" name="labelPort">
+                                <property name="text">
+                                    <string>Port</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item row="1" column="1">
+                            <widget class="QLineEdit" name="lineEditPort"/>
+                        </item>
+                        <item row="1" column="2">
+                            <widget class="QPushButton" name="pushButtonConnect">
+                                <property name="text">
+                                    <string>Connect</string>
+                                </property>
+                            </widget>
+                        </item>
+                    </layout>
+                </widget>
+            </item>
+            <item>
+                <widget class="QGroupBox" name="groupBoxSubscriptions">
+                    <property name="title">
+                        <string>Subscriptions</string>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout">
+                        <item row="1" column="0">
+                            <widget class="QLabel" name="labelSubscriptionsQos">
+                                <property name="text">
+                                    <string>QoS</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item row="0" column="0">
+                            <widget class="QLabel" name="labelTopic">
+                                <property name="text">
+                                    <string>Topic</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item row="1" column="1">
+                            <widget class="QSpinBox" name="spinBoxSubscriptionQos"/>
+                        </item>
+                        <item row="0" column="1">
+                            <widget class="QLineEdit" name="lineEditTopic"/>
+                        </item>
+                        <item row="1" column="2">
+                            <widget class="QPushButton" name="pushButtonSubscribe">
+                                <property name="text">
+                                    <string>Subscribe</string>
+                                </property>
+                            </widget>
+                        </item>
+                    </layout>
+                </widget>
+            </item>
+            <item>
+                <widget class="QGroupBox" name="groupBoxMessages">
+                    <property name="title">
+                        <string>Messages</string>
+                    </property>
+                    <layout class="QGridLayout" name="gridLayout_2">
+                        <item row="0" column="0" colspan="2">
+                            <widget class="QLabel" name="labelContent">
+                                <property name="text">
+                                    <string>Content</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item row="0" column="2">
+                            <widget class="QLineEdit" name="lineEditMessage"/>
+                        </item>
+                        <item row="1" column="0">
+                            <widget class="QLabel" name="labelMessageQos">
+                                <property name="text">
+                                    <string>QoS</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item row="1" column="1" colspan="2">
+                            <widget class="QSpinBox" name="spinBoxMessageQos"/>
+                        </item>
+                        <item row="2" column="0">
+                            <widget class="QLabel" name="labelRetain">
+                                <property name="text">
+                                    <string>Retain</string>
+                                </property>
+                            </widget>
+                        </item>
+                        <item row="2" column="1" colspan="2">
+                            <widget class="QCheckBox" name="checkBoxRetain">
+                                <property name="text">
+                                    <string/>
+                                </property>
+                            </widget>
+                        </item>
+                        <item row="3" column="0" colspan="3">
+                            <widget class="QPushButton" name="pushButtonPublish">
+                                <property name="text">
+                                    <string>Publish</string>
+                                </property>
+                            </widget>
+                        </item>
+                    </layout>
+                </widget>
+            </item>
+            <item>
+                <widget class="QGroupBox" name="groupBoxLog">
+                    <property name="title">
+                        <string>GroupBox</string>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_2">
+                        <item>
+                            <widget class="QTextEdit" name="textEdit"/>
+                        </item>
+                    </layout>
+                </widget>
+            </item>
+        </layout>
     </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBoxSubscriptions">
-     <property name="title">
-      <string>Subscriptions</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelSubscriptionsQos">
-        <property name="text">
-         <string>QoS</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="labelTopic">
-        <property name="text">
-         <string>Topic</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="spinBoxSubscriptionQos"/>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEditTopic"/>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="pushButtonSubscribe">
-        <property name="text">
-         <string>Subscribe</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBoxMessages">
-     <property name="title">
-      <string>Messages</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0" colspan="2">
-       <widget class="QLabel" name="labelContent">
-        <property name="text">
-         <string>Content</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLineEdit" name="lineEditMessage"/>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelMessageQos">
-        <property name="text">
-         <string>QoS</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1" colspan="2">
-       <widget class="QSpinBox" name="spinBoxMessageQos"/>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="labelRetain">
-        <property name="text">
-         <string>Retain</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1" colspan="2">
-       <widget class="QCheckBox" name="checkBoxRetain">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="3">
-       <widget class="QPushButton" name="pushButtonPublish">
-        <property name="text">
-         <string>Publish</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="groupBoxLog">
-     <property name="title">
-      <string>GroupBox</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QTextEdit" name="textEdit"/>
-      </item>
-     </layout>
-    </widget>
-   </item>
-  </layout>
- </widget>
- <resources/>
- <connections/>
+    <resources/>
+    <connections/>
 </ui>

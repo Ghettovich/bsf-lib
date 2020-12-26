@@ -8,7 +8,7 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 
 if (Qt5Widgets_FOUND)
 
-# HEADER LIST
+    # HEADER LIST
     set(HEADER_LIST
             transformpayload.h)
 
@@ -30,7 +30,7 @@ if (Qt5Widgets_FOUND)
             )
 
 else (!Qt5Widgets_FOUND)
-# OOPS
-message("could not find qt widgets")
+    # OOPS
+    message("could not find qt widgets")
 endif (Qt5Widgets_FOUND)
 

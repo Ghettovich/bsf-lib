@@ -5,16 +5,14 @@
 #include <bsfdatabaseconfig.h>
 #include <QtSql/QSqlDatabase>
 
-class StateCodeRepository
-{
+class StateCodeRepository {
 
-public:
-    explicit StateCodeRepository(const QString & = "");
-    StateCode getStateCode(int);
+ public:
+  explicit StateCodeRepository(const QString & = "");
+  StateCode getStateCode(int);
 
-private:
-    BsfDbconfig bsfDbConfig;
+ private:
+  BsfDbconfig bsfDbConfig;
 };
-
 
 #endif //BSF_STATECODEREPO_H

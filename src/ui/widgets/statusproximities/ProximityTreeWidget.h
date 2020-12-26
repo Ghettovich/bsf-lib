@@ -15,24 +15,23 @@ class ProximityTreeWidget;
 #include <QtWidgets/QWidget>
 #include <fonts/MaterialRegular.h>
 
-class ProximityTreeWidget: public IOWidgetStatusInterface {
+class ProximityTreeWidget : public IOWidgetStatusInterface {
 
-Q_OBJECT
-Q_INTERFACES(IOWidgetStatusInterface)
+ Q_OBJECT
+  Q_INTERFACES(IOWidgetStatusInterface)
 
-public:
-    ProximityTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
+ public:
+  ProximityTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
 
-public slots:
-    void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
+ public slots:
+  void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
-private:
-    const QStringList &headers;
-    const QList<QTreeWidgetItem *> &treeWidgets;
-    Ui::ProximityTreeWidget *ui = nullptr;
-    MaterialRegular materialRegular;
-    void initForm();
+ private:
+  const QStringList &headers;
+  const QList<QTreeWidgetItem *> &treeWidgets;
+  Ui::ProximityTreeWidget *ui = nullptr;
+  MaterialRegular materialRegular;
+  void initForm();
 };
-
 
 #endif //PROXIMITYTREEWIDGET_H

@@ -6,17 +6,16 @@
 #include <QtCore/QVector>
 #include <QtSql/QSqlDatabase>
 
-class LogRepository
-{
+class LogRepository {
 
-public:
-    LogRepository(const QString &connection = "");
-    QVector<BafaLog> createBsfLogList();
-    void addLog(const QString &logMsg, BafaLog::LOG_SEVERITY logSeverity);
+ public:
+  LogRepository(const QString &connection = "");
+  QVector<BafaLog> createBsfLogList();
+  void addLog(const QString &logMsg, BafaLog::LOG_SEVERITY logSeverity);
 
-private:
-    BsfDbconfig bsfDbConfig;
-    void insert(BafaLog &);
+ private:
+  BsfDbconfig bsfDbConfig;
+  void insert(BafaLog &);
 
 };
 #endif //BSF_LOGREPO_H

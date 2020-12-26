@@ -9,23 +9,21 @@ class SubscriptionWindow;
 #include <QtMqtt/QMqttMessage>
 #include <QtMqtt/QMqttSubscription>
 
-class SubscriptionWindow : public QWidget
-{
+class SubscriptionWindow : public QWidget {
 
-Q_OBJECT
+ Q_OBJECT
 
-public:
-    SubscriptionWindow(QMqttSubscription *m_sub);
-    virtual ~SubscriptionWindow();
+ public:
+  SubscriptionWindow(QMqttSubscription *m_sub);
+  virtual ~SubscriptionWindow();
 
-public slots:
-    void onUpdateMessage(const QMqttMessage &msg);
-    void onUpdateStatus(QMqttSubscription::SubscriptionState state);
+ public slots:
+  void onUpdateMessage(const QMqttMessage &msg);
+  void onUpdateStatus(QMqttSubscription::SubscriptionState state);
 
-private:
-    Ui::SubscriptionWindow *ui = nullptr;
-    QMqttSubscription *m_sub;
+ private:
+  Ui::SubscriptionWindow *ui = nullptr;
+  QMqttSubscription *m_sub;
 };
-
 
 #endif //SUBSCRIPTIONWINDOW_H

@@ -2,7 +2,7 @@
 #define BSF_LIB_GROUPBOXRECIPECONFIG_H
 
 namespace Ui {
-    class GroupBoxRecipeConfig;
+class GroupBoxRecipeConfig;
 }
 
 #include <recipe.h>
@@ -13,24 +13,23 @@ namespace Ui {
 
 class GroupBoxRecipeConfig : public QWidget {
 
-Q_OBJECT
+ Q_OBJECT
 
-public:
-    explicit GroupBoxRecipeConfig(MqttClient *_m_client);
-    virtual ~GroupBoxRecipeConfig();
+ public:
+  explicit GroupBoxRecipeConfig(MqttClient *_m_client);
+  virtual ~GroupBoxRecipeConfig();
 
-private:
-    Recipe selectedRecipe;
-    MqttClient *m_client;
-    Ui::GroupBoxRecipeConfig *ui = nullptr;
-    void init();
-    void createRecipeComboBox();
-    void createRecipeComponentsTable();
+ private:
+  Recipe selectedRecipe;
+  MqttClient *m_client;
+  Ui::GroupBoxRecipeConfig *ui = nullptr;
+  void init();
+  void createRecipeComboBox();
+  void createRecipeComponentsTable();
 
-private slots:
-    void onChangeRecipeComboBox(int index);
-    void onClickButtonPublishRecipe();
+ private slots:
+  void onChangeRecipeComboBox(int index);
+  void onClickButtonPublishRecipe();
 };
-
 
 #endif //BSF_LIB_GROUPBOXRECIPECONFIG_H

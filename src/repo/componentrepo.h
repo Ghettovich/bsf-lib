@@ -6,17 +6,15 @@
 #include <QtCore/QVector>
 #include <QtSql/QSqlDatabase>
 
-class ComponentRepo
-{
+class ComponentRepo {
 
-public:
-    ComponentRepo(const QString &connection = "");
-    Component getComponentFromRecipe(int recipeId, int componentId);
-    QVector<Component> getComponentsFromRecipe(int);
+ public:
+  ComponentRepo(const QString &connection = "");
+  Component getComponentFromRecipe(int recipeId, int componentId);
+  QVector<Component> getComponentsFromRecipe(int);
 
-private:
-    BsfDbconfig bsfDbConfig;
+ private:
+  BsfDbconfig bsfDbConfig;
 };
-
 
 #endif //BSF_COMPONENTREPO_H

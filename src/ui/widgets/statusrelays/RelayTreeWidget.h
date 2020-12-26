@@ -15,25 +15,24 @@ class RelayTreeWidget;
 #include <QtWidgets/QWidget>
 #include <fonts/MaterialRegular.h>
 
-class RelayTreeWidget: public IOWidgetStatusInterface {
+class RelayTreeWidget : public IOWidgetStatusInterface {
 
-Q_OBJECT
-Q_INTERFACES(IOWidgetStatusInterface)
+ Q_OBJECT
+  Q_INTERFACES(IOWidgetStatusInterface)
 
-public:
-    RelayTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
+ public:
+  RelayTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
 
-public slots:
-    void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
+ public slots:
+  void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
-private:
-    const QStringList &headers;
-    const QList<QTreeWidgetItem *> &treeWidgets;
-    Ui::RelayTreeWidget *ui = nullptr;
-    MaterialRegular materialRegular;
+ private:
+  const QStringList &headers;
+  const QList<QTreeWidgetItem *> &treeWidgets;
+  Ui::RelayTreeWidget *ui = nullptr;
+  MaterialRegular materialRegular;
 
-    void initForm();
+  void initForm();
 };
-
 
 #endif //RELAYTREEWIDGET_H

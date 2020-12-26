@@ -1,8 +1,7 @@
 #ifndef OPERATORMQTTCLIENT_H
 #define OPERATORMQTTCLIENT_H
 
-namespace Ui
-{
+namespace Ui {
 class OperatorMqttClient;
 }
 
@@ -10,28 +9,26 @@ class OperatorMqttClient;
 #include <QtWidgets/QWidget>
 #include <QtMqtt/QtMqtt>
 
-class OperatorMqttClient: public QWidget
-{
+class OperatorMqttClient : public QWidget {
 
-Q_OBJECT
+ Q_OBJECT
 
-public:
-    OperatorMqttClient(QWidget *parent, const Qt::WindowFlags &f);
-    virtual ~OperatorMqttClient();
+ public:
+  OperatorMqttClient(QWidget *parent, const Qt::WindowFlags &f);
+  virtual ~OperatorMqttClient();
 
-public slots:
-    void onUpdateLogStateChange();
-    void onBrokerDisconnected();
+ public slots:
+  void onUpdateLogStateChange();
+  void onBrokerDisconnected();
 
-private:
-    Ui::OperatorMqttClient *ui = nullptr;
-    QMqttClient *m_client;
+ private:
+  Ui::OperatorMqttClient *ui = nullptr;
+  QMqttClient *m_client;
 
-private slots:
-    void onPushButtonConnectClicked();
-    void onPushButtonSubscribeClicked();
-    void onPushButtonPublishClicked();
+ private slots:
+  void onPushButtonConnectClicked();
+  void onPushButtonSubscribeClicked();
+  void onPushButtonPublishClicked();
 };
-
 
 #endif //OPERATORMQTTCLIENT_H

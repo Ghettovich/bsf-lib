@@ -75,6 +75,6 @@ if (Qt5Widgets_FOUND)
             )
 
 else (!Qt5Widgets_FOUND)
-# OOPS
-message("could not find qt widgets")
+    # OOPS
+    message("could not find qt widgets")
 endif (Qt5Widgets_FOUND)
