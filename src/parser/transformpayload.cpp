@@ -51,6 +51,7 @@ bool TransformPayload::validateJsonDocument(QJsonDocument &jsonDocument) {
     return false;
   }
 
+  delete parseError;
   return true;
 }
 

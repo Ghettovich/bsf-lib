@@ -164,6 +164,7 @@ IODeviceRepository::getArduinoIODeviceList(int arduinoId,
           break;
         case IODeviceType::UNKOWN:printf("\nunknown device type in method getArduinoIODeviceList");
           break;
+        case IODeviceType::ARDUINO:break;
       }
 
       db.close();
