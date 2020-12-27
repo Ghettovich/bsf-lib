@@ -12,7 +12,7 @@ class RecipeTest : public QObject {
 private slots:
     void initTestCase();
     void isRecipeTargetMet1();
-    //void isRecipeTargetMet2();
+    void isRecipeTargetMet2();
     void cleanupTestCase();
 
 };

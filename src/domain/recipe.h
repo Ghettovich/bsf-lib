@@ -2,7 +2,6 @@
 #define BSF_RECIPE_H
 
 #include "component.h"
-#include <QtCore/QMap>
 #include <QtCore/QVector>
 #include <QtCore/QString>
 
@@ -13,13 +12,11 @@ class Recipe {
   int getId() const;
   const QString &getDescription() const;
   void setDescription(const QString &_description);
-  QVector<Component> componentList;
-  QMap<int, int> actualComponentMap;
-  void updateWeightForComponent(int, int);
   int getTargetWeightForComponent(int componentId);
   Component getComponent(int componentId);
   void updateComponentWeight(int componentId, int weight);
   bool isRecipeTargetMet();
+  QVector<Component> componentList;
 
  private:
   int id = 0;

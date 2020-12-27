@@ -1,5 +1,6 @@
 #include "tst_recipe.h"
 #include <recipe.h>
+#include <reciperepo.h>
 
 DECLARE_TEST_RECIPE(RecipeTest)
 
@@ -12,43 +13,46 @@ void RecipeTest::initTestCase() {
  * */
 void RecipeTest::isRecipeTargetMet1() {
     int recipeId = 1;
-    Recipe recipe = Recipe(1);
+    QDir dir(".");
+    const QString testConnection = dir.absolutePath().append("/resource/database/bsf.db");
+    RecipeRepository recipeRepository(testConnection);
+    Recipe recipe = recipeRepository.getRecipeWithComponents(recipeId);
 
-    recipe.componentList.append(Component(0));
+    recipe.updateComponentWeight(1, 1000);
+    recipe.updateComponentWeight(2, 500);
 
-    recipe.updateWeightForComponent(1, 1000);
-    recipe.updateWeightForComponent(2, 500);
+    QVERIFY(!recipe.isRecipeTargetMet());
 
-//    QVERIFY(!recipe.isRecipeTargetMet());
-//
-//    recipe.updateWeightForComponent(3, 50);
+    recipe.updateComponentWeight(3, 50);
 
-    QVERIFY(!recipe.componentList.empty());
+    QVERIFY(recipe.isRecipeTargetMet());
 }
 
-//void RecipeTest::isRecipeTargetMet2() {
-//    int recipeId = 1;
-//    RecipeRepository recipeRepository;
-//    Recipe recipe = recipeRepository.getRecipeWithComponents(recipeId);
-//
-//    recipe.updateWeightForComponent(3, 100);
-//    recipe.updateWeightForComponent(1, 450);
-//
-//    QVERIFY(!recipe.isRecipeTargetMet());
-//
-//    recipe.updateWeightForComponent(2, 2000);
-//
-//    QVERIFY(!recipe.isRecipeTargetMet());
-//
-//    recipe.updateWeightForComponent(3, 50);
-//    recipe.updateWeightForComponent(2, 500);
-//
-//    QVERIFY(!recipe.isRecipeTargetMet());
-//
-//    recipe.updateWeightForComponent(1, 1000);
-//
-//    QVERIFY(recipe.isRecipeTargetMet());
-//}
+void RecipeTest::isRecipeTargetMet2() {
+  int recipeId = 1;
+  QDir dir(".");
+  const QString testConnection = dir.absolutePath().append("/resource/database/bsf.db");
+  RecipeRepository recipeRepository(testConnection);
+  Recipe recipe = recipeRepository.getRecipeWithComponents(recipeId);
+
+    recipe.updateComponentWeight(3, 100);
+    recipe.updateComponentWeight(1, 450);
+
+    QVERIFY(!recipe.isRecipeTargetMet());
+
+    recipe.updateComponentWeight(2, 2000);
+
+    QVERIFY(!recipe.isRecipeTargetMet());
+
+    recipe.updateComponentWeight(3, 50);
+    recipe.updateComponentWeight(2, 500);
+
+    QVERIFY(!recipe.isRecipeTargetMet());
+
+    recipe.updateComponentWeight(1, 1000);
+
+    QVERIFY(recipe.isRecipeTargetMet());
+}
 
 void RecipeTest::cleanupTestCase() {
 }

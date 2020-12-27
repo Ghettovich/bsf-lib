@@ -3,6 +3,8 @@
 #include <reciperepo.h>
 #include <weightcensor.h>
 #include <BsfWidgetEnum.h>
+#include <QMessageBox>
+#include <QErrorMessage>
 
 Scale::Scale(MqttClient *_m_client) :
     ui(new Ui::Scale), m_client(_m_client) {
@@ -144,7 +146,13 @@ void Scale::updateComponentWidgetTable() {
 
 void Scale::onClickPushButtonTare() {
   if(!isTareActive) {
-    m_client->publishTareScale(false);
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, tr("Tare scale"),
+                                  "Reset scale and tare scale?",
+                                  QMessageBox::Yes | QMessageBox::Cancel);
+    if (reply == QMessageBox::Yes) {
+      m_client->publishTareScale(false);
+    }
   }
   else {
     isTareActive = false;
