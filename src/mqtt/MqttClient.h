@@ -22,6 +22,7 @@ class MqttClient : public QObject {
   void connectToHost();
   void publishToggleRelay(IODevice *iodevice);
   void publishConfirmComponent(const Component &component);
+  void publishTareScale(bool confirm, int calibrationWeight = 1000);
   void publishRecipe(const Recipe &recipe, const Component &component = Component(0));
   void addIODeviceSubscription(const QString &topic, quint8 QoS, QWidget *widget);
   void addRecipeDataSubscription(quint8 QoS, QWidget *widget);
@@ -44,6 +45,7 @@ class MqttClient : public QObject {
   const QString recipeDataTopic = "/recipe/data";
   const QString proximityLiftTopic = "/proximity/lift";
   const QString relayStatesTopic = "/relay/states";
+  const QString tareScaleTopic = "/tare/scale";
 
   void createIODeviceWidgetSubscriptions(QWidget *widget);
   void createRecipeWidgetSubscriptions(QWidget *);

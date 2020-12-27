@@ -107,6 +107,9 @@ void MainWindow::createScale_1_Widget() {
 
   connect(qobject_cast<Scale *>(scale), &Scale::receivedComponent,
           this, &MainWindow::onReceivedConfiguredComponent);
+
+  connect(qobject_cast<Scale *>(scale), &Scale::scaleInTareMode,
+          this, &MainWindow::onReceivedChangeIsScaleInTareMode);
 }
 
 void MainWindow::onCreateMqttClientSubscriptions() {
@@ -267,6 +270,28 @@ void MainWindow::updateRecipeComponentsTable(const Component &component) {
       activeCompTreeWidgetItem = ui->componentTreeWidget->topLevelItem(i);
       break;
     }
+  }
+}
+
+void MainWindow::onReceivedChangeIsScaleInTareMode(bool isInTareMode) {
+  if(isInTareMode) {
+    ui->pushButtonConfirm->setDisabled(true);
+    ui->pushButtonComponentDown->setDisabled(true);
+    ui->pushButtonComponentUp->setDisabled(true);
+    ui->pushButtonRecipeChange->setDisabled(true);
+    ui->pushButtonRecipeUp->setDisabled(true);
+    ui->pushButtonRecipeDown->setDisabled(true);
+    ui->recipeTreeWidget->setDisabled(true);
+    ui->componentTreeWidget->setDisabled(true);
+  } else {
+    ui->pushButtonConfirm->setDisabled(false);
+    ui->pushButtonComponentDown->setDisabled(false);
+    ui->pushButtonComponentUp->setDisabled(false);
+    ui->pushButtonRecipeChange->setDisabled(false);
+    ui->pushButtonRecipeUp->setDisabled(false);
+    ui->pushButtonRecipeDown->setDisabled(false);
+    ui->recipeTreeWidget->setDisabled(false);
+    ui->componentTreeWidget->setDisabled(false);
   }
 }
 

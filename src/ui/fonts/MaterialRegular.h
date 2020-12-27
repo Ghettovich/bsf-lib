@@ -22,6 +22,9 @@ class MaterialRegular {
   QIcon arrowCircleUpIcon(const QColor &baseColor = Qt::lightGray);
   QIcon updateIcon(const QColor &baseColor = Qt::lightGray);
   QIcon updateDisabledIcon(const QColor &baseColor = Qt::lightGray);
+  QIcon syncIcon(const QColor &baseColor = Qt::lightGray);
+  QIcon syncProblemIcon(const QColor &baseColor = Qt::lightGray);
+  QIcon clearIcon(const QColor &baseColor = Qt::lightGray);
 
  private:
   const QString familyName = "Material Design";
@@ -38,6 +41,9 @@ class MaterialRegular {
   const QChar arrowCircleUp = 0xf182;
   const QChar update = 0xe923;
   const QChar updateDisabled = 0xe075;
+  const QChar sync = 0xe627;
+  const QChar syncProblem = 0xe629;
+  const QChar clear = 0xe14c;
 };
 
 #endif //MATERIALREGULAR_H

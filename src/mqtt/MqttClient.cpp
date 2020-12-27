@@ -67,6 +67,21 @@ void MqttClient::publishConfirmComponent(const Component &component) {
   }
 }
 
+void MqttClient::publishTareScale(bool confirm, int calibrationWeight) {
+  quint8 QoS = 1;
+  QJsonObject jsonPayload;
+  jsonPayload["tare"] = confirm;
+  jsonPayload["weight"] = calibrationWeight;
+
+  doc = QJsonDocument(jsonPayload);
+
+  if (m_client->publish(tareScaleTopic,
+                        doc.toJson(),
+                        QoS,
+                        false) == -1) {
+  }
+}
+
 void MqttClient::publishRecipe(const Recipe &recipe, const Component &component) {
   quint8 QoS = 1;
   QJsonObject jsonPayloadObject;

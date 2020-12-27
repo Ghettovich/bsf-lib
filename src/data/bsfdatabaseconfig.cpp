@@ -1,11 +1,14 @@
 #include "bsfdatabaseconfig.h"
+#include <QDir>
+#include <QDebug>
 
 BsfDbconfig::BsfDbconfig() {
 }
 
 void BsfDbconfig::initDatabaseConnection() {
   if (databaseName.isEmpty()) {
-    databaseName = defaultDatabaseName;
+    QDir dir(".");
+    databaseName = dir.absolutePath().append("/bsf.db");
   }
 }
 

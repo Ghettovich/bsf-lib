@@ -30,11 +30,14 @@ class Scale : public RecipeStatusInterface {
   MqttClient *m_client = nullptr;
   IODevice *weightSensor = nullptr;
   QTableWidgetItem *activeComponentTableWidget = nullptr;
+  MaterialRegular material;
   Recipe configuredRecipe = Recipe(0);
   Component activeComponent = Component(0);
+  bool isTareActive = false;
 
   void createRecipeComponentTableWidget();
   void setQLcdNumberDisplay();
+  void setPushButtonConfirmRecipe();
   void updateComponentWidgetTable();
 
  private slots:
@@ -44,6 +47,7 @@ class Scale : public RecipeStatusInterface {
 
  signals:
   void receivedComponent(const Component &component);
+  void scaleInTareMode(bool isInTareMode);
 };
 
 #endif //SCALE_H

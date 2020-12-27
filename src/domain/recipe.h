@@ -18,6 +18,8 @@ class Recipe {
   void updateWeightForComponent(int, int);
   int getTargetWeightForComponent(int componentId);
   Component getComponent(int componentId);
+  void updateComponentWeight(int componentId, int weight);
+  bool isRecipeTargetMet();
 
  private:
   int id = 0;

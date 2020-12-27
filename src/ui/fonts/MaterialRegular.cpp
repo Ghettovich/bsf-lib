@@ -51,3 +51,15 @@ QIcon MaterialRegular::updateIcon(const QColor &baseColor) {
 QIcon MaterialRegular::updateDisabledIcon(const QColor &baseColor) {
   return QFontIcon::icon(updateDisabled, baseColor, familyName);
 }
+
+QIcon MaterialRegular::syncIcon(const QColor &baseColor) {
+  return QFontIcon::icon(sync, baseColor, familyName);
+}
+
+QIcon MaterialRegular::syncProblemIcon(const QColor &baseColor) {
+  return QFontIcon::icon(syncProblem, baseColor, familyName);
+}
+
+QIcon MaterialRegular::clearIcon(const QColor &baseColor) {
+  return QFontIcon::icon(clear, baseColor, familyName);
+}

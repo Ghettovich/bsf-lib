@@ -1,5 +1,6 @@
 #include "tst_actionarduinorepo.h"
 #include <QtTest/QtTest>
+#include <QDir>
 #include <repo/actionarduinorepo.h>
 #include <domain/action.h>
 

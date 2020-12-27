@@ -58,6 +58,7 @@ class MainWindow : public QMainWindow {
   void onCreateMqttClientSubscriptions();
   void onRecipeTreeWidgetChanged();
   void onReceivedConfiguredComponent(const Component &component);
+  void onReceivedChangeIsScaleInTareMode(bool isInTareMode);
 
 };
 #endif // MAINWINDOW_H

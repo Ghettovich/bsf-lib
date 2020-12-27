@@ -16,10 +16,6 @@ void Recipe::setDescription(const QString &_description) {
   description = _description;
 }
 
-void Recipe::updateWeightForComponent(int componentId, int weight) {
-  actualComponentMap.insert(componentId, weight);
-}
-
 int Recipe::getTargetWeightForComponent(int componentId) {
   int targetWeight = 0;
 
@@ -41,5 +37,23 @@ Component Recipe::getComponent(int componentId) {
   }
 
   return Component(0);
+}
+
+bool Recipe::isRecipeTargetMet() {
+  for (const auto &comp: componentList) {
+    if(!comp.isTargetMet()) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+void Recipe::updateComponentWeight(int componentId, int weight) {
+  for (auto &comp: componentList) {
+    if (comp.getComponentId() == componentId) {
+      comp.setCurrentWeight(weight);
+    }
+  }
 }
 
