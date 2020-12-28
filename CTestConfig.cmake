@@ -17,7 +17,13 @@ if(NOT "${dashboard_model}" MATCHES "^(Nightly|Experimental|Continuous)$")
 endif()
 
 set(CTEST_PROJECT_NAME "bsf-lib")
-set(CTEST_NIGHTLY_START_TIME "20:53:00 UTC")
+set(CTEST_NIGHTLY_START_TIME "22:00:00 UTC")
+
+#set(WITH_MEMCHECK TRUE)
+#set(WITH_COVERAGE TRUE)
+
+#find_program(CTEST_GIT_COMMAND NAMES git)
+#find_program(CTEST_COVERAGE_COMMAND NAMES gcov)
 
 set(CTEST_DROP_METHOD "http")
 set(CTEST_DROP_SITE "192.168.178.5:8082/cdash")
