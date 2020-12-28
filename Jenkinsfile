@@ -1,29 +1,22 @@
 pipeline {
   agent any
-  triggers {
-    cron('H */4 * * 1-5')
-  }
   stages {
     stage('Configure') {
       steps {
-        dir('build') {
-          sh 'git credentialsId: 'd29ef267-2eb6-437f-9b79-b1cb33a6a464', url: 'https://github.com/Ghettovich/bsf-lib.git''
-          sh 'git fetch'
-          sh 'cmake arguments: '-DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage', installation: 'InSearchPath', workingDir: 'build''
-        }
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'd29ef267-2eb6-437f-9b79-b1cb33a6a464', url: 'https://github.com/Ghettovich/bsf-lib']]])
       }
     }
     stage('Build') {
       steps {
         dir('build') {
-          sh 'cmakeBuild buildDir: 'build', buildType: 'Debug', cleanBuild: true, generator: 'Unix Makefiles', installation: 'InSearchPath', sourceDir: 'https://github.com/Ghettovich/bsf-lib.git', steps: [[withCmake: true]]''
+          cmakeBuild buildDir: 'build', buildType: 'Debug', cleanBuild: true, installation: 'InSearchPath', steps: [[withCmake: true]]
         }
       }
     }
     stage('Test') {
       steps {
         dir('build') {
-          sh 'ctest -T test -D Experimental Test  --no-compress-output'
+          ctest arguments: '-T test -D Experimental Test --no-compress-output', installation: 'InSearchPath'
         }
       }
     }
