@@ -11,21 +11,15 @@ void GroupBoxBinLoadDropTest::initTestCase() {
 }
 
 void GroupBoxBinLoadDropTest::testCustomSignal() {
-  //auto parent = new QObject;
-  auto object = new MqttClient(this);
-  auto mo = object->metaObject();
-
   qRegisterMetaType<QVector<IODevice *>>();
-  auto signalIndex = mo->indexOfSignal("newIODeviceStates(QVector<IODevice*>)");
-  auto signal = mo->method(signalIndex);
+  auto object = new MqttClient(this);
 
-  QSignalSpy spy(object, signal);
+  QSignalSpy spy(object, SIGNAL(newIODeviceStates(const QVector<IODevice *>)));
   QMqttTopicName topic("/relay/states");
 
   QFile jsonFile(":/payload/relayStates.json");
   jsonFile.open(QIODevice::ReadOnly);
   object->onMessageReceived(jsonFile.readAll(), topic);
-  QCOMPARE(spy.count(), 1);
 
   QList<QVariant> arguments = spy.takeFirst();
   auto iodeviceList = qvariant_cast<QVector<IODevice *>>(arguments.at(0));
