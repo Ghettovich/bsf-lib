@@ -8,11 +8,16 @@
 #include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
 #include <widgets/interfaces/RecipeStatusInterface.h>
 
-MqttClient::MqttClient(QObject *parent)
+MqttClient::MqttClient(QObject *parent, const QString& host)
     : QObject(parent) {
   m_client = new QMqttClient(this);
-  m_client->setHostname("localhost");
   m_client->setPort(1883);
+
+  if(!host.isEmpty()) {
+    m_client->setHostname(host);
+  } else {
+    m_client->setHostname("localhost");
+  }
 
   connect(m_client, &QMqttClient::stateChanged, this, &MqttClient::onStateChanged);
   connect(m_client, &QMqttClient::disconnected, this, &MqttClient::onBrokerDisconnected);
@@ -210,26 +215,26 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
     emit newDataForScale(weightSensor);
   }
 
-  const QString content = QDateTime::currentDateTime().toString()
-      + QLatin1String(" Received Topic: ")
-      + topic.name()
-      + QLatin1String(" Message: ")
-      + message
-      + QLatin1Char('\n');
-  qDebug() << content;
+//  const QString content = QDateTime::currentDateTime().toString()
+//      + QLatin1String(" Received Topic: ")
+//      + topic.name()
+//      + QLatin1String(" Message: ")
+//      + message
+//      + QLatin1Char('\n');
+//  qDebug() << content;
 }
 
 void MqttClient::createRecipeWidgetSubscriptions(QWidget *widget) {
-  RecipeStatusInterface *recipeStatusInterface =
-      qobject_cast<RecipeStatusInterface *>(widget);
+  auto recipeStatusInterface =
+      dynamic_cast<RecipeStatusInterface *>(widget);
 
   connect(this, &MqttClient::newDataForScale,
           recipeStatusInterface, &RecipeStatusInterface::onUpdateIODevice);
 }
 
 void MqttClient::createIODeviceWidgetSubscriptions(QWidget *widget) {
-  IOWidgetStatusInterface *widgetDeviceStatusInterface =
-      qobject_cast<IOWidgetStatusInterface *>(widget);
+  auto widgetDeviceStatusInterface =
+      dynamic_cast<IOWidgetStatusInterface *>(widget);
 
   connect(this, &MqttClient::newIODeviceStates,
           widgetDeviceStatusInterface, &IOWidgetStatusInterface::onUpdateIODevices);

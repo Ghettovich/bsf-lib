@@ -18,7 +18,7 @@ class MqttClient : public QObject {
  Q_OBJECT
 
  public:
-  explicit MqttClient(QObject *parent);
+  explicit MqttClient(QObject *parent, const QString& host = "localhost");
   void connectToHost();
   void publishToggleRelay(IODevice *iodevice);
   void publishConfirmComponent(const Component &component);

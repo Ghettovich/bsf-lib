@@ -84,6 +84,9 @@ public:
 #define DECLARE_TEST_RECIPE_REPO(className) static Test<className> t("RecipeRepoTest");
 #define DECLARE_TEST_STATECODE_REPO(className) static Test<className> t("StateCodeRepoTest");
 
+// UI Widgets
+#define DECLARE_TEST_GROUPBOX_BINLOADDROP(className) static Test<className> t("GroupBoxBinLoadDropTest");
+
 #define TEST_MAIN \
  int main(int argc, char *argv[]) \
  {                \

@@ -19,8 +19,10 @@ if (Qt5Widgets_FOUND)
     add_library(srcTestLib SHARED "")
 
     add_subdirectory(domain)
+    add_subdirectory(mqtt)
     add_subdirectory(parser)
     add_subdirectory(repo)
+    add_subdirectory(ui)
 
     # TARGET SOURCES
     add_executable(BsfTest

@@ -19,8 +19,12 @@ GroupBoxBinRecipeStatus::~GroupBoxBinRecipeStatus() {
 
 void GroupBoxBinRecipeStatus::onUpdateIODevice(const WeightSensor *sensor) {
   if (scale1->getId() == sensor->getId()) {
+    if(sensor->getComponent().getComponentId() == 0 || sensor->getComponent().getRecipeId() == 0) {
+      // in tare mode
+      return;
+    }
 
-    if (sensor->getComponent().getRecipeId() != selectedRecipe.getId()) {
+    else if (sensor->getComponent().getRecipeId() != selectedRecipe.getId()) {
       RecipeRepository recipeRepository;
       selectedRecipe = recipeRepository.getRecipeWithComponents(sensor->getComponent().getRecipeId());
       createRecipeComponentTableWidget();
