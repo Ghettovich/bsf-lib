@@ -15,7 +15,6 @@ class Component {
     SAND = 2,
     PLASTIFIER = 3
   };
-
   Q_ENUM(COMPONENT);
 
   explicit Component(int id = 0);

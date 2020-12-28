@@ -34,7 +34,7 @@ void Scale::init() {
   connect(ui->pushButtonConfirmRecipe, &QPushButton::clicked, this, &Scale::onClickPushButtonConfirmRecipe);
 }
 
-void Scale::onUpdateIODevice(const WeightSensor *sensor) {
+void Scale::onUpdateIODevice(WeightSensor *sensor) {
   if (sensor->getId() == weightSensor->getId()) {
     if(sensor->getComponent().getRecipeId() == 0 || sensor->getComponent().getComponentId() == 0) {
       activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());

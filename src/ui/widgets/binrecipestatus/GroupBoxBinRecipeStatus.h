@@ -24,7 +24,7 @@ class GroupBoxBinRecipeStatus : public RecipeStatusInterface {
   virtual ~GroupBoxBinRecipeStatus();
 
  public slots:
-  void onUpdateIODevice(const WeightSensor *sensor) override;
+  void onUpdateIODevice(WeightSensor *sensor) override;
 
  private:
   Ui::GroupBoxBinRecipeStatus *ui = nullptr;

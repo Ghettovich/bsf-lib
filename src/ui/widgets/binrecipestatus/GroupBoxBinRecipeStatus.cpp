@@ -17,7 +17,7 @@ GroupBoxBinRecipeStatus::~GroupBoxBinRecipeStatus() {
   delete ui;
 }
 
-void GroupBoxBinRecipeStatus::onUpdateIODevice(const WeightSensor *sensor) {
+void GroupBoxBinRecipeStatus::onUpdateIODevice(WeightSensor *sensor) {
   if (scale1->getId() == sensor->getId()) {
     if(sensor->getComponent().getComponentId() == 0 || sensor->getComponent().getRecipeId() == 0) {
       // in tare mode

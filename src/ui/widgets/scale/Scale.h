@@ -23,7 +23,7 @@ class Scale : public RecipeStatusInterface {
   void init();
 
  public slots:
-  void onUpdateIODevice(const WeightSensor *sensor) override;
+  void onUpdateIODevice(WeightSensor *sensor) override;
 
  private:
   Ui::Scale *ui = nullptr;

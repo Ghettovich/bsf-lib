@@ -7,6 +7,8 @@
 
 class Recipe {
 
+  Q_GADGET
+
  public:
   explicit Recipe(int id = 0);
   int getId() const;

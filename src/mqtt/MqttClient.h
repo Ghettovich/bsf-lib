@@ -52,7 +52,7 @@ class MqttClient : public QObject {
 
  signals:
   void brokerConnected();
-  void newDataForScale(const WeightSensor *ioDevice);
+  void newDataForScale(WeightSensor *ioDevice);
   void newIODeviceStates(const QVector<IODevice *> &iodeviceList);
 };
 

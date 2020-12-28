@@ -66,18 +66,18 @@ void MqttTest::isNewRecipeDataEmitted() {
   qRegisterMetaType<WeightSensor *>();
   auto object = new MqttClient(this);
 
-  QObject::connect(object, &MqttClient::newDataForScale,
-                   [&](const WeightSensor *value) {
-                     QVERIFY(value->getComponent().getRecipeId() != 0);
-                     QVERIFY(value->getComponent().getComponentId() != 0);
-                     QVERIFY(value->getComponent().getCurrentWeight() != 0);
-                   });
-
+  QSignalSpy spy(object, &MqttClient::newDataForScale);
   QMqttTopicName topic("/recipe/data");
 
   QFile jsonFile(":/payload/recipeData.json");
   jsonFile.open(QIODevice::ReadOnly);
   object->onMessageReceived(jsonFile.readAll(), topic);
+
+  auto *iodeviceList = qvariant_cast<WeightSensor *>(spy.at(0).at(0));
+
+  QVERIFY(iodeviceList->getComponent().getRecipeId() != 0);
+  QVERIFY(iodeviceList->getComponent().getComponentId()!= 0);
+  QVERIFY(iodeviceList->getComponent().getCurrentWeight()!= 0);
 }
 
 void MqttTest::cleanupTestCase() {

@@ -4,6 +4,9 @@
 #include "../autotest/AutoTest.h"
 #include <QtTest/QTest>
 #include <QtCore/QObject>
+#include <QMetaType>
+#include <iodevice.h>
+#include <weightcensor.h>
 
 class MqttTest: public QObject {
   Q_OBJECT

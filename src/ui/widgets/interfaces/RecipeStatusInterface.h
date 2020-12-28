@@ -9,7 +9,7 @@ class RecipeStatusInterface : public QWidget {
  Q_OBJECT
 
  public:
-  virtual void onUpdateIODevice(const WeightSensor *ioDevice) = 0;
+  virtual void onUpdateIODevice(WeightSensor *ioDevice) = 0;
 };
 
 #define RecipeStatusInterface_iid "plugins.RecipeStatusInterface"
