@@ -7,6 +7,8 @@ pipeline {
     stage('Configure') {
       steps {
         dir('build') {
+          sh 'git credentialsId: 'd29ef267-2eb6-437f-9b79-b1cb33a6a464', url: 'https://github.com/Ghettovich/bsf-lib.git''
+          sh 'git fetch'
           sh 'cmake arguments: '-DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage', installation: 'InSearchPath', workingDir: 'build''
         }
       }
