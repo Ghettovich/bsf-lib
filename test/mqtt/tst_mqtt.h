@@ -11,6 +11,9 @@ class MqttTest: public QObject {
  private slots:
   void initTestCase();
   void isConnectedToBroker();
+  void isRelayStatesEmitted();
+  void isProximityStatesEmitted();
+  void isNewRecipeDataEmitted();
   void cleanupTestCase();
 };
 

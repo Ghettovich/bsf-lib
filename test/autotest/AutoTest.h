@@ -73,6 +73,9 @@ public:
 // DOMAIN
 #define DECLARE_TEST_RECIPE(className) static Test<className> t("RecipeTest");
 
+// MQTT
+#define DECLARE_TEST_MQTT(className) static Test<className> t("MqttTest");
+
 // PARSER
 #define DECLARE_TEST_TRANSFORMPAYLOAD(className) static Test<className> t("TransformPayloadTest");
 
