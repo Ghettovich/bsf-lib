@@ -50,14 +50,7 @@ if (Qt5Widgets_FOUND)
             ${CMAKE_CURRENT_BINARY_DIR}/resource/database/bsf.db
     )
 
-    add_test(NAME RecipeTest COMMAND BsfTest)
-    add_test(NAME TransformPayloadTest COMMAND BsfTest)
-    add_test(NAME ActionArduinoRepoTest COMMAND BsfTest)
-    add_test(NAME ArduinoRepoTest COMMAND BsfTest)
-    add_test(NAME IODeviceRepoTest COMMAND BsfTest)
-    add_test(NAME LogRepoTest COMMAND BsfTest)
-    add_test(NAME RecipeRepoTest COMMAND BsfTest)
-    add_test(NAME StateCodeRepoTest COMMAND BsfTest)
+    add_test(NAME BsfLib COMMAND BsfTest)
 
 else (!Qt5Widgets_FOUND)
     # OOPS
