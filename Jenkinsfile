@@ -7,14 +7,14 @@ pipeline {
     stage('Configure') {
       steps {
         dir('build') {
-          sh 'cmake -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage ../'
+          sh 'cmake arguments: '-DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage', installation: 'InSearchPath', workingDir: 'build''
         }
       }
     }
     stage('Build') {
       steps {
         dir('build') {
-          sh 'cmake --build .'
+          sh 'cmakeBuild buildDir: 'build', buildType: 'Debug', cleanBuild: true, generator: 'Unix Makefiles', installation: 'InSearchPath', sourceDir: 'https://github.com/Ghettovich/bsf-lib.git', steps: [[withCmake: true]]''
         }
       }
     }
