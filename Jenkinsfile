@@ -1,13 +1,17 @@
 pipeline {
   agent any
   stages {
-    stage('Configure') {
+    stage('Clean') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'd29ef267-2eb6-437f-9b79-b1cb33a6a464', url: 'https://github.com/Ghettovich/bsf-lib']]])
+        dir("build") {
+          deleteDir();
+          sh 'mkdir build'
+        }
       }
     }
     stage('Build') {
       steps {
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'd29ef267-2eb6-437f-9b79-b1cb33a6a464', url: 'https://github.com/Ghettovich/bsf-lib']]])
         dir('build') {
           cmakeBuild buildDir: 'build', buildType: 'Debug', cleanBuild: true, installation: 'InSearchPath', steps: [[withCmake: true]]
         }
