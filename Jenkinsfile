@@ -9,10 +9,10 @@ pipeline {
       }
     }
     stage('Configure') {
-          steps {
-            checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'd29ef267-2eb6-437f-9b79-b1cb33a6a464', name: 'origin', url: 'https://github.com/Ghettovich/bsf-lib']]]
-          }
-        }
+      steps {
+        checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanBeforeCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'd29ef267-2eb6-437f-9b79-b1cb33a6a464', name: 'origin', url: 'https://github.com/Ghettovich/bsf-lib']]]
+      }
+    }
     stage('Build') {
       steps {
         cmake installation: 'InSearchPath', workingDir: 'build'
