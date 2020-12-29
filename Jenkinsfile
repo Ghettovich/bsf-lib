@@ -10,7 +10,7 @@ pipeline {
     }
     stage('Configure') {
       steps {
-        checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'origin/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'CleanCheckout']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '51e3bd50-468c-413f-97a7-ba5b72c9727c', url: 'https://github.com/Ghettovich/bsf-lib']]]
+        checkout poll: false, scm: [$class: 'GitSCM', branches: [[name: 'origin/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'WipeWorkspace']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '51e3bd50-468c-413f-97a7-ba5b72c9727c', url: 'https://github.com/Ghettovich/bsf-lib']]]
       }
     }
     stage('Build') {
@@ -28,6 +28,8 @@ pipeline {
     }
   }
   post {
-    xunit([QtTest(deleteOutputFiles: true, failIfNotNew: true, pattern: 'Testing/**/Test.xml', skipNoTestFiles: false, stopProcessingIfError: true)])
+     always {
+      xunit([QtTest(deleteOutputFiles: true, failIfNotNew: true, pattern: 'Testing/**/Test.xml', skipNoTestFiles: false, stopProcessingIfError: true)])
+    }
   }
 }
