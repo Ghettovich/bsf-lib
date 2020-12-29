@@ -7,7 +7,6 @@
 ##   INCLUDE(CTest)
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
-set(CTEST_GIT_UPDATE_OPTIONS "--tags origin master")
 set(CTEST_DROP_METHOD "http")
 set(CTEST_DROP_SITE "192.168.178.5:8082/cdash")
 set(CTEST_DROP_LOCATION "/submit.php?project=bsf-lib")
