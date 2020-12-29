@@ -15,7 +15,7 @@ find_program(CTEST_MEMORYCHECK_COMMAND NAMES valgrind)
 
 
 if(NOT EXISTS "${CTEST_SOURCE_DIRECTORY}")
-    set(CTEST_CHECKOUT_COMMAND "${CTEST_GIT_COMMAND} clone git://git.libssh.org/projects/libssh/libssh.git ${CTEST_SOURCE_DIRECTORY}")
+    set(CTEST_CHECKOUT_COMMAND "${CTEST_GIT_COMMAND} clone git://git@github.com:Ghettovich/bsf-lib.git ${CTEST_SOURCE_DIRECTORY}")
 endif()
 
 set(CTEST_UPDATE_COMMAND "${CTEST_GIT_COMMAND}")

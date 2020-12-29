@@ -22,7 +22,7 @@ pipeline {
     stage('Test') {
       steps {
         dir('build') {
-          ctest arguments: '-T test -D Nightly Test --no-compress-output', installation: 'InSearchPath'
+          ctest arguments: '-D Nightly Test --no-compress-output', installation: 'InSearchPath'
         }
       }
     }
