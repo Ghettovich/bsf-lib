@@ -29,7 +29,7 @@ pipeline {
   }
   post {
      always {
-      xunit([QtTest(deleteOutputFiles: true, failIfNotNew: true, pattern: 'Testing/**/Test.xml', skipNoTestFiles: false, stopProcessingIfError: true)])
+      xunit([QtTest(deleteOutputFiles: true, failIfNotNew: true, pattern: 'build/Testing/**/Test.xml', skipNoTestFiles: false, stopProcessingIfError: true)])
     }
   }
 }
