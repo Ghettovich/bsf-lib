@@ -22,7 +22,7 @@ pipeline {
     stage('Test') {
       steps {
         dir('build') {
-          ctest arguments: '-D Continuous Test --no-compress-output', installation: 'InSearchPath'
+          ctest arguments: '-T Continuous Test --no-compress-output', installation: 'InSearchPath'
         }
       }
     }
