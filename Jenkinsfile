@@ -23,12 +23,4 @@ pipeline {
       }
     }
   }
-  post {
-    always {
-      dir('build') {
-        xunit([CTest(deleteOutputFiles: true, failIfNotNew: true, pattern: 'Testing/**/Coverage.xml', skipNoTestFiles: false, stopProcessingIfError: true)])
-      }
-      deleteDir()
-    }
-  }
 }
