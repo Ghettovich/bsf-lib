@@ -22,14 +22,14 @@ pipeline {
     stage('Test') {
       steps {
         dir('build') {
-          ctest arguments: '-T Test --no-compress-output', installation: 'InSearchPath'
+          ctest arguments: '-D Test --no-compress-output', installation: 'InSearchPath'
         }
       }
     }
   }
   post {
      always {
-      xunit([QtTest(deleteOutputFiles: true, failIfNotNew: true, pattern: 'build/Temporary/LastTest_*.log', skipNoTestFiles: false, stopProcessingIfError: true)])
+       xunit([CTest(deleteOutputFiles: true, failIfNotNew: true, pattern: 'build/Testing/**/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)])
     }
   }
 }
