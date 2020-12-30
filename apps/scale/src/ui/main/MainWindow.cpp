@@ -148,21 +148,13 @@ void MainWindow::onComponentTreeWidgetSelectionChanged() {
 
 void MainWindow::onClickPushButtonRecipeDown() {
   if (ui->recipeTreeWidget->currentIndex().isValid()) {
-    auto indexes = ui->recipeTreeWidget->selectionModel()->selectedIndexes().first();
-
-    if ((indexes.row() + 1) < ui->recipeTreeWidget->topLevelItemCount()) {
-      ui->recipeTreeWidget->setCurrentItem(ui->recipeTreeWidget->topLevelItem(indexes.row() + 1));
-    }
+    selectItemInTreeWidget(ui->recipeTreeWidget, true);
   }
 }
 
 void MainWindow::onClickPushButtonRecipeUp() {
   if (ui->recipeTreeWidget->currentIndex().isValid()) {
-    auto indexes = ui->recipeTreeWidget->selectionModel()->selectedIndexes().first();
-
-    if ((indexes.row() - 1) < ui->recipeTreeWidget->topLevelItemCount()) {
-      ui->recipeTreeWidget->setCurrentItem(ui->recipeTreeWidget->topLevelItem(indexes.row() - 1));
-    }
+    selectItemInTreeWidget(ui->recipeTreeWidget, true);
   }
 }
 
@@ -171,28 +163,22 @@ void MainWindow::onClickPushButtonChangeRecipe() {
 }
 
 void MainWindow::onClickPushButtonComponentDown() {
-  if (ui->componentTreeWidget->currentIndex().isValid()) {
-    auto indexes = ui->componentTreeWidget->selectionModel()->selectedIndexes().first();
 
-    if ((indexes.row() + 1) < ui->componentTreeWidget->topLevelItemCount()) {
-      ui->componentTreeWidget->setCurrentItem(ui->componentTreeWidget->topLevelItem(indexes.row() + 1));
-    }
+  if (ui->componentTreeWidget->currentIndex().isValid()) {
+    selectItemInTreeWidget(ui->componentTreeWidget, true);
   }
 }
 
 void MainWindow::onClickPushButtonComponentUp() {
   if (ui->componentTreeWidget->currentIndex().isValid()) {
-    auto indexes = ui->componentTreeWidget->selectionModel()->selectedIndexes().first();
-
-    if ((indexes.row() - 1) >= 0) {
-      ui->componentTreeWidget->setCurrentItem(ui->componentTreeWidget->topLevelItem(indexes.row() - 1));
-    }
+    selectItemInTreeWidget(ui->componentTreeWidget, false);
   }
 }
 
 void MainWindow::onClickPushButtonConfirmComponent() {
   m_client->publishConfirmComponent(activeComponent);
   ui->componentTreeWidget->currentItem()->setDisabled(true);
+  selectItemInTreeWidget(ui->componentTreeWidget, true);
   ui->pushButtonConfirm->setDisabled(true);
 }
 
@@ -261,6 +247,34 @@ void MainWindow::selectItemInTreeWidgetWithId(QTreeWidget *treeWidget, int id) {
   }
 }
 
+void MainWindow::selectItemInTreeWidget(QTreeWidget *widget, bool down) {
+  int row = widget->currentIndex().row();
+
+  if(down) {
+   row +=  1;
+  } else {
+    row -= 1;
+  }
+
+  if(row >= 0 && row < widget->topLevelItemCount()) {
+
+    while (row != widget->topLevelItemCount() || row == 0) {
+
+      auto widgetItem = widget->topLevelItem(row);
+
+      if (!widgetItem->isDisabled()) {
+        widget->setCurrentItem(widget->topLevelItem(row));
+        break;
+      }
+
+      if(down)
+        row++;
+      else
+        row--;
+    }
+  }
+}
+
 void MainWindow::updateRecipeComponentsTable(const Component &component) {
   for (int i = 0; i < ui->componentTreeWidget->topLevelItemCount(); ++i) {
     if (ui->componentTreeWidget->topLevelItem(i)->data(0, Qt::UserRole).toInt() == component.getComponentId()) {
@@ -274,7 +288,7 @@ void MainWindow::updateRecipeComponentsTable(const Component &component) {
 }
 
 void MainWindow::onReceivedChangeIsScaleInTareMode(bool isInTareMode) {
-  if(isInTareMode) {
+  if (isInTareMode) {
     ui->pushButtonConfirm->setDisabled(true);
     ui->pushButtonComponentDown->setDisabled(true);
     ui->pushButtonComponentUp->setDisabled(true);

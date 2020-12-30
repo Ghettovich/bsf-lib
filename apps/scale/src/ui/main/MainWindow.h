@@ -45,7 +45,9 @@ class MainWindow : public QMainWindow {
   void setConfirmComponentButtonState();
   void setActiveComponentTreeWidgetTargetsMet(QTreeWidgetItem *item);
   void selectItemInTreeWidgetWithId(QTreeWidget *treeWidget, int id);
+  void selectItemInTreeWidget(QTreeWidget *widget, bool down);
   void updateRecipeComponentsTable(const Component &component);
+
 
  public slots:
   void onClickPushButtonRecipeDown();
