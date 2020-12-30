@@ -83,40 +83,18 @@ void GroupBoxBinLoadDrop::onUpdateIODevices(const QVector<IODevice *> &iodeviceL
 
 void GroupBoxBinLoadDrop::onChangeProximity(IODevice *detectionSensor) {
   proximityBinDrop->setDeviceState(detectionSensor->getDeviceState());
-
-  if (proximityBinDrop->isDeviceOn()) {
-    ui->labelProximityBinDropStatus->setPixmap(materialRegular.visibilityIcon(Qt::lightGray).pixmap(48, 48));
-  } else {
-    ui->labelProximityBinDropStatus->setPixmap(materialRegular.visibilityOffIcon(Qt::darkGray).pixmap(48, 48));
-  }
-
+  setProximityBinDropLabelStatus();
   emit proximityStateChange(proximityBinDrop);
 }
 
 void GroupBoxBinLoadDrop::onToggledBinLoadRelay(IODevice *relay) {
   relayBinLoad->setDeviceState(relay->getDeviceState());
-
-  if (!relayBinLoad->isDeviceOn()) {
-    ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::green));
-    ui->pushButtonBinLoadRelay->setText("LOAD ON");
-  } else {
-    ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::red));
-    ui->pushButtonBinLoadRelay->setText("LOAD OFF");
-  }
-
+  setBinLoadButtonState();
   emit toggledRelay(relayBinLoad);
 }
 
 void GroupBoxBinLoadDrop::onToggledBinDropRelay(IODevice *relay) {
   relayBinDrop->setDeviceState(relay->getDeviceState());
-
-  if (!relayBinDrop->isDeviceOn()) {
-    ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::green));
-    ui->pushButtonBinDropRelay->setText("DROP ON");
-  } else {
-    ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::red));
-    ui->pushButtonBinDropRelay->setText("DROP OFF");
-  }
-
+  setBinDropButtonState();
   emit toggledRelay(relayBinDrop);
 }

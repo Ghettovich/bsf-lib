@@ -72,18 +72,30 @@ void GroupBoxLiftUpDown::setLiftDownButtonState() {
 void GroupBoxLiftUpDown::onUpdateIODevices(const QVector<IODevice *> &iodeviceList) {
   for (auto iodevice : iodeviceList) {
     if (iodevice->getId() == proximityBinLoad->getId()) {
-      proximityBinLoad->setDeviceState(iodevice->getDeviceState());
+      onChangeProximity(iodevice);
     } else if (iodevice->getId() == relayBinLiftUp->getId()) {
-      relayBinLiftUp->setDeviceState(iodevice->getDeviceState());
+      onToggledLiftUpRelay(iodevice);
     } else if (iodevice->getId() == relayBinLiftDown->getId()) {
-      relayBinLiftDown->setDeviceState(iodevice->getDeviceState());
+      onToggledLiftDownRelay(iodevice);
     }
   }
+}
 
-  if (!iodeviceList.empty()) {
-    setLiftDownButtonState();
-    setLiftUpButtonState();
-    setProximityBinLoadStatusLabel();
-  }
+void GroupBoxLiftUpDown::onChangeProximity(IODevice *detectionSensor) {
+  proximityBinLoad->setDeviceState(detectionSensor->getDeviceState());
+  setProximityBinLoadStatusLabel();
+  emit proximityStateChange(proximityBinLoad);
+}
+
+void GroupBoxLiftUpDown::onToggledLiftUpRelay(IODevice *relay) {
+  relayBinLiftUp->setDeviceState(relay->getDeviceState());
+  setLiftUpButtonState();
+  emit toggledRelay(relayBinLiftUp);
+}
+
+void GroupBoxLiftUpDown::onToggledLiftDownRelay(IODevice *relay) {
+  relayBinLiftDown->setDeviceState(relay->getDeviceState());
+  setLiftDownButtonState();
+  emit toggledRelay(relayBinLiftDown);
 }
 

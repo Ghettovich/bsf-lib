@@ -5,7 +5,7 @@
 #include <QtTest/QTest>
 #include <QtCore/QObject>
 
-class GroupBoxBinLoadDropTest : public QObject {
+class IOWidgetStatusInterfaceTest : public QObject {
  Q_OBJECT
 
  private slots:

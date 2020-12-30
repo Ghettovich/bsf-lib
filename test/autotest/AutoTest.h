@@ -88,7 +88,7 @@ public:
 #define DECLARE_TEST_STATECODE_REPO(className) static Test<className> t("StateCodeRepoTest");
 
 // UI Widgets
-#define DECLARE_TEST_GROUPBOX_BINLOADDROP(className) static Test<className> t("GroupBoxBinLoadDropTest");
+#define DECLARE_TEST_IOWIDGETINTERFACE(className) static Test<className> t("IOWidgetStatusInterfaceTest");
 
 #define TEST_MAIN \
  int main(int argc, char *argv[]) \

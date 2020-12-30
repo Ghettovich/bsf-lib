@@ -12,13 +12,13 @@ if (Qt5Widgets_FOUND)
 
     # HEADER LIST
     set(HEADER_LIST
-            widgets/tst_GroupBoxBinLoadDrop.h
+            widgets/tst_IOWidgetStatusInterfaceTest.h
             )
 
     # TARGET SOURCES
     target_sources(srcTestLib
             PRIVATE
-            widgets/tst_GroupBoxBinLoadDrop.cpp
+            widgets/tst_IOWidgetStatusInterfaceTest.cpp
             PUBLIC
             ${HEADER_LIST})
 

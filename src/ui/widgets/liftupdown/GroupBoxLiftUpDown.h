@@ -24,6 +24,9 @@ class GroupBoxLiftUpDown : public IOWidgetStatusInterface {
 
  public slots:
   void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
+  void onChangeProximity(IODevice *detectionSensor);
+  void onToggledLiftUpRelay(IODevice *relay);
+  void onToggledLiftDownRelay(IODevice *relay);
 
  private:
   Ui::GroupBoxLiftUpDown *ui = nullptr;
@@ -41,6 +44,9 @@ class GroupBoxLiftUpDown : public IOWidgetStatusInterface {
   void onClickPushButtonLiftDown();
   void onClickPushButtonLiftUp();
 
+  signals:
+  void toggledRelay(IODevice *relay);
+  void proximityStateChange(IODevice *detectionSensor);
 };
 
 #endif //BSF_LIB_GROUPBOXLIFTUPDOWN_H
