@@ -72,17 +72,51 @@ void GroupBoxBinLoadDrop::onClickPushButtonBinDrop() {
 void GroupBoxBinLoadDrop::onUpdateIODevices(const QVector<IODevice *> &iodeviceList) {
   for (auto iodevice : iodeviceList) {
     if (iodevice->getId() == proximityBinDrop->getId()) {
-      proximityBinDrop->setDeviceState(iodevice->getDeviceState());
+      onChangeProximity(iodevice);
     } else if (iodevice->getId() == relayBinLoad->getId()) {
-      relayBinLoad->setDeviceState(iodevice->getDeviceState());
+      onToggledBinLoadRelay(iodevice);
     } else if (iodevice->getId() == relayBinDrop->getId()) {
-      relayBinDrop->setDeviceState(iodevice->getDeviceState());
+      onToggledBinDropRelay(iodevice);
     }
   }
+}
 
-  if (!iodeviceList.empty()) {
-    setBinDropButtonState();
-    setBinLoadButtonState();
-    setProximityBinDropLabelStatus();
+void GroupBoxBinLoadDrop::onChangeProximity(IODevice *detectionSensor) {
+  proximityBinDrop->setDeviceState(detectionSensor->getDeviceState());
+
+  if (proximityBinDrop->isDeviceOn()) {
+    ui->labelProximityBinDropStatus->setPixmap(materialRegular.visibilityIcon(Qt::lightGray).pixmap(48, 48));
+  } else {
+    ui->labelProximityBinDropStatus->setPixmap(materialRegular.visibilityOffIcon(Qt::darkGray).pixmap(48, 48));
   }
+
+  emit proximityStateChange(proximityBinDrop);
+}
+
+void GroupBoxBinLoadDrop::onToggledBinLoadRelay(IODevice *relay) {
+  relayBinLoad->setDeviceState(relay->getDeviceState());
+
+  if (!relayBinLoad->isDeviceOn()) {
+    ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::green));
+    ui->pushButtonBinLoadRelay->setText("LOAD ON");
+  } else {
+    ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::red));
+    ui->pushButtonBinLoadRelay->setText("LOAD OFF");
+  }
+
+  emit toggledRelay(relayBinLoad);
+}
+
+void GroupBoxBinLoadDrop::onToggledBinDropRelay(IODevice *relay) {
+  relayBinDrop->setDeviceState(relay->getDeviceState());
+
+  if (!relayBinDrop->isDeviceOn()) {
+    ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::green));
+    ui->pushButtonBinDropRelay->setText("DROP ON");
+  } else {
+    ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::red));
+    ui->pushButtonBinDropRelay->setText("DROP OFF");
+  }
+
+  emit toggledRelay(relayBinDrop);
 }

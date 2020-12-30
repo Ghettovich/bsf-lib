@@ -10,6 +10,7 @@ class GroupBoxBinLoadDropTest : public QObject {
 
  private slots:
   void initTestCase();
+  void updateWidgetFromSubscription();
   void cleanupTestCase();
 };
 

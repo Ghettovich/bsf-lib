@@ -73,11 +73,11 @@ void MqttTest::isNewRecipeDataEmitted() {
   jsonFile.open(QIODevice::ReadOnly);
   object->onMessageReceived(jsonFile.readAll(), topic);
 
-  auto *iodeviceList = qvariant_cast<WeightSensor *>(spy.at(0).at(0));
+  auto *iodevice = qvariant_cast<WeightSensor *>(spy.at(0).at(0));
 
-  QVERIFY(iodeviceList->getComponent().getRecipeId() != 0);
-  QVERIFY(iodeviceList->getComponent().getComponentId()!= 0);
-  QVERIFY(iodeviceList->getComponent().getCurrentWeight()!= 0);
+  QVERIFY(iodevice->getComponent().getRecipeId() != 0);
+  QVERIFY(iodevice->getComponent().getComponentId()!= 0);
+  QVERIFY(iodevice->getComponent().getCurrentWeight()!= 0);
 }
 
 void MqttTest::cleanupTestCase() {

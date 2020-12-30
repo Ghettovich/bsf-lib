@@ -25,6 +25,9 @@ class GroupBoxBinLoadDrop : public IOWidgetStatusInterface {
 
  public slots:
   void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
+  void onChangeProximity(IODevice *detectionSensor);
+  void onToggledBinLoadRelay(IODevice *relay);
+  void onToggledBinDropRelay(IODevice *relay);
 
  private:
   Ui::GroupBoxBinLoadDrop *ui = nullptr;
@@ -41,6 +44,10 @@ class GroupBoxBinLoadDrop : public IOWidgetStatusInterface {
  private slots:
   void onClickPushButtonBinLoad();
   void onClickPushButtonBinDrop();
+
+ signals:
+  void toggledRelay(IODevice *relay);
+  void proximityStateChange(IODevice *detectionSensor);
 };
 
 #endif //BSF_LIB_GROUPBOXBINLOADDROP_H
