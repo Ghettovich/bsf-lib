@@ -17,6 +17,7 @@ find_program(CTEST_COVERAGE_COMMAND NAMES gcov)
 find_program(CTEST_MEMORYCHECK_COMMAND NAMES valgrind)
 
 if(NOT EXISTS "${CTEST_SOURCE_DIRECTORY}")
+    set(CTEST_GIT_UPDATE_OPTIONS "--tags origin master")
     set(CTEST_CHECKOUT_COMMAND "${CTEST_GIT_COMMAND} clone git://git@github.com:Ghettovich/bsf-lib.git ${CTEST_SOURCE_DIRECTORY}")
 endif()
 

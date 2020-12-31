@@ -10,7 +10,6 @@ project(bsf-lib
 
 enable_testing()
 include(CTest)
-set(CTEST_GIT_UPDATE_OPTIONS "--tags origin master")
 
 # BUILD OPTION
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
