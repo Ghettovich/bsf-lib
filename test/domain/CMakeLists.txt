@@ -21,7 +21,13 @@ if (Qt5Widgets_FOUND)
             PUBLIC
             ${HEADER_LIST})
 
-    target_link_libraries(srcTestLib PUBLIC
+    add_executable(DomainTest
+            autotest.cpp
+            tst_recipe.cpp
+            ${HEADER_LIST}
+            )
+
+    target_link_libraries(DomainTest PRIVATE
             bsf
             Qt5::Test
             Qt5::Core

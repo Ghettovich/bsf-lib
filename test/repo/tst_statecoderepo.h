@@ -5,12 +5,12 @@
 #include <QtCore/QObject>
 
 class StateCodeRepoTest : public QObject {
-    Q_OBJECT
+ Q_OBJECT
 
-private slots:
-    void initTestCase();
-    void isStateCodeFound();
-    void cleanupTestCase();
+ private slots:
+  void initTestCase();
+  void isStateCodeFound();
+  void cleanupTestCase();
 };
 
 #endif //BSF_TST_STATECODEREPO_H

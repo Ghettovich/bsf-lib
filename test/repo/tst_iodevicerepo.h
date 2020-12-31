@@ -5,17 +5,16 @@
 #include <QtCore/QObject>
 
 class IODeviceRepoTest : public QObject {
-Q_OBJECT
+ Q_OBJECT
 
-private slots:
-    void initTestCase();
-    void isIODeviceTypeFound();
-    void isIODeviceListNotEmpty();
-    void isRelayListFromArduinoEmpty();
-    void isDetectionSensorListEmpty();
-    void isWeightSensorListEmpty();
-    void cleanUpTestCase();
+ private slots:
+  void initTestCase();
+  void isIODeviceTypeFound();
+  void isIODeviceListNotEmpty();
+  void isRelayListFromArduinoEmpty();
+  void isDetectionSensorListEmpty();
+  void isWeightSensorListEmpty();
+  void cleanUpTestCase();
 };
-
 
 #endif //BSF_TST_IODEVICEREPO_H

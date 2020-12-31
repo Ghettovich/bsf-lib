@@ -5,7 +5,7 @@ set(CMAKE_AUTOMOC ON)
 
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5Test REQUIRED)
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt5 COMPONENTS Core Mqtt REQUIRED)
 
 
 if (Qt5Widgets_FOUND)
@@ -15,15 +15,22 @@ if (Qt5Widgets_FOUND)
             tst_mqtt.h)
 
     # TARGET SOURCES
-    target_sources(srcTestLib
-            PRIVATE
+#    target_sources(srcTestLib
+#            PRIVATE
+#            tst_mqtt.cpp
+#            PUBLIC
+#            ${HEADER_LIST})
+    add_executable(MqttClientTest
             tst_mqtt.cpp
-            PUBLIC
-            ${HEADER_LIST})
+            ${HEADER_LIST}
+            ${CMAKE_CURRENT_SOURCE_DIR}/../resource/jsonPayload.qrc
+            )
 
-    target_link_libraries(srcTestLib PUBLIC
+
+    target_link_libraries(MqttClientTest PRIVATE
             bsf
             Qt5::Test
+            Qt5::Mqtt
             Qt5::Core
             )
 

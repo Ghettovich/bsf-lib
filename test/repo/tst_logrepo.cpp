@@ -3,9 +3,6 @@
 #include <logrepo.h>
 #include <QtTest/QtTest>
 
-
-DECLARE_TEST_LOG_REPO(LogRepoTest)
-
 void LogRepoTest::initTestCase() {
 }
 
@@ -13,36 +10,38 @@ void LogRepoTest::initTestCase() {
  * Check if log list is not empty.
  * */
 void LogRepoTest::isLogListEmpty() {
-    // ARRANGE
-    QDir dir(".");
-    const QString testConnection = dir.absolutePath().append("/resource/database/bsf.db");
-    LogRepository logRepository(testConnection);
+  // ARRANGE
+  QDir dir(".");
+  dir.cdUp();
+  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
+  LogRepository logRepository(testConnection);
 
-    // ACT
-    QVector<BafaLog> logs = logRepository.createBsfLogList();
+  // ACT
+  QVector<BafaLog> logs = logRepository.createBsfLogList();
 
-    // ASSERT
-    QVERIFY(!logs.empty());
+  // ASSERT
+  QVERIFY(!logs.empty());
 }
 
 /*
  * Checks wether the log list size is increased after adding a new log.
  * */
 void LogRepoTest::isLogListSizeIncreased() {
-    // ARRANGE
-    QDir dir(".");
-    const QString testConnection = dir.absolutePath().append("/resource/database/bsf.db");
-    LogRepository logRepository(testConnection);
+  // ARRANGE
+  QDir dir(".");
+  dir.cdUp();
+  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
+  LogRepository logRepository(testConnection);
 
-    // ACT
-    QVector<BafaLog> logList = logRepository.createBsfLogList();
-    logRepository.addLog("Hoi", BafaLog::INFO);
+  // ACT
+  QVector<BafaLog> logList = logRepository.createBsfLogList();
+  logRepository.addLog("Hoi", BafaLog::INFO);
 
-    QThread::msleep(5);
-    QVector<BafaLog> secondLogList = logRepository.createBsfLogList();
+  QThread::msleep(5);
+  QVector<BafaLog> secondLogList = logRepository.createBsfLogList();
 
-    // ASSERT
-    QVERIFY(secondLogList.size() > logList.size());
+  // ASSERT
+  QVERIFY(secondLogList.size() > logList.size());
 }
 
 void LogRepoTest::cleanupTestCase() {

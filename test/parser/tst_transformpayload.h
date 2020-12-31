@@ -1,7 +1,8 @@
 #ifndef BSF_TST_TRANSFORMPAYLOAD_H
 #define BSF_TST_TRANSFORMPAYLOAD_H
 
-#include "../autotest/AutoTest.h"
+//#include "../autotest/AutoTest.h"
+#include <QTest>
 #include <QtCore/QObject>
 
 class TransformPayloadTest : public QObject {

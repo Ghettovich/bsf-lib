@@ -5,14 +5,13 @@
 #include <QtCore/QObject>
 
 class LogRepoTest : public QObject {
-    Q_OBJECT
+ Q_OBJECT
 
-private slots:
-    void initTestCase();
-    void isLogListEmpty();
-    void isLogListSizeIncreased();
-    void cleanupTestCase();
+ private slots:
+  void initTestCase();
+  void isLogListEmpty();
+  void isLogListSizeIncreased();
+  void cleanupTestCase();
 };
-
 
 #endif //BSF_TST_LOGREPO_H

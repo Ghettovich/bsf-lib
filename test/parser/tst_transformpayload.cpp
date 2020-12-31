@@ -1,8 +1,10 @@
 #include "tst_transformpayload.h"
-#include <domain/arduino.h>
-#include <parser/transformpayload.h>
+#include <QFile>
+#include <QVector>
+#include <iodevice.h>
+#include <transformpayload.h>
 
-DECLARE_TEST_TRANSFORMPAYLOAD(TransformPayloadTest)
+//DECLARE_TEST_TRANSFORMPAYLOAD(TransformPayloadTest)
 
 void TransformPayloadTest::initTestCase() {
 }
@@ -48,3 +50,5 @@ void TransformPayloadTest::parseProximity()
 }
 void TransformPayloadTest::cleanupTestCase() {
 }
+
+QTEST_APPLESS_MAIN(TransformPayloadTest)

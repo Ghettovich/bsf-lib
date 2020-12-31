@@ -71,7 +71,7 @@ public:
 };
 
 // DOMAIN
-#define DECLARE_TEST_RECIPE(className) static Test<className> t("RecipeTest");
+//#define DECLARE_TEST_RECIPE(className) static Test<className> t("RecipeTest");
 
 // MQTT
 #define DECLARE_TEST_MQTT(className) static Test<className> t("MqttTest");
@@ -80,12 +80,12 @@ public:
 #define DECLARE_TEST_TRANSFORMPAYLOAD(className) static Test<className> t("TransformPayloadTest");
 
 // REPOSITORIES
-#define DECLARE_TEST_ACTION_ARDUINO_REPO(className) static Test<className> t("ActionArduinoRepoTest");
-#define DECLARE_TEST_ARDUINO_REPO(className) static Test<className> t("ArduinoRepoTest");
-#define DECLARE_TEST_IODEVICE_REPO(className) static Test<className> t("IODeviceRepoTest");
-#define DECLARE_TEST_LOG_REPO(className) static Test<className> t("LogRepoTest");
-#define DECLARE_TEST_RECIPE_REPO(className) static Test<className> t("RecipeRepoTest");
-#define DECLARE_TEST_STATECODE_REPO(className) static Test<className> t("StateCodeRepoTest");
+//#define DECLARE_TEST_ACTION_ARDUINO_REPO(className) static Test<className> t("ActionArduinoRepoTest");
+//#define DECLARE_TEST_ARDUINO_REPO(className) static Test<className> t("ArduinoRepoTest");
+//#define DECLARE_TEST_IODEVICE_REPO(className) static Test<className> t("IODeviceRepoTest");
+//#define DECLARE_TEST_LOG_REPO(className) static Test<className> t("LogRepoTest");
+//#define DECLARE_TEST_RECIPE_REPO(className) static Test<className> t("RecipeRepoTest");
+//#define DECLARE_TEST_STATECODE_REPO(className) static Test<className> t("StateCodeRepoTest");
 
 // UI Widgets
 #define DECLARE_TEST_IOWIDGETINTERFACE(className) static Test<className> t("IOWidgetStatusInterfaceTest");

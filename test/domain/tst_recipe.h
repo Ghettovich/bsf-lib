@@ -1,7 +1,6 @@
 #ifndef BSF_TST_RECIPE_H
 #define BSF_TST_RECIPE_H
 
-#include "../autotest/AutoTest.h"
 #include <QtTest/QTest>
 #include <QtCore/QObject>
 

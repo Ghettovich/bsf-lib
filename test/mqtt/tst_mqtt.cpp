@@ -7,12 +7,10 @@
 #include <widgets/binloaddrop/GroupBoxBinLoadDrop.h>
 #include "tst_mqtt.h"
 
-DECLARE_TEST_MQTT(MqttTest)
-
-void MqttTest::initTestCase() {
+void MqttClientTest::initTestCase() {
 }
 
-void MqttTest::isConnectedToBroker() {
+void MqttClientTest::isConnectedToBroker() {
   // ARRANGE
   auto parent = new QObject;
   auto m_client = new MqttClient(parent, "192.168.178.5");
@@ -28,7 +26,7 @@ void MqttTest::isConnectedToBroker() {
   QCOMPARE(spy.count(), 1);
 }
 
-void MqttTest::isRelayStatesEmitted() {
+void MqttClientTest::isRelayStatesEmitted() {
   qRegisterMetaType<QVector<IODevice *>>();
   auto object = new MqttClient(this);
 
@@ -45,7 +43,7 @@ void MqttTest::isRelayStatesEmitted() {
   QVERIFY(!iodeviceList.isEmpty());
 }
 
-void MqttTest::isProximityStatesEmitted() {
+void MqttClientTest::isProximityStatesEmitted() {
   qRegisterMetaType<QVector<IODevice *>>();
   auto object = new MqttClient(this);
 
@@ -62,7 +60,7 @@ void MqttTest::isProximityStatesEmitted() {
   QVERIFY(!iodeviceList.isEmpty());
 }
 
-void MqttTest::isNewRecipeDataEmitted() {
+void MqttClientTest::isNewRecipeDataEmitted() {
   qRegisterMetaType<WeightSensor *>();
   auto object = new MqttClient(this);
 
@@ -80,6 +78,8 @@ void MqttTest::isNewRecipeDataEmitted() {
   QVERIFY(iodevice->getComponent().getCurrentWeight()!= 0);
 }
 
-void MqttTest::cleanupTestCase() {
+void MqttClientTest::cleanupTestCase() {
 
 }
+
+QTEST_MAIN(MqttClientTest)

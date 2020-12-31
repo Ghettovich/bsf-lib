@@ -172,28 +172,16 @@ void MqttClient::onStateChanged() {
   switch (m_client->state()) {
 
     case QMqttClient::Disconnected: {
-      const QString content = QDateTime::currentDateTime().toString()
-          + QLatin1String(": State Change Disconnected ")
-          + QString::number(m_client->state())
-          + QLatin1Char('\n');
-      qDebug() << content;
+      qDebug() << QLatin1String(": State Change Disconnected ");
       break;
     }
     case QMqttClient::Connecting: {
-      const QString content = QDateTime::currentDateTime().toString()
-          + QLatin1String(": State Change Conecting ... ")
-          + QString::number(m_client->state())
-          + QLatin1Char('\n');
-      qDebug() << content;
+      qDebug() << QLatin1String(": State Change Conecting ... ");
       break;
     }
     case QMqttClient::Connected: {
       emit brokerConnected();
-      const QString content = QDateTime::currentDateTime().toString()
-          + QLatin1String(": State Change Connected! ")
-          + QString::number(m_client->state())
-          + QLatin1Char('\n');
-      qDebug() << content;
+      qDebug() << QLatin1String(": State Change Connected! ");
       break;
     }
   }

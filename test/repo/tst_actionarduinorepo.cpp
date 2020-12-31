@@ -4,29 +4,27 @@
 #include <repo/actionarduinorepo.h>
 #include <domain/action.h>
 
-DECLARE_TEST_ACTION_ARDUINO_REPO(ActionArduinoRepoTest)
-
 void ActionArduinoRepoTest::initTestCase() {
-    //db.createTestDatabase();
-    //db.insertData();
 }
 
 /*
  * Checks if the received list is not empty.
  * */
 void ActionArduinoRepoTest::isSizeOfActionListOfArduinoGreaterThanZero() {
-    // ARRANGE
-    int arduinoId = 1;
+  // ARRANGE
+  int arduinoId = 1;
 
-    QDir dir(".");
-    const QString testConnection = dir.absolutePath().append("/resource/database/bsf.db");
-    ActionArduinoRepository actionArduinoRepository(testConnection);
+  QDir dir(".");
+  dir.cdUp();
 
-    // ACT
-    QVector<Action> actionList = actionArduinoRepository.getArduinoAction(arduinoId);
+  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
+  ActionArduinoRepository actionArduinoRepository(testConnection);
 
-    // ASSERT
-    QVERIFY(!actionList.empty());
+  // ACT
+  QVector<Action> actionList = actionArduinoRepository.getArduinoAction(arduinoId);
+
+  // ASSERT
+  QVERIFY(!actionList.empty());
 }
 
 void ActionArduinoRepoTest::cleanupTestCase() {

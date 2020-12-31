@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.7...3.18)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTOMOC ON)
+
+enable_testing(true)
 
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5Test REQUIRED)
@@ -11,13 +14,19 @@ set(HEADER_LIST
         tst_transformpayload.h)
 
 # TARGET SOURCES
-target_sources(srcTestLib
-        PRIVATE
-        tst_transformpayload.cpp
-        PUBLIC
-        ${HEADER_LIST})
+#target_sources(srcTestLib
+#        PRIVATE
+#        tst_transformpayload.cpp
+#        PUBLIC
+#        ${HEADER_LIST})
 
-target_link_libraries(srcTestLib PUBLIC
+add_executable(TransformPayloadTest
+        tst_transformpayload.cpp
+        tst_transformpayload.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/../resource/jsonPayload.qrc
+        )
+
+target_link_libraries(TransformPayloadTest PRIVATE
         bsf
         Qt5::Test
         Qt5::Core)

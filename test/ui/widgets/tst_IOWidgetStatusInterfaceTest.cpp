@@ -7,8 +7,6 @@
 #include <widgets/binloaddrop/GroupBoxBinLoadDrop.h>
 #include <widgets/liftupdown/GroupBoxLiftUpDown.h>
 
-DECLARE_TEST_IOWIDGETINTERFACE(IOWidgetStatusInterfaceTest)
-
 void IOWidgetStatusInterfaceTest::initTestCase() {
 }
 

@@ -1,14 +1,12 @@
 #ifndef BSF_LIB_TEST_MQTT_TST_MQTT_H_
 #define BSF_LIB_TEST_MQTT_TST_MQTT_H_
 
-#include "../autotest/AutoTest.h"
-#include <QtTest/QTest>
-#include <QtCore/QObject>
-#include <QMetaType>
+#include <QObject>
+#include <QTest>
 #include <iodevice.h>
 #include <weightcensor.h>
 
-class MqttTest: public QObject {
+class MqttClientTest: public QObject {
   Q_OBJECT
 
  private slots:

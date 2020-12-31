@@ -6,13 +6,12 @@
 
 class ActionArduinoRepoTest : public QObject {
 
-    Q_OBJECT
+ Q_OBJECT
 
-private slots:
-    void initTestCase();
-    void isSizeOfActionListOfArduinoGreaterThanZero();
-    void cleanupTestCase();
+ private slots:
+  void initTestCase();
+  void isSizeOfActionListOfArduinoGreaterThanZero();
+  void cleanupTestCase();
 };
-
 
 #endif //BSF_TST_ACTIONARDUINOREPO_H

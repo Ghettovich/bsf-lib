@@ -5,7 +5,7 @@ set(CMAKE_AUTOMOC ON)
 
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5Test REQUIRED)
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Mqtt REQUIRED)
 
 
 if (Qt5Widgets_FOUND)
@@ -16,16 +16,26 @@ if (Qt5Widgets_FOUND)
             )
 
     # TARGET SOURCES
-    target_sources(srcTestLib
-            PRIVATE
-            widgets/tst_IOWidgetStatusInterfaceTest.cpp
-            PUBLIC
-            ${HEADER_LIST})
+    #    target_sources(srcTestLib
+    #            PRIVATE
+    #            widgets/tst_IOWidgetStatusInterfaceTest.cpp
+    #            PUBLIC
+    #            ${HEADER_LIST}
+    #            )
 
-    target_link_libraries(srcTestLib PUBLIC
+    add_executable(IOWidgetStatusInterfaceTest
+            autotest.cpp
+            widgets/tst_IOWidgetStatusInterfaceTest.cpp
+            ${HEADER_LIST}
+            ${CMAKE_CURRENT_SOURCE_DIR}/../resource/jsonPayload.qrc
+            )
+
+    target_link_libraries(IOWidgetStatusInterfaceTest PUBLIC
             bsf
             Qt5::Test
             Qt5::Core
+            Qt5::Mqtt
+            Qt5::Widgets
             )
 
     target_include_directories(srcTestLib PUBLIC
