@@ -17,13 +17,7 @@ if (Qt5Widgets_FOUND)
     set(HEADER_LIST
             tst_transformpayload.h)
 
-    # TARGET SOURCES
-    #target_sources(srcTestLib
-    #        PRIVATE
-    #        tst_transformpayload.cpp
-    #        PUBLIC
-    #        ${HEADER_LIST})
-
+    # ADD TEST EXECUTABLE
     add_executable(TransformPayloadTest
             tst_transformpayload.cpp
             tst_transformpayload.h

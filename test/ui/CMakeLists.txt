@@ -16,14 +16,7 @@ if (Qt5Widgets_FOUND)
             widgets/tst_IOWidgetStatusInterfaceTest.h
             )
 
-    # TARGET SOURCES
-    #    target_sources(srcTestLib
-    #            PRIVATE
-    #            widgets/tst_IOWidgetStatusInterfaceTest.cpp
-    #            PUBLIC
-    #            ${HEADER_LIST}
-    #            )
-
+    # ADD TEST EXECUTABLE
     add_executable(IOWidgetStatusInterfaceTest
             autotest.cpp
             widgets/tst_IOWidgetStatusInterfaceTest.cpp

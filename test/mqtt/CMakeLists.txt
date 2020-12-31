@@ -15,12 +15,7 @@ if (Qt5Widgets_FOUND)
     set(HEADER_LIST
             tst_mqtt.h)
 
-    # TARGET SOURCES
-#    target_sources(srcTestLib
-#            PRIVATE
-#            tst_mqtt.cpp
-#            PUBLIC
-#            ${HEADER_LIST})
+    # ADD TEST EXECUTABLE
     add_executable(MqttClientTest
             tst_mqtt.cpp
             ${HEADER_LIST}

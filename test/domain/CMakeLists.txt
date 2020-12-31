@@ -15,13 +15,7 @@ if (Qt5Widgets_FOUND)
     set(HEADER_LIST
             tst_recipe.h)
 
-    # TARGET SOURCES
-#    target_sources(srcTestLib
-#            PRIVATE
-#            tst_recipe.cpp
-#            PUBLIC
-#            ${HEADER_LIST})
-
+    # ADD TEST EXECUTABLE
     add_executable(DomainTest
             autotest.cpp
             tst_recipe.cpp

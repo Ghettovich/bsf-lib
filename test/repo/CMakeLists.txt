@@ -22,18 +22,7 @@ if (Qt5Widgets_FOUND)
             tst_reciperepo.h
             tst_statecoderepo.h)
 
-    # TARGET SOURCES
-    #    target_sources(srcTestLib
-    #            PRIVATE
-    #            tst_actionarduinorepo.cpp
-    #            tst_arduinorepo.cpp
-    #            tst_iodevicerepo.cpp
-    #            tst_logrepo.cpp
-    #            tst_reciperepo.cpp
-    #            tst_statecoderepo.cpp
-    #            PUBLIC
-    #            ${HEADER_LIST})
-
+    # ADD TEST EXECUTABLE
     add_executable(RepositoryTest
             autotest.cpp
             tst_actionarduinorepo.cpp
