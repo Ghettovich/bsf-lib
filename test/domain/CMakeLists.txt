@@ -7,6 +7,7 @@ set(CMAKE_AUTOMOC ON)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5 COMPONENTS Core REQUIRED)
 
+enable_testing()
 
 if (Qt5Widgets_FOUND)
 
@@ -15,11 +16,11 @@ if (Qt5Widgets_FOUND)
             tst_recipe.h)
 
     # TARGET SOURCES
-    target_sources(srcTestLib
-            PRIVATE
-            tst_recipe.cpp
-            PUBLIC
-            ${HEADER_LIST})
+#    target_sources(srcTestLib
+#            PRIVATE
+#            tst_recipe.cpp
+#            PUBLIC
+#            ${HEADER_LIST})
 
     add_executable(DomainTest
             autotest.cpp
@@ -33,9 +34,11 @@ if (Qt5Widgets_FOUND)
             Qt5::Core
             )
 
-    target_include_directories(srcTestLib PUBLIC
+    target_include_directories(DomainTest PRIVATE
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
             )
+
+    add_test(domaintest DomainTest)
 
 else (!Qt5Widgets_FOUND)
     # OOPS

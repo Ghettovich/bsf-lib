@@ -9,27 +9,38 @@ enable_testing(true)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5 COMPONENTS Core REQUIRED)
 
-# HEADER LIST
-set(HEADER_LIST
-        tst_transformpayload.h)
+enable_testing()
 
-# TARGET SOURCES
-#target_sources(srcTestLib
-#        PRIVATE
-#        tst_transformpayload.cpp
-#        PUBLIC
-#        ${HEADER_LIST})
+if (Qt5Widgets_FOUND)
 
-add_executable(TransformPayloadTest
-        tst_transformpayload.cpp
-        tst_transformpayload.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/../resource/jsonPayload.qrc
-        )
+    # HEADER LIST
+    set(HEADER_LIST
+            tst_transformpayload.h)
 
-target_link_libraries(TransformPayloadTest PRIVATE
-        bsf
-        Qt5::Test
-        Qt5::Core)
+    # TARGET SOURCES
+    #target_sources(srcTestLib
+    #        PRIVATE
+    #        tst_transformpayload.cpp
+    #        PUBLIC
+    #        ${HEADER_LIST})
 
-target_include_directories(srcTestLib PUBLIC
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>")
+    add_executable(TransformPayloadTest
+            tst_transformpayload.cpp
+            tst_transformpayload.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/../resource/jsonPayload.qrc
+            )
+
+    target_link_libraries(TransformPayloadTest PRIVATE
+            bsf
+            Qt5::Test
+            Qt5::Core)
+
+    target_include_directories(TransformPayloadTest PRIVATE
+            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>")
+
+    add_test(transformPayloadTest TransformPayloadTest)
+
+else (!Qt5Widgets_FOUND)
+    # OOPS
+    message("could not find qt widgets")
+endif (Qt5Widgets_FOUND)

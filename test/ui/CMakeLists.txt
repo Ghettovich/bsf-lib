@@ -7,6 +7,7 @@ set(CMAKE_AUTOMOC ON)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5 COMPONENTS Core Widgets Mqtt REQUIRED)
 
+enable_testing()
 
 if (Qt5Widgets_FOUND)
 
@@ -38,9 +39,11 @@ if (Qt5Widgets_FOUND)
             Qt5::Widgets
             )
 
-    target_include_directories(srcTestLib PUBLIC
+    target_include_directories(IOWidgetStatusInterfaceTest PUBLIC
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
             )
+
+    add_test(iowidgetStatusInterfaceTest IOWidgetStatusInterfaceTest)
 
 else (!Qt5Widgets_FOUND)
     # OOPS

@@ -9,6 +9,7 @@ enable_testing(true)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5 COMPONENTS Core REQUIRED)
 
+enable_testing()
 
 if (Qt5Widgets_FOUND)
 
@@ -48,8 +49,10 @@ if (Qt5Widgets_FOUND)
             Qt5::Test
             Qt5::Core)
 
-    target_include_directories(srcTestLib PUBLIC
+    target_include_directories(RepositoryTest PRIVATE
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>")
+
+    add_test(repositoryTest RepositoryTest)
 
 else (!Qt5Widgets_FOUND)
     # OOPS

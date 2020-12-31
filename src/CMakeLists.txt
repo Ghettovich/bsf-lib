@@ -77,6 +77,13 @@ if (Qt5Widgets_FOUND)
             ${CMAKE_CURRENT_BINARY_DIR}/../apps/scale/app/bsf.db
     )
 
+    add_custom_command(
+            TARGET bsf POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_CURRENT_SOURCE_DIR}/data/bsf.db
+            ${CMAKE_CURRENT_BINARY_DIR}/../test/resource/database/bsf.db
+    )
+
 else (!Qt5Widgets_FOUND)
     # OOPS
     message("could not find qt widgets")

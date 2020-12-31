@@ -16,41 +16,11 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 if (Qt5Widgets_FOUND)
 
-    add_library(srcTestLib SHARED "")
-
     add_subdirectory(domain)
     add_subdirectory(mqtt)
     add_subdirectory(parser)
     add_subdirectory(repo)
     add_subdirectory(ui)
-
-    # TARGET SOURCES
-    add_executable(BsfTest
-            autotest/AutoTest.cpp
-            autotest/AutoTest.h
-            resource/jsonPayload.qrc
-            )
-
-    target_link_libraries(BsfTest PUBLIC
-            bsf
-            srcTestLib
-            Qt5::Core
-            Qt5::Test
-            )
-
-    target_include_directories(BsfTest
-            PUBLIC
-            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-            )
-
-    add_custom_command(
-            TARGET BsfTest POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy
-            ${CMAKE_CURRENT_SOURCE_DIR}/resource/database/bsf.db
-            ${CMAKE_CURRENT_BINARY_DIR}/resource/database/bsf.db
-    )
-
-    add_test(NAME BsfLib COMMAND BsfTest)
 
 else (!Qt5Widgets_FOUND)
     # OOPS
