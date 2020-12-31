@@ -1,5 +1,7 @@
 #include "tst_statecoderepo.h"
 #include <repo/statecoderepo.h>
+#include <QDir>
+#include <QTest>
 
 void StateCodeRepoTest::initTestCase() {
 }

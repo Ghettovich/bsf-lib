@@ -1,7 +1,6 @@
 #ifndef BSF_TST_ARDUINOREPO_H
 #define BSF_TST_ARDUINOREPO_H
 
-#include "../autotest/AutoTest.h"
 #include <QtCore/QObject>
 
 class ArduinoRepoTest : public QObject {

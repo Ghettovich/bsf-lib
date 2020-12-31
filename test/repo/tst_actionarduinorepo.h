@@ -1,7 +1,6 @@
 #ifndef BSF_TST_ACTIONARDUINOREPO_H
 #define BSF_TST_ACTIONARDUINOREPO_H
 
-#include "../autotest/AutoTest.h"
 #include <QtCore/QObject>
 
 class ActionArduinoRepoTest : public QObject {

@@ -1,7 +1,6 @@
 #ifndef BSF_TST_STATECODEREPO_H
 #define BSF_TST_STATECODEREPO_H
 
-#include "../autotest/AutoTest.h"
 #include <QtCore/QObject>
 
 class StateCodeRepoTest : public QObject {

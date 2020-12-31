@@ -1,7 +1,6 @@
 #ifndef BSF_TST_RECIPEREPO_H
 #define BSF_TST_RECIPEREPO_H
 
-#include "../autotest/AutoTest.h"
 #include <QtCore/QObject>
 
 class RecipeRepoTest : public QObject {

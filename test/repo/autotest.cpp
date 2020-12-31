@@ -4,6 +4,7 @@
 #include "tst_logrepo.h"
 #include "tst_reciperepo.h"
 #include "tst_statecoderepo.h"
+#include <QTest>
 
 int main(int argc, char *argv[]) {
   int status = 0;

@@ -147,17 +147,24 @@ void Scale::updateComponentWidgetTable() {
 void Scale::onClickPushButtonTare() {
   if(!isTareActive) {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, tr("Tare scale"),
-                                  "Reset scale and tare scale?",
+    reply = QMessageBox::question(this, tr("Tare scale?"),
+                                  "Place a weight of 1 kg. on the scale and continue.",
                                   QMessageBox::Yes | QMessageBox::Cancel);
     if (reply == QMessageBox::Yes) {
       m_client->publishTareScale(false);
+      ui->pushButtonTareScale->setIcon(material.syncIcon());
     }
   }
   else {
     isTareActive = false;
     emit scaleInTareMode(false);
     m_client->publishTareScale(true);
+
+    if(configuredRecipe.getId() != 0) {
+      m_client->publishRecipe(configuredRecipe, activeComponent);
+    }
+
+    ui->pushButtonTareScale->setIcon(material.syncProblemIcon());
   }
 }
 

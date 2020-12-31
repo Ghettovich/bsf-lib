@@ -8,7 +8,7 @@ BsfDbconfig::BsfDbconfig() {
 void BsfDbconfig::initDatabaseConnection() {
   if (databaseName.isEmpty()) {
     QDir dir(".");
-    databaseName = dir.absolutePath().append("/bsf.db");
+    databaseName = dir.absoluteFilePath("bsf.db");
   }
 }
 

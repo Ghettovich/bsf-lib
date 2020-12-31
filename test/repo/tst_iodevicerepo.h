@@ -1,7 +1,6 @@
 #ifndef BSF_TST_IODEVICEREPO_H
 #define BSF_TST_IODEVICEREPO_H
 
-#include "../autotest/AutoTest.h"
 #include <QtCore/QObject>
 
 class IODeviceRepoTest : public QObject {
