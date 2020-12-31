@@ -24,7 +24,9 @@ pipeline {
     stage('Test') {
       steps {
         dir('build') {
-          ctest arguments: '-D Experimental --extra-verbose', installation: 'InSearchPath'
+          ctest arguments: '-D Experimental', installation: 'InSearchPath'
+          ctest arguments: '-D Nightly Test', installation: 'InSearchPath'
+          ctest arguments: '-D Nightly MemCheck', installation: 'InSearchPath'
         }
       }
     }
