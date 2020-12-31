@@ -23,6 +23,6 @@ endif()
 set(CTEST_UPDATE_COMMAND "${CTEST_GIT_COMMAND}")
 
 set(CTEST_DROP_METHOD "http")
-set(CTEST_DROP_SITE "192.168.178.5:8082/cdash")
-set(CTEST_DROP_LOCATION "/submit.php?project=bsf-lib")
+set(CTEST_DROP_SITE "192.168.178.5/cdash")
+set(CTEST_DROP_LOCATION "/submit.php?project=basalt")
 set(CTEST_DROP_SITE_CDASH TRUE)
