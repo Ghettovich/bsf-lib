@@ -7,19 +7,20 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
   m_client = new MqttClient(this);
+  init();
+}
 
+MainWindow::MainWindow(MqttClient *_m_client, QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow), m_client(_m_client) {
+  ui->setupUi(this);
+  init();
+}
+
+void MainWindow::init() {
   connect(m_client, &MqttClient::brokerConnected,
           this, &MainWindow::onCreateMqttClientSubscriptions);
 
   m_client->connectToHost();
-
-  init();
-  createStatusBar();
-  createRecipeTreeWidget();
-  createScale_1_Widget();
-}
-
-void MainWindow::init() {
 
   connect(ui->pushButtonRecipeDown, &QPushButton::clicked,
           this, &MainWindow::onClickPushButtonRecipeDown);
@@ -59,7 +60,12 @@ void MainWindow::init() {
   headers.append("Recipe");
   ui->recipeTreeWidget->setHeaderLabels(headers);
 
-  connect(ui->recipeTreeWidget, &QTreeWidget::itemSelectionChanged, this, &MainWindow::onRecipeTreeWidgetChanged);
+  connect(ui->recipeTreeWidget, &QTreeWidget::itemSelectionChanged,
+          this, &MainWindow::onRecipeTreeWidgetChanged);
+
+  createStatusBar();
+  createRecipeTreeWidget();
+  createScale_1_Widget();
 }
 
 MainWindow::~MainWindow() {
@@ -159,6 +165,13 @@ void MainWindow::onClickPushButtonRecipeUp() {
 }
 
 void MainWindow::onClickPushButtonChangeRecipe() {
+  if(selectedRecipe.getId() == 0) {
+    if(ui->recipeTreeWidget->topLevelItemCount() > 0) {
+      int recipeId = ui->recipeTreeWidget->topLevelItem(0)->data(0, Qt::UserRole).toInt();
+      RecipeRepository recipeRepository;
+      selectedRecipe = recipeRepository.getRecipeWithComponents(recipeId);
+    }
+  }
   m_client->publishRecipe(selectedRecipe);
 }
 
@@ -250,13 +263,13 @@ void MainWindow::selectItemInTreeWidgetWithId(QTreeWidget *treeWidget, int id) {
 void MainWindow::selectItemInTreeWidget(QTreeWidget *widget, bool down) {
   int row = widget->currentIndex().row();
 
-  if(down) {
-   row +=  1;
+  if (down) {
+    row += 1;
   } else {
     row -= 1;
   }
 
-  if(row >= 0 && row < widget->topLevelItemCount()) {
+  if (row >= 0 && row < widget->topLevelItemCount()) {
 
     while (row != widget->topLevelItemCount() || row == 0) {
 
@@ -267,7 +280,7 @@ void MainWindow::selectItemInTreeWidget(QTreeWidget *widget, bool down) {
         break;
       }
 
-      if(down)
+      if (down)
         row++;
       else
         row--;
@@ -307,10 +320,11 @@ void MainWindow::onReceivedChangeIsScaleInTareMode(bool isInTareMode) {
     ui->recipeTreeWidget->setDisabled(false);
     ui->componentTreeWidget->setDisabled(false);
 
-    if(selectedRecipe.getId() != 0) {
+    if (selectedRecipe.getId() != 0) {
       m_client->publishRecipe(selectedRecipe, activeComponent);
     }
   }
 }
+
 
 

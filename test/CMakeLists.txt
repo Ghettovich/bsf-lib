@@ -22,6 +22,8 @@ if (Qt5Widgets_FOUND)
     add_subdirectory(repo)
     add_subdirectory(ui)
 
+    add_subdirectory(apps/scale)
+
 else (!Qt5Widgets_FOUND)
     # OOPS
     message("could not find qt widgets")
