@@ -16,6 +16,7 @@ class ScaleTest : public QObject {
   void init();
   void isActiveComponentEmitted();
   void isComponentSelectionChanged();
+  void isTareActivated();
   void cleanupTestCase();
 
 };
