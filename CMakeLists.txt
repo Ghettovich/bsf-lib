@@ -8,8 +8,8 @@ project(bsf-lib
         VERSION 1.0
         DESCRIPTION "Basalt shared libraries between clients")
 
-enable_testing()
-include(CTest)
+#enable_testing()
+#include(CTest)
 
 # BUILD OPTION
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
@@ -24,3 +24,4 @@ add_subdirectory(apps/operator)
 add_subdirectory(apps/scale)
 
 add_subdirectory(test)
+

@@ -15,6 +15,7 @@ class ScaleTest : public QObject {
  private slots:
   void init();
   void isActiveComponentEmitted();
+  void isComponentSelectionChanged();
   void cleanupTestCase();
 
 };

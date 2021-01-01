@@ -50,6 +50,10 @@ void ScaleTest::isActiveComponentEmitted() {
   QVERIFY(component.getCurrentWeight() >= 0);
 }
 
+void ScaleTest::isComponentSelectionChanged() {
+
+}
+
 void ScaleTest::cleanupTestCase() {
 }
 
