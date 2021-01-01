@@ -27,7 +27,6 @@ if (Qt5Widgets_FOUND)
             Qt5::Mqtt
             )
 
-    # Define rules for exporting domain
     target_include_directories(bsf
             PUBLIC
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"

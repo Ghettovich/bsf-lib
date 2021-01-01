@@ -306,6 +306,10 @@ void MainWindow::onReceivedChangeIsScaleInTareMode(bool isInTareMode) {
     ui->pushButtonRecipeDown->setDisabled(false);
     ui->recipeTreeWidget->setDisabled(false);
     ui->componentTreeWidget->setDisabled(false);
+
+    if(selectedRecipe.getId() != 0) {
+      m_client->publishRecipe(selectedRecipe, activeComponent);
+    }
   }
 }
 

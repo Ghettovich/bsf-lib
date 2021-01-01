@@ -25,8 +25,7 @@ pipeline {
       steps {
         dir('build') {
           ctest arguments: '-D Experimental', installation: 'InSearchPath'
-          ctest arguments: '-D Nightly Test', installation: 'InSearchPath'
-          ctest arguments: '-D Nightly MemCheck', installation: 'InSearchPath'
+          ctest arguments: '-D Nightly', installation: 'InSearchPath'
         }
       }
     }
