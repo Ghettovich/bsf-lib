@@ -7,7 +7,7 @@
 #include <widgets/scale/Scale.h>
 
 void ScaleTest::init() {
-
+  m_client = new MqttClient(this, host);
   QSignalSpy spy(m_client, &MqttClient::brokerConnected);
   QVERIFY(spy.isValid());
 
@@ -51,7 +51,29 @@ void ScaleTest::isActiveComponentEmitted() {
 }
 
 void ScaleTest::isComponentSelectionChanged() {
+  qRegisterMetaType<Component>();
+  qRegisterMetaType<WeightSensor *>();
+  quint8 QoS = 0;
 
+  auto scale = new Scale(m_client);
+  m_client->addRecipeDataSubscription(QoS, scale);
+
+  QFile jsonFile(":/payload/tarePayload.json");
+  jsonFile.open(QIODevice::ReadOnly);
+  const QByteArray payload = jsonFile.readAll();
+
+  QSignalSpy spy(m_client, &MqttClient::newDataForScale);
+  QVERIFY(spy.isValid());
+
+  QSignalSpy spyReceivedComponent(scale, &Scale::scaleInTareMode);
+  QVERIFY(spy.isValid());
+
+  const QString topic = "/recipe/data";
+  m_client->onMessageReceived(payload, topic);
+
+  QList<QVariant> arguments = spy.takeFirst();
+  bool isTareActive = arguments.at(0).toBool();
+  QVERIFY(isTareActive = true);
 }
 
 void ScaleTest::cleanupTestCase() {
