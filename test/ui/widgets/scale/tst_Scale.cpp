@@ -93,18 +93,14 @@ void ScaleTest::isTareActivated() {
   jsonFile.open(QIODevice::ReadOnly);
   const QByteArray payload = jsonFile.readAll();
 
-  QSignalSpy spy(m_client, &MqttClient::newDataForScale);
-  QVERIFY(spy.isValid());
-
-  QSignalSpy spyReceivedComponent(scale, &Scale::scaleInTareMode);
-  QVERIFY(spy.isValid());
+  QSignalSpy spyReceivedComponent(scale, SIGNAL(scaleInTareMode(bool)));
+  QVERIFY(spyReceivedComponent.isValid());
 
   const QString topic = "/recipe/data";
   m_client->onMessageReceived(payload, topic);
 
-  QList<QVariant> arguments = spy.takeFirst();
-  bool isTareActive = arguments.at(0).toBool();
-  QVERIFY(isTareActive = true);
+  QList<QVariant> arguments = spyReceivedComponent.takeFirst();
+  QVERIFY(arguments.at(0).type() == QVariant::Bool);
 }
 
 void ScaleTest::cleanupTestCase() {

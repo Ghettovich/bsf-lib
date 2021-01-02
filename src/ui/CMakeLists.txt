@@ -9,7 +9,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(CMakePackageConfigHelpers)
 
 # find Qt5 and required components | Qt5_DIR
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 
 if (Qt5Widgets_FOUND)
 
@@ -66,6 +66,8 @@ if (Qt5Widgets_FOUND)
 
     target_link_libraries(bsf
             PUBLIC
+            Qt5::Core
+            Qt5::Gui
             Qt5::Widgets
             )
 

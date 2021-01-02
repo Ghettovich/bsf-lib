@@ -9,8 +9,6 @@ enable_testing(true)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5 COMPONENTS Core REQUIRED)
 
-enable_testing()
-
 if (Qt5Widgets_FOUND)
 
     # HEADER LIST

@@ -23,26 +23,6 @@ void ScaleAppTest::configureScaleWithPayload() {
   qRegisterMetaType<WeightSensor *>();
   auto scaleApp = new MainWindow(m_client);
 
-  QFile jsonFile(":/payload/recipeData.json");
-  jsonFile.open(QIODevice::ReadOnly);
-  const QByteArray payload = jsonFile.readAll();
-
-  QSignalSpy spy(m_client, &MqttClient::newDataForScale);
-  QVERIFY(spy.isValid());
-
-  scaleApp->onClickPushButtonChangeRecipe();
-
-  const QString topic = "/recipe/data";
-  m_client->onMessageReceived(payload, topic);
-
-  auto weightSensor = qvariant_cast<WeightSensor *>(spy.at(0).at(0));
-  QVERIFY(weightSensor->getComponent().getComponentId() != 0);
-}
-
-void ScaleAppTest::updateWidgetComponentSelectionChanged() {
-  qRegisterMetaType<WeightSensor *>();
-  auto scaleApp = new MainWindow(m_client);
-
   QFile jsonFile(":/payload/recipeComponentUpdated.json");
   jsonFile.open(QIODevice::ReadOnly);
   const QByteArray payload = jsonFile.readAll();
@@ -50,6 +30,7 @@ void ScaleAppTest::updateWidgetComponentSelectionChanged() {
   QSignalSpy spy(m_client, &MqttClient::newDataForScale);
   QVERIFY(spy.isValid());
 
+  scaleApp->onClickPushButtonRecipeDown();
   scaleApp->onClickPushButtonChangeRecipe();
   scaleApp->onClickPushButtonComponentDown();
 
@@ -58,6 +39,28 @@ void ScaleAppTest::updateWidgetComponentSelectionChanged() {
 
   auto weightSensor = qvariant_cast<WeightSensor *>(spy.at(0).at(0));
   QVERIFY(weightSensor->getComponent().getComponentId() != 0);
+  QVERIFY(weightSensor->getComponent().getRecipeId() != 0);
+}
+
+void ScaleAppTest::updateWidgetWithRecipePayload() {
+  qRegisterMetaType<WeightSensor *>();
+  auto scaleApp = new MainWindow(m_client);
+
+  QFile jsonFile(":/payload/recipeUpdated.json");
+  jsonFile.open(QIODevice::ReadOnly);
+  const QByteArray payload = jsonFile.readAll();
+
+  QSignalSpy spy(m_client, &MqttClient::newDataForScale);
+  QVERIFY(spy.isValid());
+
+  const QString topic = "/recipe/data";
+  m_client->onMessageReceived(payload, topic);
+
+  auto weightSensor = qvariant_cast<WeightSensor *>(spy.at(0).at(0));
+  scaleApp->onReceivedConfiguredComponent(weightSensor->getComponent());
+
+  QVERIFY(weightSensor->getComponent().getComponentId() != 0);
+  QVERIFY(weightSensor->getComponent().getRecipeId() != 0);
 }
 
 void ScaleAppTest::cleanupTestCase() {

@@ -12,11 +12,10 @@ class ScaleAppTest : public QObject {
   const QString host = "192.168.178.5";
   MqttClient *m_client;
 
- private
-  slots:
+ private slots:
   void init();
   void configureScaleWithPayload();
-  void updateWidgetComponentSelectionChanged();
+  void updateWidgetWithRecipePayload();
   void cleanupTestCase();
 };
 
