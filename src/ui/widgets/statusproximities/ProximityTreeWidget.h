@@ -7,10 +7,9 @@ class ProximityTreeWidget;
 
 #include <iodevice.h>
 #include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
-#include <QMap>
 #include <QObject>
 #include <QtCore/QList>
-#include <QtCore/QStringList>
+#include <QtCore/QVector>
 #include <QtWidgets/QTreeWidgetItem>
 #include <QtWidgets/QWidget>
 #include <fonts/MaterialRegular.h>
@@ -21,14 +20,13 @@ class ProximityTreeWidget : public IOWidgetStatusInterface {
   Q_INTERFACES(IOWidgetStatusInterface)
 
  public:
-  ProximityTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
+  explicit ProximityTreeWidget();
 
  public slots:
   void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
  private:
-  const QStringList &headers;
-  const QList<QTreeWidgetItem *> &treeWidgets;
+  QList<QTreeWidgetItem *> proximityWidgetList;
   Ui::ProximityTreeWidget *ui = nullptr;
   MaterialRegular materialRegular;
   void initForm();

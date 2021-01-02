@@ -7,7 +7,6 @@ class RelayTreeWidget;
 
 #include <iodevice.h>
 #include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
-#include <QMap>
 #include <QObject>
 #include <QtCore/QList>
 #include <QtCore/QStringList>
@@ -21,14 +20,15 @@ class RelayTreeWidget : public IOWidgetStatusInterface {
   Q_INTERFACES(IOWidgetStatusInterface)
 
  public:
-  RelayTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
+  explicit RelayTreeWidget();
+  //RelayTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
 
  public slots:
   void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
 
  private:
-  const QStringList &headers;
-  const QList<QTreeWidgetItem *> &treeWidgets;
+  QStringList headers;
+  QList<QTreeWidgetItem *> treeWidgets;
   Ui::RelayTreeWidget *ui = nullptr;
   MaterialRegular materialRegular;
 

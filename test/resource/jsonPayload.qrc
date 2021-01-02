@@ -2,6 +2,7 @@
 <RCC version="1.0">
     <qresource prefix="/payload">
         <file alias="relayStates.json">payload/relayStates.json</file>
+        <file alias="relayStatesHighLow.json">payload/relayStatesHighLow.json</file>
         <file alias="proximityStates.json">payload/proximityStates.json</file>
         <file alias="recipeData.json">payload/recipeData.json</file>
         <file alias="recipeUpdated.json">payload/recipeUpdated.json</file>

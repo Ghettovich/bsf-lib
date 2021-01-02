@@ -1,11 +1,10 @@
 #include "RelayTreeWidget.h"
 #include "ui_relaytreewidget.h"
 #include <BsfWidgetEnum.h>
+#include <iodevicerepo.h>
 
-RelayTreeWidget::RelayTreeWidget(const QStringList &_headers,
-                                 const QList<QTreeWidgetItem *> &_treeWidgets)
-    :
-    headers(_headers), treeWidgets(_treeWidgets), ui(new Ui::RelayTreeWidget) {
+RelayTreeWidget::RelayTreeWidget() :
+   ui(new Ui::RelayTreeWidget) {
   ui->setupUi(this);
 
   QVariant formId = WIDGET_TYPES::TREEWIDGET_RELAY_STATUS;
@@ -15,6 +14,14 @@ RelayTreeWidget::RelayTreeWidget(const QStringList &_headers,
 }
 
 void RelayTreeWidget::initForm() {
+  headers.append("ID");
+  headers.append("Type");
+  headers.append("Status");
+  headers.append("Relay");
+
+  IODeviceRepository ioDeviceRepository;
+  treeWidgets = ioDeviceRepository.getIODeviceTreeWidgets(IODeviceType::RELAY);
+
   ui->treeWidget->setHeaderLabels(headers);
   ui->treeWidget->setColumnHidden(0, true);
   ui->treeWidget->setColumnHidden(1, true);
@@ -40,3 +47,4 @@ void RelayTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceList)
     }
   }
 }
+

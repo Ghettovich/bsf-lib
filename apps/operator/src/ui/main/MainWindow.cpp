@@ -40,31 +40,12 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::createRelayTreeView() {
-  QStringList headers;
-  headers.append("ID");
-  headers.append("Type");
-  headers.append("Status");
-  headers.append("Relay");
-
-  IODeviceRepository ioDeviceRepository;
-  QList<QTreeWidgetItem *> relayTreeWidgetList = ioDeviceRepository.getIODeviceTreeWidgets(IODeviceType::RELAY);
-
-  relayTreeWidget = new RelayTreeWidget(headers, relayTreeWidgetList);
+  relayTreeWidget = new RelayTreeWidget;
   ui->verticalLayoutSidePanel->addWidget(relayTreeWidget);
 }
 
 void MainWindow::createProximityTreeView() {
-  IODeviceRepository ioDeviceRepository;
-  QList<QTreeWidgetItem *>
-      proximityWidgetList = ioDeviceRepository.getIODeviceTreeWidgets(IODeviceType::DETECTIONSENSOR);
-
-  QStringList headers;
-  headers.append("ID");
-  headers.append("Type");
-  headers.append("Status");
-  headers.append("Proximity");
-
-  proximityTreeWidget = new ProximityTreeWidget(headers, proximityWidgetList);
+  proximityTreeWidget = new ProximityTreeWidget;
   ui->verticalLayoutSidePanel->addWidget(proximityTreeWidget);
 }
 

@@ -80,8 +80,8 @@ if (Qt5Widgets_FOUND)
     add_custom_command(
             TARGET bsf POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy
-            ${CMAKE_CURRENT_SOURCE_DIR}/../test/resource/database/bsf.db
-            ${CMAKE_CURRENT_BINARY_DIR}/../test/resource/database/bsf.db
+            ${CMAKE_CURRENT_SOURCE_DIR}/data/bsf.db
+            ${CMAKE_BINARY_DIR}/test/data/bsf.db
     )
 
 else (!Qt5Widgets_FOUND)

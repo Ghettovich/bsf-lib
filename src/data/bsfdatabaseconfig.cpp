@@ -6,10 +6,14 @@ BsfDbconfig::BsfDbconfig() {
 }
 
 void BsfDbconfig::initDatabaseConnection() {
+  QDir dir(".");
   if (databaseName.isEmpty()) {
-    QDir dir(".");
+
     databaseName = dir.absoluteFilePath("bsf.db");
+
   }
+
+  printf("\n\n *** \nAbsolute path = %s", qUtf8Printable(dir.absolutePath()));
 }
 
 void BsfDbconfig::setDatabaseName(const QString &_databaseName) {

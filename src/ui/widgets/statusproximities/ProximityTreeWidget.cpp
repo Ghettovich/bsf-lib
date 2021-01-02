@@ -1,11 +1,11 @@
 #include "ProximityTreeWidget.h"
 #include "ui_proximitytreewidget.h"
 #include <BsfWidgetEnum.h>
+#include <QStringList>
+#include <iodevicerepo.h>
 
-ProximityTreeWidget::ProximityTreeWidget(const QStringList &_headers,
-                                         const QList<QTreeWidgetItem *> &_treeWidgets)
-    :
-    headers(_headers), treeWidgets(_treeWidgets), ui(new Ui::ProximityTreeWidget) {
+ProximityTreeWidget::ProximityTreeWidget() :
+    ui(new Ui::ProximityTreeWidget) {
   ui->setupUi(this);
 
   QVariant formId = WIDGET_TYPES::TREEWIDGET_PROXITY_STATUS;
@@ -15,10 +15,19 @@ ProximityTreeWidget::ProximityTreeWidget(const QStringList &_headers,
 }
 
 void ProximityTreeWidget::initForm() {
+  QStringList headers;
+  headers.append("ID");
+  headers.append("Type");
+  headers.append("Status");
+  headers.append("Proximity");
+
+  IODeviceRepository ioDeviceRepository;
+  proximityWidgetList = ioDeviceRepository.getIODeviceTreeWidgets(IODeviceType::DETECTIONSENSOR);
+
   ui->treeWidget->setHeaderLabels(headers);
   ui->treeWidget->setColumnHidden(0, true);
   ui->treeWidget->setColumnHidden(1, true);
-  ui->treeWidget->insertTopLevelItems(0, treeWidgets);
+  ui->treeWidget->insertTopLevelItems(0, proximityWidgetList);
 }
 
 void ProximityTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceList) {
