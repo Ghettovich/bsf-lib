@@ -12,8 +12,7 @@ class GroupBoxBinLoadDropTest : public QObject {
   const QString host = "192.168.178.5";
   MqttClient *m_client;
 
- private
-  slots:
+ private slots:
   void init();
   void isProximityUpdatedForWidget();
   void isRelayToggledForWidget();

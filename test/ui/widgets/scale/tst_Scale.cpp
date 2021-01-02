@@ -35,7 +35,7 @@ void ScaleTest::isActiveComponentEmitted() {
   QVERIFY(spy.isValid());
 
   QSignalSpy spyReceivedComponent(scale, &Scale::receivedComponent);
-  QVERIFY(spy.isValid());
+  QVERIFY(spyReceivedComponent.isValid());
 
   const QString topic = "/recipe/data";
   m_client->onMessageReceived(payload, topic);
