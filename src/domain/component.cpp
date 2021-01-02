@@ -74,11 +74,13 @@ void Component::setMarginValue(int _marginValue) {
 }
 
 bool Component::isTargetMet() const {
+  const int p = 100;
+
   if (currentWeight == 0) {
     return false;
   }
 
-  int marginWeight = (targetWeight / 100) * marginValue;
+  int marginWeight = (targetWeight / p) * marginValue;
 
   if (currentWeight <= targetWeight + marginWeight) {
     if (currentWeight >= targetWeight - marginWeight) {

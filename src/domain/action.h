@@ -7,7 +7,7 @@ class Action {
 
  public:
   Action(int id = 0);
-  int getId();
+  int getId() const;
   QString getCode() const;
   void setCode(const QString &);
   QString getUrl() const;

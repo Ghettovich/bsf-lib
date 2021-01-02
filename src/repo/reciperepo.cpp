@@ -123,7 +123,7 @@ QList<QTreeWidgetItem *> RecipeRepository::getRecipesTreeWidgetList() {
 
     if (query.exec(queryString)) {
       while (query.next()) {
-        auto treeWidgetItem = new QTreeWidgetItem;
+        auto *treeWidgetItem = new QTreeWidgetItem;
         treeWidgetItem->setData(0, Qt::UserRole, query.value("id").toInt());
         treeWidgetItem->setData(0, Qt::DisplayRole, query.value("description").toString());
         recipeTreeWidgets.append(treeWidgetItem);

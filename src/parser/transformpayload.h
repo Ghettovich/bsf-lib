@@ -28,7 +28,7 @@ class TransformPayload : public QObject {
   WeightSensor *parseRecipeData(const QByteArray &payload);
 
  private:
-  bool validateJsonDocument(QJsonDocument &);
+  static bool validateJsonDocument(QJsonDocument &);
   QVector<IODevice *> addProximitiesToArray(const QJsonArray &jsonArray);
   QVector<IODevice *> addRelaysToArray(const QJsonArray &jsonArray);
 };

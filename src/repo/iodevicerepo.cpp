@@ -100,7 +100,7 @@ QList<QTreeWidgetItem *> IODeviceRepository::getIODeviceTreeWidgets(IODeviceType
     query.exec();
 
     while (query.next()) {
-      auto treeWidgetItem = new QTreeWidgetItem;
+      auto *treeWidgetItem = new QTreeWidgetItem;
       treeWidgetItem->setData(0, Qt::UserRole, query.value("io_id").toInt());
       treeWidgetItem->setData(1, Qt::UserRole, ioDeviceType);
 
@@ -179,7 +179,7 @@ IODeviceRepository::getArduinoIODeviceList(int arduinoId,
 
 void IODeviceRepository::createRelayList(QSqlQuery &query, QVector<IODevice *> &list) {
   while (query.next()) {
-    auto relay = new Relay(query.value("io_id").toInt(), IODevice::HIGH);
+    auto *relay = new Relay(query.value("io_id").toInt(), IODevice::HIGH);
     relay->setDescription(query.value("io_desc").toString());
     // Arduino properties
     auto arduino = new Arduino(query.value("arduino_id").toInt());

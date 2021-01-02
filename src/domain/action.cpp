@@ -3,7 +3,7 @@
 Action::Action(int id)
     : id(id) {}
 
-int Action::getId() {
+int Action::getId() const {
   return id;
 }
 

@@ -11,7 +11,7 @@ class StateCode {
   explicit StateCode(int id = 0);
   int getId() const;
   const QString &getStatusMessage() const;
-  void setStatusMessage(const QString &_message);
+  void setStatusMessage(const QString &message);
   const QString &getMessage() const;
   void setMessage(const QString &);
 
