@@ -3,6 +3,8 @@
 #include <reciperepo.h>
 
 void RecipeTest::initTestCase() {
+  QDir dir(".");
+  testConnection = dir.absoluteFilePath("bsf.db");
 }
 
 /*
@@ -12,9 +14,6 @@ void RecipeTest::initTestCase() {
 void RecipeTest::isRecipeTargetMet1() {
   // ARRANGE
   int recipeId = 1;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   RecipeRepository recipeRepository(testConnection);
   Recipe recipe = recipeRepository.getRecipeWithComponents(recipeId);
 
@@ -33,9 +32,6 @@ void RecipeTest::isRecipeTargetMet1() {
 void RecipeTest::isRecipeTargetMet2() {
   // ARRANGE
   int recipeId = 1;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   RecipeRepository recipeRepository(testConnection);
   Recipe recipe = recipeRepository.getRecipeWithComponents(recipeId);
 

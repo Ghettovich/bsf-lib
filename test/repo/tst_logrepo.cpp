@@ -4,6 +4,8 @@
 #include <QtTest/QtTest>
 
 void LogRepoTest::initTestCase() {
+  QDir dir(".");
+  testConnection = dir.absoluteFilePath("bsf.db");
 }
 
 /*
@@ -11,9 +13,6 @@ void LogRepoTest::initTestCase() {
  * */
 void LogRepoTest::isLogListEmpty() {
   // ARRANGE
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   LogRepository logRepository(testConnection);
 
   // ACT
@@ -28,9 +27,6 @@ void LogRepoTest::isLogListEmpty() {
  * */
 void LogRepoTest::isLogListSizeIncreased() {
   // ARRANGE
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   LogRepository logRepository(testConnection);
 
   // ACT

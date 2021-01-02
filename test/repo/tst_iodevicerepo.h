@@ -6,8 +6,11 @@
 class IODeviceRepoTest : public QObject {
  Q_OBJECT
 
+ private:
+  QString testConnection;
+
  private slots:
-  void initTestCase();
+  void init();
   void isIODeviceTypeFound();
   void isIODeviceListNotEmpty();
   void isRelayListFromArduinoEmpty();

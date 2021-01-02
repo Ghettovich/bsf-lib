@@ -2,7 +2,9 @@
 #include <QtTest/QtTest>
 #include <repo/reciperepo.h>
 
-void RecipeRepoTest::initTestCase() {
+void RecipeRepoTest::init() {
+  QDir dir(".");
+  testConnection = dir.absoluteFilePath("bsf.db");
 }
 
 /*
@@ -11,9 +13,6 @@ void RecipeRepoTest::initTestCase() {
 void RecipeRepoTest::isRecipeFound() {
   // ARRANGE
   int recipeId = 1;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   RecipeRepository recipeRepository(testConnection);
 
   // ACT
@@ -28,9 +27,6 @@ void RecipeRepoTest::isRecipeFound() {
  * */
 void RecipeRepoTest::isRecipeListEmpty() {
   // ARRANGE
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   RecipeRepository recipeRepository(testConnection);
 
   // ACT
@@ -46,9 +42,6 @@ void RecipeRepoTest::isRecipeListEmpty() {
 void RecipeRepoTest::isRecipeWithComponentListEmpty() {
   // ARRANGE
   int recipeId = 1;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   RecipeRepository recipeRepository(testConnection);
 
   // ACT

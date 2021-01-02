@@ -6,6 +6,9 @@
 class LogRepoTest : public QObject {
  Q_OBJECT
 
+ private:
+  QString testConnection;
+
  private slots:
   void initTestCase();
   void isLogListEmpty();

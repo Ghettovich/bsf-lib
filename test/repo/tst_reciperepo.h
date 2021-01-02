@@ -6,8 +6,11 @@
 class RecipeRepoTest : public QObject {
  Q_OBJECT
 
+ private:
+  QString testConnection;
+
  private slots:
-  void initTestCase();
+  void init();
   void isRecipeFound();
   void isRecipeListEmpty();
   void isRecipeWithComponentListEmpty();

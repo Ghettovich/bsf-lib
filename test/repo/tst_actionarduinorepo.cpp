@@ -4,7 +4,9 @@
 #include <repo/actionarduinorepo.h>
 #include <domain/action.h>
 
-void ActionArduinoRepoTest::initTestCase() {
+void ActionArduinoRepoTest::init() {
+  QDir dir(".");
+  testConnection = dir.absoluteFilePath("bsf.db");
 }
 
 /*
@@ -13,11 +15,6 @@ void ActionArduinoRepoTest::initTestCase() {
 void ActionArduinoRepoTest::isSizeOfActionListOfArduinoGreaterThanZero() {
   // ARRANGE
   int arduinoId = 1;
-
-  QDir dir(".");
-  dir.cdUp();
-
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   ActionArduinoRepository actionArduinoRepository(testConnection);
 
   // ACT

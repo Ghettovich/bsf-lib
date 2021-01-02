@@ -6,8 +6,11 @@
 class StateCodeRepoTest : public QObject {
  Q_OBJECT
 
+ private:
+  QString testConnection;
+
  private slots:
-  void initTestCase();
+  void init();
   void isStateCodeFound();
   void cleanupTestCase();
 };

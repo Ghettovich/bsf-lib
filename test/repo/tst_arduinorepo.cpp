@@ -3,6 +3,8 @@
 #include <repo/arduinorepo.h>
 
 void ArduinoRepoTest::initTestCase() {
+  QDir dir(".");
+  testConnection = dir.absoluteFilePath("bsf.db");
 }
 
 /*
@@ -11,9 +13,6 @@ void ArduinoRepoTest::initTestCase() {
 void ArduinoRepoTest::isActiveArduinoIdNotZero() {
   // ARRANGE
   int arduinoId = 1;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   ArduinoRepository arduinoRepository(testConnection);
 
   // ACT
@@ -29,9 +28,6 @@ void ArduinoRepoTest::isActiveArduinoIdNotZero() {
 void ArduinoRepoTest::isActiveArduinoListGreaterThenZero() {
   // ARRANGE
   int size = 0;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   ArduinoRepository arduinoRepository(testConnection);
 
   // ACT
@@ -47,9 +43,6 @@ void ArduinoRepoTest::isActiveArduinoListGreaterThenZero() {
 void ArduinoRepoTest::isArduinoFoundWithId() {
   // ARRANGE
   int arduinoId = 2;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   ArduinoRepository arduinoRepository(testConnection);
 
   // ACT

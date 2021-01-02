@@ -7,8 +7,11 @@ class ActionArduinoRepoTest : public QObject {
 
  Q_OBJECT
 
+ private:
+  QString testConnection;
+
  private slots:
-  void initTestCase();
+  void init();
   void isSizeOfActionListOfArduinoGreaterThanZero();
   void cleanupTestCase();
 };

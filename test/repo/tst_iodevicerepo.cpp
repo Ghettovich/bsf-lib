@@ -2,7 +2,9 @@
 #include "tst_iodevicerepo.h"
 #include <QtTest/QtTest>
 
-void IODeviceRepoTest::initTestCase() {
+void IODeviceRepoTest::init() {
+  QDir dir(".");
+  testConnection = dir.absoluteFilePath("bsf.db");
 }
 
 /*
@@ -11,9 +13,7 @@ void IODeviceRepoTest::initTestCase() {
 void IODeviceRepoTest::isIODeviceListNotEmpty() {
   // ARRANGE
   int arduinoId = 1;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
+
   IODeviceRepository ioDeviceRepository(testConnection);
   QVector<IODeviceType> ioDeviceTypeList;
 
@@ -30,9 +30,6 @@ void IODeviceRepoTest::isIODeviceListNotEmpty() {
 void IODeviceRepoTest::isIODeviceTypeFound() {
   // ARRANGE
   int ioDeviceTypeId = 1;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   IODeviceRepository ioDeviceRepository(testConnection);
 
   // ACT
@@ -48,9 +45,6 @@ void IODeviceRepoTest::isIODeviceTypeFound() {
 void IODeviceRepoTest::isRelayListFromArduinoEmpty() {
   // ARRANGE
   int ioDeviceTypeId = 3, arduinoId = 1;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   IODeviceRepository ioDeviceRepository(testConnection);
 
   // ACT
@@ -67,9 +61,6 @@ void IODeviceRepoTest::isRelayListFromArduinoEmpty() {
 void IODeviceRepoTest::isDetectionSensorListEmpty() {
   // ARRANGE
   int ioDeviceTypeId = 2, arduinoId = 1;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   IODeviceRepository ioDeviceRepository(testConnection);
 
   // ACT
@@ -86,9 +77,6 @@ void IODeviceRepoTest::isDetectionSensorListEmpty() {
 void IODeviceRepoTest::isWeightSensorListEmpty() {
   // ARRANGE
   int ioDeviceTypeId = 1, arduinoId = 2;
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   IODeviceRepository ioDeviceRepository(testConnection);
 
   // ACT

@@ -3,7 +3,9 @@
 #include <QDir>
 #include <QTest>
 
-void StateCodeRepoTest::initTestCase() {
+void StateCodeRepoTest::init() {
+  QDir dir(".");
+  testConnection = dir.absoluteFilePath("bsf.db");
 }
 
 /*
@@ -13,9 +15,6 @@ void StateCodeRepoTest::isStateCodeFound() {
   // ARRANGE
   int stateCodeId = 0;
   const QString message = "READY";
-  QDir dir(".");
-  dir.cdUp();
-  const QString testConnection = dir.absoluteFilePath("resource/database/bsf.db");
   StateCodeRepository stateCodeRepository(testConnection);
 
   // ACT

@@ -1,10 +1,10 @@
-#include "tst_RelayTreeWidgetStatus.h"
+#include "tst_ProximityTreeWidgetStatus.h"
 #include <QSignalSpy>
 #include <iodevice.h>
 #include <QFile>
-#include <widgets/statusrelays/RelayTreeWidget.h>
+#include <widgets/statusproximities/ProximityTreeWidget.h>
 
-void RelayTreeWidgetTest::init() {
+void ProximityTreeWidgetStatusTest::init() {
   m_client = new MqttClient(this, host);
 
   QSignalSpy spy(m_client, &MqttClient::brokerConnected);
@@ -18,21 +18,21 @@ void RelayTreeWidgetTest::init() {
   QCOMPARE(spy.count(), 1);
 }
 
-void RelayTreeWidgetTest::isRelayToggledForWidget() {
+void ProximityTreeWidgetStatusTest::isProximityToggledForWidget() {
   qRegisterMetaType<QVector<IODevice *>>();
-  auto statusRelayTreeWidget = new RelayTreeWidget;
+  auto statusRelayTreeWidget = new ProximityTreeWidget;
 
   quint8 QoS = 0;
-  const QString topicRelayStates("/relay/states");
+  const QString topicProximityLift("/proximity/lift");
 
-  m_client->addIODeviceSubscription(topicRelayStates, QoS, statusRelayTreeWidget);
+  m_client->addIODeviceSubscription(topicProximityLift, QoS, statusRelayTreeWidget);
 
   QSignalSpy spy(m_client, &MqttClient::newIODeviceStates);
   QVERIFY(spy.isValid());
 
-  QFile jsonFile(":/payload/relayStatesHighLow.json");
+  QFile jsonFile(":/payload/proximityHighLow.json");
   jsonFile.open(QIODevice::ReadOnly);
-  m_client->onMessageReceived(jsonFile.readAll(), topicRelayStates);
+  m_client->onMessageReceived(jsonFile.readAll(), topicProximityLift);
 
   QList<QVariant> arguments = spy.takeFirst();
   auto iodeviceList = qvariant_cast<QVector<IODevice *>>(arguments.at(0));
@@ -40,8 +40,7 @@ void RelayTreeWidgetTest::isRelayToggledForWidget() {
   QVERIFY(!iodeviceList.isEmpty());
 }
 
-void RelayTreeWidgetTest::cleanupTestCase() {
-
+void ProximityTreeWidgetStatusTest::cleanupTestCase() {
 }
 
-QTEST_MAIN(RelayTreeWidgetTest)
+QTEST_MAIN(ProximityTreeWidgetStatusTest)

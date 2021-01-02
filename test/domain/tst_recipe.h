@@ -4,15 +4,17 @@
 #include <QtTest/QTest>
 #include <QtCore/QObject>
 
-
 class RecipeTest : public QObject {
-    Q_OBJECT
+ Q_OBJECT
 
-private slots:
-    void initTestCase();
-    void isRecipeTargetMet1();
-    void isRecipeTargetMet2();
-    void cleanupTestCase();
+ private:
+  QString testConnection;
+
+ private slots:
+  void initTestCase();
+  void isRecipeTargetMet1();
+  void isRecipeTargetMet2();
+  void cleanupTestCase();
 
 };
 

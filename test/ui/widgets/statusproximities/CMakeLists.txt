@@ -5,37 +5,35 @@ set(CMAKE_AUTOMOC ON)
 
 # find Qt5 and required components | Qt5_DIR
 find_package(Qt5Test REQUIRED)
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Mqtt REQUIRED)
 
 enable_testing()
 
 if (Qt5Widgets_FOUND)
 
-    # HEADER LIST
-    set(HEADER_LIST
-            tst_recipe.h)
-
-    # ADD TEST EXECUTABLE
-    add_executable(DomainTest
-            autotest.cpp
-            tst_recipe.cpp
-            ${HEADER_LIST}
+    # ADD TEST EXECUTABLES
+    add_executable(ProximityTreeWidgetTest
+            tst_ProximityTreeWidgetStatus.cpp
+            tst_ProximityTreeWidgetStatus.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/../../../resource/jsonPayload.qrc
             )
 
-    target_link_libraries(DomainTest PRIVATE
+    target_link_libraries(ProximityTreeWidgetTest PRIVATE
             bsf
             Qt5::Test
             Qt5::Core
+            Qt5::Mqtt
+            Qt5::Widgets
             )
 
-    target_include_directories(DomainTest PRIVATE
+    target_include_directories(ProximityTreeWidgetTest PUBLIC
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
             )
 
-    add_test(domaintest DomainTest)
+    add_test(proximityTreeWidgetTest ProximityTreeWidgetTest)
 
     add_custom_command(
-            TARGET DomainTest POST_BUILD
+            TARGET ProximityTreeWidgetTest POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy
             ${CMAKE_CURRENT_SOURCE_DIR}/bsf.db
             ${CMAKE_CURRENT_BINARY_DIR}/bsf.db
