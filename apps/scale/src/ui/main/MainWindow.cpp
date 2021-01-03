@@ -82,7 +82,6 @@ void MainWindow::createRecipeTreeWidget() {
   QList<QTreeWidgetItem *> recipeTreeWidgets = recipeRepository.getRecipesTreeWidgetList();
 
   ui->recipeTreeWidget->insertTopLevelItems(0, recipeTreeWidgets);
-
 }
 
 void MainWindow::createComponentsListWidget(const Recipe &recipe) {
@@ -116,6 +115,9 @@ void MainWindow::createScale_1_Widget() {
 
   connect(qobject_cast<Scale *>(scale), &Scale::scaleInTareMode,
           this, &MainWindow::onReceivedChangeIsScaleInTareMode);
+
+  connect(qobject_cast<Scale *>(scale), &Scale::scaleTimeOutOccured,
+          this, &MainWindow::onReceivedTimeOutOccured);
 }
 
 void MainWindow::onCreateMqttClientSubscriptions() {
@@ -323,6 +325,17 @@ void MainWindow::onReceivedChangeIsScaleInTareMode(bool isInTareMode) {
     if (selectedRecipe.getId() != 0) {
       m_client->publishRecipe(selectedRecipe, activeComponent);
     }
+  }
+}
+
+void MainWindow::onReceivedTimeOutOccured(IODevice::IO_DEVICE_HIGH_LOW state) {
+  if(state == IODevice::LOW) {
+    ui->componentTreeWidget->blockSignals(true);
+    ui->componentTreeWidget->selectionModel()->clearSelection();
+    this->setStatusTip("Time out occured! Select a component again.");
+    ui->componentTreeWidget->blockSignals(false);
+  } else {
+    this->setStatusTip("Waiting for recipe to complete...");
   }
 }
 

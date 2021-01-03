@@ -26,7 +26,10 @@ WeightSensor *TransformPayload::parseRecipeData(const QByteArray &payload) {
   QJsonDocument jsonDocument(QJsonDocument::fromJson(payload));
 
   if (validateJsonDocument(jsonDocument)) {
-    weightSensor = new WeightSensor(jsonDocument["did"].toInt(), IODevice::HIGH);
+    IODevice::IO_DEVICE_HIGH_LOW scaleState;
+    scaleState = jsonDocument["low"].toInt() == 0 ? IODevice::LOW : IODevice::HIGH;
+
+    weightSensor = new WeightSensor(jsonDocument["did"].toInt(), scaleState);
     Component component;
 
     component = Component(jsonDocument["cid"].toInt(), jsonDocument["rid"].toInt());

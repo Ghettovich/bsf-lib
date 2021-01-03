@@ -30,10 +30,15 @@ void Scale::init() {
   ui->pushButtonConfirmRecipe->setDisabled(true);
   ui->pushButtonConfirmRecipe->setIcon(material.updateDisabledIcon());
   connect(ui->pushButtonConfirmRecipe, &QPushButton::clicked, this, &Scale::onClickPushButtonConfirmRecipe);
+
+  connect(this, &Scale::scaleTimeOutOccured,
+          this, &Scale::onScaleTimeOutOccured);
 }
 
 void Scale::onUpdateIODevice(WeightSensor *sensor) {
   if (sensor->getId() == weightSensor->getId()) {
+    weightSensor->setDeviceState(sensor->getDeviceState());
+
     if (sensor->getComponent().getRecipeId() == 0 || sensor->getComponent().getComponentId() == 0) {
       activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
       ui->pushButtonTareScale->setIcon(material.syncProblemIcon());
@@ -52,17 +57,6 @@ void Scale::onUpdateIODevice(WeightSensor *sensor) {
 
       activeComponent = configuredRecipe.getComponent(sensor->getComponent().getComponentId());
       activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
-
-      //      for (const auto &comp: configuredRecipe.componentList) {
-//        if (comp.getComponentId() == sensor->getComponent().getComponentId()) {
-//          activeComponent.setComponentId(sensor->getComponent().getComponentId());
-//          activeComponent.setRecipeId(sensor->getComponent().getRecipeId());
-//          activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
-//          activeComponent.setTargetWeight(comp.getTargetWeight());
-//          activeComponent.setMarginValue(comp.getMarginValue());
-//          break;
-//        }
-      //}
 
       updateComponentWidgetTable();
 
@@ -84,6 +78,15 @@ void Scale::onUpdateIODevice(WeightSensor *sensor) {
 
     // SIGNALS
     emit receivedComponent(activeComponent);
+    emit scaleTimeOutOccured(weightSensor->getDeviceState());
+  }
+}
+
+void Scale::onScaleTimeOutOccured(IODevice::IO_DEVICE_HIGH_LOW state) {
+  if(state == IODevice::LOW) {
+    ui->tableWidget->setDisabled(true);
+  } else {
+    ui->tableWidget->setDisabled(false);
   }
 }
 
@@ -143,9 +146,14 @@ void Scale::setPushButtonConfirmRecipe() {
 void Scale::setRecipeProgressBar() {
   auto totalCurrentWeight = (float)configuredRecipe.getSumOfCurrentWeight();
   auto totalTargetWeight = (float)configuredRecipe.getSumOfTargetWeight();
-
   auto val = (int)100 * (totalCurrentWeight / totalTargetWeight);
-  ui->progressBar->setValue((int)val);
+
+  if((int)val > ui->progressBar->maximum()) {
+    ui->progressBar->setValue(ui->progressBar->maximum());
+  }
+  else {
+    ui->progressBar->setValue((int)val);
+  }
 }
 
 void Scale::updateComponentWidgetTable() {

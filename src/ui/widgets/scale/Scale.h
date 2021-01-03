@@ -24,6 +24,7 @@ class Scale : public RecipeStatusInterface {
 
  public slots:
   void onUpdateIODevice(WeightSensor *sensor) override;
+  void onScaleTimeOutOccured(IODevice::IO_DEVICE_HIGH_LOW state);
 
  private:
   Ui::Scale *ui = nullptr;
@@ -48,6 +49,7 @@ class Scale : public RecipeStatusInterface {
  signals:
   void receivedComponent(const Component &component);
   void scaleInTareMode(bool isInTareMode);
+  void scaleTimeOutOccured(IODevice::IO_DEVICE_HIGH_LOW state);
 };
 
 #endif //SCALE_H

@@ -62,6 +62,7 @@ class MainWindow : public QMainWindow {
   void onRecipeTreeWidgetChanged();
   void onReceivedConfiguredComponent(const Component &component);
   void onReceivedChangeIsScaleInTareMode(bool isInTareMode);
+  void onReceivedTimeOutOccured(IODevice::IO_DEVICE_HIGH_LOW state);
 
 };
 #endif // MAINWINDOW_H
