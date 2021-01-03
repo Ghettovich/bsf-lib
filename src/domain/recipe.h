@@ -18,6 +18,8 @@ class Recipe {
   Component getComponent(int componentId);
   void updateComponentWeight(int componentId, int weight);
   bool isRecipeTargetMet();
+  int getSumOfCurrentWeight();
+  int getSumOfTargetWeight();
   QVector<Component> componentList;
 
  private:

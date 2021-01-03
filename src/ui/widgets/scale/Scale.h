@@ -38,11 +38,11 @@ class Scale : public RecipeStatusInterface {
   void createRecipeComponentTableWidget();
   void setQLcdNumberDisplay();
   void setPushButtonConfirmRecipe();
+  void setRecipeProgressBar();
   void updateComponentWidgetTable();
 
  private slots:
   void onClickPushButtonTare();
-  void onClickPushButtonClearRecipe();
   void onClickPushButtonConfirmRecipe();
 
  signals:

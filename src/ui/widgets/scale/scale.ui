@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-    <class>Scale</class>
-    <widget class="QWidget" name="Scale">
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>735</width>
-                <height>518</height>
-            </rect>
-        </property>
-        <property name="windowTitle">
-            <string>Form</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout" rowstretch="3,2,0">
-            <item row="0" column="0">
-                <widget class="QLCDNumber" name="lcdNumber"/>
-            </item>
-            <item row="2" column="0">
-                <layout class="QHBoxLayout" name="horizontalLayout">
-                    <item>
-                        <widget class="QPushButton" name="pushButtonTareScale">
-                            <property name="text">
-                                <string>Tare</string>
-                            </property>
-                        </widget>
-                    </item>
-                    <item>
-                        <widget class="QPushButton" name="pushButtonClearRecipe">
-                            <property name="text">
-                                <string>Clear recipe</string>
-                            </property>
-                        </widget>
-                    </item>
-                    <item>
-                        <widget class="QPushButton" name="pushButtonConfirmRecipe">
-                            <property name="text">
-                                <string>Confirm recipe</string>
-                            </property>
-                        </widget>
-                    </item>
-                </layout>
-            </item>
-            <item row="1" column="0">
-                <widget class="QTableWidget" name="tableWidget"/>
-            </item>
-        </layout>
-    </widget>
-    <resources/>
-    <connections/>
+ <class>Scale</class>
+ <widget class="QWidget" name="Scale">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>735</width>
+    <height>518</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" rowstretch="3,2,0">
+   <item row="0" column="0">
+    <widget class="QLCDNumber" name="lcdNumber"/>
+   </item>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="4,2,2">
+     <item>
+      <widget class="QProgressBar" name="progressBar">
+       <property name="value">
+        <number>24</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonTareScale">
+       <property name="text">
+        <string>Tare</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonConfirmRecipe">
+       <property name="text">
+        <string>Confirm recipe</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="QTableWidget" name="tableWidget"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
 </ui>

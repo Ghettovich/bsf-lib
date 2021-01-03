@@ -160,7 +160,7 @@ void MainWindow::onClickPushButtonRecipeDown() {
 
 void MainWindow::onClickPushButtonRecipeUp() {
   if (ui->recipeTreeWidget->currentIndex().isValid()) {
-    selectItemInTreeWidget(ui->recipeTreeWidget, true);
+    selectItemInTreeWidget(ui->recipeTreeWidget, false);
   }
 }
 

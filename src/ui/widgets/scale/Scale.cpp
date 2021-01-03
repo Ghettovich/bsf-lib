@@ -4,7 +4,6 @@
 #include <weightcensor.h>
 #include <BsfWidgetEnum.h>
 #include <QMessageBox>
-#include <QErrorMessage>
 
 Scale::Scale(MqttClient *_m_client) :
     ui(new Ui::Scale), m_client(_m_client) {
@@ -14,6 +13,8 @@ Scale::Scale(MqttClient *_m_client) :
 
   weightSensor = new WeightSensor(1, IODevice::LOW);
   activeComponentTableWidget = new QTableWidgetItem;
+  ui->progressBar->setValue(0);
+  ui->progressBar->setRange(0, 100);
 
   init();
 }
@@ -26,9 +27,6 @@ void Scale::init() {
   ui->pushButtonTareScale->setIcon(material.syncProblemIcon());
   connect(ui->pushButtonTareScale, &QPushButton::clicked, this, &Scale::onClickPushButtonTare);
 
-  ui->pushButtonConfirmRecipe->setIcon(material.updateDisabledIcon());
-  connect(ui->pushButtonClearRecipe, &QPushButton::clicked, this, &Scale::onClickPushButtonClearRecipe);
-
   ui->pushButtonConfirmRecipe->setDisabled(true);
   ui->pushButtonConfirmRecipe->setIcon(material.updateDisabledIcon());
   connect(ui->pushButtonConfirmRecipe, &QPushButton::clicked, this, &Scale::onClickPushButtonConfirmRecipe);
@@ -36,16 +34,14 @@ void Scale::init() {
 
 void Scale::onUpdateIODevice(WeightSensor *sensor) {
   if (sensor->getId() == weightSensor->getId()) {
-    if(sensor->getComponent().getRecipeId() == 0 || sensor->getComponent().getComponentId() == 0) {
+    if (sensor->getComponent().getRecipeId() == 0 || sensor->getComponent().getComponentId() == 0) {
       activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
       ui->pushButtonTareScale->setIcon(material.syncProblemIcon());
       setQLcdNumberDisplay();
       isTareActive = true;
       emit scaleInTareMode(true);
       return;
-    }
-
-    else if (sensor->getComponent().getRecipeId() != configuredRecipe.getId()) {
+    } else if (sensor->getComponent().getRecipeId() != configuredRecipe.getId()) {
       RecipeRepository recipeRepository;
       configuredRecipe = recipeRepository.getRecipeWithComponents(sensor->getComponent().getRecipeId());
       createRecipeComponentTableWidget();
@@ -54,14 +50,19 @@ void Scale::onUpdateIODevice(WeightSensor *sensor) {
     if (activeComponent.getComponentId() != sensor->getComponent().getComponentId() ||
         sensor->getComponent().getRecipeId() != activeComponent.getRecipeId()) {
 
-      for (const auto &comp: configuredRecipe.componentList) {
-        if (comp.getComponentId() == sensor->getComponent().getComponentId()) {
-          activeComponent.setComponentId(sensor->getComponent().getComponentId());
-          activeComponent.setRecipeId(sensor->getComponent().getRecipeId());
-          activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
-          break;
-        }
-      }
+      activeComponent = configuredRecipe.getComponent(sensor->getComponent().getComponentId());
+      activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
+
+      //      for (const auto &comp: configuredRecipe.componentList) {
+//        if (comp.getComponentId() == sensor->getComponent().getComponentId()) {
+//          activeComponent.setComponentId(sensor->getComponent().getComponentId());
+//          activeComponent.setRecipeId(sensor->getComponent().getRecipeId());
+//          activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
+//          activeComponent.setTargetWeight(comp.getTargetWeight());
+//          activeComponent.setMarginValue(comp.getMarginValue());
+//          break;
+//        }
+      //}
 
       updateComponentWidgetTable();
 
@@ -69,10 +70,17 @@ void Scale::onUpdateIODevice(WeightSensor *sensor) {
       activeComponent.setCurrentWeight(sensor->getComponent().getCurrentWeight());
       configuredRecipe.updateComponentWeight(activeComponent.getComponentId(), activeComponent.getCurrentWeight());
       activeComponentTableWidget->setText(QString::number(activeComponent.getCurrentWeight()));
+
+      if (activeComponent.isTargetMet()) {
+        activeComponentTableWidget->setData(Qt::ForegroundRole, QColor(Qt::green));
+      } else {
+        activeComponentTableWidget->setData(Qt::ForegroundRole, QColor(Qt::white));
+      }
     }
 
     setQLcdNumberDisplay();
     setPushButtonConfirmRecipe();
+    setRecipeProgressBar();
 
     // SIGNALS
     emit receivedComponent(activeComponent);
@@ -123,13 +131,21 @@ void Scale::setQLcdNumberDisplay() {
 }
 
 void Scale::setPushButtonConfirmRecipe() {
-  if(configuredRecipe.isRecipeTargetMet()) {
+  if (configuredRecipe.isRecipeTargetMet()) {
     ui->pushButtonConfirmRecipe->setIcon(material.updateIcon());
     ui->pushButtonConfirmRecipe->setDisabled(false);
   } else {
     ui->pushButtonConfirmRecipe->setIcon(material.updateDisabledIcon());
     ui->pushButtonConfirmRecipe->setDisabled(true);
   }
+}
+
+void Scale::setRecipeProgressBar() {
+  auto totalCurrentWeight = (float)configuredRecipe.getSumOfCurrentWeight();
+  auto totalTargetWeight = (float)configuredRecipe.getSumOfTargetWeight();
+
+  auto val = (int)100 * (totalCurrentWeight / totalTargetWeight);
+  ui->progressBar->setValue((int)val);
 }
 
 void Scale::updateComponentWidgetTable() {
@@ -145,7 +161,7 @@ void Scale::updateComponentWidgetTable() {
 }
 
 void Scale::onClickPushButtonTare() {
-  if(!isTareActive) {
+  if (!isTareActive) {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, tr("Tare scale?"),
                                   "Please clear the scale... then proceed.\n\nExpected calibration weight 1kg.",
@@ -154,18 +170,13 @@ void Scale::onClickPushButtonTare() {
       m_client->publishTareScale(false);
       ui->pushButtonTareScale->setIcon(material.syncIcon());
     }
-  }
-  else {
+  } else {
     isTareActive = false;
     m_client->publishTareScale(true);
     ui->pushButtonTareScale->setIcon(material.syncProblemIcon());
 
     emit scaleInTareMode(false);
   }
-}
-
-void Scale::onClickPushButtonClearRecipe() {
-
 }
 
 void Scale::onClickPushButtonConfirmRecipe() {

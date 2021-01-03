@@ -6,9 +6,9 @@ IODevice::IODevice(int id)
   deviceState = IO_DEVICE_HIGH_LOW::LOW;
 }
 
-IODevice::IODevice(int id, IODevice::IO_DEVICE_HIGH_LOW _deviceState)
+IODevice::IODevice(int id, IODevice::IO_DEVICE_HIGH_LOW deviceState)
     :
-    iodeviceId(id), deviceState(_deviceState) {
+    iodeviceId(id), deviceState(deviceState) {
 }
 
 int IODevice::getId() const {

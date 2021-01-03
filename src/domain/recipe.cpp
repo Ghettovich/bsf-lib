@@ -57,3 +57,23 @@ void Recipe::updateComponentWeight(int componentId, int weight) {
   }
 }
 
+int Recipe::getSumOfCurrentWeight() {
+  int total = 0;
+
+  for (auto &comp: componentList) {
+    total += comp.getCurrentWeight();
+  }
+
+  return total;
+}
+
+int Recipe::getSumOfTargetWeight() {
+  int total = 0;
+
+  for (auto &comp: componentList) {
+    total += comp.getTargetWeight();
+  }
+
+  return total;
+}
+
