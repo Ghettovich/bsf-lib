@@ -13,13 +13,17 @@ if (Qt5Widgets_FOUND)
 
     # HEADER LIST
     set(HEADER_LIST
-            tst_recipe.h)
+            tst_Recipe.h
+            tst_Arduino.h
+            )
 
     # ADD TEST EXECUTABLE
     add_executable(DomainTest
             autotest.cpp
-            tst_recipe.cpp
+            tst_Recipe.cpp
+            tst_Arduino.cpp
             ${HEADER_LIST}
+            ${CMAKE_CURRENT_SOURCE_DIR}/../resource/jsonPayload.qrc
             )
 
     target_link_libraries(DomainTest PRIVATE

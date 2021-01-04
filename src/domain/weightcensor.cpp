@@ -13,14 +13,6 @@ bool WeightSensor::isDeviceOn() const {
   return getDeviceState() == HIGH;
 }
 
-int WeightSensor::getCurrentWeightForComponent() const {
-  return component.getCurrentWeight();
-}
-
-void WeightSensor::setCurrentWeightForComponent(int weight) {
-  component.setCurrentWeight(weight);
-}
-
 void WeightSensor::setComponent(Component c) {
   component = std::move(c);
 }

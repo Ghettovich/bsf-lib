@@ -66,36 +66,6 @@ QVector<IODevice *> Arduino::getIoDeviceList() {
   return ioDeviceList;
 }
 
-bool Arduino::hasRelayIODevices() {
-  for (auto *dev : ioDeviceList) {
-    if (dev->getIoDeviceType().getIODeviceType() == IODeviceType::RELAY) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-bool Arduino::hasWeightSensorIODevices() {
-  for (auto *dev : ioDeviceList) {
-    if (dev->getIoDeviceType().getIODeviceType() == IODeviceType::WEIGHTSENSOR) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-bool Arduino::hasDetectionSensorIODevices() {
-  for (auto *dev : ioDeviceList) {
-    if (dev->getIoDeviceType().getIODeviceType() == IODeviceType::DETECTIONSENSOR) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
 void Arduino::updateIODeviceList(const QVector<IODevice *> &_ioDeviceList) {
 
   for (auto ioDevice : ioDeviceList) {
@@ -107,16 +77,3 @@ void Arduino::updateIODeviceList(const QVector<IODevice *> &_ioDeviceList) {
     }
   }
 }
-
-QUrl Arduino::generateQUrl(const QString &location) const {
-  QString url = QString("http://[");
-  if (location.isEmpty()) {
-    printf("\nGot empty location for generate URL");
-    url.append(ipAddress).append("]/");
-  } else {
-    url.append(ipAddress).append("]/").append(location);
-  }
-
-  return QUrl(url);
-}
-

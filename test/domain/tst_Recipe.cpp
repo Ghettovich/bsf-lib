@@ -1,8 +1,8 @@
-#include "tst_recipe.h"
+#include "tst_Recipe.h"
 #include <recipe.h>
 #include <reciperepo.h>
 
-void RecipeTest::initTestCase() {
+void RecipeTest::init() {
   QDir dir(".");
   testConnection = dir.absoluteFilePath("bsf.db");
 }

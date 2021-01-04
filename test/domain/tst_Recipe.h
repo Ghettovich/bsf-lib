@@ -11,7 +11,7 @@ class RecipeTest : public QObject {
   QString testConnection;
 
  private slots:
-  void initTestCase();
+  void init();
   void isRecipeTargetMet1();
   void isRecipeTargetMet2();
   void cleanupTestCase();

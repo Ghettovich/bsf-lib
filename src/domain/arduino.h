@@ -45,11 +45,7 @@ class Arduino {
   ARDUINO_STATE getArduinoState();
   void setArduinoState(ARDUINO_STATE);
   QVector<IODevice *> getIoDeviceList();
-  bool hasRelayIODevices();
-  bool hasWeightSensorIODevices();
-  bool hasDetectionSensorIODevices();
   void updateIODeviceList(const QVector<IODevice *> &);
-  QUrl generateQUrl(const QString &location = "") const;
 
  private:
   int arduinoId;

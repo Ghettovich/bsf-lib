@@ -20,6 +20,7 @@ void ArduinoRepoTest::isActiveArduinoIdNotZero() {
 
   // ASSERT
   QVERIFY(arduino.getId() != 0);
+  QVERIFY(!arduino.getIoDeviceList().empty());
 }
 
 /*
