@@ -188,5 +188,5 @@ void Scale::onClickPushButtonTare() {
 }
 
 void Scale::onClickPushButtonConfirmRecipe() {
-
+  m_client->publishConfirmComponent(activeComponent);
 }

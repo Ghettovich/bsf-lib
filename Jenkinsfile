@@ -26,13 +26,9 @@ pipeline {
         dir('build') {
           ctest arguments: '-D Experimental', installation: 'InSearchPath'
           ctest arguments: '-D Nightly', installation: 'InSearchPath'
+          ctest arguments: '-D Continuous', installation: 'InSearchPath'
         }
       }
-    }
-  }
-  post {
-     always {
-       xunit([CTest(deleteOutputFiles: true, failIfNotNew: true, pattern: 'build/Testing/**/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)])
     }
   }
 }
