@@ -19,6 +19,10 @@ class GroupBoxRecipeConfig : public QWidget {
   explicit GroupBoxRecipeConfig(MqttClient *_m_client);
   virtual ~GroupBoxRecipeConfig();
 
+ public slots:
+  void onChangeRecipeComboBox(int index);
+  void onClickButtonPublishRecipe();
+
  private:
   Recipe selectedRecipe;
   MqttClient *m_client;
@@ -27,9 +31,7 @@ class GroupBoxRecipeConfig : public QWidget {
   void createRecipeComboBox();
   void createRecipeComponentsTable();
 
- private slots:
-  void onChangeRecipeComboBox(int index);
-  void onClickButtonPublishRecipe();
+  signals:
 };
 
 #endif //BSF_LIB_GROUPBOXRECIPECONFIG_H
