@@ -5,7 +5,8 @@
 
 void StateCodeRepoTest::init() {
   QDir dir(".");
-  testConnection = dir.absoluteFilePath("bsf.db");
+  QString path = dir.relativeFilePath("../data/bsf.db");
+  testConnection = dir.absoluteFilePath(path);
 }
 
 /*

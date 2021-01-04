@@ -38,13 +38,6 @@ if (Qt5Widgets_FOUND)
 
     add_test(domaintest DomainTest)
 
-    add_custom_command(
-            TARGET DomainTest POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy
-            ${CMAKE_CURRENT_SOURCE_DIR}/bsf.db
-            ${CMAKE_CURRENT_BINARY_DIR}/bsf.db
-    )
-
 else (!Qt5Widgets_FOUND)
     # OOPS
     message("could not find qt widgets")
