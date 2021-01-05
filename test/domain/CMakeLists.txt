@@ -7,8 +7,6 @@ set(CMAKE_AUTOMOC ON)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5 COMPONENTS Core REQUIRED)
 
-
-include(CodeCoverage)
 enable_testing()
 
 if (Qt5Widgets_FOUND)

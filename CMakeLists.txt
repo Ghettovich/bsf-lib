@@ -14,10 +14,6 @@ include(CTest)
 # BUILD OPTION
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmakemodules/)
-include(CodeCoverage)
-append_coverage_compiler_flags()
-
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -28,13 +24,3 @@ add_subdirectory(apps/operator)
 add_subdirectory(apps/scale)
 
 add_subdirectory(test)
-
-
-set(COVERAGE_EXCLUDES "./src/bsf_autogen")
-set(setup_target_for_coverage_gcovr_html
-        NAME BsfCoverage
-        EXECUTABLE ctest -j ${PROCESSOR_COUNT}
-        BASE_DIRECTORY "../"
-        EXCLUDE "./src/bsf_autogen")
-
-setup_target_for_coverage_gcovr_xml(${setup_target_for_coverage_gcovr_html})
