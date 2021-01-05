@@ -15,8 +15,11 @@ class BsfDbconfig {
   void setDatabaseName(const QString &);
   void setSqlDatabase(QSqlDatabase &);
 
+  QSqlDatabase defaultSqlDatabase();
+
  private:
   QString databaseName = "";
-
+  QSqlDatabase defaultDatabase;
+  QString defaultDatabaseName = "data/bsf.db";
 };
 #endif //BSF_DATABASECONFIG_H

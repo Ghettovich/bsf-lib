@@ -29,3 +29,12 @@ add_subdirectory(apps/scale)
 
 add_subdirectory(test)
 
+
+set(COVERAGE_EXCLUDES "./src/bsf_autogen")
+set(setup_target_for_coverage_gcovr_html
+        NAME BsfCoverage
+        EXECUTABLE ctest -j ${PROCESSOR_COUNT}
+        BASE_DIRECTORY "../"
+        EXCLUDE "./src/bsf_autogen")
+
+setup_target_for_coverage_gcovr_xml(${setup_target_for_coverage_gcovr_html})

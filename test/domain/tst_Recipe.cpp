@@ -4,7 +4,7 @@
 
 void RecipeTest::init() {
   QDir dir(".");
-  QString path = dir.relativeFilePath("../data/bsf.db");
+  QString path = dir.relativeFilePath("bsf.db");
   testConnection = path;
 }
 

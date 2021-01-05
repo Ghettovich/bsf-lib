@@ -6,7 +6,8 @@
 
 void ArduinoTest::init() {
   QDir dir(".");
-  QString path = dir.relativeFilePath("../data/bsf.db");
+  printf("\n\n *** PATH IN TEST = %s\n", qUtf8Printable(dir.absolutePath()));
+  QString path = dir.relativeFilePath("bsf.db");
   testConnection = path;
 }
 

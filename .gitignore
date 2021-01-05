@@ -1,3 +1,4 @@
+/build/
 /cmake-build-debug/
 /cmake-build-gcc/
 
@@ -13,3 +14,4 @@
 # ignore model views for now
 /src/ui/model
 /src/ui/views/
+/build/

@@ -9,16 +9,6 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 
 
 include(CodeCoverage)
-
-set(COVERAGE_EXCLUDES "dir1/*")
-set(setup_target_for_coverage_gcovr_html
-   NAME DomainCoverage
-   EXECUTABLE DomainTest
-   BASE_DIRECTORY "${PROJECT_SOURCE_DIR}/src"
-   EXCLUDE "dir2/*")
-
-setup_target_for_coverage_gcovr_xml(${setup_target_for_coverage_gcovr_html})
-
 enable_testing()
 
 if (Qt5Widgets_FOUND)
@@ -48,7 +38,14 @@ if (Qt5Widgets_FOUND)
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
             )
 
-    #add_test(domaintest DomainTest)
+    add_test(domaintest DomainTest)
+
+    add_custom_command(
+            TARGET DomainTest POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_CURRENT_SOURCE_DIR}/bsf.db
+            ${CMAKE_CURRENT_BINARY_DIR}/bsf.db
+    )
 
 else (!Qt5Widgets_FOUND)
     # OOPS
