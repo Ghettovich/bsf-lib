@@ -14,6 +14,10 @@ include(CTest)
 # BUILD OPTION
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmakemodules/)
+include(CodeCoverage)
+append_coverage_compiler_flags()
+
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)

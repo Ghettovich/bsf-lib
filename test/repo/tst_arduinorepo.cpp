@@ -5,7 +5,7 @@
 void ArduinoRepoTest::initTestCase() {
   QDir dir(".");
   QString path = dir.relativeFilePath("../data/bsf.db");
-  testConnection = dir.absoluteFilePath(path);
+  testConnection = path;
 }
 
 /*

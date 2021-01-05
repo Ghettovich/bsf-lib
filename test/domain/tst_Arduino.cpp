@@ -7,7 +7,7 @@
 void ArduinoTest::init() {
   QDir dir(".");
   QString path = dir.relativeFilePath("../data/bsf.db");
-  testConnection = dir.absoluteFilePath(path);
+  testConnection = path;
 }
 
 void ArduinoTest::onUpdateArduinoProximity() {
