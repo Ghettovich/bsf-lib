@@ -9,9 +9,14 @@ GroupBoxLiftUpDown::GroupBoxLiftUpDown(MqttClient *_m_client)
   QVariant formId = WIDGET_TYPES::GROUPBOX_LIFT_UP_DOWN;
   this->setProperty("formId", formId);
 
-  relayBinLiftDown = new Relay(31, IODevice::HIGH); // Digital
-  relayBinLiftUp = new Relay(30, IODevice::HIGH); // Digital
-  proximityBinLoad = new DetectionSensor(11, IODevice::HIGH); // PULL UP (HIGH = OFF!)
+  auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
+  settings->beginGroup("relays");
+
+  relayBinLiftDown = new Relay(settings->value("liftdown").toInt(), IODevice::HIGH); // Digital
+  relayBinLiftUp = new Relay(settings->value("liftup").toInt(), IODevice::HIGH); // Digital
+
+  settings->beginGroup("detection_sensor");
+  proximityBinLoad = new DetectionSensor(settings->value("binload").toInt(), IODevice::HIGH); // PULL UP (HIGH = OFF!)
 
   init();
 }

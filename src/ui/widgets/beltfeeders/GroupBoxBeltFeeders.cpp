@@ -9,13 +9,16 @@ GroupBoxBeltFeeders::GroupBoxBeltFeeders(MqttClient *_m_client) :
   QVariant formId = WIDGET_TYPES::GROUPBOX_BELT_FEEDERS;
   this->setProperty("formId", formId);
 
+  auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
+  settings->beginGroup("relays");
+
   relayBeltForward = new Relay(0, IODevice::HIGH); // ON 2nd RELAY BLOCK, currently not present
   relayBeltReverse = new Relay(0, IODevice::HIGH); // ON 2nd RELAY BLOCK, currently not present
 
-  relayFeeder1Foward = new Relay(34, IODevice::HIGH);
-  relayFeeder1Reverse = new Relay(35, IODevice::HIGH);
-  relayFeeder2Foward = new Relay(36, IODevice::HIGH);
-  relayFeeder2Reverse = new Relay(37, IODevice::HIGH);
+  relayFeeder1Foward = new Relay(settings->value("feeder1forward").toInt(), IODevice::HIGH);
+  relayFeeder1Reverse = new Relay(settings->value("feeder1reverse").toInt(), IODevice::HIGH);
+  relayFeeder2Foward = new Relay(settings->value("feeder2forward").toInt(), IODevice::HIGH);
+  relayFeeder2Reverse = new Relay(settings->value("feeder2reverse").toInt(), IODevice::HIGH);
 
   init();
 }

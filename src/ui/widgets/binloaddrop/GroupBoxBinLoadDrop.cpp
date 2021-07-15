@@ -9,9 +9,14 @@ GroupBoxBinLoadDrop::GroupBoxBinLoadDrop(MqttClient *_m_client)
   QVariant formId = WIDGET_TYPES::GROUPBOX_BIN_LOAD_DROP;
   this->setProperty("formId", formId);
 
-  relayBinLoad = new Relay(32, IODevice::HIGH); // Digital
-  relayBinDrop = new Relay(33, IODevice::HIGH); // Digital
-  proximityBinDrop = new DetectionSensor(10, IODevice::HIGH); // PULL UP (HIGH = OFF!)
+  auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
+  settings->beginGroup("relays");
+
+  relayBinLoad = new Relay(settings->value("binload").toInt(), IODevice::HIGH); // Digital
+  relayBinDrop = new Relay(settings->value("bindrop").toInt(), IODevice::HIGH); // Digital
+
+  settings->beginGroup("detection_sensor");
+  proximityBinDrop = new DetectionSensor(settings->value("bindrop").toInt(), IODevice::HIGH); // PULL UP (HIGH = OFF!)
 
   init();
 }
