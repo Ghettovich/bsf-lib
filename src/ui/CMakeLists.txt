@@ -3,13 +3,9 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-# Needed for creating export
-include(CMakePackageConfigHelpers)
 
 # find Qt5 and required components | Qt5_DIR
-find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 if (Qt5Widgets_FOUND)
 
@@ -33,7 +29,7 @@ if (Qt5Widgets_FOUND)
             widgets/statusrelays/RelayTreeWidget.h
             )
 
-    target_sources(bsf PRIVATE
+    add_library(ui SHARED
             # FONTS
             resource/theme.qrc
             fonts/MaterialRegular.cpp
@@ -60,18 +56,17 @@ if (Qt5Widgets_FOUND)
             widgets/scale/Scale.cpp
             widgets/scale/scale.ui
             # HEADER LIST
-            PRIVATE
             ${HEADER_LIST}
             )
 
-    target_link_libraries(bsf
+    target_link_libraries(ui
             PUBLIC
             Qt5::Core
-            Qt5::Gui
             Qt5::Widgets
-            )
+            appservice
+            domain)
 
-    target_include_directories(bsf
+    target_include_directories(ui
             PUBLIC
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
             )

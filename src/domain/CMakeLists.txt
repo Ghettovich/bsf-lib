@@ -1,9 +1,5 @@
-cmake_minimum_required(VERSION 3.13...3.18)
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 # find Qt5 and required components | Qt5_DIR
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt5 COMPONENTS Core Sql REQUIRED)
 
 if (Qt5Widgets_FOUND)
 
@@ -12,45 +8,53 @@ if (Qt5Widgets_FOUND)
             action.h
             arduino.h
             bafalog.h
-            component.h
+            component/component.h
+            component/componentrepo.h
             detectionsensor.h
             iodevice.h
             iodevicetype.h
-            recipe.h
+            recipe/recipe.h
+            recipe/reciperepo.h
             relay.h
             statecode.h
             weightcensor.h
+            iodevice/iodeviceservice.h
+            iodevice/iodevicerepo.h
             )
 
     # TARGET SOURCES
-    target_sources(bsf
-            PRIVATE
+    add_library(domain SHARED
             action.cpp
             arduino.cpp
             bafalog.cpp
-            component.cpp
+            component/component.cpp
+            component/componentrepo.cpp
             detectionsensor.cpp
             iodevice.cpp
             iodevicetype.cpp
-            recipe.cpp
+            recipe/recipe.cpp
+            recipe/reciperepo.cpp
             relay.cpp
             statecode.cpp
             weightcensor.cpp
+            iodevice/iodeviceservice.cpp
+            iodevice/iodevicerepo.cpp
             # WIDGET ENUM
             BsfWidgetEnum.h
             # HEADER LIST
-            PRIVATE
             ${HEADER_LIST}
             )
 
     # Link files with QT
-    target_link_libraries(bsf
+    target_link_libraries(domain
             PUBLIC
             Qt5::Core
+            Qt5::Sql
+            service
             )
 
     # Define rules for exporting domain
-    target_include_directories(bsf
+    target_include_directories(domain
             PUBLIC
             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
             )
