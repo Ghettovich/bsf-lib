@@ -1,19 +1,16 @@
 #include "MqttClient.h"
-#include <BsfWidgetEnum.h>
-#include <transformpayload.h>
+
 #include <QString>
 #include <QDateTime>
 #include <QtMqtt/QMqttClient>
 #include <QtWidgets/QMessageBox>
-#include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
-#include <widgets/interfaces/RecipeStatusInterface.h>
 
-MqttClient::MqttClient(QObject *parent, const QString& host)
+MqttClient::MqttClient(QObject *parent, const QString &host)
     : QObject(parent) {
   m_client = new QMqttClient(this);
   m_client->setPort(1883);
 
-  if(!host.isEmpty()) {
+  if (!host.isEmpty()) {
     m_client->setHostname(host);
   } else {
     m_client->setHostname("localhost");
@@ -42,10 +39,29 @@ void MqttClient::connectToHost() {
   }
 }
 
-void MqttClient::publishToggleRelay(IODevice *iodevice) {
+void MqttClient::addSubscription(const QString &topic, quint8 QoS) {
+
+  if (!topics.contains(topic)) {
+    auto subscription = this->subscription(topic);
+
+    if (!subscription) {
+      subscription = m_client->subscribe(topic, QoS);
+      topics.append(topic);
+
+      if (!subscription)
+        qDebug() << "Error, could not sub D:!";
+    }
+  }
+}
+
+void MqttClient::publishMessage(const QByteArray &message, const QString &topic, quint8 qos) {
+  m_client->publish(topic, message, qos, false);
+}
+
+void MqttClient::publishToggleRelay(int relayId) {
   quint8 QoS = 1;
   QJsonObject jsonPayload;
-  jsonPayload["toggle"] = iodevice->getId();
+  jsonPayload["toggle"] = relayId;
 
   doc = QJsonDocument(jsonPayload);
 
@@ -56,11 +72,11 @@ void MqttClient::publishToggleRelay(IODevice *iodevice) {
   }
 }
 
-void MqttClient::publishConfirmComponent(const Component &component) {
+void MqttClient::publishConfirmComponent(int recipeId, int componentId) {
   quint8 QoS = 1;
   QJsonObject jsonPayload;
-  jsonPayload["recipeId"] = component.getRecipeId();
-  jsonPayload["componentId"] = component.getComponentId();
+  jsonPayload["recipeId"] = recipeId;
+  jsonPayload["componentId"] = componentId;
   jsonPayload["confirm"] = true;
 
   doc = QJsonDocument(jsonPayload);
@@ -87,18 +103,12 @@ void MqttClient::publishTareScale(bool confirm, int calibrationWeight) {
   }
 }
 
-void MqttClient::publishRecipe(const Recipe &recipe, const Component &component) {
+void MqttClient::publishRecipe(int recipeId, int componentId, int targetWeight) {
   quint8 QoS = 1;
   QJsonObject jsonPayloadObject;
-  jsonPayloadObject["recipeId"] = recipe.getId();
-
-  if (component.getComponentId() == 0) {
-    jsonPayloadObject["componentId"] = recipe.componentList.first().getComponentId();
-    jsonPayloadObject["targetWeight"] = recipe.componentList.first().getTargetWeight();
-  } else {
-    jsonPayloadObject["componentId"] = component.getComponentId();
-    jsonPayloadObject["targetWeight"] = component.getTargetWeight();
-  }
+  jsonPayloadObject["recipeId"] = recipeId;
+  jsonPayloadObject["componentId"] = componentId;
+  jsonPayloadObject["targetWeight"] = targetWeight;
 
   doc = QJsonDocument(jsonPayloadObject);
 
@@ -125,7 +135,7 @@ void MqttClient::addIODeviceSubscription(const QString &topic, quint8 QoS, QWidg
     subTopicList.append(topic);
 
     iodeviceWidgetSubscriptionMap.insert(widget->property("formId").toInt(), subTopicList);
-    createIODeviceWidgetSubscriptions(widget);
+    //createIODeviceWidgetSubscriptions(widget);
   } else {
     iodeviceWidgetSubscriptionMap.find(widget->property("formId").toInt())->append(topic);
   }
@@ -168,7 +178,6 @@ void MqttClient::onBrokerDisconnected() {
 }
 
 void MqttClient::onStateChanged() {
-  qDebug() << "on state changed triggered...";
   switch (m_client->state()) {
 
     case QMqttClient::Disconnected: {
@@ -188,42 +197,43 @@ void MqttClient::onStateChanged() {
 }
 
 void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicName &topic) {
-  TransformPayload parser;
+  emit receivedSubscriptionData(message, topic.name());
+  //TransformPayload parser;
 
-  if (QString::compare(topic.name(), proximityLiftTopic) == 0 ||
-      QString::compare(topic.name(), relayStatesTopic) == 0) {
+//  if (QString::compare(topic.name(), proximityLiftTopic) == 0 ||
+//      QString::compare(topic.name(), relayStatesTopic) == 0) {
+//
+//    QVector<IODevice *> iodeviceList;
+//    iodeviceList = parser.parseIODevices(message);
+//
+//    //emit newIODeviceStates(message);
+//  } else if (QString::compare(topic.name(), recipeDataTopic) == 0) {
+//
+//    //WeightSensor *weightSensor = parser.parseRecipeData(message);
+//    //emit newDataForScale(message);
+//  }
 
-    QVector<IODevice *> iodeviceList;
-    iodeviceList = parser.parseIODevices(message);
-
-    emit newIODeviceStates(iodeviceList);
-  } else if (QString::compare(topic.name(), recipeDataTopic) == 0) {
-
-    WeightSensor *weightSensor = parser.parseRecipeData(message);
-    emit newDataForScale(weightSensor);
-  }
-
-//  const QString content = QDateTime::currentDateTime().toString()
-//      + QLatin1String(" Received Topic: ")
-//      + topic.name()
-//      + QLatin1String(" Message: ")
-//      + message
-//      + QLatin1Char('\n');
-//  qDebug() << content;
+  const QString content = QDateTime::currentDateTime().toString()
+      + QLatin1String(" Received Topic: ")
+      + topic.name()
+      + QLatin1String(" Message: ")
+      + message
+      + QLatin1Char('\n');
+  qDebug() << content;
 }
 
 void MqttClient::createRecipeWidgetSubscriptions(QWidget *widget) {
-  auto recipeStatusInterface =
-      dynamic_cast<RecipeStatusInterface *>(widget);
-
-  connect(this, &MqttClient::newDataForScale,
-          recipeStatusInterface, &RecipeStatusInterface::onUpdateIODevice);
-}
-
-void MqttClient::createIODeviceWidgetSubscriptions(QWidget *widget) {
-  auto widgetDeviceStatusInterface =
-      dynamic_cast<IOWidgetStatusInterface *>(widget);
-
-  connect(this, &MqttClient::newIODeviceStates,
-          widgetDeviceStatusInterface, &IOWidgetStatusInterface::onUpdateIODevices);
+//  auto recipeStatusInterface =
+//      dynamic_cast<RecipeStatusInterface *>(widget);
+//
+//  connect(this, &MqttClient::newDataForScale,
+//          recipeStatusInterface, &RecipeStatusInterface::onUpdateIODevice);
+//}
+//
+//void MqttClient::createIODeviceWidgetSubscriptions(QWidget *widget) {
+//  auto widgetDeviceStatusInterface =
+//      dynamic_cast<IOWidgetStatusInterface *>(widget);
+//
+//  connect(this, &MqttClient::newIODeviceStates,
+//          widgetDeviceStatusInterface, &IOWidgetStatusInterface::onUpdateIODevices);
 }

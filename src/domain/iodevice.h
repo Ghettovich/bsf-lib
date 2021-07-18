@@ -3,7 +3,7 @@
 
 #include "action.h"
 #include "iodevicetype.h"
-#include "recipe.h"
+
 #include <QObject>
 #include <QtCore/QString>
 #include <QtCore/QJsonObject>
@@ -44,7 +44,6 @@ class IODevice {
   Arduino *arduino;
   Action action;
   IODeviceType ioDeviceType;
-  Recipe recipe;
 
  protected:
   IO_DEVICE_HIGH_LOW deviceState;

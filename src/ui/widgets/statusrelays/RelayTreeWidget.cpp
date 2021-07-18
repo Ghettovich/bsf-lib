@@ -1,45 +1,41 @@
 #include "RelayTreeWidget.h"
 #include "ui_relaytreewidget.h"
-#include <BsfWidgetEnum.h>
-#include <iodevicerepo.h>
+#include <QListWidgetItem>
 
-RelayTreeWidget::RelayTreeWidget() :
-   ui(new Ui::RelayTreeWidget) {
+using namespace appservice;
+
+RelayTreeWidget::RelayTreeWidget(std::shared_ptr<BrokerAppService> &_brokerAppService) :
+    ui(new Ui::RelayTreeWidget), brokerAppService(_brokerAppService) {
   ui->setupUi(this);
 
-  QVariant formId = WIDGET_TYPES::TREEWIDGET_RELAY_STATUS;
-  this->setProperty("formId", formId);
-
   initForm();
+
+  connect(brokerAppService.get(), &BrokerAppService::updateDevicesWithState,
+          this, &RelayTreeWidget::onUpdateIODevices);
 }
 
 void RelayTreeWidget::initForm() {
-  headers.append("ID");
-  headers.append("Type");
-  headers.append("Status");
-  headers.append("Relay");
+  auto deviceList = brokerAppService->findAll(IODeviceType::RELAY);
 
-  IODeviceRepository ioDeviceRepository;
-  treeWidgets = ioDeviceRepository.getIODeviceTreeWidgets(IODeviceType::RELAY);
-
-  ui->treeWidget->setHeaderLabels(headers);
-  ui->treeWidget->setColumnHidden(0, true);
-  ui->treeWidget->setColumnHidden(1, true);
-  ui->treeWidget->insertTopLevelItems(0, treeWidgets);
+  for (const auto &device :deviceList) {
+    auto listWidgetItem = new QListWidgetItem(materialRegular.boltIcon(Qt::red), device->getDescription());
+    listWidgetItem->setData(Qt::UserRole, device->getId());
+    ui->listWidget->addItem(listWidgetItem);
+  }
 }
 
 void RelayTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceList) {
-  for (int i = 0; i < ui->treeWidget->topLevelItemCount(); i++) {
-    const auto treeWidgetItem = ui->treeWidget->topLevelItem(i);
-    QVariant id = treeWidgetItem->data(0, Qt::UserRole);
+  for (int i = 0; i < ui->listWidget->count(); i++) {
+    const auto treeWidgetItem = ui->listWidget->item(i);
+    QVariant id = treeWidgetItem->data(Qt::UserRole);
 
     for (const auto iodevice : iodeviceList) {
       if (iodevice->getId() == id.toInt()) {
 
         if (iodevice->isDeviceOn()) {
-          treeWidgetItem->setIcon(2, materialRegular.boltIcon(Qt::green));
+          treeWidgetItem->setIcon(materialRegular.boltIcon(Qt::green));
         } else {
-          treeWidgetItem->setIcon(2, materialRegular.boltIcon(Qt::red));
+          treeWidgetItem->setIcon(materialRegular.boltIcon(Qt::red));
         }
 
         break;
@@ -47,4 +43,3 @@ void RelayTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceList)
     }
   }
 }
-

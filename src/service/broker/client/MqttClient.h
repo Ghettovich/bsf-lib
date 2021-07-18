@@ -1,10 +1,6 @@
 #ifndef BSF_LIB_MQTTCLIENT_H
 #define BSF_LIB_MQTTCLIENT_H
 
-#include <iodevice.h>
-#include <relay.h>
-#include <recipe.h>
-#include <weightcensor.h>
 #include <QObject>
 #include <QtCore/QList>
 #include <QtCore/QJsonObject>
@@ -20,10 +16,13 @@ class MqttClient : public QObject {
  public:
   explicit MqttClient(QObject *parent, const QString& host = "localhost");
   void connectToHost();
-  void publishToggleRelay(IODevice *iodevice);
-  void publishConfirmComponent(const Component &component);
+  void addSubscription(const QString &topic, quint8 QoS);
+  void publishMessage(const QByteArray &message, const QString &topic, quint8 qos = 1);
+
+  void publishToggleRelay(int id);
+  void publishConfirmComponent(int recipeId, int componentId);
   void publishTareScale(bool confirm, int calibrationWeight = 1000);
-  void publishRecipe(const Recipe &recipe, const Component &component = Component(0));
+  void publishRecipe(int recipeId, int componentId, int targetWeight);
   void addIODeviceSubscription(const QString &topic, quint8 QoS, QWidget *widget);
   void addRecipeDataSubscription(quint8 QoS, QWidget *widget);
   QMqttSubscription *subscription(const QString &topic);
@@ -35,6 +34,7 @@ class MqttClient : public QObject {
   void onMessageReceived(const QByteArray &message, const QMqttTopicName &topic);
 
  private:
+  QList<QString> topics;
   QMqttClient *m_client;
   QJsonDocument doc;
   QList<QMqttSubscription *> subscriptionList;
@@ -47,13 +47,12 @@ class MqttClient : public QObject {
   const QString relayStatesTopic = "/relay/states";
   const QString tareScaleTopic = "/tare/scale";
 
-  void createIODeviceWidgetSubscriptions(QWidget *widget);
+  //void createIODeviceWidgetSubscriptions(QWidget *widget);
   void createRecipeWidgetSubscriptions(QWidget *);
 
  signals:
   void brokerConnected();
-  void newDataForScale(WeightSensor *ioDevice);
-  void newIODeviceStates(const QVector<IODevice *> &iodeviceList);
+  void receivedSubscriptionData(const QByteArray &message, const QString &topic);
 };
 
 #endif //BSF_LIB_MQTTCLIENT_H

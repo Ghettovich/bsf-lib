@@ -5,35 +5,33 @@ namespace Ui {
 class GroupBoxBeltFeeders;
 }
 
-#include <iodevice.h>
-#include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
-#include <detectionsensor.h>
-#include <MqttClient.h>
-#include <fonts/MaterialRegular.h>
-#include <QObject>
 #include <QtWidgets/QWidget>
 
-class GroupBoxBeltFeeders : public IOWidgetStatusInterface {
+#include <iodevice.h>
+#include <fonts/MaterialRegular.h>
+#include <appservice.broker/BrokerAppService.h>
+
+class GroupBoxBeltFeeders : public QWidget {
  Q_OBJECT
-  Q_INTERFACES(IOWidgetStatusInterface)
 
  public:
-  explicit GroupBoxBeltFeeders(MqttClient *_m_client);
+  explicit GroupBoxBeltFeeders(std::shared_ptr<appservice::BrokerAppService> &brokerAppService,
+                               QWidget *parent = nullptr);
 
  public slots:
-  void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
+  void onUpdateIODevices(const QVector<IODevice *> &devices);
 
  private:
-  const QString toggleRelayTopic = "/toggle/relay";
+  std::shared_ptr<appservice::BrokerAppService> brokerAppService;
   Ui::GroupBoxBeltFeeders *ui = nullptr;
   MaterialRegular materialRegular;
-  MqttClient *m_client = nullptr;
-  IODevice *relayBeltForward = nullptr;
-  IODevice *relayBeltReverse = nullptr;
-  IODevice *relayFeeder1Foward = nullptr;
-  IODevice *relayFeeder1Reverse = nullptr;
-  IODevice *relayFeeder2Foward = nullptr;
-  IODevice *relayFeeder2Reverse = nullptr;
+
+  std::unique_ptr<IODevice> relayBeltForward;
+  std::unique_ptr<IODevice> relayBeltReverse;
+  std::unique_ptr<IODevice> relayFeeder1Foward;
+  std::unique_ptr<IODevice> relayFeeder1Reverse;
+  std::unique_ptr<IODevice> relayFeeder2Foward;
+  std::unique_ptr<IODevice> relayFeeder2Reverse;
 
   void init();
   void setBeltForwardButtonState();

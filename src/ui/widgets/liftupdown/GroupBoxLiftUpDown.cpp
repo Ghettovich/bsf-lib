@@ -1,22 +1,33 @@
 #include "ui_groupboxliftupdown.h"
 #include "GroupBoxLiftUpDown.h"
-#include <BsfWidgetEnum.h>
 
-GroupBoxLiftUpDown::GroupBoxLiftUpDown(MqttClient *_m_client)
+#include <relay.h>
+#include <detectionsensor.h>
+
+#include <QSettings>
+
+using namespace appservice;
+
+GroupBoxLiftUpDown::GroupBoxLiftUpDown(std::shared_ptr<BrokerAppService> &_brokerAppService, QWidget *parent)
     :
-    ui(new Ui::GroupBoxLiftUpDown), m_client(_m_client) {
+    ui(new Ui::GroupBoxLiftUpDown), brokerAppService(_brokerAppService), QWidget(parent) {
   ui->setupUi(this);
-  QVariant formId = WIDGET_TYPES::GROUPBOX_LIFT_UP_DOWN;
-  this->setProperty("formId", formId);
+
+  connect(brokerAppService.get(), &BrokerAppService::updateDevicesWithState,
+          this, &GroupBoxLiftUpDown::onUpdateIODevices);
 
   auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
   settings->beginGroup("relays");
 
-  relayBinLiftDown = new Relay(settings->value("liftdown").toInt(), IODevice::HIGH); // Digital
-  relayBinLiftUp = new Relay(settings->value("liftup").toInt(), IODevice::HIGH); // Digital
+  relayBinLiftDown = std::make_unique<Relay>(settings->value("liftdown").toInt(), IODevice::HIGH); // Digital
+  relayBinLiftUp = std::make_unique<Relay>(settings->value("liftup").toInt(), IODevice::HIGH); // Digital
 
-  settings->beginGroup("detection_sensor");
-  proximityBinLoad = new DetectionSensor(settings->value("binload").toInt(), IODevice::HIGH); // PULL UP (HIGH = OFF!)
+  settings->endGroup();
+
+  settings->beginGroup("detectionsensor");
+  proximityBinLoad = std::make_unique<DetectionSensor>(settings->value("binload").toInt(), IODevice::HIGH); // PULL UP (HIGH = OFF!)
+
+  settings->endGroup();
 
   init();
 }
@@ -39,14 +50,16 @@ void GroupBoxLiftUpDown::init() {
 }
 
 void GroupBoxLiftUpDown::onClickPushButtonLiftDown() {
-  m_client->publishToggleRelay(relayBinLiftDown);
+  brokerAppService->toggleRelay(relayBinLiftDown->getId());
 }
 
 void GroupBoxLiftUpDown::onClickPushButtonLiftUp() {
-  m_client->publishToggleRelay(relayBinLiftUp);
+  brokerAppService->toggleRelay(relayBinLiftUp->getId());
 }
 
 void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel() {
+  qDebug() << "updating label ... ";
+
   if (proximityBinLoad->isDeviceOn()) {
     ui->labelProximityBinLoadStatus->setPixmap(materialRegular.visibilityIcon(Qt::lightGray).pixmap(48, 48));
   } else {
@@ -74,8 +87,8 @@ void GroupBoxLiftUpDown::setLiftDownButtonState() {
   }
 }
 
-void GroupBoxLiftUpDown::onUpdateIODevices(const QVector<IODevice *> &iodeviceList) {
-  for (auto iodevice : iodeviceList) {
+void GroupBoxLiftUpDown::onUpdateIODevices(const QVector<IODevice *> &devices) {
+  for (auto iodevice : devices) {
     if (iodevice->getId() == proximityBinLoad->getId()) {
       onChangeProximity(iodevice);
     } else if (iodevice->getId() == relayBinLiftUp->getId()) {
@@ -89,18 +102,18 @@ void GroupBoxLiftUpDown::onUpdateIODevices(const QVector<IODevice *> &iodeviceLi
 void GroupBoxLiftUpDown::onChangeProximity(IODevice *detectionSensor) {
   proximityBinLoad->setDeviceState(detectionSensor->getDeviceState());
   setProximityBinLoadStatusLabel();
-  emit proximityStateChange(proximityBinLoad);
+  //emit proximityStateChange(proximityBinLoad);
 }
 
 void GroupBoxLiftUpDown::onToggledLiftUpRelay(IODevice *relay) {
   relayBinLiftUp->setDeviceState(relay->getDeviceState());
   setLiftUpButtonState();
-  emit toggledRelay(relayBinLiftUp);
+  //emit toggledRelay(relayBinLiftUp);
 }
 
 void GroupBoxLiftUpDown::onToggledLiftDownRelay(IODevice *relay) {
   relayBinLiftDown->setDeviceState(relay->getDeviceState());
   setLiftDownButtonState();
-  emit toggledRelay(relayBinLiftDown);
+  //emit toggledRelay(relayBinLiftDown);
 }
 

@@ -1,22 +1,34 @@
 #include "ui_groupboxbinloaddrop.h"
 #include "GroupBoxBinLoadDrop.h"
-#include <BsfWidgetEnum.h>
 
-GroupBoxBinLoadDrop::GroupBoxBinLoadDrop(MqttClient *_m_client)
+#include <relay.h>
+#include <detectionsensor.h>
+
+#include <QSettings>
+
+using namespace appservice;
+
+GroupBoxBinLoadDrop::GroupBoxBinLoadDrop(std::shared_ptr<BrokerAppService> &_brokerAppService, QWidget *parent)
     :
-    ui(new Ui::GroupBoxBinLoadDrop), m_client(_m_client) {
+    ui(new Ui::GroupBoxBinLoadDrop), brokerAppService(_brokerAppService), QWidget(parent) {
   ui->setupUi(this);
-  QVariant formId = WIDGET_TYPES::GROUPBOX_BIN_LOAD_DROP;
-  this->setProperty("formId", formId);
+
+  connect(brokerAppService.get(), &appservice::BrokerAppService::updateDevicesWithState,
+          this, &GroupBoxBinLoadDrop::onUpdateIODevices);
 
   auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
   settings->beginGroup("relays");
 
-  relayBinLoad = new Relay(settings->value("binload").toInt(), IODevice::HIGH); // Digital
-  relayBinDrop = new Relay(settings->value("bindrop").toInt(), IODevice::HIGH); // Digital
+  relayBinLoad = std::make_unique<Relay>(settings->value("binload").toInt(), IODevice::HIGH); // Digital
+  relayBinDrop = std::make_unique<Relay>(settings->value("bindrop").toInt(), IODevice::HIGH); // Digital
 
-  settings->beginGroup("detection_sensor");
-  proximityBinDrop = new DetectionSensor(settings->value("bindrop").toInt(), IODevice::HIGH); // PULL UP (HIGH = OFF!)
+  settings->endGroup();
+
+  settings->beginGroup("detectionsensor");
+  proximityBinDrop =
+      std::make_unique<DetectionSensor>(settings->value("bindrop").toInt(), IODevice::HIGH); // PULL UP (HIGH = OFF!)
+
+  settings->endGroup();
 
   init();
 }
@@ -67,15 +79,15 @@ void GroupBoxBinLoadDrop::setBinDropButtonState() {
 }
 
 void GroupBoxBinLoadDrop::onClickPushButtonBinLoad() {
-  m_client->publishToggleRelay(relayBinLoad);
+  brokerAppService->toggleRelay(relayBinLoad->getId());
 }
 
 void GroupBoxBinLoadDrop::onClickPushButtonBinDrop() {
-  m_client->publishToggleRelay(relayBinDrop);
+  brokerAppService->toggleRelay(relayBinDrop->getId());
 }
 
-void GroupBoxBinLoadDrop::onUpdateIODevices(const QVector<IODevice *> &iodeviceList) {
-  for (auto iodevice : iodeviceList) {
+void GroupBoxBinLoadDrop::onUpdateIODevices(const QVector<IODevice *> &devices) {
+  for (auto iodevice : devices) {
     if (iodevice->getId() == proximityBinDrop->getId()) {
       onChangeProximity(iodevice);
     } else if (iodevice->getId() == relayBinLoad->getId()) {
@@ -89,17 +101,17 @@ void GroupBoxBinLoadDrop::onUpdateIODevices(const QVector<IODevice *> &iodeviceL
 void GroupBoxBinLoadDrop::onChangeProximity(IODevice *detectionSensor) {
   proximityBinDrop->setDeviceState(detectionSensor->getDeviceState());
   setProximityBinDropLabelStatus();
-  emit proximityStateChange(proximityBinDrop);
+  //emit proximityStateChange(proximityBinDrop);
 }
 
 void GroupBoxBinLoadDrop::onToggledBinLoadRelay(IODevice *relay) {
   relayBinLoad->setDeviceState(relay->getDeviceState());
   setBinLoadButtonState();
-  emit toggledRelay(relayBinLoad);
+  //emit toggledRelay(relayBinLoad);
 }
 
 void GroupBoxBinLoadDrop::onToggledBinDropRelay(IODevice *relay) {
   relayBinDrop->setDeviceState(relay->getDeviceState());
   setBinDropButtonState();
-  emit toggledRelay(relayBinDrop);
+  //emit toggledRelay(relayBinDrop);
 }

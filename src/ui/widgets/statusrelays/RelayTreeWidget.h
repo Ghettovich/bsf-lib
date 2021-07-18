@@ -1,34 +1,27 @@
 #ifndef RELAYTREEWIDGET_H
 #define RELAYTREEWIDGET_H
 
+#include <QtWidgets/QWidget>
+
+#include <iodevice.h>
+#include <fonts/MaterialRegular.h>
+#include <appservice.broker/BrokerAppService.h>
+
 namespace Ui {
 class RelayTreeWidget;
 }
 
-#include <iodevice.h>
-#include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
-#include <QObject>
-#include <QtCore/QList>
-#include <QtCore/QStringList>
-#include <QtWidgets/QTreeWidgetItem>
-#include <QtWidgets/QWidget>
-#include <fonts/MaterialRegular.h>
-
-class RelayTreeWidget : public IOWidgetStatusInterface {
-
+class RelayTreeWidget : public QWidget {
  Q_OBJECT
-  Q_INTERFACES(IOWidgetStatusInterface)
 
  public:
-  explicit RelayTreeWidget();
-  //RelayTreeWidget(const QStringList &headers, const QList<QTreeWidgetItem *> &treeWidgets);
+  explicit RelayTreeWidget(std::shared_ptr<appservice::BrokerAppService> &brokerAppService);
 
- public slots:
-  void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
+ private slots:
+  void onUpdateIODevices(const QVector<IODevice *> &iodeviceList);
 
  private:
-  QStringList headers;
-  QList<QTreeWidgetItem *> treeWidgets;
+  std::shared_ptr<appservice::BrokerAppService> brokerAppService;
   Ui::RelayTreeWidget *ui = nullptr;
   MaterialRegular materialRegular;
 

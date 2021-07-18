@@ -3,22 +3,29 @@
 #include <relay.h>
 #include <BsfWidgetEnum.h>
 
-GroupBoxBeltFeeders::GroupBoxBeltFeeders(MqttClient *_m_client) :
-    ui(new Ui::GroupBoxBeltFeeders), m_client(_m_client) {
+using namespace appservice;
+
+GroupBoxBeltFeeders::GroupBoxBeltFeeders(std::shared_ptr<BrokerAppService> &_brokerAppService,
+                                         QWidget *parent)
+    :
+    ui(new Ui::GroupBoxBeltFeeders), brokerAppService(_brokerAppService), QWidget(parent) {
   ui->setupUi(this);
-  QVariant formId = WIDGET_TYPES::GROUPBOX_BELT_FEEDERS;
-  this->setProperty("formId", formId);
+
+  connect(brokerAppService.get(), &appservice::BrokerAppService::updateDevicesWithState,
+          this, &GroupBoxBeltFeeders::onUpdateIODevices);
 
   auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
   settings->beginGroup("relays");
 
-  relayBeltForward = new Relay(0, IODevice::HIGH); // ON 2nd RELAY BLOCK, currently not present
-  relayBeltReverse = new Relay(0, IODevice::HIGH); // ON 2nd RELAY BLOCK, currently not present
+  relayBeltForward = std::make_unique<Relay>(0, IODevice::HIGH); // ON 2nd RELAY BLOCK, currently not present
+  relayBeltReverse = std::make_unique<Relay>(0, IODevice::HIGH); // ON 2nd RELAY BLOCK, currently not present
 
-  relayFeeder1Foward = new Relay(settings->value("feeder1forward").toInt(), IODevice::HIGH);
-  relayFeeder1Reverse = new Relay(settings->value("feeder1reverse").toInt(), IODevice::HIGH);
-  relayFeeder2Foward = new Relay(settings->value("feeder2forward").toInt(), IODevice::HIGH);
-  relayFeeder2Reverse = new Relay(settings->value("feeder2reverse").toInt(), IODevice::HIGH);
+  relayFeeder1Foward = std::make_unique<Relay>(settings->value("feeder1forward").toInt(), IODevice::HIGH);
+  relayFeeder1Reverse = std::make_unique<Relay>(settings->value("feeder1reverse").toInt(), IODevice::HIGH);
+  relayFeeder2Foward = std::make_unique<Relay>(settings->value("feeder2forward").toInt(), IODevice::HIGH);
+  relayFeeder2Reverse = std::make_unique<Relay>(settings->value("feeder2reverse").toInt(), IODevice::HIGH);
+
+  settings->endGroup();
 
   init();
 }
@@ -54,8 +61,8 @@ void GroupBoxBeltFeeders::init() {
           this, &GroupBoxBeltFeeders::onClickPushButtonFeeder2Reverse);
 }
 
-void GroupBoxBeltFeeders::onUpdateIODevices(const QVector<IODevice *> &iodeviceList) {
-  for (auto iodevice : iodeviceList) {
+void GroupBoxBeltFeeders::onUpdateIODevices(const QVector<IODevice *> &devices) {
+  for (auto iodevice : devices) {
     if (iodevice->getId() == relayBeltForward->getId()) {
       relayBeltForward->setDeviceState(iodevice->getDeviceState());
       setBeltForwardButtonState();
@@ -127,25 +134,25 @@ void GroupBoxBeltFeeders::setFeeder2ReverseButtonState() {
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonBeltForward() {
-  //m_client->publishToggleRelay(relayBeltForward);
+  brokerAppService->toggleRelay(relayBeltForward->getId());
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonBeltReverse() {
-  //m_client->publishToggleRelay(relayBeltReverse);
+  brokerAppService->toggleRelay(relayBeltReverse->getId());
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonFeeder1Forward() {
-  m_client->publishToggleRelay(relayFeeder1Foward);
+  brokerAppService->toggleRelay(relayFeeder1Foward->getId());
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonFeeder1Reverse() {
-  m_client->publishToggleRelay(relayFeeder1Reverse);
+  brokerAppService->toggleRelay(relayFeeder1Reverse->getId());
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonFeeder2Forward() {
-  m_client->publishToggleRelay(relayFeeder2Foward);
+  brokerAppService->toggleRelay(relayFeeder2Foward->getId());
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonFeeder2Reverse() {
-  m_client->publishToggleRelay(relayFeeder2Reverse);
+  brokerAppService->toggleRelay(relayFeeder2Reverse->getId());
 }

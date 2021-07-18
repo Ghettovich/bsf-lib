@@ -1,34 +1,30 @@
 #ifndef PROXIMITYTREEWIDGET_H
 #define PROXIMITYTREEWIDGET_H
 
+#include <QtWidgets/QWidget>
+
+#include <iodevice.h>
+#include <fonts/MaterialRegular.h>
+#include <appservice.broker/BrokerAppService.h>
+
 namespace Ui {
 class ProximityTreeWidget;
 }
 
-#include <iodevice.h>
-#include <ui/widgets/interfaces/IOWidgetStatusInterface.h>
-#include <QObject>
-#include <QtCore/QList>
-#include <QtCore/QVector>
-#include <QtWidgets/QTreeWidgetItem>
-#include <QtWidgets/QWidget>
-#include <fonts/MaterialRegular.h>
-
-class ProximityTreeWidget : public IOWidgetStatusInterface {
-
+class ProximityTreeWidget : public QWidget {
  Q_OBJECT
-  Q_INTERFACES(IOWidgetStatusInterface)
 
  public:
-  explicit ProximityTreeWidget();
+  explicit ProximityTreeWidget(std::shared_ptr<appservice::BrokerAppService> &brokerAppService);
 
  public slots:
-  void onUpdateIODevices(const QVector<IODevice *> &iodeviceList) override;
+  void onUpdateIODevices(const QVector<IODevice *> &iodeviceList);
 
  private:
-  QList<QTreeWidgetItem *> proximityWidgetList;
+  std::shared_ptr<appservice::BrokerAppService> brokerAppService;
   Ui::ProximityTreeWidget *ui = nullptr;
   MaterialRegular materialRegular;
+
   void initForm();
 };
 
