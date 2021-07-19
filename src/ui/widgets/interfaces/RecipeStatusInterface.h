@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QtPlugin>
-#include <weightcensor.h>
+#include <iodevice/weightcensor.h>
 
 class RecipeStatusInterface : public QWidget {
  Q_OBJECT

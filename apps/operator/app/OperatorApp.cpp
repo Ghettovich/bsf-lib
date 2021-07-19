@@ -3,6 +3,8 @@
 #include <QApplication>
 
 #include <iodevice/iodeviceservice.h>
+#include <recipe/recipeservice.h>
+#include <recipe.selection/recipeselectionservice.h>
 
 #include <broker/BrokerService.h>
 #include <database/DatabaseService.h>
@@ -20,9 +22,12 @@ int main(int argc, char *argv[]) {
   auto databaseService = std::make_shared<DatabaseService>();
   auto brokerService = std::make_shared<BrokerService>();
 
+  auto recipeService = std::make_shared<RecipeService>(databaseService);
   auto deviceService = std::make_shared<IODeviceService>(databaseService, brokerService);
 
-  auto prepareRecipeAppService = std::make_shared<PrepareRecipeAppService>(deviceService);
+  auto recipeSelectionService = std::make_shared<RecipeSelectionService>(deviceService, recipeService);
+
+  auto prepareRecipeAppService = std::make_shared<PrepareRecipeAppService>(deviceService, recipeService, recipeSelectionService);
   auto mixRecipeAppService = std::make_shared<MixRecipeAppService>(deviceService);
   auto brokerAppService = std::make_shared<BrokerAppService>(brokerService, deviceService);
 

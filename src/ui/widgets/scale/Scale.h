@@ -1,35 +1,40 @@
 #ifndef SCALE_H
 #define SCALE_H
 
+#include <QtWidgets/QWidget>
+#include <QTableWidgetItem>
+
+#include <recipe/recipe.h>
+#include <iodevice/iodevice.h>
+
+#include <fonts/MaterialRegular.h>
+#include <appservice.broker/BrokerAppService.h>
+#include <appservice.prepare.recipe/PrepareRecipeAppService.h>
+
 namespace Ui {
 class Scale;
 }
 
-#include <iodevice.h>
-#include <weightcensor.h>
-#include <MqttClient.h>
-#include <fonts/MaterialRegular.h>
-#include <widgets/interfaces/RecipeStatusInterface.h>
-#include <QTableWidgetItem>
-#include <QtWidgets/QWidget>
-
-class Scale : public RecipeStatusInterface {
+class Scale : public QWidget {
  Q_OBJECT
-  Q_INTERFACES(RecipeStatusInterface)
 
  public:
-  explicit Scale(MqttClient *_m_client);
+  explicit Scale(std::shared_ptr<appservice::BrokerAppService> &brokerAppService,
+                 std::shared_ptr<appservice::PrepareRecipeAppService> &prepareRecipeAppService,
+                 QWidget *parent = nullptr);
   virtual ~Scale();
   void init();
 
  public slots:
-  void onUpdateIODevice(WeightSensor *sensor) override;
+  void onUpdateIODevice(IODevice *device);
   void onScaleTimeOutOccured(IODevice::IO_DEVICE_HIGH_LOW state);
 
  private:
   Ui::Scale *ui = nullptr;
-  MqttClient *m_client = nullptr;
-  IODevice *weightSensor = nullptr;
+  std::shared_ptr<appservice::BrokerAppService> brokerAppService;
+  std::shared_ptr<appservice::PrepareRecipeAppService> prepareRecipeAppService;
+
+  std::unique_ptr<IODevice> weightSensor;
   QTableWidgetItem *activeComponentTableWidget = nullptr;
   MaterialRegular material;
   Recipe configuredRecipe = Recipe(0);

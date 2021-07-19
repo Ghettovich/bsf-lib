@@ -5,32 +5,34 @@ namespace Ui {
 class GroupBoxBinRecipeStatus;
 }
 
-#include <iodevice.h>
-#include <widgets/interfaces/RecipeStatusInterface.h>
-#include <recipe.h>
-#include <MqttClient.h>
-#include <fonts/MaterialRegular.h>
-#include <QObject>
 #include <QtWidgets/QWidget>
 #include <QTableWidgetItem>
 
-class GroupBoxBinRecipeStatus : public RecipeStatusInterface {
+#include <iodevice/iodevice.h>
+#include <recipe/recipe.h>
+#include <component/component.h>
+#include <fonts/MaterialRegular.h>
+#include <appservice.prepare.recipe/PrepareRecipeAppService.h>
+
+class GroupBoxBinRecipeStatus : public QWidget {
 
  Q_OBJECT
-  Q_INTERFACES(RecipeStatusInterface)
 
  public:
-  explicit GroupBoxBinRecipeStatus(MqttClient *m_client);
+  explicit GroupBoxBinRecipeStatus(std::shared_ptr<appservice::PrepareRecipeAppService> &prepareRecipeAppService,
+                                   QWidget *parent = nullptr);
   virtual ~GroupBoxBinRecipeStatus();
 
  public slots:
-  void onUpdateIODevice(WeightSensor *sensor) override;
+  //void onUpdateIODevice(IODevice *sensor);
+  void onUpdateIODevice(const std::shared_ptr<RecipeSelection>& selection);
+  void onUpdateComponentSelection(const std::shared_ptr<RecipeSelection>& selection);
 
  private:
+  std::shared_ptr<appservice::PrepareRecipeAppService> prepareRecipeAppService;
   Ui::GroupBoxBinRecipeStatus *ui = nullptr;
-  MqttClient *m_client = nullptr;
-  IODevice *scale1 = nullptr;
-  //IODevice *scaleBin = nullptr;
+  std::unique_ptr<IODevice> scale1;
+  std::unique_ptr<IODevice> scaleBin;
   Recipe selectedRecipe = Recipe(0);
   Component activeComponent = Component(0);
   QTableWidgetItem *activeComponentTableWidget = nullptr;

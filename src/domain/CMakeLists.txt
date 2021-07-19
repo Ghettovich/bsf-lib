@@ -8,16 +8,19 @@ if (Qt5Widgets_FOUND)
             action.h
             arduino.h
             bafalog.h
+            statecode.h
             component/component.h
             component/componentrepo.h
-            detectionsensor.h
-            iodevice.h
-            iodevicetype.h
             recipe/recipe.h
             recipe/reciperepo.h
-            relay.h
-            statecode.h
-            weightcensor.h
+            recipe/recipeservice.h
+            recipe.selection/recipeselection.h
+            recipe.selection/recipeselectionservice.h
+            iodevice/iodevice.h
+            iodevice/detectionsensor.h
+            iodevice/relay.h
+            iodevice/weightcensor.h
+            iodevice/iodevicetype.h
             iodevice/iodeviceservice.h
             iodevice/iodevicerepo.h
             )
@@ -27,20 +30,21 @@ if (Qt5Widgets_FOUND)
             action.cpp
             arduino.cpp
             bafalog.cpp
+            statecode.cpp
             component/component.cpp
             component/componentrepo.cpp
-            detectionsensor.cpp
-            iodevice.cpp
-            iodevicetype.cpp
             recipe/recipe.cpp
             recipe/reciperepo.cpp
-            relay.cpp
-            statecode.cpp
-            weightcensor.cpp
+            recipe/recipeservice.cpp
+            recipe.selection/recipeselection.cpp
+            recipe.selection/recipeselectionservice.cpp
+            iodevice/iodevice.cpp
+            iodevice/detectionsensor.cpp
+            iodevice/relay.cpp
+            iodevice/weightcensor.cpp
+            iodevice/iodevicetype.cpp
             iodevice/iodeviceservice.cpp
             iodevice/iodevicerepo.cpp
-            # WIDGET ENUM
-            BsfWidgetEnum.h
             # HEADER LIST
             ${HEADER_LIST}
             )

@@ -9,8 +9,6 @@
 #include <widgets/statusproximities/ProximityTreeWidget.h>
 #include <widgets/statusrelays/RelayTreeWidget.h>
 
-//#include <ui/mqttclient/OperatorMqttClient.h>
-
 using namespace appservice;
 
 MainWindow::MainWindow(std::shared_ptr<PrepareRecipeAppService> &_prepareRecipeAppService,
@@ -25,9 +23,13 @@ MainWindow::MainWindow(std::shared_ptr<PrepareRecipeAppService> &_prepareRecipeA
     ui(new Ui::MainWindow) {
   ui->setupUi(this);
 
-  connect(brokerAppService.get(), &BrokerAppService::connectedToHost, [=](){
+  connect(brokerAppService.get(), &BrokerAppService::connectedToHost, [=]() {
     brokerAppService->createDeviceStateSubscriptions();
   });
+
+//  connect(brokerAppService.get(), &BrokerAppService::updateDeviceWithState,
+//          prepareRecipeAppService.get(), &PrepareRecipeAppService::onUpdateDeviceWithState);
+
 
   //createMqttClientWindow();
 }
@@ -46,8 +48,8 @@ void MainWindow::showStart() {
   createGroupBoxBinLift();
   createGroupBoxBinLoadDrop();
   createGroupBoxFeedersAndBelt();
-//  createGroupBoxRecipeConfiguration();
-//  createGroupBoxBinRecipeStatus();
+  createGroupBoxRecipeConfiguration();
+  createGroupBoxBinRecipeStatus();
 }
 
 void MainWindow::createRelayTreeView() {
@@ -99,13 +101,13 @@ void MainWindow::createGroupBoxFeedersAndBelt() {
 }
 
 void MainWindow::createGroupBoxRecipeConfiguration() {
-  auto groupBoxRecipeConfig = new GroupBoxRecipeConfig(m_client);
+  auto groupBoxRecipeConfig = new GroupBoxRecipeConfig(brokerAppService, prepareRecipeAppService);
   ui->verticalLayoutTabLeft->addWidget(groupBoxRecipeConfig);
 }
 
 void MainWindow::createGroupBoxBinRecipeStatus() {
-//  groupBoxBinRecipeStatus = new GroupBoxBinRecipeStatus(m_client);
-//  ui->verticalLayoutTabRight->addWidget(groupBoxBinRecipeStatus);
+  auto groupBoxBinRecipeStatus = new GroupBoxBinRecipeStatus(prepareRecipeAppService);
+  ui->verticalLayoutTabRight->addWidget(groupBoxBinRecipeStatus);
 }
 
 void MainWindow::createMqttClientWindow() {

@@ -1,9 +1,9 @@
 #include "iodeviceservice.h"
 
-#include <iodevice.h>
-#include <detectionsensor.h>
-#include <relay.h>
-#include <weightcensor.h>
+#include "iodevice.h"
+#include "detectionsensor.h"
+#include "relay.h"
+#include "weightcensor.h"
 
 using namespace service;
 
@@ -14,6 +14,8 @@ IODeviceService::IODeviceService(std::shared_ptr<DatabaseService> _databaseServi
     deviceRepository(std::make_unique<IODeviceRepository>(_databaseService, this)),
     brokerService(_brokerService) {
 
+  connect(brokerService.get(), &BrokerService::newMessageForTopic,
+          this, &IODeviceService::onNewIODeviceStates);
 }
 QVector<IODevice *> IODeviceService::getIODevices(IODeviceType::IO_DEVICE_TYPE ioDeviceType) {
   return deviceRepository->getIODeviceList(ioDeviceType);
@@ -21,16 +23,18 @@ QVector<IODevice *> IODeviceService::getIODevices(IODeviceType::IO_DEVICE_TYPE i
 void IODeviceService::createDeviceStateSubscriptions() {
   brokerService->addSubscription(relayStatesTopic);
   brokerService->addSubscription(proximityLiftTopic);
+  brokerService->addSubscription(recipeDataTopic);
 }
 void IODeviceService::onNewIODeviceStates(const QByteArray &message, const QString &topic) {
   if (topic.compare(relayStatesTopic) == 0) {
     parseRelayStates(message);
   } else if (topic.compare(proximityLiftTopic) == 0) {
     parseProximityStates(message);
+  } else if (topic.compare(recipeDataTopic) == 0) {
+    parseRecipeData(message);
   }
 }
 void IODeviceService::parseRelayStates(const QByteArray &message) {
-  qDebug() << "New relay states: " << message;
   QVector<IODevice *> devices;
 
   devices = parseIODevices(message);
@@ -38,19 +42,31 @@ void IODeviceService::parseRelayStates(const QByteArray &message) {
   emit updateRelayDevices(devices);
 }
 void IODeviceService::parseProximityStates(const QByteArray &message) {
-  qDebug() << "New proximity states: " << message;
   QVector<IODevice *> devices;
 
   devices = parseIODevices(message);
 
   emit updateProximityDevices(devices);
 }
+void IODeviceService::parseRecipeData(const QByteArray &message) {
+  QJsonDocument jsonDocument(QJsonDocument::fromJson(message));
 
+  if (validateJsonDocument(jsonDocument)) {
+    IODevice::IO_DEVICE_HIGH_LOW scaleState;
+    scaleState = jsonDocument["low"].toInt() == 0 ? IODevice::LOW : IODevice::HIGH;
+
+    auto weightSensor = new WeightSensor(jsonDocument["did"].toInt(),
+                                         jsonDocument["rid"].toInt(),
+                                         jsonDocument["cid"].toInt(),
+                                         jsonDocument["weight"].toInt(),
+                                         scaleState);
+
+    emit updateScale(weightSensor);
+  }
+}
 QVector<IODevice *> IODeviceService::parseIODevices(const QByteArray &payload) {
   QVector<IODevice *> iodevices;
   QJsonDocument jsonDocument(QJsonDocument::fromJson(payload));
-
-  qDebug() << "payload = " << payload;
 
   if (validateJsonDocument(jsonDocument)) {
     QJsonArray ioDeviceArray;
@@ -67,7 +83,6 @@ QVector<IODevice *> IODeviceService::parseIODevices(const QByteArray &payload) {
 
   return iodevices;
 }
-
 bool IODeviceService::validateJsonDocument(QJsonDocument &jsonDocument) {
   auto parseError = new QJsonParseError;
   if (jsonDocument.isNull()) {
@@ -84,7 +99,6 @@ bool IODeviceService::validateJsonDocument(QJsonDocument &jsonDocument) {
   delete parseError;
   return true;
 }
-
 QVector<IODevice *> IODeviceService::addProximitiesToArray(const QJsonArray &jsonArray) {
   QVector<IODevice *> proximities;
 
@@ -99,7 +113,6 @@ QVector<IODevice *> IODeviceService::addProximitiesToArray(const QJsonArray &jso
 
   return proximities;
 }
-
 QVector<IODevice *> IODeviceService::addRelaysToArray(const QJsonArray &jsonArray) {
   QVector<IODevice *> relays;
 

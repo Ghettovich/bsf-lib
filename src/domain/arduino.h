@@ -1,11 +1,11 @@
 #ifndef BSF_ARDUINO_H
 #define BSF_ARDUINO_H
 
-#include "iodevice.h"
 #include <QObject>
 #include <QtCore/QVector>
 #include <QtCore/QString>
 #include <QtCore/QUrl>
+#include <iodevice/iodevice.h>
 
 class Arduino {
 

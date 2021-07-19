@@ -7,7 +7,7 @@ class GroupBoxBeltFeeders;
 
 #include <QtWidgets/QWidget>
 
-#include <iodevice.h>
+#include <iodevice/iodevice.h>
 #include <fonts/MaterialRegular.h>
 #include <appservice.broker/BrokerAppService.h>
 

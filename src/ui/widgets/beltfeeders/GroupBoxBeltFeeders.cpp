@@ -1,7 +1,6 @@
 #include "ui_groupboxbeltfeeders.h"
 #include "GroupBoxBeltFeeders.h"
-#include <relay.h>
-#include <BsfWidgetEnum.h>
+#include <iodevice/relay.h>
 
 using namespace appservice;
 

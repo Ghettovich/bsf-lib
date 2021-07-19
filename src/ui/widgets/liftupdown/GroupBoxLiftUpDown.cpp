@@ -1,8 +1,8 @@
 #include "ui_groupboxliftupdown.h"
 #include "GroupBoxLiftUpDown.h"
 
-#include <relay.h>
-#include <detectionsensor.h>
+#include <iodevice/relay.h>
+#include <iodevice/detectionsensor.h>
 
 #include <QSettings>
 

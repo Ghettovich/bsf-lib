@@ -1,14 +1,18 @@
 #include "ui_groupboxrecipeconfig.h"
 #include "GroupBoxRecipeConfig.h"
-#include <reciperepo.h>
-#include <BsfWidgetEnum.h>
 
-GroupBoxRecipeConfig::GroupBoxRecipeConfig(MqttClient *_m_client) :
-    m_client(_m_client), ui(new Ui::GroupBoxRecipeConfig) {
+#include <QTableWidgetItem>
+
+using namespace appservice;
+
+GroupBoxRecipeConfig::GroupBoxRecipeConfig(std::shared_ptr<BrokerAppService> &_brokerAppService,
+                                           std::shared_ptr<appservice::PrepareRecipeAppService> &_prepareRecipeAppService,
+                                           QWidget *parent) :
+    ui(new Ui::GroupBoxRecipeConfig),
+    brokerAppService(_brokerAppService),
+    prepareRecipeAppService(_prepareRecipeAppService),
+    QWidget(parent) {
   ui->setupUi(this);
-
-  QVariant formId = WIDGET_TYPES::GROUPBOX_RECIPE_CONFIG;
-  this->setProperty("formId", formId);
 
   init();
 }
@@ -25,8 +29,7 @@ void GroupBoxRecipeConfig::init() {
 }
 
 void GroupBoxRecipeConfig::createRecipeComboBox() {
-  RecipeRepository recipeRepository;
-  QVector<Recipe> recipeList = recipeRepository.getRecipes();
+  QVector<Recipe> recipeList = prepareRecipeAppService->recipes();
 
   connect(ui->comboBoxSelectRecipe, SIGNAL(currentIndexChanged(int)),
           this, SLOT(onChangeRecipeComboBox(int)));
@@ -37,9 +40,8 @@ void GroupBoxRecipeConfig::createRecipeComboBox() {
 }
 
 void GroupBoxRecipeConfig::onChangeRecipeComboBox(int index) {
-  RecipeRepository recipeRepository;
   QVariant recipeId = ui->comboBoxSelectRecipe->itemData(index, Qt::UserRole);
-  selectedRecipe = recipeRepository.getRecipeWithComponents(recipeId.toInt());
+  selectedRecipe = prepareRecipeAppService->recipeWithComponents(recipeId.toInt());
 
   if (selectedRecipe.getId() != 0) {
     createRecipeComponentsTable();
@@ -78,5 +80,7 @@ void GroupBoxRecipeConfig::createRecipeComponentsTable() {
 }
 
 void GroupBoxRecipeConfig::onClickButtonPublishRecipe() {
-  m_client->publishRecipe(selectedRecipe);
+  brokerAppService->configureRecipe(selectedRecipe.getId(),
+                                    selectedRecipe.componentList.first().getComponentId(),
+                                    selectedRecipe.componentList.first().getTargetWeight());
 }

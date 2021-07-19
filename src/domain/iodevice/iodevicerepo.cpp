@@ -1,10 +1,10 @@
 #include "iodevicerepo.h"
+#include "iodevicetype.h"
+#include "detectionsensor.h"
+#include "relay.h"
+#include "weightcensor.h"
 
 #include <arduino.h>
-#include <iodevicetype.h>
-#include <detectionsensor.h>
-#include <relay.h>
-#include <weightcensor.h>
 #include <QtSql/QSqlQueryModel>
 
 IODeviceRepository::IODeviceRepository(std::shared_ptr<service::DatabaseService> &_databaseService, QObject *parent) :

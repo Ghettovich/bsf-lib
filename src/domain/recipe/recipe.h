@@ -1,9 +1,10 @@
 #ifndef BSF_RECIPE_H
 #define BSF_RECIPE_H
 
-#include "component.h"
 #include <QtCore/QVector>
 #include <QtCore/QString>
+
+#include <component/component.h>
 
 class Recipe {
 

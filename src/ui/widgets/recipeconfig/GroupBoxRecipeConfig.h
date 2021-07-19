@@ -1,22 +1,24 @@
 #ifndef BSF_LIB_GROUPBOXRECIPECONFIG_H
 #define BSF_LIB_GROUPBOXRECIPECONFIG_H
 
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QWidget>
+
+#include <recipe/recipe.h>
+#include <appservice.broker/BrokerAppService.h>
+#include <appservice.prepare.recipe/PrepareRecipeAppService.h>
+
 namespace Ui {
 class GroupBoxRecipeConfig;
 }
 
-#include <recipe.h>
-#include <MqttClient.h>
-#include <QObject>
-#include <QtWidgets/QComboBox>
-#include <QtWidgets/QWidget>
-
 class GroupBoxRecipeConfig : public QWidget {
-
  Q_OBJECT
 
  public:
-  explicit GroupBoxRecipeConfig(MqttClient *_m_client);
+  explicit GroupBoxRecipeConfig(std::shared_ptr<appservice::BrokerAppService> &brokerAppService,
+                                std::shared_ptr<appservice::PrepareRecipeAppService> &prepareRecipeAppService,
+                                QWidget *parent = nullptr);
   virtual ~GroupBoxRecipeConfig();
 
  public slots:
@@ -25,13 +27,14 @@ class GroupBoxRecipeConfig : public QWidget {
 
  private:
   Recipe selectedRecipe;
-  MqttClient *m_client;
+  std::shared_ptr<appservice::BrokerAppService> brokerAppService;
+  std::shared_ptr<appservice::PrepareRecipeAppService> prepareRecipeAppService;
   Ui::GroupBoxRecipeConfig *ui = nullptr;
   void init();
   void createRecipeComboBox();
   void createRecipeComponentsTable();
 
-  signals:
+ signals:
 };
 
 #endif //BSF_LIB_GROUPBOXRECIPECONFIG_H

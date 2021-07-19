@@ -2,6 +2,7 @@
 #define BSF_IODEVICESERVICE_H_
 
 #include "iodevice.h"
+#include "iodevicetype.h"
 #include "iodevicerepo.h"
 
 #include <QObject>
@@ -11,7 +12,7 @@
 
 #include <database/DatabaseService.h>
 #include <broker/BrokerService.h>
-#include <iodevicetype.h>
+
 
 class IODeviceService : public QObject {
  Q_OBJECT
@@ -29,12 +30,14 @@ class IODeviceService : public QObject {
  private:
   const QString proximityLiftTopic = "/proximity/lift";
   const QString relayStatesTopic = "/relay/states";
+  const QString recipeDataTopic = "/recipe/data";
 
   std::shared_ptr<IODeviceRepository> deviceRepository;
   std::shared_ptr<service::BrokerService> brokerService;
 
   void parseRelayStates(const QByteArray &message);
   void parseProximityStates(const QByteArray &message);
+  void parseRecipeData(const QByteArray &message);
 
   QVector<IODevice *> parseIODevices(const QByteArray &payload);
   static bool validateJsonDocument(QJsonDocument &);
@@ -44,6 +47,7 @@ class IODeviceService : public QObject {
  signals:
   void updateRelayDevices(const QVector<IODevice *> &devices);
   void updateProximityDevices(const QVector<IODevice *> &devices);
+  void updateScale(IODevice *device);
 };
 
 #endif //BSF_IODEVICESERVICE_H_

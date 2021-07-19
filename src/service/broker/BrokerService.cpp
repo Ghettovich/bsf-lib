@@ -42,4 +42,15 @@ void BrokerService::toggleRelay(int relayId) {
 
   m_client->publishMessage(doc.toJson(), toggleRelayTopic, qos);
 }
+void BrokerService::configureRecipe(int recipeId, int componentId, int targetWeight) {
+  quint8 qos = 1;
+  QJsonObject jsonPayloadObject;
+  jsonPayloadObject["recipeId"] = recipeId;
+  jsonPayloadObject["componentId"] = componentId;
+  jsonPayloadObject["targetWeight"] = targetWeight;
+
+  auto doc = QJsonDocument(jsonPayloadObject);
+
+  m_client->publishMessage(doc.toJson(), configureRecipeTopic, qos);
+}
 

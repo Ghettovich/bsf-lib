@@ -1,8 +1,8 @@
 #include "ui_groupboxbinloaddrop.h"
 #include "GroupBoxBinLoadDrop.h"
 
-#include <relay.h>
-#include <detectionsensor.h>
+#include <iodevice/relay.h>
+#include <iodevice/detectionsensor.h>
 
 #include <QSettings>
 

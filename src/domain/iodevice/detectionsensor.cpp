@@ -6,10 +6,6 @@ DetectionSensor::DetectionSensor(int detectionSensorId, IODevice::IO_DEVICE_HIGH
 
 }
 
-bool DetectionSensor::isDeviceStateLOW() const {
-  return deviceState == LOW;
-}
-
 bool DetectionSensor::isDeviceOn() const {
   return deviceState == LOW;
 }

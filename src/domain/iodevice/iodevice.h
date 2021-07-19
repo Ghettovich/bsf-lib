@@ -35,7 +35,6 @@ class IODevice {
   IO_DEVICE_HIGH_LOW getDeviceState() const;
   void setDeviceState(IO_DEVICE_HIGH_LOW _deviceState);
 
-  virtual bool isDeviceStateLOW() const = 0;
   virtual bool isDeviceOn() const = 0;
 
  private:

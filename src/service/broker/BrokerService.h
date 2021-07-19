@@ -16,9 +16,11 @@ class service::BrokerService : public QObject {
   void connectToHost();
   void addSubscription(const QString &topic, quint8 qos = 1);
   void toggleRelay(int relayId);
+  void configureRecipe(int recipeId, int componentId, int targetWeight);
 
  private:
   const QString toggleRelayTopic = "/toggle/relay";
+  const QString configureRecipeTopic = "/config/recipe";
 
   std::unique_ptr<MqttClient> m_client;
   QString getHost(QObject *parent);

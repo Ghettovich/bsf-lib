@@ -17,8 +17,8 @@ if (Qt5Widgets_FOUND)
             # SCALE
             widgets/scale/Scale.h
             # INTERFACES
-            widgets/interfaces/RecipeStatusInterface.h
-            widgets/interfaces/IOWidgetStatusInterface.h
+            #widgets/interfaces/RecipeStatusInterface.h
+            #widgets/interfaces/IOWidgetStatusInterface.h
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.h
             widgets/binloaddrop/GroupBoxBinLoadDrop.h
@@ -35,8 +35,8 @@ if (Qt5Widgets_FOUND)
             fonts/MaterialRegular.cpp
             fonts/QFontIcon.cpp
             # INTERFACES
-            widgets/interfaces/RecipeStatusInterface.cpp
-            widgets/interfaces/IOWidgetStatusInterface.cpp
+            #widgets/interfaces/RecipeStatusInterface.cpp
+            #widgets/interfaces/IOWidgetStatusInterface.cpp
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.cpp
             widgets/beltfeeders/groupboxbeltfeeders.ui

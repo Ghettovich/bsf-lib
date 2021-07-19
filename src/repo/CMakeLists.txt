@@ -36,7 +36,8 @@ if (Qt5Widgets_FOUND)
     target_link_libraries(bsf
             PUBLIC
             Qt5::Core
-            Qt5::Sql)
+            Qt5::Sql
+            services)
 
     target_include_directories(bsf
             PUBLIC
