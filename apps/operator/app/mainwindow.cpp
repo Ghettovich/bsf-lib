@@ -26,12 +26,6 @@ MainWindow::MainWindow(std::shared_ptr<PrepareRecipeAppService> &_prepareRecipeA
   connect(brokerAppService.get(), &BrokerAppService::connectedToHost, [=]() {
     brokerAppService->createDeviceStateSubscriptions();
   });
-
-//  connect(brokerAppService.get(), &BrokerAppService::updateDeviceWithState,
-//          prepareRecipeAppService.get(), &PrepareRecipeAppService::onUpdateDeviceWithState);
-
-
-  //createMqttClientWindow();
 }
 
 MainWindow::~MainWindow() {
@@ -44,7 +38,6 @@ void MainWindow::showSidebar() {
 }
 
 void MainWindow::showStart() {
-//  createClientDescriptions();
   createGroupBoxBinLift();
   createGroupBoxBinLoadDrop();
   createGroupBoxFeedersAndBelt();
@@ -60,29 +53,6 @@ void MainWindow::createRelayTreeView() {
 void MainWindow::createProximityTreeView() {
   auto proximityTreeWidget = new ProximityTreeWidget(brokerAppService);
   ui->verticalLayoutSidePanel->addWidget(proximityTreeWidget);
-}
-
-void MainWindow::createArduinoTreeView() {
-//  ArduinoRepository arduinoRepository;
-//  QList<QTreeWidgetItem *> arduinoTreeWidgets = arduinoRepository.getArduinoTreeWidgets();
-//
-//  QStringList headers;
-//  headers.append("ID");
-//  headers.append("Type");
-//  headers.append("Status");
-//  headers.append("Arduino");
-
-//    auto arduinoTreeWidget = new TreeWidgetDeviceStatus(headers, arduinoTreeWidgets);
-//    ui->verticalLayoutSidePanel->addWidget(arduinoTreeWidget);
-}
-
-void MainWindow::createClientsTreeView() {
-
-}
-
-void MainWindow::createClientDescriptions() {
-//    ui->labelClientInfoTitle->setText("Operator");
-//    ui->labelClientInfo->setText("IP: 192.168.178.X \nGateWay: 192.168.178.X");
 }
 
 void MainWindow::createGroupBoxBinLift() {
@@ -108,36 +78,4 @@ void MainWindow::createGroupBoxRecipeConfiguration() {
 void MainWindow::createGroupBoxBinRecipeStatus() {
   auto groupBoxBinRecipeStatus = new GroupBoxBinRecipeStatus(prepareRecipeAppService);
   ui->verticalLayoutTabRight->addWidget(groupBoxBinRecipeStatus);
-}
-
-void MainWindow::createMqttClientWindow() {
-//  auto operatorMqttClient = new OperatorMqttClient(ui->tab_2, Qt::Widget);
-//  operatorMqttClient->showFullScreen();
-}
-
-QTabWidget *MainWindow::getApplicationTabWidget() {
-  return ui->tabWidget;
-}
-
-void MainWindow::onCreateMqttClientSubscriptions() {
-//  quint8 QoS = 1;
-//  const QString topicProximityLift("/proximity/lift");
-//  const QString topicRelayStates("/relay/states");
-
-//  //GroupBox Lift Up Down
-//  m_client->addIODeviceSubscription(topicProximityLift, QoS, groupBoxLiftUpDown);
-//  m_client->addIODeviceSubscription(topicRelayStates, QoS, groupBoxLiftUpDown);
-//
-//  //GroupBox Bin Load Drop
-//  m_client->addIODeviceSubscription(topicProximityLift, QoS, groupBoxBinLoadDrop);
-//  m_client->addIODeviceSubscription(topicRelayStates, QoS, groupBoxBinLoadDrop);
-//
-//  //GroupBox Belt And Feeders
-//  m_client->addIODeviceSubscription(topicRelayStates, QoS, groupBoxBeltFeeders);
-//
-//  //m_client->addIODeviceSubscription(topicRelayStates, QoS, relayTreeWidget);
-//  m_client->addIODeviceSubscription(topicProximityLift, QoS, proximityTreeWidget);
-//
-//  //GroupBox Recipe Status Bin & Scale 1
-//  m_client->addRecipeDataSubscription(QoS, groupBoxBinRecipeStatus);
 }

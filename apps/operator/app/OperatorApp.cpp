@@ -9,9 +9,9 @@
 #include <broker/BrokerService.h>
 #include <database/DatabaseService.h>
 
-#include <appservice.prepare.recipe/PrepareRecipeAppService.h>
-#include <appservice.mix.recipe/MixRecipeAppService.h>
-#include <appservice.broker/BrokerAppService.h>
+#include <appservice.prepare.recipe/preparerecipeappservice.h>
+#include <appservice.mix.recipe/mixrecipeappservice.h>
+#include <appservice.broker/brokerappservice.h>
 
 using namespace appservice;
 using namespace service;

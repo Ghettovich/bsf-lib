@@ -5,8 +5,8 @@
 #include <QtWidgets/QWidget>
 
 #include <recipe/recipe.h>
-#include <appservice.broker/BrokerAppService.h>
-#include <appservice.prepare.recipe/PrepareRecipeAppService.h>
+#include <appservice.broker/brokerappservice.h>
+#include <appservice.prepare.recipe/preparerecipeappservice.h>
 
 namespace Ui {
 class GroupBoxRecipeConfig;

@@ -16,6 +16,7 @@ class RecipeSelection : public QObject {
   QString getRecipeDescription();
   int getSelectedRecipeId();
   int getSelectedComponentId();
+  Component &getSelectedComponent();
   QVector<Component> getComponents() const;
 
  private:

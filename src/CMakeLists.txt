@@ -8,11 +8,7 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt5 COMPONENTS Widgets DBus Core Sql Network Mqtt REQUIRED)
 
 add_subdirectory(appservice)
-#add_subdirectory(data)
 add_subdirectory(domain)
-#add_subdirectory(parser)
-#add_subdirectory(repo)
-#add_subdirectory(mqtt)
 add_subdirectory(service)
 add_subdirectory(ui)
 

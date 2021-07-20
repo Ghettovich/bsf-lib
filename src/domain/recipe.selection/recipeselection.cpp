@@ -33,3 +33,6 @@ int RecipeSelection::getSelectedComponentId() {
 void RecipeSelection::setCurrentWeightSelectedComponent(int currentWeight) {
   selectedComponent.setCurrentWeight(currentWeight);
 }
+Component &RecipeSelection::getSelectedComponent() {
+  return selectedComponent;
+}

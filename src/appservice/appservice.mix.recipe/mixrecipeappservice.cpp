@@ -1,4 +1,4 @@
-#include "MixRecipeAppService.h"
+#include "mixrecipeappservice.h"
 
 using namespace appservice;
 using namespace service;

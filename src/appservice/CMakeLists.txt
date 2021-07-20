@@ -3,16 +3,16 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 
 # HEADER LIST
 set(HEADER_LIST
-        appservice.broker/BrokerAppService.h
-        appservice.prepare.recipe/PrepareRecipeAppService.h
-        appservice.mix.recipe/MixRecipeAppService.h
+        appservice.broker/brokerappservice.h
+        appservice.prepare.recipe/preparerecipeappservice.h
+        appservice.mix.recipe/mixrecipeappservice.h
         )
 
 # ADD LIBRARY
 add_library(appservice SHARED
-        appservice.broker/BrokerAppService.cpp
-        appservice.prepare.recipe/PrepareRecipeAppService.cpp
-        appservice.mix.recipe/MixRecipeAppService.cpp
+        appservice.broker/brokerappservice.cpp
+        appservice.prepare.recipe/preparerecipeappservice.cpp
+        appservice.mix.recipe/mixrecipeappservice.cpp
         # HEADERS
         ${HEADER_LIST})
 

@@ -9,7 +9,7 @@ class GroupBoxBeltFeeders;
 
 #include <iodevice/iodevice.h>
 #include <fonts/MaterialRegular.h>
-#include <appservice.broker/BrokerAppService.h>
+#include <appservice.broker/brokerappservice.h>
 
 class GroupBoxBeltFeeders : public QWidget {
  Q_OBJECT

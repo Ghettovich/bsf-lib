@@ -16,9 +16,6 @@ if (Qt5Widgets_FOUND)
             fonts/QFontIcon.h
             # SCALE
             widgets/scale/Scale.h
-            # INTERFACES
-            #widgets/interfaces/RecipeStatusInterface.h
-            #widgets/interfaces/IOWidgetStatusInterface.h
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.h
             widgets/binloaddrop/GroupBoxBinLoadDrop.h
@@ -34,9 +31,6 @@ if (Qt5Widgets_FOUND)
             resource/theme.qrc
             fonts/MaterialRegular.cpp
             fonts/QFontIcon.cpp
-            # INTERFACES
-            #widgets/interfaces/RecipeStatusInterface.cpp
-            #widgets/interfaces/IOWidgetStatusInterface.cpp
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.cpp
             widgets/beltfeeders/groupboxbeltfeeders.ui

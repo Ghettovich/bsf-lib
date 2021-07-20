@@ -1,4 +1,4 @@
-#include "PrepareRecipeAppService.h"
+#include "preparerecipeappservice.h"
 #include <QDebug>
 
 using namespace appservice;

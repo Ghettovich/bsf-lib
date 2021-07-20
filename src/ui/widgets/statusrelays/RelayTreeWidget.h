@@ -5,7 +5,7 @@
 
 #include <iodevice/iodevice.h>
 #include <fonts/MaterialRegular.h>
-#include <appservice.broker/BrokerAppService.h>
+#include <appservice.broker/brokerappservice.h>
 
 namespace Ui {
 class RelayTreeWidget;

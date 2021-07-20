@@ -13,10 +13,6 @@ RecipeSelectionService::RecipeSelectionService(std::shared_ptr<IODeviceService> 
 void RecipeSelectionService::onUpdateRecipeSelection(IODevice *device) {
   auto scale = dynamic_cast<WeightSensor *>(device);
 
-  qDebug() << "device id = " << scale->getId();
-  qDebug() << "recipe id = " << scale->getRecipeId();
-  qDebug() << "component id = " << scale->getComponentId();
-
   if (scale->getRecipeId() == 0 || scale->getComponentId() == 0) {
     // ToDo: fix tare
   } else {
