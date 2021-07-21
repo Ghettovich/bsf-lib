@@ -58,8 +58,6 @@ void GroupBoxLiftUpDown::onClickPushButtonLiftUp() {
 }
 
 void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel() {
-  qDebug() << "updating label ... ";
-
   if (proximityBinLoad->isDeviceOn()) {
     ui->labelProximityBinLoadStatus->setPixmap(materialRegular.visibilityIcon(Qt::lightGray).pixmap(48, 48));
   } else {

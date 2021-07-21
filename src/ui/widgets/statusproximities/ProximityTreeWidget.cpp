@@ -26,7 +26,6 @@ void ProximityTreeWidget::initForm() {
 }
 
 void ProximityTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceList) {
-  qDebug() << iodeviceList.count();
 
   for (int i = 0; i < ui->listWidget->count(); i++) {
     const auto listWidgetItem = ui->listWidget->item(i);

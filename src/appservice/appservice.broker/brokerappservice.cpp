@@ -5,8 +5,9 @@ using namespace service;
 
 BrokerAppService::BrokerAppService(std::shared_ptr<service::BrokerService> &_brokerService,
                                    std::shared_ptr<IODeviceService> &_deviceService,
+                                   std::shared_ptr<StateService> &_stateService,
                                    QObject *parent) :
-    brokerService(_brokerService), deviceService(_deviceService), QObject(parent) {
+    brokerService(_brokerService), deviceService(_deviceService), stateService(_stateService), QObject(parent) {
 
   connect(brokerService.get(), &BrokerService::connectedToHost, [=]() {
     emit connectedToHost();
@@ -24,8 +25,11 @@ BrokerAppService::BrokerAppService(std::shared_ptr<service::BrokerService> &_bro
     emit updateDeviceWithState(device);
   });
 }
+QVector<IODevice *> BrokerAppService::findAll() {
+  return deviceService->findAllDevices();
+}
 QVector<IODevice *> BrokerAppService::findAll(IODeviceType::IO_DEVICE_TYPE type) {
-  return deviceService->getIODevices(type);
+  return deviceService->findAllDevices(type);
 }
 void BrokerAppService::connectToHost() {
   brokerService->connectToHost();

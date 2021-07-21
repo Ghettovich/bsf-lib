@@ -39,18 +39,16 @@ void IODevice::setAction(const Action &_action) {
   action = _action;
 }
 
-IODeviceType IODevice::getIoDeviceType() const {
-  return ioDeviceType;
-}
-
-void IODevice::setIoDeviceType(const IODeviceType &_ioDeviceType) {
-  ioDeviceType = _ioDeviceType;
-}
-
 IODevice::IO_DEVICE_HIGH_LOW IODevice::getDeviceState() const {
   return deviceState;
 }
 
 void IODevice::setDeviceState(IODevice::IO_DEVICE_HIGH_LOW _deviceState) {
   deviceState = _deviceState;
+}
+void IODevice::setDeviceType(IODeviceType::IO_DEVICE_TYPE _deviceType) {
+  deviceType = _deviceType;
+}
+IODeviceType::IO_DEVICE_TYPE IODevice::getDeviceType() {
+  return deviceType;
 }

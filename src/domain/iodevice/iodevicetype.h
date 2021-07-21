@@ -12,7 +12,6 @@ class IODeviceType {
   enum IO_DEVICE_TYPE {
     UNKOWN = 0, WEIGHTSENSOR = 1, DETECTIONSENSOR = 2, RELAY = 3, ARDUINO = 4
   };
-
   Q_ENUM(IO_DEVICE_TYPE);
 
   explicit IODeviceType(int id = 0);

@@ -21,7 +21,9 @@ class IODeviceService : public QObject {
   explicit IODeviceService(std::shared_ptr<service::DatabaseService> databaseService,
                            std::shared_ptr<service::BrokerService> &brokerService,
                            QObject *parent = nullptr);
-  QVector<IODevice *> getIODevices(IODeviceType::IO_DEVICE_TYPE ioDeviceType);
+  QVector<IODevice *> findAllDevices();
+  QVector<IODevice *> findAllDevices(IODeviceType::IO_DEVICE_TYPE deviceType);
+
   void createDeviceStateSubscriptions();
 
  public slots:
@@ -32,9 +34,12 @@ class IODeviceService : public QObject {
   const QString relayStatesTopic = "/relay/states";
   const QString recipeDataTopic = "/recipe/data";
 
+  QVector<IODevice *> devices;
   std::shared_ptr<IODeviceRepository> deviceRepository;
   std::shared_ptr<service::BrokerService> brokerService;
 
+  void updateDevices(IODevice *iodevice);
+  void updateDevices(const QVector<IODevice *>& devices);
   void parseRelayStates(const QByteArray &message);
   void parseProximityStates(const QByteArray &message);
   void parseRecipeData(const QByteArray &message);

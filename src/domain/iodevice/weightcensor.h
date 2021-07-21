@@ -13,8 +13,11 @@ class WeightSensor : public IODevice {
   explicit WeightSensor(int weightSensorId = 0, IO_DEVICE_HIGH_LOW state = LOW);
   WeightSensor(int weightSensorId, int recipeId, int componentId, int currentWeight = 0, IO_DEVICE_HIGH_LOW state = LOW);
   int getRecipeId() const;
+  void setRecipeId(int recipeId);
   int getComponentId() const;
+  void setComponentId(int componentId);
   int getCurrentWeight() const;
+  void setCurrentWeight(int currentWeight);
   bool isDeviceOn() const override;
 
  private:

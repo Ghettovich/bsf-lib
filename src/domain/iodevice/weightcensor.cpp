@@ -25,4 +25,13 @@ int WeightSensor::getComponentId() const {
 int WeightSensor::getCurrentWeight() const {
   return currentWeight;
 }
+void WeightSensor::setRecipeId(int _recipeId) {
+  recipeId = _recipeId;
+}
+void WeightSensor::setComponentId(int _componentId) {
+  componentId = _componentId;
+}
+void WeightSensor::setCurrentWeight(int _currentWeight) {
+  currentWeight = _currentWeight;
+}
 

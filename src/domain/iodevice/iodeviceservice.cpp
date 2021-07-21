@@ -14,11 +14,24 @@ IODeviceService::IODeviceService(std::shared_ptr<DatabaseService> _databaseServi
     deviceRepository(std::make_unique<IODeviceRepository>(_databaseService, this)),
     brokerService(_brokerService) {
 
+  devices = deviceRepository->findAllDevices();
+
   connect(brokerService.get(), &BrokerService::newMessageForTopic,
           this, &IODeviceService::onNewIODeviceStates);
 }
-QVector<IODevice *> IODeviceService::getIODevices(IODeviceType::IO_DEVICE_TYPE ioDeviceType) {
-  return deviceRepository->getIODeviceList(ioDeviceType);
+QVector<IODevice *> IODeviceService::findAllDevices() {
+  return devices;
+}
+QVector<IODevice *> IODeviceService::findAllDevices(IODeviceType::IO_DEVICE_TYPE deviceType) {
+  QVector<IODevice *> devicesWithType;
+
+  for (const auto &device: devices) {
+    if (device->getDeviceType() == deviceType) {
+      devicesWithType.append(device);
+    }
+  }
+
+  return devicesWithType;
 }
 void IODeviceService::createDeviceStateSubscriptions() {
   brokerService->addSubscription(relayStatesTopic);
@@ -35,18 +48,22 @@ void IODeviceService::onNewIODeviceStates(const QByteArray &message, const QStri
   }
 }
 void IODeviceService::parseRelayStates(const QByteArray &message) {
-  QVector<IODevice *> devices;
+  QVector<IODevice *> relayDevices;
 
-  devices = parseIODevices(message);
+  relayDevices = parseIODevices(message);
 
-  emit updateRelayDevices(devices);
+  updateDevices(relayDevices);
+
+  emit updateRelayDevices(relayDevices);
 }
 void IODeviceService::parseProximityStates(const QByteArray &message) {
-  QVector<IODevice *> devices;
+  QVector<IODevice *> proximityDevices;
 
-  devices = parseIODevices(message);
+  proximityDevices = parseIODevices(message);
 
-  emit updateProximityDevices(devices);
+  updateDevices(proximityDevices);
+
+  emit updateProximityDevices(proximityDevices);
 }
 void IODeviceService::parseRecipeData(const QByteArray &message) {
   QJsonDocument jsonDocument(QJsonDocument::fromJson(message));
@@ -60,6 +77,8 @@ void IODeviceService::parseRecipeData(const QByteArray &message) {
                                          jsonDocument["cid"].toInt(),
                                          jsonDocument["weight"].toInt(),
                                          scaleState);
+
+    updateDevices(weightSensor);
 
     emit updateScale(weightSensor);
   }
@@ -126,4 +145,40 @@ QVector<IODevice *> IODeviceService::addRelaysToArray(const QJsonArray &jsonArra
   }
 
   return relays;
+}
+void IODeviceService::updateDevices(IODevice *_device) {
+  auto weightSensor = dynamic_cast<WeightSensor*>(_device);
+
+  if(weightSensor) {
+
+    for (const auto &device:devices) {
+      if (device->getId() == _device->getId()) {
+
+        auto deviceToUpdate = dynamic_cast<WeightSensor *>(device);
+
+        deviceToUpdate->setDeviceState(_device->getDeviceState());
+        deviceToUpdate->setRecipeId(weightSensor->getRecipeId());
+        deviceToUpdate->setComponentId(weightSensor->getComponentId());
+        deviceToUpdate->setCurrentWeight(weightSensor->getCurrentWeight());
+
+        qDebug() << "Updated weight sensor in device list";
+        break;
+      }
+    }
+
+  }
+}
+void IODeviceService::updateDevices(const QVector<IODevice *> &_devices) {
+
+  for (const auto &deviceToUpdate : devices) {
+
+    for (const auto &device: _devices) {
+      if(device->getId() == deviceToUpdate->getId()) {
+        deviceToUpdate->setDeviceState(device->getDeviceState());
+
+        qDebug() << "Updated device in device list";
+        break;
+      }
+    }
+  }
 }

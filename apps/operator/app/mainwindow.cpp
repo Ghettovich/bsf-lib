@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QLayout>
 #include <widgets/liftupdown/GroupBoxLiftUpDown.h>
 #include <widgets/binloaddrop/GroupBoxBinLoadDrop.h>
 #include <widgets/beltfeeders/GroupBoxBeltFeeders.h>
@@ -26,6 +27,8 @@ MainWindow::MainWindow(std::shared_ptr<PrepareRecipeAppService> &_prepareRecipeA
   connect(brokerAppService.get(), &BrokerAppService::connectedToHost, [=]() {
     brokerAppService->createDeviceStateSubscriptions();
   });
+
+  brokerAppService->findAll();
 }
 
 MainWindow::~MainWindow() {
@@ -33,6 +36,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::showSidebar() {
+  createStateWidget();
   createRelayTreeView();
   createProximityTreeView();
 }
@@ -55,6 +59,16 @@ void MainWindow::createProximityTreeView() {
   ui->verticalLayoutSidePanel->addWidget(proximityTreeWidget);
 }
 
+void MainWindow::createStateWidget() {
+  auto stateWidget = new QWidget;
+  auto layout = new QVBoxLayout(stateWidget);
+
+  auto statusLabel = new QLabel("status: unknown");
+  layout->addWidget(statusLabel);
+
+  ui->verticalLayoutSidePanel->addWidget(stateWidget);
+}
+
 void MainWindow::createGroupBoxBinLift() {
   auto groupBoxLiftUpDown = new GroupBoxLiftUpDown(brokerAppService);
   ui->verticalLayoutTabLeft->addWidget(groupBoxLiftUpDown);
@@ -74,7 +88,6 @@ void MainWindow::createGroupBoxRecipeConfiguration() {
   auto groupBoxRecipeConfig = new GroupBoxRecipeConfig(brokerAppService, prepareRecipeAppService);
   ui->verticalLayoutTabLeft->addWidget(groupBoxRecipeConfig);
 }
-
 void MainWindow::createGroupBoxBinRecipeStatus() {
   auto groupBoxBinRecipeStatus = new GroupBoxBinRecipeStatus(prepareRecipeAppService);
   ui->verticalLayoutTabRight->addWidget(groupBoxBinRecipeStatus);

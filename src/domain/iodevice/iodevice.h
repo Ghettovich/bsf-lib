@@ -30,8 +30,8 @@ class IODevice {
   void setArduino(Arduino *_arduino);
   Action getAction() const;
   void setAction(const Action &_action);
-  IODeviceType getIoDeviceType() const;
-  void setIoDeviceType(const IODeviceType &_ioDeviceType);
+  IODeviceType::IO_DEVICE_TYPE getDeviceType();
+  void setDeviceType(IODeviceType::IO_DEVICE_TYPE deviceType);
   IO_DEVICE_HIGH_LOW getDeviceState() const;
   void setDeviceState(IO_DEVICE_HIGH_LOW _deviceState);
 
@@ -40,6 +40,8 @@ class IODevice {
  private:
   int iodeviceId = 0;
   QString description;
+  IODeviceType::IO_DEVICE_TYPE deviceType = IODeviceType::IO_DEVICE_TYPE::UNKOWN;
+
   Arduino *arduino;
   Action action;
   IODeviceType ioDeviceType;
@@ -48,4 +50,4 @@ class IODevice {
   IO_DEVICE_HIGH_LOW deviceState;
 };
 
-#endif // IODEVICE_H
+#endif // BSF_IODEVICE_H

@@ -5,6 +5,7 @@
 #include <QObject>
 #include <broker/BrokerService.h>
 #include <iodevice/iodeviceservice.h>
+#include <state/stateservice.h>
 
 namespace appservice {
 class BrokerAppService;
@@ -16,6 +17,7 @@ class appservice::BrokerAppService : public QObject {
  public:
   explicit BrokerAppService(std::shared_ptr<service::BrokerService> &brokerService,
                             std::shared_ptr<IODeviceService> &deviceService,
+                            std::shared_ptr<StateService> &stateService,
                             QObject *parent = nullptr);
 
   /// Connect to broker. Host is defined in configuration file.
@@ -32,11 +34,14 @@ class appservice::BrokerAppService : public QObject {
   void configureRecipe(int recipeId, int componentId, int targetWeight);
 
   /// Fetch all devices from repository
+  QVector<IODevice *> findAll();
+
   QVector<IODevice *> findAll(IODeviceType::IO_DEVICE_TYPE type);
 
  private:
   std::shared_ptr<service::BrokerService> brokerService;
   std::shared_ptr<IODeviceService> deviceService;
+  std::shared_ptr<StateService> stateService;
 
  signals:
   void connectedToHost();

@@ -105,6 +105,7 @@ void GroupBoxBinRecipeStatus::updateComponentWidgetTable(const Component &compon
   for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
 
     if (ui->tableWidget->item(i, 0)->data(Qt::UserRole).toInt() == component.getComponentId()) {
+      activeComponentTableWidget = new QTableWidgetItem;
       activeComponentTableWidget = ui->tableWidget->item(i, currentWeightColumn);
       activeComponentTableWidget->setData(Qt::UserRole, component.getComponentId());
       activeComponentTableWidget->setData(Qt::DisplayRole, component.getCurrentWeight());

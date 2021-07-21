@@ -40,6 +40,7 @@ class MainWindow : public QMainWindow {
 
   void createRelayTreeView();
   void createProximityTreeView();
+  void createStateWidget();
   void createGroupBoxBinLift();
   void createGroupBoxBinLoadDrop();
   void createGroupBoxFeedersAndBelt();
