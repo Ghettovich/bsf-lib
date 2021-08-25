@@ -16,6 +16,9 @@ if (Qt5Widgets_FOUND)
             fonts/QFontIcon.h
             # SCALE
             widgets/scale/Scale.h
+            # STACKED WIDGETS
+            widgets/home/home.h
+            widgets/experimental/experimental.h
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.h
             widgets/binloaddrop/GroupBoxBinLoadDrop.h
@@ -31,6 +34,11 @@ if (Qt5Widgets_FOUND)
             resource/theme.qrc
             fonts/MaterialRegular.cpp
             fonts/QFontIcon.cpp
+            # STACKED WIDGETS
+            widgets/home/home.cpp
+            widgets/home/home.ui
+            widgets/experimental/experimental.cpp
+            widgets/experimental/experimental.ui
             # WIDGETS
             widgets/beltfeeders/GroupBoxBeltFeeders.cpp
             widgets/beltfeeders/groupboxbeltfeeders.ui
