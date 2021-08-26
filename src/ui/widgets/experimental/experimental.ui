@@ -216,23 +216,23 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="RelayButton" name="pushButtonLiftDown">
             <property name="text">
              <string>Lift down</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="RelayButton" name="pushButtonLiftUp">
             <property name="text">
              <string>Lift up</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label">
+           <widget class="ProximityLabel" name="labelBinLoadDetected">
             <property name="text">
-             <string>bin load detected</string>
+             <string/>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -499,6 +499,18 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RelayButton</class>
+   <extends>QPushButton</extends>
+   <header>buttons/relay/relay.button.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ProximityLabel</class>
+   <extends>QLabel</extends>
+   <header>labels/proximity/proximity.label.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
