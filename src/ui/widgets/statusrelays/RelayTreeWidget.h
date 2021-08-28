@@ -5,7 +5,7 @@
 
 #include <iodevice/iodevice.h>
 #include <fonts/MaterialRegular.h>
-#include <appservice.broker/brokerappservice.h>
+#include <appservice.iodevices/iodevice.appservice.h>
 
 namespace Ui {
 class RelayTreeWidget;
@@ -15,13 +15,13 @@ class RelayTreeWidget : public QWidget {
  Q_OBJECT
 
  public:
-  explicit RelayTreeWidget(std::shared_ptr<appservice::BrokerAppService> &brokerAppService);
+  explicit RelayTreeWidget(std::shared_ptr<appservice::IODeviceAppService> &deviceAppService);
 
  private slots:
-  void onUpdateIODevices(const QVector<IODevice *> &iodeviceList);
+  void onUpdateIODevices(const QList<IODevice *> &iodeviceList);
 
  private:
-  std::shared_ptr<appservice::BrokerAppService> brokerAppService;
+  std::shared_ptr<appservice::IODeviceAppService> deviceAppService;
   Ui::RelayTreeWidget *ui = nullptr;
   MaterialRegular materialRegular;
 

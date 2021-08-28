@@ -1,6 +1,5 @@
 #include "MainWindow.h"
 #include <reciperepo.h>
-#include <BsfWidgetEnum.h>
 #include <widgets/scale/Scale.h>
 
 MainWindow::MainWindow(QWidget *parent)

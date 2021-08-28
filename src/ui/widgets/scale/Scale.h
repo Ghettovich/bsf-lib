@@ -8,8 +8,8 @@
 #include <iodevice/iodevice.h>
 
 #include <fonts/MaterialRegular.h>
-#include <appservice.broker/BrokerAppService.h>
-#include <appservice.prepare.recipe/PrepareRecipeAppService.h>
+#include <appservice.broker/brokerappservice.h>
+#include <appservice.prepare.recipe/preparerecipeappservice.h>
 
 namespace Ui {
 class Scale;

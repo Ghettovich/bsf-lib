@@ -13,8 +13,8 @@ GroupBoxLiftUpDown::GroupBoxLiftUpDown(std::shared_ptr<BrokerAppService> &_broke
     ui(new Ui::GroupBoxLiftUpDown), brokerAppService(_brokerAppService), QWidget(parent) {
   ui->setupUi(this);
 
-  connect(brokerAppService.get(), &BrokerAppService::updateDevicesWithState,
-          this, &GroupBoxLiftUpDown::onUpdateIODevices);
+//  connect(brokerAppService.get(), &BrokerAppService::updateDevicesWithState,
+//          this, &GroupBoxLiftUpDown::onUpdateIODevices);
 
   auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
   settings->beginGroup("relays");
@@ -85,7 +85,7 @@ void GroupBoxLiftUpDown::setLiftDownButtonState() {
   }
 }
 
-void GroupBoxLiftUpDown::onUpdateIODevices(const QVector<IODevice *> &devices) {
+void GroupBoxLiftUpDown::onUpdateIODevices(const QList<IODevice *> &devices) {
   for (auto iodevice : devices) {
     if (iodevice->getId() == proximityBinLoad->getId()) {
       onChangeProximity(iodevice);

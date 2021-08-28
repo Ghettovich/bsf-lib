@@ -5,18 +5,15 @@
 
 using namespace appservice;
 
-ProximityTreeWidget::ProximityTreeWidget(std::shared_ptr<BrokerAppService> &_brokerAppService) :
-    ui(new Ui::ProximityTreeWidget), brokerAppService(_brokerAppService) {
+ProximityTreeWidget::ProximityTreeWidget(std::shared_ptr<IODeviceAppService> &_deviceAppService) :
+    ui(new Ui::ProximityTreeWidget), deviceAppService(_deviceAppService) {
   ui->setupUi(this);
 
   initForm();
-
-  connect(brokerAppService.get(), &BrokerAppService::updateDevicesWithState,
-          this, &ProximityTreeWidget::onUpdateIODevices);
 }
 
 void ProximityTreeWidget::initForm() {
-  auto deviceList = brokerAppService->findAll(IODeviceType::DETECTIONSENSOR);
+  auto deviceList = deviceAppService->findAll(IODeviceType::DETECTIONSENSOR);
 
   for (const auto &device :deviceList) {
     auto listWidgetItem = new QListWidgetItem(materialRegular.visibilityOffIcon(), device->getDescription());
@@ -25,7 +22,7 @@ void ProximityTreeWidget::initForm() {
   }
 }
 
-void ProximityTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceList) {
+void ProximityTreeWidget::onUpdateIODevices(const QList<IODevice *> &iodeviceList) {
 
   for (int i = 0; i < ui->listWidget->count(); i++) {
     const auto listWidgetItem = ui->listWidget->item(i);

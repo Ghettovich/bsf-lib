@@ -19,7 +19,7 @@ class GroupBoxBeltFeeders : public QWidget {
                                QWidget *parent = nullptr);
 
  public slots:
-  void onUpdateIODevices(const QVector<IODevice *> &devices);
+  void onUpdateIODevices(const QList<IODevice *> &devices);
 
  private:
   std::shared_ptr<appservice::BrokerAppService> brokerAppService;

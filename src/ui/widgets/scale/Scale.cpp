@@ -2,7 +2,6 @@
 #include "Scale.h"
 
 #include <iodevice/weightcensor.h>
-#include <BsfWidgetEnum.h>
 #include <QMessageBox>
 
 using namespace appservice;
@@ -16,7 +15,7 @@ Scale::Scale(std::shared_ptr<BrokerAppService> &_brokerAppService,
     QWidget(parent) {
   ui->setupUi(this);
 
-  connect(brokerAppService.get(), &BrokerAppService::updateDeviceWithState, this, &Scale::onUpdateIODevice);
+//  connect(brokerAppService.get(), &BrokerAppService::updateDeviceWithState, this, &Scale::onUpdateIODevice);
 
   auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
   settings->beginGroup("weightsensor");

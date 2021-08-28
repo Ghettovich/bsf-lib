@@ -5,7 +5,7 @@
 
 #include <iodevice/iodevice.h>
 #include <fonts/MaterialRegular.h>
-#include <appservice.broker/brokerappservice.h>
+#include <appservice.iodevices/iodevice.appservice.h>
 
 namespace Ui {
 class ProximityTreeWidget;
@@ -15,13 +15,13 @@ class ProximityTreeWidget : public QWidget {
  Q_OBJECT
 
  public:
-  explicit ProximityTreeWidget(std::shared_ptr<appservice::BrokerAppService> &brokerAppService);
+  explicit ProximityTreeWidget(std::shared_ptr<appservice::IODeviceAppService> &deviceAppService);
 
  public slots:
-  void onUpdateIODevices(const QVector<IODevice *> &iodeviceList);
+  void onUpdateIODevices(const QList<IODevice *> &iodeviceList);
 
  private:
-  std::shared_ptr<appservice::BrokerAppService> brokerAppService;
+  std::shared_ptr<appservice::IODeviceAppService> deviceAppService;
   Ui::ProximityTreeWidget *ui = nullptr;
   MaterialRegular materialRegular;
 

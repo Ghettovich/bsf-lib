@@ -10,8 +10,8 @@ GroupBoxBeltFeeders::GroupBoxBeltFeeders(std::shared_ptr<BrokerAppService> &_bro
     ui(new Ui::GroupBoxBeltFeeders), brokerAppService(_brokerAppService), QWidget(parent) {
   ui->setupUi(this);
 
-  connect(brokerAppService.get(), &appservice::BrokerAppService::updateDevicesWithState,
-          this, &GroupBoxBeltFeeders::onUpdateIODevices);
+//  connect(brokerAppService.get(), &appservice::BrokerAppService::updateDevicesWithState,
+//          this, &GroupBoxBeltFeeders::onUpdateIODevices);
 
   auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
   settings->beginGroup("relays");
@@ -60,7 +60,7 @@ void GroupBoxBeltFeeders::init() {
           this, &GroupBoxBeltFeeders::onClickPushButtonFeeder2Reverse);
 }
 
-void GroupBoxBeltFeeders::onUpdateIODevices(const QVector<IODevice *> &devices) {
+void GroupBoxBeltFeeders::onUpdateIODevices(const QList<IODevice *> &devices) {
   for (auto iodevice : devices) {
     if (iodevice->getId() == relayBeltForward->getId()) {
       relayBeltForward->setDeviceState(iodevice->getDeviceState());

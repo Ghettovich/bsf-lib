@@ -23,7 +23,6 @@ class MainWindow : public QMainWindow {
 
  public:
   explicit MainWindow(QWidget *parent = nullptr);
-  explicit MainWindow(MqttClient *m_client, QWidget *parent = nullptr);
   virtual ~MainWindow();
 
  private:

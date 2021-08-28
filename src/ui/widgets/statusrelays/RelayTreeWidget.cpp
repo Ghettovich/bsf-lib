@@ -4,18 +4,15 @@
 
 using namespace appservice;
 
-RelayTreeWidget::RelayTreeWidget(std::shared_ptr<BrokerAppService> &_brokerAppService) :
-    ui(new Ui::RelayTreeWidget), brokerAppService(_brokerAppService) {
+RelayTreeWidget::RelayTreeWidget(std::shared_ptr<IODeviceAppService> &_deviceAppService) :
+    ui(new Ui::RelayTreeWidget), deviceAppService(_deviceAppService) {
   ui->setupUi(this);
 
   initForm();
-
-  connect(brokerAppService.get(), &BrokerAppService::updateDevicesWithState,
-          this, &RelayTreeWidget::onUpdateIODevices);
 }
 
 void RelayTreeWidget::initForm() {
-  auto deviceList = brokerAppService->findAll(IODeviceType::RELAY);
+  auto deviceList = deviceAppService->findAll(IODeviceType::RELAY);
 
   for (const auto &device :deviceList) {
     auto listWidgetItem = new QListWidgetItem(materialRegular.boltIcon(Qt::red), device->getDescription());
@@ -24,7 +21,7 @@ void RelayTreeWidget::initForm() {
   }
 }
 
-void RelayTreeWidget::onUpdateIODevices(const QVector<IODevice *> &iodeviceList) {
+void RelayTreeWidget::onUpdateIODevices(const QList<IODevice *> &iodeviceList) {
   for (int i = 0; i < ui->listWidget->count(); i++) {
     const auto treeWidgetItem = ui->listWidget->item(i);
     QVariant id = treeWidgetItem->data(Qt::UserRole);

@@ -13,8 +13,8 @@ GroupBoxBinLoadDrop::GroupBoxBinLoadDrop(std::shared_ptr<BrokerAppService> &_bro
     ui(new Ui::GroupBoxBinLoadDrop), brokerAppService(_brokerAppService), QWidget(parent) {
   ui->setupUi(this);
 
-  connect(brokerAppService.get(), &appservice::BrokerAppService::updateDevicesWithState,
-          this, &GroupBoxBinLoadDrop::onUpdateIODevices);
+//  connect(brokerAppService.get(), &appservice::BrokerAppService::updateDevicesWithState,
+//          this, &GroupBoxBinLoadDrop::onUpdateIODevices);
 
   auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
   settings->beginGroup("relays");
@@ -86,7 +86,7 @@ void GroupBoxBinLoadDrop::onClickPushButtonBinDrop() {
   brokerAppService->toggleRelay(relayBinDrop->getId());
 }
 
-void GroupBoxBinLoadDrop::onUpdateIODevices(const QVector<IODevice *> &devices) {
+void GroupBoxBinLoadDrop::onUpdateIODevices(const QList<IODevice *> &devices) {
   for (auto iodevice : devices) {
     if (iodevice->getId() == proximityBinDrop->getId()) {
       onChangeProximity(iodevice);
