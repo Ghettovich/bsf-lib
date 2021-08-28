@@ -46,8 +46,6 @@ void Experimental::onIODeviceStateChanged(int deviceId, bool on) {
   if (ui->labelBinLoadDetected->property("binload").toInt() == deviceId) {
     ui->labelBinLoadDetected->updateProximityStatus(on);
   }
-
-  qDebug() << "updated onIODeviceStateChanged called in experimental.";
 }
 QList<QWidget *> Experimental::deviceWidgets() {
   return QList<QWidget *>()

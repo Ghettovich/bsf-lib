@@ -17,11 +17,15 @@ class appservice::IODeviceAppService : public QObject {
  public:
   explicit IODeviceAppService(std::shared_ptr<service::BrokerService> &brokerService,
                               std::shared_ptr<IODeviceService> &deviceService,
-                              std::shared_ptr<StateService> &stateService,
                               QObject *parent = nullptr);
+
+  /// Find a device with a particular @deviceId
   std::shared_ptr<IODevice> findOne(int id);
 
+  /// Get a list of all present devices.
   QList<std::shared_ptr<IODevice>> findAll();
+
+  /// Get a list of all present devices with a given @deviceType
   QList<std::shared_ptr<IODevice>> findAll(IODeviceType::IO_DEVICE_TYPE type);
 
  public slots:
@@ -30,10 +34,13 @@ class appservice::IODeviceAppService : public QObject {
  private:
   std::shared_ptr<service::BrokerService> brokerService;
   std::shared_ptr<IODeviceService> deviceService;
-  std::shared_ptr<StateService> stateService;
 
  signals:
+  /// Emit a signal that a device has changed and their state.
+  /// Could either mean from HIGH to LOW or LOW to HIGH.
   void updateIODeviceState(int deviceId, bool on);
+
+  /// Emit a signal that the weight of a scale got updated.
   void updateScale(int deviceId, bool on, int recipeId, int componentId, int weight);
 };
 

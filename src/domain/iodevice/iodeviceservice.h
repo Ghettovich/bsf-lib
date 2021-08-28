@@ -22,12 +22,18 @@ class IODeviceService : public QObject {
                            std::shared_ptr<service::BrokerService> &brokerService,
                            QObject *parent = nullptr);
 
-  std::shared_ptr<IODevice> findDevice(int id);
+  std::shared_ptr<IODevice> findDevice(int deviceId);
   QList<std::shared_ptr<IODevice>> findAllDevices();
   QList<std::shared_ptr<IODevice>> findAllDevices(IODeviceType::IO_DEVICE_TYPE deviceType);
 
  public slots:
+
+  /// Update a device with a given @state.
+  /// Depending on the device both LOW and HIGH could mean on.
+  /// If a proximity (Pull-up) reports LOW its actually on. And, if a scale (digital) reports HIGH it is also on.
   void onUpdateIODeviceState(int deviceId, IODevice::IO_DEVICE_HIGH_LOW state);
+
+ /// Update a scale device and their weight.
   void onUpdateScaleDevice(int deviceId, IODevice::IO_DEVICE_HIGH_LOW state, int recipeId, int componentId, int weight);
 
  private:

@@ -18,7 +18,7 @@ PavementController::PavementController(QObject *parent) : QObject(parent) {
   auto stateService = std::make_shared<StateService>(brokerService, deviceService);
 
   brokerAppService = std::make_shared<BrokerAppService>(brokerService, stateService);
-  deviceAppService = std::make_shared<IODeviceAppService>(brokerService, deviceService, stateService);
+  deviceAppService = std::make_shared<IODeviceAppService>(brokerService, deviceService);
 
   qDebug() << "service count = " << deviceService.use_count();
 

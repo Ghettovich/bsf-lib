@@ -4,9 +4,8 @@ using namespace appservice;
 
 IODeviceAppService::IODeviceAppService(std::shared_ptr<service::BrokerService> &_brokerService,
                                        std::shared_ptr<IODeviceService> &_deviceService,
-                                       std::shared_ptr<StateService> &_stateService,
                                        QObject *parent) :
-    brokerService(_brokerService), deviceService(_deviceService), stateService(_stateService), QObject(parent) {
+    brokerService(_brokerService), deviceService(_deviceService), QObject(parent) {
 
   connect(deviceService.get(), &IODeviceService::stateChangdIODevice, [=](int deviceId, bool on) {
     emit updateIODeviceState(deviceId, on);
