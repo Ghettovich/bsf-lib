@@ -16,11 +16,11 @@ class IODeviceRepository : public QObject {
 
  public:
   explicit IODeviceRepository(std::shared_ptr<service::DatabaseService> &databaseService, QObject *parent);
-  QVector<IODevice *> findAllDevices();
+  QMap<int, std::shared_ptr<IODevice>> findAllDevices();
 
  private:
   std::shared_ptr<service::DatabaseService> databaseService;
-  IODevice *createDeviceFromQuery(QSqlQuery &query, int deviceTypeId);
+  std::shared_ptr<IODevice> createDeviceFromQuery(QSqlQuery &query, int deviceTypeId);
 };
 
 #endif //BSF_IODEVICEREPO_H

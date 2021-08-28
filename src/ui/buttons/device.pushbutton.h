@@ -10,7 +10,6 @@ class DevicePushButton : public QPushButton {
 
  public:
   explicit DevicePushButton(QWidget *parent = nullptr);
-  void setDeviceId(int id);
   virtual void updateButtonState(bool on) = 0;
 
  protected:

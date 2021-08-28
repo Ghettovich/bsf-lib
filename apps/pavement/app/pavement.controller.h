@@ -5,6 +5,9 @@
 #include <QtWidgets/QLayout>
 #include <QtWidgets/QStackedWidget>
 
+#include <appservice.iodevices/iodevice.appservice.h>
+#include <appservice.broker/brokerappservice.h>
+
 class PavementController : public QObject {
  Q_OBJECT
 
@@ -15,7 +18,8 @@ class PavementController : public QObject {
 
  private:
   QStackedWidget *stackedWidget = nullptr;
-
+  std::shared_ptr<appservice::IODeviceAppService> deviceAppService;
+  std::shared_ptr<appservice::BrokerAppService> brokerAppService;
 };
 
 #endif //CONTROLLER_PAVEMENTCONTROLLER_H_

@@ -34,4 +34,7 @@ void WeightSensor::setComponentId(int _componentId) {
 void WeightSensor::setCurrentWeight(int _currentWeight) {
   currentWeight = _currentWeight;
 }
+IODevice *WeightSensor::clone() const {
+  return new WeightSensor(*this);
+}
 

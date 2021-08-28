@@ -9,3 +9,7 @@ DetectionSensor::DetectionSensor(int detectionSensorId, IODevice::IO_DEVICE_HIGH
 bool DetectionSensor::isDeviceOn() const {
   return deviceState == LOW;
 }
+
+IODevice *DetectionSensor::clone() const {
+  return new DetectionSensor(*this);
+}

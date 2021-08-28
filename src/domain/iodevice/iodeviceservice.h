@@ -6,13 +6,13 @@
 #include "iodevicerepo.h"
 
 #include <QObject>
+#include <QMap>
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonObject>
 
 #include <database/DatabaseService.h>
 #include <broker/BrokerService.h>
-
 
 class IODeviceService : public QObject {
  Q_OBJECT
@@ -21,38 +21,23 @@ class IODeviceService : public QObject {
   explicit IODeviceService(std::shared_ptr<service::DatabaseService> databaseService,
                            std::shared_ptr<service::BrokerService> &brokerService,
                            QObject *parent = nullptr);
-  QVector<IODevice *> findAllDevices();
-  QVector<IODevice *> findAllDevices(IODeviceType::IO_DEVICE_TYPE deviceType);
 
-  void createDeviceStateSubscriptions();
+  std::shared_ptr<IODevice> findDevice(int id);
+  QList<std::shared_ptr<IODevice>> findAllDevices();
+  QList<std::shared_ptr<IODevice>> findAllDevices(IODeviceType::IO_DEVICE_TYPE deviceType);
 
  public slots:
-  void onNewIODeviceStates(const QByteArray &message, const QString &topic);
+  void onUpdateIODeviceState(int deviceId, IODevice::IO_DEVICE_HIGH_LOW state);
+  void onUpdateScaleDevice(int deviceId, IODevice::IO_DEVICE_HIGH_LOW state, int recipeId, int componentId, int weight);
 
  private:
-  const QString proximityLiftTopic = "/proximity/lift";
-  const QString relayStatesTopic = "/relay/states";
-  const QString recipeDataTopic = "/recipe/data";
-
-  QVector<IODevice *> devices;
+  QMap<int, std::shared_ptr<IODevice>> deviceMap;
   std::shared_ptr<IODeviceRepository> deviceRepository;
   std::shared_ptr<service::BrokerService> brokerService;
 
-  void updateDevices(IODevice *iodevice);
-  void updateDevices(const QVector<IODevice *>& devices);
-  void parseRelayStates(const QByteArray &message);
-  void parseProximityStates(const QByteArray &message);
-  void parseRecipeData(const QByteArray &message);
-
-  QVector<IODevice *> parseIODevices(const QByteArray &payload);
-  static bool validateJsonDocument(QJsonDocument &);
-  QVector<IODevice *> addProximitiesToArray(const QJsonArray &jsonArray);
-  QVector<IODevice *> addRelaysToArray(const QJsonArray &jsonArray);
-
  signals:
-  void updateRelayDevices(const QVector<IODevice *> &devices);
-  void updateProximityDevices(const QVector<IODevice *> &devices);
-  void updateScale(IODevice *device);
+  void stateChangdIODevice(int deviceId, bool on);
+  void scaleChanged(int deviceId, bool on, int recipeId, int componentId, int weight);
 };
 
 #endif //BSF_IODEVICESERVICE_H_

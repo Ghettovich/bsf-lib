@@ -43,7 +43,7 @@ IODeviceRepository::IODeviceRepository(std::shared_ptr<service::DatabaseService>
   databaseService->runScripts(scripts);
 }
 
-QVector<IODevice *> IODeviceRepository::findAllDevices() {
+QMap<int, std::shared_ptr<IODevice>> IODeviceRepository::findAllDevices() {
   QSqlDatabase db = databaseService->openDatabase();
   QSqlQuery query(db);
 
@@ -57,29 +57,30 @@ QVector<IODevice *> IODeviceRepository::findAllDevices() {
     throw std::logic_error("Unknown Exception");
   }
 
-  QVector<IODevice *> devices;
+  QMap<int, std::shared_ptr<IODevice>> devices;
 
   while (query.next()) {
-    devices.append(createDeviceFromQuery(query, query.value("io_dev_type_id").toInt()));
+    devices.insert(query.value("io_id").toInt(),
+                   createDeviceFromQuery(query, query.value("io_dev_type_id").toInt()));
   }
 
   return devices;
 }
 
-IODevice * IODeviceRepository::createDeviceFromQuery(QSqlQuery &query, int deviceTypeId) {
-  IODevice *device = nullptr;
+std::shared_ptr<IODevice> IODeviceRepository::createDeviceFromQuery(QSqlQuery &query, int deviceTypeId) {
+  std::shared_ptr<IODevice> device = nullptr;
 
   switch (deviceTypeId) {
     case (int)IODeviceType::RELAY :
-      device = new Relay(query.value("io_id").toInt(), IODevice::HIGH);
+      device = std::make_shared<Relay>(query.value("io_id").toInt(), IODevice::HIGH);
       device->setDeviceType(IODeviceType::RELAY);
       break;
     case (int)IODeviceType::WEIGHTSENSOR:
-      device = new WeightSensor(query.value("io_id").toInt(), IODevice::LOW);
+      device = std::make_shared<WeightSensor>(query.value("io_id").toInt(), IODevice::LOW);
       device->setDeviceType(IODeviceType::WEIGHTSENSOR);
       break;
     case (int)IODeviceType::DETECTIONSENSOR:
-      device = new DetectionSensor(query.value("io_id").toInt(), IODevice::HIGH);
+      device = std::make_shared<DetectionSensor>(query.value("io_id").toInt(), IODevice::HIGH);
       device->setDeviceType(IODeviceType::DETECTIONSENSOR);
       break;
     default:

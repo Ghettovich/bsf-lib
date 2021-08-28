@@ -8,6 +8,7 @@ class DetectionSensor : public IODevice {
  public:
   DetectionSensor(int detectionSensorId, IO_DEVICE_HIGH_LOW deviceState);
   bool isDeviceOn() const override;
+  IODevice *clone() const override;
 };
 
 #endif //BSF_DETECTIONSENSOR_H

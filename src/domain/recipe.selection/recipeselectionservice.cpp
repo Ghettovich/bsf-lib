@@ -7,8 +7,8 @@ RecipeSelectionService::RecipeSelectionService(std::shared_ptr<IODeviceService> 
     deviceService(_deviceService), recipeService(_recipeService), QObject(parent) {
   recipeSelection = std::make_shared<RecipeSelection>();
 
-  connect(deviceService.get(), &IODeviceService::updateScale,
-          this, &RecipeSelectionService::onUpdateRecipeSelection);
+//  connect(deviceService.get(), &IODeviceService::updateScale,
+//          this, &RecipeSelectionService::onUpdateRecipeSelection);
 }
 void RecipeSelectionService::onUpdateRecipeSelection(IODevice *device) {
   auto scale = dynamic_cast<WeightSensor *>(device);

@@ -4,6 +4,7 @@ find_package(Qt5 COMPONENTS Core REQUIRED)
 # HEADER LIST
 set(HEADER_LIST
         appservice.broker/brokerappservice.h
+        appservice.iodevices/iodevice.appservice.h
         appservice.prepare.recipe/preparerecipeappservice.h
         appservice.mix.recipe/mixrecipeappservice.h
         )
@@ -11,6 +12,7 @@ set(HEADER_LIST
 # ADD LIBRARY
 add_library(appservice SHARED
         appservice.broker/brokerappservice.cpp
+        appservice.iodevices/iodevice.appservice.cpp
         appservice.prepare.recipe/preparerecipeappservice.cpp
         appservice.mix.recipe/mixrecipeappservice.cpp
         # HEADERS

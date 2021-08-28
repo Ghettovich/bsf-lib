@@ -12,8 +12,6 @@ if (Qt5Widgets_FOUND)
 
     # HEADER LIST
     set(HEADER_LIST
-            actionarduinorepo.h
-            arduinorepo.h
             iodevicerepo.h
             logrepo.h
             reciperepo.h
@@ -22,8 +20,6 @@ if (Qt5Widgets_FOUND)
 
     # TARGET SOURCES
     target_sources(bsf PRIVATE
-            actionarduinorepo.cpp
-            arduinorepo.cpp
             iodevicerepo.cpp
             logrepo.cpp
             reciperepo.cpp

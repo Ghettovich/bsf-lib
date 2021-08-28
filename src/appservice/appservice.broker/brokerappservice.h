@@ -16,7 +16,6 @@ class appservice::BrokerAppService : public QObject {
 
  public:
   explicit BrokerAppService(std::shared_ptr<service::BrokerService> &brokerService,
-                            std::shared_ptr<IODeviceService> &deviceService,
                             std::shared_ptr<StateService> &stateService,
                             QObject *parent = nullptr);
 
@@ -33,20 +32,12 @@ class appservice::BrokerAppService : public QObject {
   /// @targetWeight is the amount of material needed to fulfill the recipe.
   void configureRecipe(int recipeId, int componentId, int targetWeight);
 
-  /// Fetch all devices from repository
-  QVector<IODevice *> findAll();
-
-  QVector<IODevice *> findAll(IODeviceType::IO_DEVICE_TYPE type);
-
  private:
   std::shared_ptr<service::BrokerService> brokerService;
-  std::shared_ptr<IODeviceService> deviceService;
   std::shared_ptr<StateService> stateService;
 
  signals:
   void connectedToHost();
-  void updateDeviceWithState(IODevice *device);
-  void updateDevicesWithState(const QVector<IODevice *> &iodeviceList);
 };
 
 #endif //BSF_BROKERAPPSERVICE_H_

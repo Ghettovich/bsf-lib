@@ -16,6 +16,7 @@ if (Qt5Widgets_FOUND)
             recipe/recipeservice.h
             recipe.selection/recipeselection.h
             recipe.selection/recipeselectionservice.h
+            state/stateservice.h
             iodevice/iodevice.h
             iodevice/detectionsensor.h
             iodevice/relay.h
@@ -38,6 +39,7 @@ if (Qt5Widgets_FOUND)
             recipe/recipeservice.cpp
             recipe.selection/recipeselection.cpp
             recipe.selection/recipeselectionservice.cpp
+            state/stateservice.cpp
             iodevice/iodevice.cpp
             iodevice/detectionsensor.cpp
             iodevice/relay.cpp

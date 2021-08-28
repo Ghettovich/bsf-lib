@@ -2,12 +2,9 @@
 #define WEIGHTCENSOR_H
 
 #include "iodevice.h"
-#include <QObject>
-#include <QMetaType>
 #include <component/component.h>
 
 class WeightSensor : public IODevice {
- Q_GADGET
 
  public:
   explicit WeightSensor(int weightSensorId = 0, IO_DEVICE_HIGH_LOW state = LOW);
@@ -18,7 +15,9 @@ class WeightSensor : public IODevice {
   void setComponentId(int componentId);
   int getCurrentWeight() const;
   void setCurrentWeight(int currentWeight);
+
   bool isDeviceOn() const override;
+  IODevice *clone() const override;
 
  private:
   int recipeId = 0;
