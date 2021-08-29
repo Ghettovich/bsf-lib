@@ -50,11 +50,11 @@ void GroupBoxLiftUpDown::init() {
 }
 
 void GroupBoxLiftUpDown::onClickPushButtonLiftDown() {
-  brokerAppService->toggleRelay(relayBinLiftDown->getId());
+  brokerAppService->onToggleRelay(relayBinLiftDown->getId());
 }
 
 void GroupBoxLiftUpDown::onClickPushButtonLiftUp() {
-  brokerAppService->toggleRelay(relayBinLiftUp->getId());
+  brokerAppService->onToggleRelay(relayBinLiftUp->getId());
 }
 
 void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel() {

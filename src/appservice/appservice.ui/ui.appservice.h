@@ -23,6 +23,9 @@ class appservice::UiAppService : public QObject {
 
  private:
   std::shared_ptr<service::UiService> uiService;
+
+ signals:
+  void toggleRelay(int relayId);
 };
 
 #endif //BSF_LIB_SRC_APPSERVICE_UI_APPSERVICE_H_

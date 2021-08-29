@@ -29,6 +29,9 @@ PavementController::PavementController(QObject *parent) : QObject(parent) {
 
   connect(deviceAppService.get(), &IODeviceAppService::updateIODeviceState,
           uiAppService.get(), &UiAppService::onUpdateWidget);
+
+  connect(uiAppService.get(), &UiAppService::toggleRelay,
+          brokerAppService.get(), &BrokerAppService::onToggleRelay);
 }
 
 void PavementController::createStackedWidget(QLayout *layout) {

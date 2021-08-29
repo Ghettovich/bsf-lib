@@ -79,11 +79,11 @@ void GroupBoxBinLoadDrop::setBinDropButtonState() {
 }
 
 void GroupBoxBinLoadDrop::onClickPushButtonBinLoad() {
-  brokerAppService->toggleRelay(relayBinLoad->getId());
+  brokerAppService->onToggleRelay(relayBinLoad->getId());
 }
 
 void GroupBoxBinLoadDrop::onClickPushButtonBinDrop() {
-  brokerAppService->toggleRelay(relayBinDrop->getId());
+  brokerAppService->onToggleRelay(relayBinDrop->getId());
 }
 
 void GroupBoxBinLoadDrop::onUpdateIODevices(const QList<IODevice *> &devices) {

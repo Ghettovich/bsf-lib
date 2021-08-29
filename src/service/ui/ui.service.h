@@ -19,12 +19,16 @@ class service::UiService : public QObject {
 
  public slots:
   void onUpdateWidgetState(int deviceId, bool on);
+  void onToggleRelay(int relayId);
 
  private:
-  //QMap<int, QWidget *> widgetMap;
   QMap<int, SensorWidget *> widgetMap;
+  QList<QMetaObject::Connection> connections;
 
   void addDeviceWidget(int id, QWidget *widget);
+
+ signals:
+  void toggleRelay(int relayId);
 };
 
 #endif //BSF_LIB_SRC_SERVICE_UI_UI_SERVICE_H_

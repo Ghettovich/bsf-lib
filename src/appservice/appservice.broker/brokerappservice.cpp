@@ -13,16 +13,16 @@ BrokerAppService::BrokerAppService(std::shared_ptr<service::BrokerService> &_bro
   });
 
   connect(this, &BrokerAppService::connectedToHost,
-          this, &BrokerAppService::createDeviceStateSubscriptions);
+          this, &BrokerAppService::onCreateDeviceStateSubscriptions);
 }
 
 void BrokerAppService::connectToHost() {
   brokerService->connectToHost();
 }
-void BrokerAppService::createDeviceStateSubscriptions() {
+void BrokerAppService::onCreateDeviceStateSubscriptions() {
   stateService->createDeviceStateSubscriptions();
 }
-void BrokerAppService::toggleRelay(int id) {
+void BrokerAppService::onToggleRelay(int id) {
   brokerService->toggleRelay(id);
 }
 void BrokerAppService::configureRecipe(int recipeId, int componentId, int targetWeight) {

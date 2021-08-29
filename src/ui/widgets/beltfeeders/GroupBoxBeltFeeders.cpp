@@ -133,25 +133,25 @@ void GroupBoxBeltFeeders::setFeeder2ReverseButtonState() {
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonBeltForward() {
-  brokerAppService->toggleRelay(relayBeltForward->getId());
+  brokerAppService->onToggleRelay(relayBeltForward->getId());
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonBeltReverse() {
-  brokerAppService->toggleRelay(relayBeltReverse->getId());
+  brokerAppService->onToggleRelay(relayBeltReverse->getId());
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonFeeder1Forward() {
-  brokerAppService->toggleRelay(relayFeeder1Foward->getId());
+  brokerAppService->onToggleRelay(relayFeeder1Foward->getId());
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonFeeder1Reverse() {
-  brokerAppService->toggleRelay(relayFeeder1Reverse->getId());
+  brokerAppService->onToggleRelay(relayFeeder1Reverse->getId());
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonFeeder2Forward() {
-  brokerAppService->toggleRelay(relayFeeder2Foward->getId());
+  brokerAppService->onToggleRelay(relayFeeder2Foward->getId());
 }
 
 void GroupBoxBeltFeeders::onClickPushButtonFeeder2Reverse() {
-  brokerAppService->toggleRelay(relayFeeder2Reverse->getId());
+  brokerAppService->onToggleRelay(relayFeeder2Reverse->getId());
 }

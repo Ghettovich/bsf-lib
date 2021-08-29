@@ -25,10 +25,8 @@ MainWindow::MainWindow(std::shared_ptr<PrepareRecipeAppService> &_prepareRecipeA
   ui->setupUi(this);
 
   connect(brokerAppService.get(), &BrokerAppService::connectedToHost, [=]() {
-    brokerAppService->createDeviceStateSubscriptions();
+    brokerAppService->onCreateDeviceStateSubscriptions();
   });
-
-  brokerAppService->findAll();
 }
 
 MainWindow::~MainWindow() {
