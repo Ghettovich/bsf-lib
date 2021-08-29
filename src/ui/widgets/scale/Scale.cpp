@@ -36,11 +36,11 @@ Scale::~Scale() {
 }
 
 void Scale::init() {
-  ui->pushButtonTareScale->setIcon(material.syncProblemIcon());
+  //ui->pushButtonTareScale->setIcon(material.syncProblemIcon());
   connect(ui->pushButtonTareScale, &QPushButton::clicked, this, &Scale::onClickPushButtonTare);
 
   ui->pushButtonConfirmRecipe->setDisabled(true);
-  ui->pushButtonConfirmRecipe->setIcon(material.updateDisabledIcon());
+  //ui->pushButtonConfirmRecipe->setIcon(material.updateDisabledIcon());
   connect(ui->pushButtonConfirmRecipe, &QPushButton::clicked, this, &Scale::onClickPushButtonConfirmRecipe);
 
   connect(this, &Scale::scaleTimeOutOccured,
@@ -160,10 +160,10 @@ void Scale::setQLcdNumberDisplay() {
 
 void Scale::setPushButtonConfirmRecipe() {
   if (configuredRecipe.isRecipeTargetMet()) {
-    ui->pushButtonConfirmRecipe->setIcon(material.updateIcon());
+    //ui->pushButtonConfirmRecipe->setIcon(material.updateIcon());
     ui->pushButtonConfirmRecipe->setDisabled(false);
   } else {
-    ui->pushButtonConfirmRecipe->setIcon(material.updateDisabledIcon());
+    //ui->pushButtonConfirmRecipe->setIcon(material.updateDisabledIcon());
     ui->pushButtonConfirmRecipe->setDisabled(true);
   }
 }
@@ -201,12 +201,12 @@ void Scale::onClickPushButtonTare() {
                                   QMessageBox::Yes | QMessageBox::Cancel);
     if (reply == QMessageBox::Yes) {
       //m_client->publishTareScale(false);
-      ui->pushButtonTareScale->setIcon(material.syncIcon());
+      //ui->pushButtonTareScale->setIcon(material.syncIcon());
     }
   } else {
     isTareActive = false;
     //m_client->publishTareScale(true);
-    ui->pushButtonTareScale->setIcon(material.syncProblemIcon());
+    //ui->pushButtonTareScale->setIcon(material.syncProblemIcon());
 
     emit scaleInTareMode(false);
   }

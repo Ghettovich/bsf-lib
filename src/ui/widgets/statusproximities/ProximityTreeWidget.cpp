@@ -16,9 +16,9 @@ void ProximityTreeWidget::initForm() {
   auto deviceList = deviceAppService->findAll(IODeviceType::DETECTIONSENSOR);
 
   for (const auto &device :deviceList) {
-    auto listWidgetItem = new QListWidgetItem(materialRegular.visibilityOffIcon(), device->getDescription());
-    listWidgetItem->setData(Qt::UserRole, device->getId());
-    ui->listWidget->addItem(listWidgetItem);
+//    auto listWidgetItem = new QListWidgetItem(materialRegular.visibilityOffIcon(), device->getDescription());
+//    listWidgetItem->setData(Qt::UserRole, device->getId());
+//    ui->listWidget->addItem(listWidgetItem);
   }
 }
 
@@ -31,11 +31,11 @@ void ProximityTreeWidget::onUpdateIODevices(const QList<IODevice *> &iodeviceLis
     for (const auto iodevice : iodeviceList) {
       if (iodevice->getId() == id.toInt()) {
 
-        if (iodevice->isDeviceOn()) {
-          listWidgetItem->setIcon(materialRegular.visibilityIcon());
-        } else {
-          listWidgetItem->setIcon(materialRegular.visibilityOffIcon());
-        }
+//        if (iodevice->isDeviceOn()) {
+//          listWidgetItem->setIcon(materialRegular.visibilityIcon());
+//        } else {
+//          listWidgetItem->setIcon(materialRegular.visibilityOffIcon());
+//        }
 
         break;
       }

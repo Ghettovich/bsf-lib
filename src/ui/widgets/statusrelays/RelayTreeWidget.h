@@ -4,7 +4,6 @@
 #include <QtWidgets/QWidget>
 
 #include <iodevice/iodevice.h>
-#include <fonts/MaterialRegular.h>
 #include <appservice.iodevices/iodevice.appservice.h>
 
 namespace Ui {
@@ -23,7 +22,6 @@ class RelayTreeWidget : public QWidget {
  private:
   std::shared_ptr<appservice::IODeviceAppService> deviceAppService;
   Ui::RelayTreeWidget *ui = nullptr;
-  MaterialRegular materialRegular;
 
   void initForm();
 };

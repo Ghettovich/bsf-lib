@@ -7,7 +7,6 @@
 #include <recipe/recipe.h>
 #include <iodevice/iodevice.h>
 
-#include <fonts/MaterialRegular.h>
 #include <appservice.broker/brokerappservice.h>
 #include <appservice.prepare.recipe/preparerecipeappservice.h>
 
@@ -36,7 +35,6 @@ class Scale : public QWidget {
 
   std::unique_ptr<IODevice> weightSensor;
   QTableWidgetItem *activeComponentTableWidget = nullptr;
-  MaterialRegular material;
   Recipe configuredRecipe = Recipe(0);
   Component activeComponent = Component(0);
   bool isTareActive = false;

@@ -51,31 +51,31 @@ void GroupBoxBinLoadDrop::init() {
 }
 
 void GroupBoxBinLoadDrop::setProximityBinDropLabelStatus() {
-  if (proximityBinDrop->isDeviceOn()) {
-    ui->labelProximityBinDropStatus->setPixmap(materialRegular.visibilityIcon(Qt::lightGray).pixmap(48, 48));
-  } else {
-    ui->labelProximityBinDropStatus->setPixmap(materialRegular.visibilityOffIcon(Qt::darkGray).pixmap(48, 48));
-  }
+//  if (proximityBinDrop->isDeviceOn()) {
+//    ui->labelProximityBinDropStatus->setPixmap(materialRegular.visibilityIcon(Qt::lightGray).pixmap(48, 48));
+//  } else {
+//    ui->labelProximityBinDropStatus->setPixmap(materialRegular.visibilityOffIcon(Qt::darkGray).pixmap(48, 48));
+//  }
 }
 
 void GroupBoxBinLoadDrop::setBinLoadButtonState() {
-  if (!relayBinLoad->isDeviceOn()) {
-    ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::green));
-    ui->pushButtonBinLoadRelay->setText("LOAD ON");
-  } else {
-    ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::red));
-    ui->pushButtonBinLoadRelay->setText("LOAD OFF");
-  }
+//  if (!relayBinLoad->isDeviceOn()) {
+//    ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::green));
+//    ui->pushButtonBinLoadRelay->setText("LOAD ON");
+//  } else {
+//    ui->pushButtonBinLoadRelay->setIcon(materialRegular.boltIcon(Qt::red));
+//    ui->pushButtonBinLoadRelay->setText("LOAD OFF");
+//  }
 }
 
 void GroupBoxBinLoadDrop::setBinDropButtonState() {
-  if (!relayBinDrop->isDeviceOn()) {
-    ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::green));
-    ui->pushButtonBinDropRelay->setText("DROP ON");
-  } else {
-    ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::red));
-    ui->pushButtonBinDropRelay->setText("DROP OFF");
-  }
+//  if (!relayBinDrop->isDeviceOn()) {
+//    ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::green));
+//    ui->pushButtonBinDropRelay->setText("DROP ON");
+//  } else {
+//    ui->pushButtonBinDropRelay->setIcon(materialRegular.boltIcon(Qt::red));
+//    ui->pushButtonBinDropRelay->setText("DROP OFF");
+//  }
 }
 
 void GroupBoxBinLoadDrop::onClickPushButtonBinLoad() {

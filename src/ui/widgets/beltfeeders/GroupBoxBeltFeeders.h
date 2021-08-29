@@ -8,7 +8,6 @@ class GroupBoxBeltFeeders;
 #include <QtWidgets/QWidget>
 
 #include <iodevice/iodevice.h>
-#include <fonts/MaterialRegular.h>
 #include <appservice.broker/brokerappservice.h>
 
 class GroupBoxBeltFeeders : public QWidget {
@@ -24,7 +23,6 @@ class GroupBoxBeltFeeders : public QWidget {
  private:
   std::shared_ptr<appservice::BrokerAppService> brokerAppService;
   Ui::GroupBoxBeltFeeders *ui = nullptr;
-  MaterialRegular materialRegular;
 
   std::unique_ptr<IODevice> relayBeltForward;
   std::unique_ptr<IODevice> relayBeltReverse;

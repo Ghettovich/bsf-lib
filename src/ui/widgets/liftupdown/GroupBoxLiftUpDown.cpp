@@ -58,31 +58,31 @@ void GroupBoxLiftUpDown::onClickPushButtonLiftUp() {
 }
 
 void GroupBoxLiftUpDown::setProximityBinLoadStatusLabel() {
-  if (proximityBinLoad->isDeviceOn()) {
-    ui->labelProximityBinLoadStatus->setPixmap(materialRegular.visibilityIcon(Qt::lightGray).pixmap(48, 48));
-  } else {
-    ui->labelProximityBinLoadStatus->setPixmap(materialRegular.visibilityOffIcon(Qt::darkGray).pixmap(48, 48));
-  }
+//  if (proximityBinLoad->isDeviceOn()) {
+//    ui->labelProximityBinLoadStatus->setPixmap(materialRegular.visibilityIcon(Qt::lightGray).pixmap(48, 48));
+//  } else {
+//    ui->labelProximityBinLoadStatus->setPixmap(materialRegular.visibilityOffIcon(Qt::darkGray).pixmap(48, 48));
+//  }
 }
 
 void GroupBoxLiftUpDown::setLiftUpButtonState() {
-  if (!relayBinLiftUp->isDeviceOn()) {
-    ui->pushButtonLiftUp->setText("UP ON");
-    ui->pushButtonLiftUp->setIcon(materialRegular.boltIcon(Qt::green));
-  } else {
-    ui->pushButtonLiftUp->setText("UP OFF");
-    ui->pushButtonLiftUp->setIcon(materialRegular.boltIcon(Qt::red));
-  }
+//  if (!relayBinLiftUp->isDeviceOn()) {
+//    ui->pushButtonLiftUp->setText("UP ON");
+//    ui->pushButtonLiftUp->setIcon(materialRegular.boltIcon(Qt::green));
+//  } else {
+//    ui->pushButtonLiftUp->setText("UP OFF");
+//    ui->pushButtonLiftUp->setIcon(materialRegular.boltIcon(Qt::red));
+//  }
 }
 
 void GroupBoxLiftUpDown::setLiftDownButtonState() {
-  if (!relayBinLiftDown->isDeviceOn()) {
-    ui->pushButtonLiftDown->setText("DOWN ON");
-    ui->pushButtonLiftDown->setIcon(materialRegular.boltIcon(Qt::green));
-  } else {
-    ui->pushButtonLiftDown->setText("DOWN OFF");
-    ui->pushButtonLiftDown->setIcon(materialRegular.boltIcon(Qt::red));
-  }
+//  if (!relayBinLiftDown->isDeviceOn()) {
+//    ui->pushButtonLiftDown->setText("DOWN ON");
+//    ui->pushButtonLiftDown->setIcon(materialRegular.boltIcon(Qt::green));
+//  } else {
+//    ui->pushButtonLiftDown->setText("DOWN OFF");
+//    ui->pushButtonLiftDown->setIcon(materialRegular.boltIcon(Qt::red));
+//  }
 }
 
 void GroupBoxLiftUpDown::onUpdateIODevices(const QList<IODevice *> &devices) {

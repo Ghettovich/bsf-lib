@@ -4,7 +4,6 @@
 #include <QtWidgets/QWidget>
 
 #include <iodevice/iodevice.h>
-#include <fonts/MaterialRegular.h>
 #include <appservice.broker/brokerappservice.h>
 
 namespace Ui {
@@ -26,7 +25,6 @@ class GroupBoxBinLoadDrop : public QWidget {
  private:
   std::shared_ptr<appservice::BrokerAppService> brokerAppService;
   Ui::GroupBoxBinLoadDrop *ui = nullptr;
-  MaterialRegular materialRegular;
 
   std::unique_ptr<IODevice> relayBinLoad;
   std::unique_ptr<IODevice> relayBinDrop;

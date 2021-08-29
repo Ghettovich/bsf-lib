@@ -11,7 +11,6 @@ class GroupBoxBinRecipeStatus;
 #include <iodevice/iodevice.h>
 #include <recipe/recipe.h>
 #include <component/component.h>
-#include <fonts/MaterialRegular.h>
 #include <appservice.prepare.recipe/preparerecipeappservice.h>
 
 class GroupBoxBinRecipeStatus : public QWidget {

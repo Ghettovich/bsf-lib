@@ -4,7 +4,6 @@
 #include <QtWidgets/QWidget>
 
 #include <iodevice/iodevice.h>
-#include <fonts/MaterialRegular.h>
 #include <appservice.broker/brokerappservice.h>
 
 namespace Ui {
@@ -26,7 +25,6 @@ class GroupBoxLiftUpDown : public QWidget {
  private:
   std::shared_ptr<appservice::BrokerAppService> brokerAppService;
   Ui::GroupBoxLiftUpDown *ui = nullptr;
-  MaterialRegular materialRegular;
 
   std::unique_ptr<IODevice> relayBinLiftUp;
   std::unique_ptr<IODevice> relayBinLiftDown;

@@ -94,40 +94,40 @@ void GroupBoxBeltFeeders::setBeltReverseButtonState() {
 
 void GroupBoxBeltFeeders::setFeeder1ForwardButtonState() {
   if (!relayFeeder1Foward->isDeviceOn()) {
-    ui->pushButtonFeeder1Forward->setIcon(materialRegular.boltIcon(Qt::green));
+    //ui->pushButtonFeeder1Forward->setIcon(materialRegular.boltIcon(Qt::green));
     ui->pushButtonFeeder1Forward->setText("FORWARD ON");
   } else {
-    ui->pushButtonFeeder1Forward->setIcon(materialRegular.boltIcon(Qt::red));
+    //ui->pushButtonFeeder1Forward->setIcon(materialRegular.boltIcon(Qt::red));
     ui->pushButtonFeeder1Forward->setText("FORWARD OFF");
   }
 }
 
 void GroupBoxBeltFeeders::setFeeder1ReverseButtonState() {
   if (!relayFeeder1Reverse->isDeviceOn()) {
-    ui->pushButtonFeeder1Reverse->setIcon(materialRegular.boltIcon(Qt::green));
+    //ui->pushButtonFeeder1Reverse->setIcon(materialRegular.boltIcon(Qt::green));
     ui->pushButtonFeeder1Reverse->setText("REVERSE ON");
   } else {
-    ui->pushButtonFeeder1Reverse->setIcon(materialRegular.boltIcon(Qt::red));
+    //ui->pushButtonFeeder1Reverse->setIcon(materialRegular.boltIcon(Qt::red));
     ui->pushButtonFeeder1Reverse->setText("REVERSE OFF");
   }
 }
 
 void GroupBoxBeltFeeders::setFeeder2ForwardButtonState() {
   if (!relayFeeder2Foward->isDeviceOn()) {
-    ui->pushButtonFeeder2Forward->setIcon(materialRegular.boltIcon(Qt::green));
+    //ui->pushButtonFeeder2Forward->setIcon(materialRegular.boltIcon(Qt::green));
     ui->pushButtonFeeder2Forward->setText("FORWARD ON");
   } else {
-    ui->pushButtonFeeder2Forward->setIcon(materialRegular.boltIcon(Qt::red));
+    //ui->pushButtonFeeder2Forward->setIcon(materialRegular.boltIcon(Qt::red));
     ui->pushButtonFeeder2Forward->setText("FORWARD OFF");
   }
 }
 
 void GroupBoxBeltFeeders::setFeeder2ReverseButtonState() {
   if (!relayFeeder2Reverse->isDeviceOn()) {
-    ui->pushButtonFeeder2Reverse->setIcon(materialRegular.boltIcon(Qt::green));
+    //ui->pushButtonFeeder2Reverse->setIcon(materialRegular.boltIcon(Qt::green));
     ui->pushButtonFeeder2Reverse->setText("REVERSE ON");
   } else {
-    ui->pushButtonFeeder2Reverse->setIcon(materialRegular.boltIcon(Qt::red));
+    //ui->pushButtonFeeder2Reverse->setIcon(materialRegular.boltIcon(Qt::red));
     ui->pushButtonFeeder2Reverse->setText("REVERSE OFF");
   }
 }
