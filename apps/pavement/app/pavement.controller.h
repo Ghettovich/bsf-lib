@@ -7,6 +7,7 @@
 
 #include <appservice.iodevices/iodevice.appservice.h>
 #include <appservice.broker/brokerappservice.h>
+#include <appservice.ui/ui.appservice.h>
 
 class PavementController : public QObject {
  Q_OBJECT
@@ -20,6 +21,7 @@ class PavementController : public QObject {
   QStackedWidget *stackedWidget = nullptr;
   std::shared_ptr<appservice::IODeviceAppService> deviceAppService;
   std::shared_ptr<appservice::BrokerAppService> brokerAppService;
+  std::shared_ptr<appservice::UiAppService> uiAppService;
 };
 
 #endif //CONTROLLER_PAVEMENTCONTROLLER_H_

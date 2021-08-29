@@ -11,14 +11,6 @@ if (Qt5Widgets_FOUND)
 
     # HEADER LIST
     set(HEADER_LIST
-            # BUTTONS
-            buttons/device.pushbutton.h
-            buttons/relay/relay.button.h
-            # FONTS
-            fonts/MaterialRegular.h
-            fonts/QFontIcon.h
-            # LABELS
-            labels/proximity/proximity.label.h
             # SCALE
             widgets/scale/Scale.h
             # STACKED WIDGETS
@@ -35,15 +27,6 @@ if (Qt5Widgets_FOUND)
             )
 
     add_library(ui SHARED
-            # BUTTONS
-            buttons/device.pushbutton.cpp
-            buttons/relay/relay.button.cpp
-            # FONTS
-            resource/theme.qrc
-            fonts/MaterialRegular.cpp
-            fonts/QFontIcon.cpp
-            # LABELS
-            labels/proximity/proximity.label.cpp
             # STACKED WIDGETS
             widgets/home/home.cpp
             widgets/home/home.ui

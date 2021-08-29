@@ -11,6 +11,8 @@ using namespace appservice;
 using namespace service;
 
 PavementController::PavementController(QObject *parent) : QObject(parent) {
+  auto uiService = std::make_shared<UiService>();
+
   auto databaseService = std::make_shared<DatabaseService>();
   auto brokerService = std::make_shared<BrokerService>();
 
@@ -19,22 +21,27 @@ PavementController::PavementController(QObject *parent) : QObject(parent) {
 
   brokerAppService = std::make_shared<BrokerAppService>(brokerService, stateService);
   deviceAppService = std::make_shared<IODeviceAppService>(brokerService, deviceService);
+  uiAppService = std::make_shared<UiAppService>(uiService);
 
   qDebug() << "service count = " << deviceService.use_count();
 
   brokerAppService->connectToHost();
 
-  connect(brokerAppService.get(), &BrokerAppService::connectedToHost, [=]() {
-    brokerAppService->createDeviceStateSubscriptions();
-  });
+  connect(deviceAppService.get(), &IODeviceAppService::updateIODeviceState,
+          uiAppService.get(), &UiAppService::onUpdateWidget);
 }
 
 void PavementController::createStackedWidget(QLayout *layout) {
   stackedWidget = new QStackedWidget();
 
-  stackedWidget->addWidget(new Home(stackedWidget));
+  auto home = new Home(stackedWidget);
+  stackedWidget->addWidget(home);
+
   stackedWidget->addWidget(new QWidget); // ToDo: replace with new mixture
-  stackedWidget->addWidget(new Experimental(deviceAppService, stackedWidget));
+
+  auto experimental = new Experimental(deviceAppService, stackedWidget);
+  stackedWidget->addWidget(experimental);
+  uiAppService->addWidget(experimental->deviceWidgets());
 
   layout->addWidget(stackedWidget);
 }

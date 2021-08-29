@@ -22,15 +22,16 @@ class appservice::BrokerAppService : public QObject {
   /// Connect to broker. Host is defined in configuration file.
   void connectToHost();
 
-  /// Subscribe to broker. Topics hardcoded.
-  void createDeviceStateSubscriptions();
-
   /// Publish message to toggle a relay. @relayId is used to identify the relay.
   void toggleRelay(int relayId);
 
   /// Publish a recipe. @recipeId and @componentId are used to identify the selected recipe.
   /// @targetWeight is the amount of material needed to fulfill the recipe.
   void configureRecipe(int recipeId, int componentId, int targetWeight);
+
+ public slots:
+  /// Subscribe to broker. Topics hardcoded.
+  void createDeviceStateSubscriptions();
 
  private:
   std::shared_ptr<service::BrokerService> brokerService;

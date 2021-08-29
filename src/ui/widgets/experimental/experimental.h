@@ -2,7 +2,6 @@
 #define BSF_LIB_SRC_UI_WIDGETS_EXPERIMENTAL_EXPERIMENTAL_H_
 
 #include <QWidget>
-#include <fonts/MaterialRegular.h>
 #include <appservice.iodevices/iodevice.appservice.h>
 
 namespace Ui {
@@ -18,13 +17,8 @@ class Experimental : public QWidget {
   virtual ~Experimental();
   QList<QWidget *> deviceWidgets();
 
- public slots:
-  void onIODeviceStateChanged(int deviceId, bool on);
-
  private:
   Ui::Experimental *ui = nullptr;
-  MaterialRegular materialRegular;
-
   std::shared_ptr<appservice::IODeviceAppService> deviceAppService;
 };
 

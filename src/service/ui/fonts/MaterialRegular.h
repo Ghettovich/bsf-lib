@@ -4,8 +4,8 @@
 #include <QFont>
 #include <QColor>
 #include <QPalette>
-#include <fonts/QFontIcon.h>
 #include <QFontDatabase>
+#include <ui/fonts/QFontIcon.h>
 
 class MaterialRegular {
  public:

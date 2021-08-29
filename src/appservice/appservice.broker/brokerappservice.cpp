@@ -11,6 +11,9 @@ BrokerAppService::BrokerAppService(std::shared_ptr<service::BrokerService> &_bro
   connect(brokerService.get(), &BrokerService::connectedToHost, [=]() {
     emit connectedToHost();
   });
+
+  connect(this, &BrokerAppService::connectedToHost,
+          this, &BrokerAppService::createDeviceStateSubscriptions);
 }
 
 void BrokerAppService::connectToHost() {

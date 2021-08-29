@@ -216,21 +216,21 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="RelayButton" name="pushButtonLiftDown">
+           <widget class="QPushButton" name="pushButtonLiftDown">
             <property name="text">
              <string>Lift down</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="RelayButton" name="pushButtonLiftUp">
+           <widget class="QPushButton" name="pushButtonLiftUp">
             <property name="text">
              <string>Lift up</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="ProximityLabel" name="labelBinLoadDetected">
+           <widget class="QLabel" name="labelBinLoadDetected">
             <property name="text">
              <string/>
             </property>
@@ -499,18 +499,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>RelayButton</class>
-   <extends>QPushButton</extends>
-   <header>buttons/relay/relay.button.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ProximityLabel</class>
-   <extends>QLabel</extends>
-   <header>labels/proximity/proximity.label.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
