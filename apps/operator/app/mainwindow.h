@@ -10,7 +10,7 @@
 
 #include <appservice.prepare.recipe/preparerecipeappservice.h>
 #include <appservice.mix.recipe/mixrecipeappservice.h>
-#include <appservice.broker/brokerappservice.h>
+#include <appservice.broker/broker.appservice.h>
 
 namespace Ui {
 class MainWindow;

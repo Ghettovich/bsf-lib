@@ -2,10 +2,9 @@
 
 using namespace appservice;
 
-IODeviceAppService::IODeviceAppService(std::shared_ptr<service::BrokerService> &_brokerService,
-                                       std::shared_ptr<IODeviceService> &_deviceService,
+IODeviceAppService::IODeviceAppService(std::shared_ptr<IODeviceService> &_deviceService,
                                        QObject *parent) :
-    brokerService(_brokerService), deviceService(_deviceService), QObject(parent) {
+    deviceService(_deviceService), QObject(parent) {
 
   connect(deviceService.get(), &IODeviceService::stateChangdIODevice, [=](int deviceId, bool on) {
     emit updateIODeviceState(deviceId, on);
@@ -14,12 +13,11 @@ IODeviceAppService::IODeviceAppService(std::shared_ptr<service::BrokerService> &
     emit updateScale(deviceId, on, recipeId, componentId, weight);
   });
 }
+
 std::shared_ptr<IODevice> IODeviceAppService::findOne(int id) {
   return deviceService->findDevice(id);
 }
-void IODeviceAppService::onToggleRelay(int id) {
-  brokerService->toggleRelay(id);
-}
+
 QList<std::shared_ptr<IODevice>> IODeviceAppService::findAll() {
   return deviceService->findAllDevices();
 }

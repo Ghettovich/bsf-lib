@@ -7,7 +7,7 @@
 #include <recipe/recipe.h>
 #include <iodevice/iodevice.h>
 
-#include <appservice.broker/brokerappservice.h>
+#include <appservice.broker/broker.appservice.h>
 #include <appservice.prepare.recipe/preparerecipeappservice.h>
 
 namespace Ui {

@@ -41,7 +41,12 @@ void UiService::addWidget(const QList<QWidget *> &widgets) {
 }
 
 void UiService::onUpdateWidgetState(int deviceId, bool on) {
-  widgetMap.value(deviceId)->updateWidgetState(on);
+  if(!widgetMap.contains(deviceId)) {
+    qWarning() << "Unable to find widget in device widget map.";
+  }
+  else {
+    widgetMap.value(deviceId)->updateWidgetState(on);
+  }
 }
 void UiService::onToggleRelay(int relayId) {
   emit toggleRelay(relayId);

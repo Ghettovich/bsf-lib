@@ -4,7 +4,7 @@
 #include <QtWidgets/QWidget>
 
 #include <iodevice/iodevice.h>
-#include <appservice.broker/brokerappservice.h>
+#include <appservice.broker/broker.appservice.h>
 
 namespace Ui {
 class GroupBoxBinLoadDrop;

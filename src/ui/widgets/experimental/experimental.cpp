@@ -7,8 +7,13 @@
 
 using namespace appservice;
 
-Experimental::Experimental(std::shared_ptr<IODeviceAppService> &_deviceAppService, QWidget *parent) :
-    ui(new Ui::Experimental), deviceAppService(_deviceAppService), QWidget(parent) {
+Experimental::Experimental(std::shared_ptr<IODeviceAppService> &_deviceAppService,
+                           std::shared_ptr<appservice::StateMachineAppService> &_statemachineAppService,
+                           QWidget *parent) :
+    ui(new Ui::Experimental),
+    deviceAppService(_deviceAppService),
+    statemachineAppService(_statemachineAppService),
+    QWidget(parent) {
   ui->setupUi(this);
 
   auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
@@ -36,6 +41,10 @@ Experimental::Experimental(std::shared_ptr<IODeviceAppService> &_deviceAppServic
   ui->labelBinLoadDetected->setProperty("deviceId", proximityBinLoad->getId()); // PULL UP (HIGH = OFF!)
 
   settings->endGroup();
+
+  QObject::connect(ui->pushButtonEmptyTable, &QPushButton::clicked, [=](){
+    statemachineAppService->sendLiftToLoad();
+  });
 }
 
 Experimental::~Experimental() {

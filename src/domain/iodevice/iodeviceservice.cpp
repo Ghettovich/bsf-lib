@@ -37,8 +37,13 @@ QList<std::shared_ptr<IODevice>> IODeviceService::findAllDevices(IODeviceType::I
 }
 
 void IODeviceService::onUpdateIODeviceState(int deviceId, IODevice::IO_DEVICE_HIGH_LOW state) {
-  deviceMap.value(deviceId)->setDeviceState(state);
-  emit stateChangdIODevice(deviceId, deviceMap.value(deviceId)->isDeviceOn());
+  if(!deviceMap.contains(deviceId)) {
+    qWarning() << "Could not find deviceId " << deviceId << " in device map";
+  }
+  else {
+    deviceMap.value(deviceId)->setDeviceState(state);
+    emit stateChangdIODevice(deviceId, deviceMap.value(deviceId)->isDeviceOn());
+  }
 }
 
 void IODeviceService::onUpdateScaleDevice(int deviceId,
@@ -50,4 +55,12 @@ void IODeviceService::onUpdateScaleDevice(int deviceId,
   // ToDo implement and act on state change scale
 
   // ToDo update current weight and emit scale data changes
+}
+bool IODeviceService::isDeviceOn(int deviceId) {
+  if(!deviceMap.contains(deviceId)) {
+    qWarning() << "Could not find deviceId " << deviceId << " in device map";
+    return false;
+  }
+
+  return deviceMap.value(deviceId)->isDeviceOn();
 }

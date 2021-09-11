@@ -20,7 +20,8 @@ PavementController::PavementController(QObject *parent) : QObject(parent) {
   auto stateService = std::make_shared<StateService>(brokerService, deviceService);
 
   brokerAppService = std::make_shared<BrokerAppService>(brokerService, stateService);
-  deviceAppService = std::make_shared<IODeviceAppService>(brokerService, deviceService);
+  deviceAppService = std::make_shared<IODeviceAppService>(deviceService);
+  statemachineAppService = std::make_shared<StateMachineAppService>(brokerService, deviceService);
   uiAppService = std::make_shared<UiAppService>(uiService);
 
   qDebug() << "service count = " << deviceService.use_count();
@@ -37,12 +38,12 @@ PavementController::PavementController(QObject *parent) : QObject(parent) {
 void PavementController::createStackedWidget(QLayout *layout) {
   stackedWidget = new QStackedWidget();
 
-  auto home = new Home(stackedWidget);
+  auto home = new Home(deviceAppService, stackedWidget);
   stackedWidget->addWidget(home);
 
   stackedWidget->addWidget(new QWidget); // ToDo: replace with new mixture
 
-  auto experimental = new Experimental(deviceAppService, stackedWidget);
+  auto experimental = new Experimental(deviceAppService, statemachineAppService, stackedWidget);
   stackedWidget->addWidget(experimental);
   uiAppService->addWidget(experimental->deviceWidgets());
 
