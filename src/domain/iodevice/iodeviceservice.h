@@ -19,7 +19,6 @@ class IODeviceService : public QObject {
 
  public:
   explicit IODeviceService(std::shared_ptr<service::DatabaseService> databaseService,
-                           std::shared_ptr<service::BrokerService> &brokerService,
                            QObject *parent = nullptr);
 
   std::shared_ptr<IODevice> findDevice(int deviceId);
@@ -40,7 +39,6 @@ class IODeviceService : public QObject {
  private:
   QMap<int, std::shared_ptr<IODevice>> deviceMap;
   std::shared_ptr<IODeviceRepository> deviceRepository;
-  std::shared_ptr<service::BrokerService> brokerService;
 
  signals:
   void stateChangdIODevice(int deviceId, bool on);

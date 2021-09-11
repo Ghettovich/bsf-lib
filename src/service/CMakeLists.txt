@@ -6,6 +6,7 @@ set(HEADER_LIST
         broker/BrokerService.h
         broker/client/MqttClient.h
         database/DatabaseService.h
+        statemachine/machine.service.h
         ui/ui.service.h
         # INTERFACES
         ui/interfaces/sensor.widget.h
@@ -16,13 +17,14 @@ set(HEADER_LIST
         # FONTS
         ui/fonts/MaterialRegular.h
         ui/fonts/QFontIcon.h
-        )
+        statemachine/machine.service.cpp statemachine/machine.service.h)
 
 # ADD LIBRARY
 add_library(service SHARED
         broker/BrokerService.cpp
         broker/client/MqttClient.cpp
         database/DatabaseService.cpp
+        statemachine/machine.service.cpp
         ui/ui.service.cpp
         # INTERFACES
         ui/interfaces/sensor.widget.cpp

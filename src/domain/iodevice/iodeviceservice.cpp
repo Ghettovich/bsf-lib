@@ -8,11 +8,9 @@
 using namespace service;
 
 IODeviceService::IODeviceService(std::shared_ptr<DatabaseService> _databaseService,
-                                 std::shared_ptr<service::BrokerService> &_brokerService,
                                  QObject *parent) :
     QObject(parent),
-    deviceRepository(std::make_unique<IODeviceRepository>(_databaseService, this)),
-    brokerService(_brokerService) {
+    deviceRepository(std::make_unique<IODeviceRepository>(_databaseService, this)) {
 
   deviceMap = deviceRepository->findAllDevices();
 }

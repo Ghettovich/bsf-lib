@@ -3,6 +3,7 @@
 #include <broker/BrokerService.h>
 #include <database/DatabaseService.h>
 #include <state/stateservice.h>
+#include <statemachine/machine.service.h>
 
 #include <widgets/home/home.h>
 #include <widgets/experimental/experimental.h>
@@ -16,12 +17,14 @@ PavementController::PavementController(QObject *parent) : QObject(parent) {
   auto databaseService = std::make_shared<DatabaseService>();
   auto brokerService = std::make_shared<BrokerService>();
 
-  auto deviceService = std::make_shared<IODeviceService>(databaseService, brokerService);
+  auto deviceService = std::make_shared<IODeviceService>(databaseService);
   auto stateService = std::make_shared<StateService>(brokerService, deviceService);
+
+  auto stateMachineService = std::make_shared<MachineService>();
 
   brokerAppService = std::make_shared<BrokerAppService>(brokerService, stateService);
   deviceAppService = std::make_shared<IODeviceAppService>(deviceService);
-  statemachineAppService = std::make_shared<StateMachineAppService>(brokerService, deviceService);
+  statemachineAppService = std::make_shared<StateMachineAppService>(brokerService, deviceService, stateMachineService);
   uiAppService = std::make_shared<UiAppService>(uiService);
 
   qDebug() << "service count = " << deviceService.use_count();
