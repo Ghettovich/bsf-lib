@@ -36,7 +36,7 @@ Material Recipe::getMaterialByName(const QString &name) {
     }
   }
 
-  return {0};
+  return Material(0);
 }
 const QList<Component> &Recipe::getComponents() const {
   return components;

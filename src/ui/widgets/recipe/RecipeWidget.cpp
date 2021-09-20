@@ -29,10 +29,10 @@ void RecipeWidget::createComboBox() {
 void RecipeWidget::fillForm() {
   ui->plainTextEditRecipe->setPlainText(selectedRecipe.getDescription());
 
-  ui->lineEditBasalt->setText(QString::number(selectedRecipe.getMaterialByName("basalt 0-8").getWeight()));
-  ui->lineEditSand->setText(QString::number(selectedRecipe.getMaterialByName("sand 0-2").getWeight()));
+  ui->lineEditBasalt->setText(QString::number(selectedRecipe.getMaterialByName("basalt 0-8").getWeight(), 10, 2));
+  ui->lineEditSand->setText(QString::number(selectedRecipe.getMaterialByName("sand 0-2").getWeight(), 10, 2));
 
-  ui->lineEditCement->setText(QString::number(selectedRecipe.getComponentByName("cement").getWeight()));
+  ui->lineEditCement->setText(QString::number(selectedRecipe.getComponentByName("cement").getWeight(), 10, 2));
   ui->doubleSpinBoxMaterialCementRatio->setValue(selectedRecipe.getComponentByName("cement").getRatio());
 
 
@@ -40,6 +40,9 @@ void RecipeWidget::fillForm() {
   ui->doubleSpinBoxPlastifierCementRatio->setValue(selectedRecipe.getComponentByName("plastifier").getRatio());
   ui->doubleSpinBoxPigmentCementRatio->setValue(selectedRecipe.getComponentByName("pigment").getRatio());
 
+  ui->lineEditWater->setText(QString::number(selectedRecipe.getComponentByName("water").getWeight(), 10, 2));
+  ui->lineEditPlastifier->setText(QString::number(selectedRecipe.getComponentByName("plastifier").getWeight(), 10, 2));
+  ui->lineEditPigment->setText(QString::number(selectedRecipe.getComponentByName("pigment").getWeight(), 10, 2));
 }
 void RecipeWidget::onChangeRecipeComboBox(int index) {
   int recipeId = ui->comboBoxRecipe->itemData(index, Qt::UserRole).toInt();

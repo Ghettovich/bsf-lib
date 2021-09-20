@@ -21,7 +21,7 @@ class RecipeSelection : public QObject {
 
  private:
   Recipe selectedRecipe = Recipe(0);
-  Component selectedComponent = Component(0);
+  //Component selectedComponent = Component(0);
 };
 
 #endif //BSF_RECIPESELECTION_H_

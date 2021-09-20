@@ -4,7 +4,7 @@
 
 Material::Material(int id) : id(id) {}
 
-Material::Material(int id, int weight, QString name, QString description)
+Material::Material(int id, float weight, QString name, QString description)
     : id(id), weight(weight), name(std::move(name)), description(std::move(description)) {}
 
 int Material::getId() const {
@@ -22,9 +22,9 @@ const QString &Material::setDescription() const {
 void Material::setDescription(const QString &_description) {
   description = _description;
 }
-int Material::getWeight() const {
+float Material::getWeight() const {
   return weight;
 }
-void Material::setWeight(int _weight) {
+void Material::setWeight(float _weight) {
   weight = _weight;
 }

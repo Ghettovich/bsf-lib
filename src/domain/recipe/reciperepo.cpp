@@ -88,7 +88,7 @@ QList<Material> RecipeRepository::getMaterials(int recipeId) {
 
   while(query.next()) {
     Material material(query.value("id").toInt(),
-                      query.value("weight").toInt(),
+                      query.value("weight").toFloat(),
                       query.value("name").toString(),
                       query.value("description").toString());
 
@@ -125,7 +125,7 @@ QList<Component> RecipeRepository::getComponents(int recipeId) {
                    query.value("recipe_id").toInt(),
                    query.value("name").toString(),
                    query.value("description").toString(),
-                   query.value("weight").toInt(),
+                   query.value("weight").toFloat(),
                    query.value("ratio").toFloat());
 
     components.append(comp);

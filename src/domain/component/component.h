@@ -14,7 +14,7 @@ class Component {
             int recipe_id,
             QString name,
             QString description,
-            int weight,
+            float weight,
             float ratio);
   int getId();
   int getComponentId() const;
@@ -25,10 +25,10 @@ class Component {
   void setComponentName(const QString &name);
   const QString &getComponentDescription() const;
   void setComponentDescription(const QString &description);
-  int getWeight() const;
-  void setWeight(int targetWeight);
-  int getCurrentWeight() const;
-  void setCurrentWeight(int currentWeight);
+  float getWeight() const;
+  void setWeight(float targetWeight);
+  float getCurrentWeight() const;
+  void setCurrentWeight(float currentWeight);
   float getRatio() const;
   void setRatio(float ratio);
 
@@ -38,7 +38,7 @@ class Component {
   int recipeId = 0;
   QString name = "";
   QString description = "";
-  int weight, currentWeight = 0;
+  float weight, currentWeight = 0;
   float ratio;
 
 };
