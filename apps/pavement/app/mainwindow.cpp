@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->pushButtonHome, &QPushButton::clicked, this, &MainWindow::onShowStart);
   connect(ui->pushButtonNewMixture, &QPushButton::clicked, this, &MainWindow::onShowNewMixture);
   connect(ui->pushButtonExperimental, &QPushButton::clicked, this, &MainWindow::onShowExperimental);
+  connect(ui->pushButtonRecipes, &QPushButton::clicked, this, &MainWindow::onShowRecipes);
 }
 
 MainWindow::~MainWindow() {

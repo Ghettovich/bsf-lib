@@ -7,6 +7,7 @@
 
 #include <widgets/home/home.h>
 #include <widgets/experimental/experimental.h>
+#include <widgets/recipe/RecipeWidget.h>
 
 using namespace appservice;
 using namespace service;
@@ -17,6 +18,8 @@ PavementController::PavementController(QObject *parent) : QObject(parent) {
   auto databaseService = std::make_shared<DatabaseService>();
   auto brokerService = std::make_shared<BrokerService>();
 
+  auto recipeService = std::make_shared<RecipeService>(databaseService);
+
   auto deviceService = std::make_shared<IODeviceService>(databaseService);
   auto stateService = std::make_shared<StateService>(brokerService, deviceService);
 
@@ -25,6 +28,7 @@ PavementController::PavementController(QObject *parent) : QObject(parent) {
   brokerAppService = std::make_shared<BrokerAppService>(brokerService, stateService);
   deviceAppService = std::make_shared<IODeviceAppService>(deviceService);
   statemachineAppService = std::make_shared<StateMachineAppService>(brokerService, deviceService, stateMachineService);
+  recipeAppService = std::make_shared<PrepareRecipeAppService>(deviceService, recipeService);
   uiAppService = std::make_shared<UiAppService>(uiService);
 
   qDebug() << "service count = " << deviceService.use_count();
@@ -49,6 +53,9 @@ void PavementController::createStackedWidget(QLayout *layout) {
   auto experimental = new Experimental(deviceAppService, statemachineAppService, stackedWidget);
   stackedWidget->addWidget(experimental);
   uiAppService->addWidget(experimental->deviceWidgets());
+
+  auto recipes = new RecipeWidget(recipeAppService);
+  stackedWidget->addWidget(recipes);
 
   layout->addWidget(stackedWidget);
 }

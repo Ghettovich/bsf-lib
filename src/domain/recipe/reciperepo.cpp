@@ -5,14 +5,13 @@
 
 RecipeRepository::RecipeRepository(std::shared_ptr<service::DatabaseService> &_databaseService, QObject *parent) :
     QObject(parent), databaseService(_databaseService) {
-
 }
 
 QVector<Recipe> RecipeRepository::getRecipes() {
   QSqlDatabase db = databaseService->openDatabase();
   QSqlQuery query(db);
 
-  QString queryString = "SELECT id, description FROM recipe";
+  QString queryString = "SELECT id, title, description FROM recipe";
 
   if (!query.exec(queryString)) {
     qDebug("DB table \"recipe\" findAll, Either select query error or table does not exists!");
@@ -24,6 +23,7 @@ QVector<Recipe> RecipeRepository::getRecipes() {
 
   while (query.next()) {
     Recipe recipe = Recipe(query.value("id").toInt());
+    recipe.setTitle(query.value("title").toString());
     recipe.setDescription(query.value("description").toString());
     recipeList.append(recipe);
   }
@@ -31,18 +31,17 @@ QVector<Recipe> RecipeRepository::getRecipes() {
   return recipeList;
 }
 
-Recipe RecipeRepository::getRecipeWithComponents(int id) {
+Recipe RecipeRepository::getRecipeMaterials(int recipeId) {
   QSqlDatabase db = databaseService->openDatabase();
   QSqlQuery query(db);
 
   QString queryString =
-      "SELECT r.id AS r_id, r.description, c.id AS component_id, c.component, rp.target_weight, rp.margin_value FROM recipe r "
-      "INNER JOIN recipe_components rp ON  r.id = rp.recipe_id "
-      "INNER JOIN component c ON rp.component_id = c.id "
+      "SELECT r.id, r.title, r.description "
+      "FROM recipe r "
       "WHERE r.id =:id ";
 
   query.prepare(queryString);
-  query.bindValue(":id", id);
+  query.bindValue(":id", recipeId);
 
   if (!query.exec()) {
     qDebug("DB table \"recipe 2\" findAll, Either select query error or table does not exists!");
@@ -53,55 +52,84 @@ Recipe RecipeRepository::getRecipeWithComponents(int id) {
   Recipe recipe;
 
   if (query.first()) {
-    recipe = Recipe(query.value("r_id").toInt());
+    recipe = Recipe(query.value("id").toInt());
+    recipe.setTitle(query.value("title").toString());
     recipe.setDescription(query.value("description").toString());
 
-    Component comp;
-    addComponent(recipe.getId(), comp, recipe.componentList, query);
+    auto materials = getMaterials(recipe.getId());
+    recipe.setMaterials(materials);
 
-    while (query.next()) {
-      addComponent(recipe.getId(), comp, recipe.componentList, query);
-    }
-
-    return recipe;
+    auto components = getComponents(recipe.getId());
+    recipe.setComponents(components);
   }
 
-  return Recipe(0);
+  return recipe;
 }
-
-Recipe RecipeRepository::getRecipe(int id) {
+QList<Material> RecipeRepository::getMaterials(int recipeId) {
   QSqlDatabase db = databaseService->openDatabase();
   QSqlQuery query(db);
 
-  QString queryString = "SELECT id, description FROM recipe WHERE id =:id ";
+  QString queryString =
+      "SELECT rm.id, m.name, m.description, rm.weight "
+      "FROM recipe_material rm "
+      "INNER JOIN material m ON m.id = rm.material_id "
+      "WHERE rm.recipe_id =:id ";
 
   query.prepare(queryString);
-  query.bindValue(":id", id);
+  query.bindValue(":id", recipeId);
 
   if (!query.exec()) {
-    qDebug("DB table \"io_device\" findAll, Either select query error or table does not exists!");
+    qDebug("DB table \"recipe 2\" findAll, Either select query error or table does not exists!");
     qDebug() << QString(query.lastError().text());
     throw std::logic_error("Unknown Exception");
   }
 
-  Recipe recipe;
+  QList<Material> materials;
 
-  if (query.first()) {
-    recipe = Recipe(query.value("id").toInt());
-    recipe.setDescription(query.value("description").toString());
-    return recipe;
+  while(query.next()) {
+    Material material(query.value("id").toInt(),
+                      query.value("weight").toInt(),
+                      query.value("name").toString(),
+                      query.value("description").toString());
+
+    materials.append(material);
   }
 
-  return Recipe(0);
+  return materials;
 }
+QList<Component> RecipeRepository::getComponents(int recipeId) {
+  QSqlDatabase db = databaseService->openDatabase();
+  QSqlQuery query(db);
 
-void RecipeRepository::addComponent(int recipeId, Component &comp, QVector<Component> &compList, QSqlQuery &query) {
-  comp = Component(query.value("component_id").toInt());
-  comp.setRecipeId(recipeId);
-  comp.setComponent(query.value("component").toString());
-  comp.setTargetWeight(query.value("target_weight").toInt());
-  comp.setMarginValue(query.value("margin_value").toInt());
-  comp.setRecipeComponent(comp.identifyComponent(comp.getComponentId()));
+  QString queryString =
+      "SELECT c.id AS comp_id, cr.id AS comp_ratio_id, cr.recipe_id AS recipe_id, c.description, c.name, cr.ratio, cr.weight "
+      "FROM component c "
+      "INNER JOIN component_ratio cr ON c.id = cr.component_id "
+      "INNER JOIN recipe r ON r.id = cr.recipe_id "
+      "WHERE cr.recipe_id =:id ";
 
-  compList.append(comp);
+  query.prepare(queryString);
+  query.bindValue(":id", recipeId);
+
+  if (!query.exec()) {
+    qDebug("DB table \"recipe 2\" findAll, Either select query error or table does not exists!");
+    qDebug() << QString(query.lastError().text());
+    throw std::logic_error("Unknown Exception");
+  }
+
+  QList<Component> components;
+
+  while(query.next()) {
+    Component comp(query.value("comp_ratio_id").toInt(),
+                   query.value("comp_id").toInt(),
+                   query.value("recipe_id").toInt(),
+                   query.value("name").toString(),
+                   query.value("description").toString(),
+                   query.value("weight").toInt(),
+                   query.value("ratio").toFloat());
+
+    components.append(comp);
+  }
+
+  return components;
 }

@@ -14,13 +14,13 @@ class RecipeRepository : public QObject {
 
  public:
   explicit RecipeRepository(std::shared_ptr<service::DatabaseService> &databaseService, QObject *parent = nullptr);
-  Recipe getRecipe(int);
-  Recipe getRecipeWithComponents(int);
   QVector<Recipe> getRecipes();
+  Recipe getRecipeMaterials(int recipeId);
 
  private:
   std::shared_ptr<service::DatabaseService> databaseService;
-  void addComponent(int recipeId, Component &, QVector<Component> &, QSqlQuery &);
+  QList<Material> getMaterials(int recipeId);
+  QList<Component> getComponents(int recipeId);
 
 };
 #endif //BSF_RECIPEREPO_H

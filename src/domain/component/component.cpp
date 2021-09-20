@@ -1,11 +1,24 @@
 #include "component.h"
 
-Component::Component(int id)
-    : componentId(id) {
-}
+#include <utility>
 
-Component::Component(int componentId, int recipeId)
-    : componentId(componentId), recipeId(recipeId) {
+Component::Component(int id,
+                     int component_id,
+                     int recipe_id,
+                     QString name,
+                     QString description,
+                     int weight,
+                     float ratio)
+    : id(id),
+      componentId(component_id),
+      recipeId(recipe_id),
+      name(std::move(name)),
+      description(std::move(description)),
+      weight(weight),
+      ratio(ratio) {}
+
+int Component::getId() {
+  return id;
 }
 
 int Component::getComponentId() const {
@@ -24,73 +37,33 @@ void Component::setRecipeId(int _recipeId) {
   recipeId = _recipeId;
 }
 
-const QString &Component::getComponent() const {
-  return component;
+int Component::getWeight() const {
+  return weight;
 }
-
-void Component::setComponent(const QString &_component) {
-  Component::component = _component;
+void Component::setWeight(int _targetWeight) {
+  weight = _targetWeight;
 }
-
-int Component::getTargetWeight() const {
-  return targetWeight;
-}
-
-void Component::setTargetWeight(int _targetWeight) {
-  targetWeight = _targetWeight;
-}
-
 int Component::getCurrentWeight() const {
   return currentWeight;
 }
-
 void Component::setCurrentWeight(int _currentWeight) {
   currentWeight = _currentWeight;
 }
-
-Component::COMPONENT Component::getRecipeComponent() const {
-  return recipeComponent;
+const QString &Component::getComponentName() const {
+  return name;
 }
-
-void Component::setRecipeComponent(Component::COMPONENT _recipeComponent) {
-  recipeComponent = _recipeComponent;
+void Component::setComponentName(const QString &_name) {
+  name = _name;
 }
-
-Component::COMPONENT Component::identifyComponent(int componentType) const {
-  switch (componentType) {
-    case Component::WATER :return WATER;
-    case Component::SAND :return SAND;
-    case Component::PLASTIFIER :return PLASTIFIER;
-    default:return UNKNOWN_COMP;
-  }
+const QString &Component::getComponentDescription() const {
+  return description;
 }
-
-int Component::getMarginValue() const {
-  return marginValue;
+void Component::setComponentDescription(const QString &_description) {
+  description = _description;
 }
-
-void Component::setMarginValue(int _marginValue) {
-  marginValue = _marginValue;
+float Component::getRatio() const {
+  return ratio;
 }
-
-bool Component::isTargetMet() const {
-  const int p = 100;
-
-  if (currentWeight == 0) {
-    return false;
-  }
-
-  int marginWeight = (targetWeight / p) * marginValue;
-
-  if (currentWeight <= targetWeight + marginWeight) {
-    if (currentWeight >= targetWeight - marginWeight) {
-      return true;
-    }
-  } else if (currentWeight >= targetWeight - marginWeight) {
-    if (currentWeight <= targetWeight + marginWeight) {
-      return true;
-    }
-  }
-
-  return false;
+void Component::setRatio(float _ratio) {
+  ratio = _ratio;
 }

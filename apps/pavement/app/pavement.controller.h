@@ -9,6 +9,7 @@
 #include <appservice.broker/broker.appservice.h>
 #include <appservice.statemachine/statemachine.appservice.h>
 #include <appservice.ui/ui.appservice.h>
+#include <appservice.prepare.recipe/preparerecipeappservice.h>
 
 class PavementController : public QObject {
  Q_OBJECT
@@ -23,6 +24,7 @@ class PavementController : public QObject {
   std::shared_ptr<appservice::IODeviceAppService> deviceAppService;
   std::shared_ptr<appservice::BrokerAppService> brokerAppService;
   std::shared_ptr<appservice::StateMachineAppService> statemachineAppService;
+  std::shared_ptr<appservice::PrepareRecipeAppService> recipeAppService;
   std::shared_ptr<appservice::UiAppService> uiAppService;
 };
 

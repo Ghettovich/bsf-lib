@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>RecipeWidget</class>
+ <widget class="QWidget" name="RecipeWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="1,2,2">
    <item row="0" column="0">
-    <widget class="QGroupBox" name="groupBox_3">
+    <widget class="QGroupBox" name="groupBoxRecipeSelect">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -27,7 +27,7 @@
      </property>
      <layout class="QFormLayout" name="formLayout_3">
       <item row="0" column="0">
-       <widget class="QLabel" name="label_8">
+       <widget class="QLabel" name="labelSelectRecipe">
         <property name="text">
          <string>Recipe</string>
         </property>
@@ -37,7 +37,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="comboBoxRecipe">
         <property name="minimumSize">
          <size>
           <width>200</width>
@@ -47,14 +47,17 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_10">
+       <widget class="QLabel" name="labelRecipeDescription">
         <property name="text">
          <string>Description</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QPlainTextEdit" name="plainTextEdit">
+       <widget class="QPlainTextEdit" name="plainTextEditRecipe">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -64,23 +67,23 @@
        </widget>
       </item>
       <item row="2" column="0" colspan="2">
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <layout class="QHBoxLayout" name="horizontalLayoutRecipeButtons">
         <item>
-         <widget class="QPushButton" name="pushButton_5">
+         <widget class="QPushButton" name="pushButtonDeleteRecipe">
           <property name="text">
            <string>Delete</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_6">
+         <widget class="QPushButton" name="pushButtonCloneRecipe">
           <property name="text">
            <string>Clone</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_7">
+         <widget class="QPushButton" name="pushButtonEditRecipe">
           <property name="text">
            <string>Edit</string>
           </property>
@@ -92,57 +95,77 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLCDNumber" name="lcdNumber">
+    <widget class="QLCDNumber" name="lcdNumberRecipeWeight">
      <property name="value" stdset="0">
       <double>125.000000000000000</double>
      </property>
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="groupBoxMaterial">
      <property name="title">
       <string>Recipe Material</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="labelBasalt">
         <property name="text">
-         <string>Basalt 0-8</string>
+         <string>Basalt 0-8 (kg)</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="lineEditBasalt">
         <property name="text">
          <string>150</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="labelSand">
         <property name="text">
-         <string>Sand 0-2</string>
+         <string>Sand 0-2 (kg)</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit_2">
+       <widget class="QLineEdit" name="lineEditSand">
         <property name="text">
          <string>20</string>
         </property>
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="labelMaterialCementRatio">
         <property name="text">
-         <string>Cement</string>
+         <string>Material cement ratio</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelCement">
+        <property name="text">
+         <string>Cement (kg)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="lineEditCement">
+        <property name="enabled">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEdit_3">
-        <property name="text">
-         <string>25</string>
+       <widget class="QDoubleSpinBox" name="doubleSpinBoxMaterialCementRatio">
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="stepType">
+         <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
         </property>
        </widget>
       </item>
@@ -150,146 +173,191 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QGroupBox" name="groupBox_4">
+    <widget class="QGroupBox" name="groupBoxRecipeWork">
      <property name="title">
       <string>Mixer Work</string>
      </property>
      <layout class="QFormLayout" name="formLayout_4">
       <item row="0" column="0">
-       <widget class="QLabel" name="label_11">
+       <widget class="QLabel" name="labelDryMixWork">
         <property name="text">
          <string>Dry mix work (kJ/kg)</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit_6"/>
+       <widget class="QLineEdit" name="lineEditDryMixWork">
+        <property name="text">
+         <string>10</string>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_12">
+       <widget class="QLabel" name="labelWetMixWork">
         <property name="text">
          <string>Wet mix work (kJ/kg)</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit_7"/>
+       <widget class="QLineEdit" name="lineEditWetMixWork">
+        <property name="text">
+         <string>5</string>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="label_13">
+       <widget class="QLabel" name="labelViscosityPower">
         <property name="text">
          <string>Viscosity power (kW)</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEdit_8"/>
+       <widget class="QLineEdit" name="lineEditViscosityPower">
+        <property name="text">
+         <string>1.2</string>
+        </property>
+       </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QLabel" name="label_14">
+       <widget class="QLabel" name="labelPlastifierMixWork">
         <property name="text">
          <string>Plastifier mix work (kJ/kg)</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLineEdit" name="lineEdit_10"/>
+       <widget class="QLineEdit" name="lineEditPlastifierMixWork">
+        <property name="text">
+         <string>15</string>
+        </property>
+       </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QLabel" name="label_16">
+       <widget class="QLabel" name="labelViscosityPowerFinal">
         <property name="text">
          <string>Viscosity power final (kW)</string>
         </property>
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QLineEdit" name="lineEdit_11"/>
+       <widget class="QLineEdit" name="lineEditViscosityPowerFinal">
+        <property name="text">
+         <string>1</string>
+        </property>
+       </widget>
       </item>
       <item row="5" column="0">
-       <widget class="QLabel" name="label_17">
+       <widget class="QLabel" name="labelErrorMargin">
         <property name="text">
          <string>Error margin (+/- %)</string>
         </property>
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QLineEdit" name="lineEdit_12"/>
+       <widget class="QLineEdit" name="lineEditErrorMargin">
+        <property name="text">
+         <string>1</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QGroupBox" name="groupBoxRatios">
      <property name="title">
       <string>Ratios</string>
      </property>
      <layout class="QFormLayout" name="formLayout_2">
       <item row="0" column="0">
-       <widget class="QLabel" name="label_6">
+       <widget class="QLabel" name="labelWaterCementRatio">
         <property name="text">
          <string>Water-cement ratio (kg/kg)</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QSpinBox" name="spinBox_2"/>
-      </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="labelPlastifierCementRatio">
         <property name="text">
          <string>Plastifier-cement ratio (kg/kg)</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="spinBox"/>
-      </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="label_7">
+       <widget class="QLabel" name="labelPigmentCementRatio">
         <property name="text">
          <string>Pigment-cement ratio ( kg/kg)</string>
         </property>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QDoubleSpinBox" name="doubleSpinBoxWaterCement"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="doubleSpinBoxPlastifierCementRatio"/>
+      </item>
       <item row="2" column="1">
-       <widget class="QSpinBox" name="spinBox_3"/>
+       <widget class="QDoubleSpinBox" name="doubleSpinBoxPigmentCementRatio"/>
       </item>
      </layout>
     </widget>
    </item>
    <item row="2" column="1">
-    <widget class="QGroupBox" name="groupBox_5">
+    <widget class="QGroupBox" name="groupBoxComponents">
      <property name="title">
       <string>Components</string>
      </property>
      <layout class="QFormLayout" name="formLayout_5">
       <item row="0" column="0">
-       <widget class="QLabel" name="label_5">
+       <widget class="QLabel" name="labelWater">
         <property name="text">
-         <string>Plastifier</string>
+         <string>Water (kg)</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="lineEdit_5"/>
+       <widget class="QLineEdit" name="lineEditWater">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>5 (berekend)</string>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_9">
+       <widget class="QLabel" name="labelPlastifier">
         <property name="text">
-         <string>Water</string>
+         <string>Plastifier (kg)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelPigment">
+        <property name="text">
+         <string>Pigment black (kg)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="lineEditPigment">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>3 (berekend)</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit_4"/>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEdit_9"/>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_15">
+       <widget class="QLineEdit" name="lineEditPlastifier">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
-         <string>Pigment black</string>
+         <string>15 (berekend)</string>
         </property>
        </widget>
       </item>

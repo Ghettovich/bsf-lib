@@ -10,12 +10,11 @@ if (Qt5Widgets_FOUND)
             bafalog.h
             statecode.h
             component/component.h
-            component/componentrepo.h
             recipe/recipe.h
             recipe/reciperepo.h
             recipe/recipeservice.h
-            recipe.selection/recipeselection.h
-            recipe.selection/recipeselectionservice.h
+#            recipe.selection/recipeselection.h
+#            recipe.selection/recipeselectionservice.h
             state/stateservice.h
             iodevice/iodevice.h
             iodevice/detectionsensor.h
@@ -24,6 +23,7 @@ if (Qt5Widgets_FOUND)
             iodevice/iodevicetype.h
             iodevice/iodeviceservice.h
             iodevice/iodevicerepo.h
+            material/material.h
             )
 
     # TARGET SOURCES
@@ -33,12 +33,11 @@ if (Qt5Widgets_FOUND)
             bafalog.cpp
             statecode.cpp
             component/component.cpp
-            component/componentrepo.cpp
             recipe/recipe.cpp
             recipe/reciperepo.cpp
             recipe/recipeservice.cpp
-            recipe.selection/recipeselection.cpp
-            recipe.selection/recipeselectionservice.cpp
+#           recipe.selection/recipeselection.cpp
+#            recipe.selection/recipeselectionservice.cpp
             state/stateservice.cpp
             iodevice/iodevice.cpp
             iodevice/detectionsensor.cpp
@@ -47,6 +46,7 @@ if (Qt5Widgets_FOUND)
             iodevice/iodevicetype.cpp
             iodevice/iodeviceservice.cpp
             iodevice/iodevicerepo.cpp
+            material/material.cpp
             # HEADER LIST
             ${HEADER_LIST}
             )
