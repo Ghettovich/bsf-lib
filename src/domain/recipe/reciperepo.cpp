@@ -31,7 +31,7 @@ QVector<Recipe> RecipeRepository::getRecipes() {
   return recipeList;
 }
 
-Recipe RecipeRepository::getRecipeMaterials(int recipeId) {
+std::unique_ptr<Recipe> RecipeRepository::getRecipeMaterials(int recipeId) {
   QSqlDatabase db = databaseService->openDatabase();
   QSqlQuery query(db);
 
@@ -49,21 +49,22 @@ Recipe RecipeRepository::getRecipeMaterials(int recipeId) {
     throw std::logic_error("Unknown Exception");
   }
 
-  Recipe recipe;
-
   if (query.first()) {
-    recipe = Recipe(query.value("id").toInt());
-    recipe.setTitle(query.value("title").toString());
-    recipe.setDescription(query.value("description").toString());
+    auto recipe = std::make_unique<Recipe>(query.value("id").toInt());
 
-    auto materials = getMaterials(recipe.getId());
-    recipe.setMaterials(materials);
+    recipe->setTitle(query.value("title").toString());
+    recipe->setDescription(query.value("description").toString());
 
-    auto components = getComponents(recipe.getId());
-    recipe.setComponents(components);
+    auto materials = getMaterials(recipe->getId());
+    recipe->setMaterials(materials);
+
+    auto components = getComponents(recipe->getId());
+    recipe->setComponents(components);
+
+    return recipe;
   }
 
-  return recipe;
+  return {};
 }
 QList<Material> RecipeRepository::getMaterials(int recipeId) {
   QSqlDatabase db = databaseService->openDatabase();
@@ -88,7 +89,7 @@ QList<Material> RecipeRepository::getMaterials(int recipeId) {
 
   while(query.next()) {
     Material material(query.value("id").toInt(),
-                      query.value("weight").toFloat(),
+                      query.value("weight").toDouble(),
                       query.value("name").toString(),
                       query.value("description").toString());
 
@@ -125,8 +126,8 @@ QList<Component> RecipeRepository::getComponents(int recipeId) {
                    query.value("recipe_id").toInt(),
                    query.value("name").toString(),
                    query.value("description").toString(),
-                   query.value("weight").toFloat(),
-                   query.value("ratio").toFloat());
+                   query.value("weight").toDouble(),
+                   query.value("ratio").toDouble());
 
     components.append(comp);
   }

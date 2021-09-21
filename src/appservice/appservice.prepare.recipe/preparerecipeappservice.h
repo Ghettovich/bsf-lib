@@ -20,7 +20,7 @@ class appservice::PrepareRecipeAppService : public QObject {
                                    QObject *parent = nullptr);
 
   QVector<Recipe> recipes();
-  Recipe recipeMaterials(int recipeId);
+  std::unique_ptr<Recipe>  recipeMaterials(int recipeId);
 
  private:
   std::shared_ptr<IODeviceService> deviceService;

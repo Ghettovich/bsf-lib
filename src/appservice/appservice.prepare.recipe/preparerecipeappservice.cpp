@@ -14,6 +14,6 @@ PrepareRecipeAppService::PrepareRecipeAppService(std::shared_ptr<IODeviceService
 QVector<Recipe> PrepareRecipeAppService::recipes() {
   return recipeService->recipes();
 }
-Recipe PrepareRecipeAppService::recipeMaterials(int recipeId) {
+std::unique_ptr<Recipe> PrepareRecipeAppService::recipeMaterials(int recipeId) {
   return recipeService->recipeMaterials(recipeId);
 }

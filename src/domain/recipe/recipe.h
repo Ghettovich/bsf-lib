@@ -10,7 +10,7 @@
 class Recipe {
 
  public:
-  explicit Recipe(int id = 0);
+  Recipe(int id);
   int getId() const;
   const QString &getTitle() const;
   void setTitle(const QString &title);
@@ -23,6 +23,9 @@ class Recipe {
 
   Material getMaterialByName(const QString &name);
   Component getComponentByName(const QString &name);
+  void updateComponentByName(const QString &name, double weight);
+  void updateMaterialByName(const QString &name, double weight);
+  void updateComponentRatio(const QString &name, double ratio);
 
  private:
   int id = 0;
@@ -30,6 +33,7 @@ class Recipe {
   QString description;
   QList<Material> materials;
   QList<Component> components;
+
 
 };
 #endif //BSF_RECIPE_H

@@ -10,6 +10,6 @@ RecipeService::RecipeService(std::shared_ptr<service::DatabaseService> &_databas
 QVector<Recipe> RecipeService::recipes() {
   return recipeRepository->getRecipes();
 }
-Recipe RecipeService::recipeMaterials(int recipeId) {
+std::unique_ptr<Recipe>  RecipeService::recipeMaterials(int recipeId) {
   return recipeRepository->getRecipeMaterials(recipeId);
 }

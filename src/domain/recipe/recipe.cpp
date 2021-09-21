@@ -36,7 +36,7 @@ Material Recipe::getMaterialByName(const QString &name) {
     }
   }
 
-  return Material(0);
+  return {0, 0, QString(), QString()};
 }
 const QList<Component> &Recipe::getComponents() const {
   return components;
@@ -52,4 +52,31 @@ Component Recipe::getComponentByName(const QString &name) {
   }
 
   return {0, 0, 0, QString(), QString(), 0, 0};
+}
+void Recipe::updateComponentByName(const QString &name, double weight) {
+  for (auto &comp : components) {
+    if(QString::compare(comp.getComponentName(), name) == 0) {
+      comp.setWeight(weight);
+
+      break;
+    }
+  }
+}
+void Recipe::updateMaterialByName(const QString &name, double weight) {
+  for (auto &material : materials) {
+    if(QString::compare(material.getName(), name) == 0) {
+      material.setWeight(weight);
+
+      break;
+    }
+  }
+}
+void Recipe::updateComponentRatio(const QString &name, double ratio) {
+  for (auto &comp : components) {
+    if(QString::compare(comp.getComponentName(), name) == 0) {
+      comp.setRatio(ratio);
+
+      break;
+    }
+  }
 }

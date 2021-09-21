@@ -7,8 +7,8 @@ Component::Component(int id,
                      int recipe_id,
                      QString name,
                      QString description,
-                     float weight,
-                     float ratio)
+                     double weight,
+                     double ratio)
     : id(id),
       componentId(component_id),
       recipeId(recipe_id),
@@ -37,17 +37,17 @@ void Component::setRecipeId(int _recipeId) {
   recipeId = _recipeId;
 }
 
-float Component::getWeight() const {
+double Component::getWeight() const {
   return weight;
 }
-void Component::setWeight(float _targetWeight) {
-  weight = _targetWeight;
+void Component::setWeight(double targetWeight) {
+  weight = targetWeight;
 }
-float Component::getCurrentWeight() const {
+double Component::getCurrentWeight() const {
   return currentWeight;
 }
-void Component::setCurrentWeight(float _currentWeight) {
-  currentWeight = _currentWeight;
+void Component::setCurrentWeight(double currentWeight) {
+  currentWeight = currentWeight;
 }
 const QString &Component::getComponentName() const {
   return name;
@@ -61,9 +61,9 @@ const QString &Component::getComponentDescription() const {
 void Component::setComponentDescription(const QString &_description) {
   description = _description;
 }
-float Component::getRatio() const {
+double Component::getRatio() const {
   return ratio;
 }
-void Component::setRatio(float _ratio) {
-  ratio = _ratio;
+void Component::setRatio(double ratio) {
+  ratio = ratio;
 }

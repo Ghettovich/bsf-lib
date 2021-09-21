@@ -6,11 +6,10 @@
 class Material {
 
  public:
-  explicit Material(int id);
-  Material(int id, float weight, QString name, QString description);
+  Material(int id, double weight, QString name, QString description);
   int getId() const;
-  float getWeight() const;
-  void setWeight(float weight);
+  double getWeight() const;
+  void setWeight(double weight);
   const QString &getName() const;
   void setName(const QString &name);
   const QString &setDescription() const;
@@ -18,7 +17,7 @@ class Material {
 
  private:
   int id;
-  float weight = 0.00;
+  double weight = 0.00;
   QString name;
   QString description;
 };

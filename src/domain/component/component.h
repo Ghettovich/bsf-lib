@@ -1,12 +1,9 @@
 #ifndef BSF_COMPONENT_H
 #define BSF_COMPONENT_H
 
-#include <QObject>
 #include <QtCore/QString>
 
 class Component {
-
- Q_GADGET
 
  public:
   Component(int id,
@@ -14,8 +11,8 @@ class Component {
             int recipe_id,
             QString name,
             QString description,
-            float weight,
-            float ratio);
+            double weight,
+            double ratio);
   int getId();
   int getComponentId() const;
   void setComponentId(int _componentId);
@@ -25,12 +22,12 @@ class Component {
   void setComponentName(const QString &name);
   const QString &getComponentDescription() const;
   void setComponentDescription(const QString &description);
-  float getWeight() const;
-  void setWeight(float targetWeight);
-  float getCurrentWeight() const;
-  void setCurrentWeight(float currentWeight);
-  float getRatio() const;
-  void setRatio(float ratio);
+  double getWeight() const;
+  void setWeight(double targetWeight);
+  double getCurrentWeight() const;
+  void setCurrentWeight(double currentWeight);
+  double getRatio() const;
+  void setRatio(double ratio);
 
  private:
   int id;
@@ -38,8 +35,8 @@ class Component {
   int recipeId = 0;
   QString name = "";
   QString description = "";
-  float weight, currentWeight = 0;
-  float ratio;
+  double weight, currentWeight = 0;
+  double ratio;
 
 };
 
