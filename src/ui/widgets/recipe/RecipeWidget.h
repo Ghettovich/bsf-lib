@@ -24,6 +24,9 @@ class RecipeWidget : public QWidget {
   void onFinishEditingBasalt();
   void onFinishEditingSand();
   void onChangeSpinboxMaterialCement(double value);
+  void onChangeSpinboxWaterCement(double value);
+  void onChangeSpinboxPlastifierCement(double value);
+  void onChangeSpinboxPigmentCement(int value);
 
  private:
   Ui::RecipeWidget *ui = nullptr;
