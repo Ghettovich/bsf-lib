@@ -2,8 +2,6 @@
 
 #include <utility>
 
-//Material::Material(int id) : id(id) {}
-
 Material::Material(int id, double weight, QString name, QString description)
     : id(id), weight(weight), name(std::move(name)), description(std::move(description)) {}
 
@@ -25,6 +23,6 @@ void Material::setDescription(const QString &_description) {
 double Material::getWeight() const {
   return weight;
 }
-void Material::setWeight(double weight) {
-  weight = weight;
+void Material::setWeight(double _weight) {
+  weight = _weight;
 }

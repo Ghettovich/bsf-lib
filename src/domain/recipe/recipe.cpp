@@ -44,6 +44,19 @@ const QList<Component> &Recipe::getComponents() const {
 void Recipe::setComponents(QList<Component> _components) {
   components = std::move(_components);
 }
+double Recipe::calculateRecipeTotalWeight() {
+  double total = 0.00;
+
+  for (const auto &comp : components) {
+    total += comp.getWeight();
+  }
+
+  for (const auto &mat : materials) {
+    total += mat.getWeight();
+  }
+
+  return total;
+}
 Component Recipe::getComponentByName(const QString &name) {
   for(auto comp : components) {
     if(QString::compare(comp.getComponentName(), name) == 0) {

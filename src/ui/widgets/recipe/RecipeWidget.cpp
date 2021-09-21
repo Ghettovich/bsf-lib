@@ -53,11 +53,13 @@ void RecipeWidget::fillForm() {
   ui->lineEditWater->setText(QString::number(selectedRecipe->getComponentByName("water").getWeight(), 10, 2));
   ui->lineEditPlastifier->setText(QString::number(selectedRecipe->getComponentByName("plastifier").getWeight(), 10, 2));
   ui->lineEditPigment->setText(QString::number(selectedRecipe->getComponentByName("pigment").getWeight(), 10, 2));
+  ui->lcdNumberRecipeWeight->display(selectedRecipe->calculateRecipeTotalWeight());
 }
 void RecipeWidget::updateMaterialCement(double basaltWeight, double sandWeight, double ratio) {
   double weight = (basaltWeight + sandWeight) * ratio;
   selectedRecipe->updateComponentByName("cement", weight);
   ui->lineEditCement->setText(QString::number(selectedRecipe->getComponentByName("cement").getWeight(), 10, 2));
+  ui->lcdNumberRecipeWeight->display(selectedRecipe->calculateRecipeTotalWeight());
 }
 void RecipeWidget::onChangeRecipeComboBox(int index) {
   int recipeId = ui->comboBoxRecipe->itemData(index, Qt::UserRole).toInt();
@@ -109,14 +111,17 @@ void RecipeWidget::onChangeSpinboxWaterCement(double value) {
   double waterWeight = value * selectedRecipe->getComponentByName("cement").getWeight();
   selectedRecipe->updateComponentByName("water", waterWeight);
   ui->lineEditWater->setText(QString::number(selectedRecipe->getComponentByName("water").getWeight(), 10, 2));
+  ui->lcdNumberRecipeWeight->display(selectedRecipe->calculateRecipeTotalWeight());
 }
 void RecipeWidget::onChangeSpinboxPlastifierCement(double value) {
   double plastifierWeight = value * selectedRecipe->getComponentByName("cement").getWeight();
   selectedRecipe->updateComponentByName("plastifier", plastifierWeight);
   ui->lineEditPlastifier->setText(QString::number(selectedRecipe->getComponentByName("plastifier").getWeight(), 10, 2));
+  ui->lcdNumberRecipeWeight->display(selectedRecipe->calculateRecipeTotalWeight());
 }
 void RecipeWidget::onChangeSpinboxPigmentCement(int value) {
   double pigmentWeight = (selectedRecipe->getComponentByName("cement").getWeight() * value) / 100;
   selectedRecipe->updateComponentByName("pigment", pigmentWeight);
   ui->lineEditPigment->setText(QString::number(selectedRecipe->getComponentByName("pigment").getWeight(), 10, 2));
+  ui->lcdNumberRecipeWeight->display(selectedRecipe->calculateRecipeTotalWeight());
 }

@@ -20,6 +20,7 @@ class Recipe {
   void setMaterials(QList<Material> materials);
   const QList<Component> &getComponents() const;
   void setComponents(QList<Component> components);
+  double calculateRecipeTotalWeight();
 
   Material getMaterialByName(const QString &name);
   Component getComponentByName(const QString &name);
