@@ -21,6 +21,8 @@ class Recipe {
   const QList<Component> &getComponents() const;
   void setComponents(QList<Component> components);
   double calculateRecipeTotalWeight();
+  double getErrorMargin() const;
+  void setErrorMargin(double errorMargin);
 
   Material getMaterialByName(const QString &name);
   Component getComponentByName(const QString &name);
@@ -30,11 +32,11 @@ class Recipe {
 
  private:
   int id = 0;
+  double errorMargin = 0.00;
   QString title;
   QString description;
   QList<Material> materials;
   QList<Component> components;
-
 
 };
 #endif //BSF_RECIPE_H

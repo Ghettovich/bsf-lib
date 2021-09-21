@@ -19,8 +19,23 @@ class appservice::PrepareRecipeAppService : public QObject {
                                    std::shared_ptr<RecipeService> &recipeService,
                                    QObject *parent = nullptr);
 
+  /// Return a list of recipes
   QVector<Recipe> recipes();
-  std::unique_ptr<Recipe>  recipeMaterials(int recipeId);
+
+  /// Return a recipe
+  std::unique_ptr<Recipe> recipe(int recipeId);
+
+  /// Create a new recipe.
+  void saveRecipe(const Recipe &recipe);
+
+  /// Update recipe title, description and error margin.
+  void updateRecipe(int id, const QString &title, const QString &description, double errorMargin);
+
+  /// Update a material weight by their id.
+  void updateRecipeMaterial(int id, double weight);
+
+  /// Update a components weight and ratio by their id.
+  void updateRecipeComponent(int id, double weight, double ratio);
 
  private:
   std::shared_ptr<IODeviceService> deviceService;

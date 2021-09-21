@@ -11,7 +11,7 @@ QVector<Recipe> RecipeRepository::getRecipes() {
   QSqlDatabase db = databaseService->openDatabase();
   QSqlQuery query(db);
 
-  QString queryString = "SELECT id, title, description FROM recipe";
+  QString queryString = "SELECT id, title, description, error_margin FROM recipe";
 
   if (!query.exec(queryString)) {
     qDebug("DB table \"recipe\" findAll, Either select query error or table does not exists!");
@@ -25,13 +25,15 @@ QVector<Recipe> RecipeRepository::getRecipes() {
     Recipe recipe = Recipe(query.value("id").toInt());
     recipe.setTitle(query.value("title").toString());
     recipe.setDescription(query.value("description").toString());
+    recipe.setErrorMargin(query.value("error_margin").toDouble());
+
     recipeList.append(recipe);
   }
 
   return recipeList;
 }
 
-std::unique_ptr<Recipe> RecipeRepository::getRecipeMaterials(int recipeId) {
+std::unique_ptr<Recipe> RecipeRepository::getRecipe(int recipeId) {
   QSqlDatabase db = databaseService->openDatabase();
   QSqlQuery query(db);
 
@@ -44,7 +46,7 @@ std::unique_ptr<Recipe> RecipeRepository::getRecipeMaterials(int recipeId) {
   query.bindValue(":id", recipeId);
 
   if (!query.exec()) {
-    qDebug("DB table \"recipe 2\" findAll, Either select query error or table does not exists!");
+    qDebug("DB table \"recipe\" getRecipe, Either select query error or table does not exists!");
     qDebug() << QString(query.lastError().text());
     throw std::logic_error("Unknown Exception");
   }
@@ -80,7 +82,7 @@ QList<Material> RecipeRepository::getMaterials(int recipeId) {
   query.bindValue(":id", recipeId);
 
   if (!query.exec()) {
-    qDebug("DB table \"recipe 2\" findAll, Either select query error or table does not exists!");
+    qDebug("DB table \"recipe\" getMaterials, Either select query error or table does not exists!");
     qDebug() << QString(query.lastError().text());
     throw std::logic_error("Unknown Exception");
   }
@@ -113,7 +115,7 @@ QList<Component> RecipeRepository::getComponents(int recipeId) {
   query.bindValue(":id", recipeId);
 
   if (!query.exec()) {
-    qDebug("DB table \"recipe 2\" findAll, Either select query error or table does not exists!");
+    qDebug("DB table \"recipe\" getComponents, Either select query error or table does not exists!");
     qDebug() << QString(query.lastError().text());
     throw std::logic_error("Unknown Exception");
   }
@@ -133,4 +135,59 @@ QList<Component> RecipeRepository::getComponents(int recipeId) {
   }
 
   return components;
+}
+void RecipeRepository::saveRecipe(const Recipe &recipe) {
+
+}
+void RecipeRepository::updateRecipeMaterial(int id, double weight) {
+  QSqlDatabase db = databaseService->openDatabase();
+  QSqlQuery query(db);
+
+  QString queryString = "UPDATE recipe_material SET weight=:weight WHERE id=:id;";
+
+  query.prepare(queryString);
+  query.bindValue(":weight", weight);
+  query.bindValue(":id", id);
+
+  if (!query.exec()) {
+    qDebug("DB table \"recipe\" updateRecipeMaterial, updating recipe material failed!");
+    qDebug() << QString(query.lastError().text());
+    throw std::logic_error("Unknown Exception");
+  }
+}
+void RecipeRepository::updateRecipeComponent(int id, double weight, double ratio) {
+  QSqlDatabase db = databaseService->openDatabase();
+  QSqlQuery query(db);
+
+  QString queryString = "UPDATE component_ratio SET weight=:weight, ratio=:ratio WHERE id=:id ";
+
+  query.prepare(queryString);
+  query.bindValue(":weight", weight);
+  query.bindValue(":ratio", ratio);
+  query.bindValue(":id", id);
+
+  if (!query.exec()) {
+    qDebug("DB table \"recipe\" updateRecipeComponent, updating recipe components failed!");
+    qDebug() << QString(query.lastError().text());
+    throw std::logic_error("Unknown Exception");
+  }
+}
+void RecipeRepository::updateRecipe(int id, const QString &title, const QString &description, double errorMargin) {
+  QSqlDatabase db = databaseService->openDatabase();
+  QSqlQuery query(db);
+
+  QString queryString = "UPDATE recipe SET title=:title, description=:description, error_margin=:error_margin "
+                        "WHERE id=:id ";
+
+  query.prepare(queryString);
+  query.bindValue(":title", title);
+  query.bindValue(":description", description);
+  query.bindValue(":error_margin", errorMargin);
+  query.bindValue(":id", id);
+
+  if (!query.exec()) {
+    qDebug("DB table \"recipe\" updateRecipe, updating recipe failed!");
+    qDebug() << QString(query.lastError().text());
+    throw std::logic_error("Unknown Exception");
+  }
 }

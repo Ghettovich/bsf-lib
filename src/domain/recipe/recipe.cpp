@@ -93,3 +93,9 @@ void Recipe::updateComponentRatio(const QString &name, double ratio) {
     }
   }
 }
+double Recipe::getErrorMargin() const {
+  return errorMargin;
+}
+void Recipe::setErrorMargin(double _errorMargin) {
+  errorMargin = _errorMargin;
+}

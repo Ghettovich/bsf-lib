@@ -13,6 +13,8 @@ RecipeWidget::RecipeWidget(std::shared_ptr<PrepareRecipeAppService> &_recipeAppS
 
   createComboBox();
 
+  QObject::connect(ui->plainTextEditRecipe, &QPlainTextEdit::textChanged,
+                   this, &RecipeWidget::onChangePlainTextRecipeDescription);
   QObject::connect(ui->lineEditBasalt, &QLineEdit::editingFinished, this, &RecipeWidget::onFinishEditingBasalt);
   QObject::connect(ui->lineEditSand, &QLineEdit::editingFinished, this, &RecipeWidget::onFinishEditingSand);
   QObject::connect(ui->doubleSpinBoxMaterialCementRatio, QOverload<double>::of(&QDoubleSpinBox::valueChanged),
@@ -23,6 +25,8 @@ RecipeWidget::RecipeWidget(std::shared_ptr<PrepareRecipeAppService> &_recipeAppS
                    this, &RecipeWidget::onChangeSpinboxPlastifierCement);
   QObject::connect(ui->spinBoxPigmentCementRatio, QOverload<int>::of(&QSpinBox::valueChanged),
                    this, &RecipeWidget::onChangeSpinboxPigmentCement);
+
+  QObject::connect(ui->pushButtonEditRecipe, &QPushButton::clicked, this, &RecipeWidget::onClickEditRecipe);
 }
 RecipeWidget::~RecipeWidget() {
   delete ui;
@@ -54,6 +58,8 @@ void RecipeWidget::fillForm() {
   ui->lineEditPlastifier->setText(QString::number(selectedRecipe->getComponentByName("plastifier").getWeight(), 10, 2));
   ui->lineEditPigment->setText(QString::number(selectedRecipe->getComponentByName("pigment").getWeight(), 10, 2));
   ui->lcdNumberRecipeWeight->display(selectedRecipe->calculateRecipeTotalWeight());
+
+  ui->lineEditErrorMargin->setText(QString::number(selectedRecipe->getErrorMargin(), 10, 2));
 }
 void RecipeWidget::updateMaterialCement(double basaltWeight, double sandWeight, double ratio) {
   double weight = (basaltWeight + sandWeight) * ratio;
@@ -65,7 +71,7 @@ void RecipeWidget::onChangeRecipeComboBox(int index) {
   int recipeId = ui->comboBoxRecipe->itemData(index, Qt::UserRole).toInt();
 
   if(recipeId != 0) {
-    selectedRecipe = prepareRecipeAppService->recipeMaterials(recipeId);
+    selectedRecipe = prepareRecipeAppService->recipe(recipeId);
     fillForm();
   }
 }
@@ -78,6 +84,9 @@ void RecipeWidget::onFinishEditingBasalt() {
   if(succes) {
     selectedRecipe->updateMaterialByName("basalt 0-8", basaltWeight);
     updateMaterialCement(basaltWeight, sandWeight, ratio);
+
+    prepareRecipeAppService->updateRecipeMaterial(selectedRecipe->getMaterialByName("basalt 0-8").getId(),
+                                                  basaltWeight);
   } else {
     qWarning() << "Failed to convert value in form";
   }
@@ -91,6 +100,9 @@ void RecipeWidget::onFinishEditingSand() {
   if(succes) {
     selectedRecipe->updateMaterialByName("sand 0-2", sandWeight);
     updateMaterialCement(basaltWeight, sandWeight, ratio);
+
+    prepareRecipeAppService->updateRecipeMaterial(selectedRecipe->getMaterialByName("sand 0-2").getId(),
+                                                  sandWeight);
   } else {
     qWarning() << "Failed to convert value in form";
   }
@@ -103,6 +115,10 @@ void RecipeWidget::onChangeSpinboxMaterialCement(double value) {
   if(succes) {
     selectedRecipe->updateComponentRatio("cement", value);
     updateMaterialCement(basaltWeight, sandWeight, value);
+
+    prepareRecipeAppService->updateRecipeComponent(selectedRecipe->getComponentByName("cement").getId(),
+                                                   selectedRecipe->getComponentByName("cement").getWeight(),
+                                                   value);
   } else {
     qWarning() << "Failed to convert value in form";
   }
@@ -112,16 +128,43 @@ void RecipeWidget::onChangeSpinboxWaterCement(double value) {
   selectedRecipe->updateComponentByName("water", waterWeight);
   ui->lineEditWater->setText(QString::number(selectedRecipe->getComponentByName("water").getWeight(), 10, 2));
   ui->lcdNumberRecipeWeight->display(selectedRecipe->calculateRecipeTotalWeight());
+
+  prepareRecipeAppService->updateRecipeComponent(selectedRecipe->getComponentByName("water").getId(),
+                                                 waterWeight,
+                                                 value);
 }
 void RecipeWidget::onChangeSpinboxPlastifierCement(double value) {
   double plastifierWeight = value * selectedRecipe->getComponentByName("cement").getWeight();
   selectedRecipe->updateComponentByName("plastifier", plastifierWeight);
   ui->lineEditPlastifier->setText(QString::number(selectedRecipe->getComponentByName("plastifier").getWeight(), 10, 2));
   ui->lcdNumberRecipeWeight->display(selectedRecipe->calculateRecipeTotalWeight());
+
+  prepareRecipeAppService->updateRecipeComponent(selectedRecipe->getComponentByName("plastifier").getId(),
+                                                 plastifierWeight,
+                                                 value);
 }
 void RecipeWidget::onChangeSpinboxPigmentCement(int value) {
   double pigmentWeight = (selectedRecipe->getComponentByName("cement").getWeight() * value) / 100;
   selectedRecipe->updateComponentByName("pigment", pigmentWeight);
   ui->lineEditPigment->setText(QString::number(selectedRecipe->getComponentByName("pigment").getWeight(), 10, 2));
   ui->lcdNumberRecipeWeight->display(selectedRecipe->calculateRecipeTotalWeight());
+
+  prepareRecipeAppService->updateRecipeComponent(selectedRecipe->getComponentByName("pigment").getId(),
+                                                 pigmentWeight,
+                                                 value);
+}
+void RecipeWidget::onClickEditRecipe() {
+  if(ui->plainTextEditRecipe->isEnabled()) {
+    ui->plainTextEditRecipe->setEnabled(false);
+    ui->pushButtonEditRecipe->setText("Edit");
+  } else {
+    ui->plainTextEditRecipe->setEnabled(true);
+    ui->pushButtonEditRecipe->setText("Save");
+  }
+}
+void RecipeWidget::onChangePlainTextRecipeDescription() {
+  prepareRecipeAppService->updateRecipe(selectedRecipe->getId(),
+                                        selectedRecipe->getTitle(),
+                                        ui->plainTextEditRecipe->toPlainText(),
+                                        selectedRecipe->getErrorMargin());
 }

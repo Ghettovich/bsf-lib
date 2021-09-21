@@ -15,7 +15,11 @@ class RecipeRepository : public QObject {
  public:
   explicit RecipeRepository(std::shared_ptr<service::DatabaseService> &databaseService, QObject *parent = nullptr);
   QVector<Recipe> getRecipes();
-  std::unique_ptr<Recipe> getRecipeMaterials(int recipeId);
+  std::unique_ptr<Recipe> getRecipe(int recipeId);
+  void saveRecipe(const Recipe &recipe);
+  void updateRecipeMaterial(int id, double weight);
+  void updateRecipeComponent(int id, double weight, double ratio);
+  void updateRecipe(int id, const QString &title, const QString &description, double errorMargin);
 
  private:
   std::shared_ptr<service::DatabaseService> databaseService;
