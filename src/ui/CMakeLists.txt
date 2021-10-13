@@ -13,6 +13,7 @@ if (Qt5Widgets_FOUND)
     set(HEADER_LIST
             # STACKED WIDGETS
             widgets/home/home.h
+            widgets/mixture/mixture.h
             widgets/recipe/RecipeWidget.h
             widgets/experimental/experimental.h
             )
@@ -21,6 +22,8 @@ if (Qt5Widgets_FOUND)
             # STACKED WIDGETS
             widgets/home/home.cpp
             widgets/home/home.ui
+            widgets/mixture/mixture.cpp
+            widgets/mixture/mixture.ui
             widgets/recipe/RecipeWidget.cpp
             widgets/recipe/recipewidget.ui
             widgets/experimental/experimental.cpp

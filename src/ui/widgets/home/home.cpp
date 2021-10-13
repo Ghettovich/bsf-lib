@@ -6,14 +6,14 @@
 using namespace appservice;
 
 Home::Home(std::shared_ptr<IODeviceAppService> &_deviceAppService, QWidget *parent) :
-  ui(new Ui::Home),
-  deviceAppService(_deviceAppService),
-  QWidget(parent) {
+    ui(new Ui::Home),
+    deviceAppService(_deviceAppService),
+    QWidget(parent) {
   ui->setupUi(this);
 
   auto deviceList = deviceAppService->findAll(IODeviceType::DETECTIONSENSOR);
 
-  for (const auto &device :deviceList) {
+  for (const auto &device: deviceList) {
     QString text = QString("%1 OFF").arg(device->getDescription());
     auto listWidgetItem = new QListWidgetItem(text);
     listWidgetItem->setData(Qt::UserRole, device->getId());
@@ -22,7 +22,7 @@ Home::Home(std::shared_ptr<IODeviceAppService> &_deviceAppService, QWidget *pare
 
   deviceList = deviceAppService->findAll(IODeviceType::RELAY);
 
-  for (const auto &device :deviceList) {
+  for (const auto &device: deviceList) {
     QString text = QString("%1 OFF").arg(device->getDescription());
     auto listWidgetItem = new QListWidgetItem(text);
     listWidgetItem->setData(Qt::UserRole, device->getId());

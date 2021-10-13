@@ -22,9 +22,9 @@ class StateService : public QObject {
   void onNewIODeviceStates(const QByteArray &message, const QString &topic);
 
  private:
-  const QString proximityLiftTopic = "/proximity/lift";
-  const QString relayStatesTopic = "/relay/states";
-  const QString recipeDataTopic = "/recipe/data";
+  const QString proximityLiftTopic = "proximity/lift";
+  const QString relayStatesTopic = "relay/states";
+  const QString recipeDataTopic = "recipe/data";
 
   QMap<int, IODevice *> deviceStateMap;
   std::shared_ptr<service::BrokerService> brokerService;

@@ -19,7 +19,7 @@ class service::BrokerService : public QObject {
   void configureRecipe(int recipeId, int componentId, int targetWeight);
 
  private:
-  const QString toggleRelayTopic = "/toggle/relay";
+  const QString toggleRelayTopic = "toggle/relay";
   const QString configureRecipeTopic = "/config/recipe";
 
   std::unique_ptr<MqttClient> m_client;

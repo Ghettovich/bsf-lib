@@ -81,7 +81,7 @@ void MqttClient::onStateChanged() {
       break;
     }
     case QMqttClient::Connecting: {
-      qDebug() << QLatin1String(": State Change Conecting ... ");
+      qDebug() << QLatin1String(": State Change Connecting ... ");
       break;
     }
     case QMqttClient::Connected: {
@@ -95,11 +95,11 @@ void MqttClient::onStateChanged() {
 void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicName &topic) {
   emit receivedSubscriptionData(message, topic.name());
 
-//  const QString content = QDateTime::currentDateTime().toString()
-//      + QLatin1String(" Received Topic: ")
-//      + topic.name()
-//      + QLatin1String(" Message: ")
-//      + message
-//      + QLatin1Char('\n');
-//  qDebug() << content;
+  const QString content = QDateTime::currentDateTime().toString()
+      + QLatin1String(" Received Topic: ")
+      + topic.name()
+      + QLatin1String(" Message: ")
+      + message
+      + QLatin1Char('\n');
+  qDebug() << content;
 }

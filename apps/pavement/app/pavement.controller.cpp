@@ -8,6 +8,7 @@
 #include <widgets/home/home.h>
 #include <widgets/experimental/experimental.h>
 #include <widgets/recipe/RecipeWidget.h>
+#include <widgets/mixture/mixture.h>
 
 using namespace appservice;
 using namespace service;
@@ -48,7 +49,8 @@ void PavementController::createStackedWidget(QLayout *layout) {
   auto home = new Home(deviceAppService, stackedWidget);
   stackedWidget->addWidget(home);
 
-  stackedWidget->addWidget(new QWidget); // ToDo: replace with new mixture
+  auto mixture = new Mixture(deviceAppService, recipeAppService, stackedWidget);
+  stackedWidget->addWidget(mixture);
 
   auto experimental = new Experimental(deviceAppService, statemachineAppService, stackedWidget);
   stackedWidget->addWidget(experimental);
