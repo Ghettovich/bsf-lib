@@ -45,4 +45,8 @@ void Mixture::fillRecipeGroupBox() {
 }
 void Mixture::onClickStartBatch() {
   ui->stackedWidget->setCurrentIndex(1);
+  emit stackedWidgetIndexChanged(ui->stackedWidget->currentIndex() - 1);
+}
+void Mixture::setStackedWidgetIndex(int index) {
+  ui->stackedWidget->setCurrentIndex(index);
 }

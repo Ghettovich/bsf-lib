@@ -50,6 +50,8 @@ void RecipeWidget::fillForm() {
   ui->lineEditCement->setText(QString::number(selectedRecipe->getComponentByName("cement").getWeight(), 10, 2));
   ui->doubleSpinBoxMaterialCementRatio->setValue(selectedRecipe->getComponentByName("cement").getRatio());
 
+  ui->lineEditIntegrationFactor->setText(QString::number(selectedRecipe->getIntegrationFactor(), 10, 2));
+
   ui->doubleSpinBoxWaterCement->setValue(selectedRecipe->getComponentByName("water").getRatio());
   ui->doubleSpinBoxPlastifierCementRatio->setValue(selectedRecipe->getComponentByName("plastifier").getRatio());
   ui->spinBoxPigmentCementRatio->setValue((int)selectedRecipe->getComponentByName("pigment").getRatio());

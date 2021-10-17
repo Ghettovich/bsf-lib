@@ -14,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->pushButtonNewMixture, &QPushButton::clicked, this, &MainWindow::onShowNewMixture);
   connect(ui->pushButtonExperimental, &QPushButton::clicked, this, &MainWindow::onShowExperimental);
   connect(ui->pushButtonRecipes, &QPushButton::clicked, this, &MainWindow::onShowRecipes);
+  connect(ui->pushButtonBack, &QPushButton::clicked, [=]{
+    controller->updateMixtureWidget();
+  });
 }
 
 MainWindow::~MainWindow() {

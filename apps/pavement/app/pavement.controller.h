@@ -2,6 +2,7 @@
 #define CONTROLLER_PAVEMENTCONTROLLER_H_
 
 #include <QObject>
+#include <QWidget>
 #include <QtWidgets/QLayout>
 #include <QtWidgets/QStackedWidget>
 
@@ -11,6 +12,8 @@
 #include <appservice.ui/ui.appservice.h>
 #include <appservice.prepare.recipe/preparerecipeappservice.h>
 
+#include <widgets/mixture/mixture.h>
+
 class PavementController : public QObject {
  Q_OBJECT
 
@@ -18,9 +21,12 @@ class PavementController : public QObject {
   explicit PavementController(QObject *parent = nullptr);
   void createStackedWidget(QLayout *layout);
   void updateCurrentWidget(int widgetNr);
+  void updateMixtureWidget();
 
  private:
+  int mixtureWidgetPreviousIndex = 0;
   QStackedWidget *stackedWidget = nullptr;
+  Mixture *mixtureWidget = nullptr;
   std::shared_ptr<appservice::IODeviceAppService> deviceAppService;
   std::shared_ptr<appservice::BrokerAppService> brokerAppService;
   std::shared_ptr<appservice::StateMachineAppService> statemachineAppService;

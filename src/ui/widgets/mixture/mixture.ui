@@ -14,10 +14,13 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="topMargin">
+    <number>0</number>
+   </property>
    <item row="2" column="0">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="page">
       <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1">
@@ -34,7 +37,7 @@
         <number>0</number>
        </property>
        <item row="0" column="0">
-        <layout class="QVBoxLayout" name="verticalLayout_2" stretch="2,2,1">
+        <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,2,1">
          <property name="bottomMargin">
           <number>0</number>
          </property>
@@ -44,6 +47,9 @@
             <string>Recipe info</string>
            </property>
            <layout class="QFormLayout" name="formLayout">
+            <property name="topMargin">
+             <number>0</number>
+            </property>
             <item row="0" column="0">
              <widget class="QLabel" name="labelSelectRecipe">
               <property name="text">
@@ -395,183 +401,171 @@ All above targets have a 1% error margin</string>
       </layout>
      </widget>
      <widget class="QWidget" name="page_2">
-      <widget class="QGroupBox" name="groupBox">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>40</y>
-         <width>601</width>
-         <height>701</height>
-        </rect>
+      <layout class="QGridLayout" name="gridLayout_8">
+       <property name="topMargin">
+        <number>0</number>
        </property>
-       <property name="title">
-        <string>Bin material</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_7">
-        <item row="3" column="0" colspan="2">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Using integration factor: N</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="3">
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="text">
-           <string>Dose N pulses</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1" colspan="2">
-         <widget class="QLineEdit" name="lineEdit"/>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Set pulsecount</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="2">
-         <widget class="QPushButton" name="pushButton">
-          <property name="text">
-           <string>Start dosing materials</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="4">
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::Expanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="1" column="0" colspan="5">
-         <widget class="QTableWidget" name="tableWidget">
-          <row>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>2</string>
-           </property>
-          </row>
-          <column>
-           <property name="text">
-            <string>Material</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Pulsecount</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Weight</string>
-           </property>
-          </column>
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBoxBinMaterial">
+         <property name="title">
+          <string>Bin material</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="3" column="0" colspan="2">
+           <widget class="QLabel" name="labelIntegrationFactor">
+            <property name="text">
+             <string>Using integration factor: N</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QPushButton" name="pushButtonDoseNPulses">
+            <property name="text">
+             <string>Dose N pulses</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1" colspan="2">
+           <widget class="QLineEdit" name="lineEditPulseCount"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="labelPulseCount">
+            <property name="text">
+             <string>Set pulsecount</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QPushButton" name="pushButtonStartDosing">
+            <property name="text">
+             <string>Start dosing materials</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="4">
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0" colspan="5">
+           <widget class="QTableWidget" name="tableWidgetBinR">
+            <row>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </row>
+            <row>
+             <property name="text">
+              <string>2</string>
+             </property>
+            </row>
+            <column>
+             <property name="text">
+              <string>Material</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Pulsecount</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Weight</string>
+             </property>
+            </column>
+            <item row="0" column="0">
+             <property name="text">
+              <string>Basalt</string>
+             </property>
+            </item>
+            <item row="0" column="1">
+             <property name="text">
+              <string>900</string>
+             </property>
+            </item>
+            <item row="0" column="2">
+             <property name="text">
+              <string>94</string>
+             </property>
+            </item>
+            <item row="1" column="0">
+             <property name="text">
+              <string>Basalt</string>
+             </property>
+            </item>
+            <item row="1" column="1">
+             <property name="text">
+              <string>100</string>
+             </property>
+            </item>
+            <item row="1" column="2">
+             <property name="text">
+              <string>6</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="5">
+           <widget class="QLCDNumber" name="lcdNumberBinMaterial">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>200</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3" colspan="2">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Recipe progression</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_9">
           <item row="0" column="0">
-           <property name="text">
-            <string>Basalt</string>
-           </property>
-          </item>
-          <item row="0" column="1">
-           <property name="text">
-            <string>900</string>
-           </property>
-          </item>
-          <item row="0" column="2">
-           <property name="text">
-            <string>94</string>
-           </property>
+           <widget class="QLCDNumber" name="lcdNumberRecipeProgression">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>200</height>
+             </size>
+            </property>
+           </widget>
           </item>
           <item row="1" column="0">
-           <property name="text">
-            <string>Basalt</string>
-           </property>
+           <widget class="QListWidget" name="listWidgetRecipeItems"/>
           </item>
-          <item row="1" column="1">
-           <property name="text">
-            <string>100</string>
-           </property>
-          </item>
-          <item row="1" column="2">
-           <property name="text">
-            <string>6</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="5">
-         <widget class="QLCDNumber" name="lcdNumberScaleBin_2">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>200</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="3" colspan="2">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QGroupBox" name="groupBox_2">
-       <property name="geometry">
-        <rect>
-         <x>840</x>
-         <y>30</y>
-         <width>621</width>
-         <height>481</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>Recipe progression</string>
-       </property>
-       <widget class="QLCDNumber" name="lcdNumberRecipeProgression">
-        <property name="geometry">
-         <rect>
-          <x>180</x>
-          <y>60</y>
-          <width>351</width>
-          <height>141</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QListWidget" name="listWidget">
-        <property name="geometry">
-         <rect>
-          <x>140</x>
-          <y>230</y>
-          <width>256</width>
-          <height>192</height>
-         </rect>
-        </property>
-       </widget>
-      </widget>
+         </layout>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>

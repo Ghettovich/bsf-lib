@@ -99,3 +99,9 @@ double Recipe::getErrorMargin() const {
 void Recipe::setErrorMargin(double _errorMargin) {
   errorMargin = _errorMargin;
 }
+void Recipe::setIntegrationFactor(double factor) {
+  integrationFactor = factor;
+}
+double Recipe::getIntegrationFactor() const {
+  return integrationFactor;
+}

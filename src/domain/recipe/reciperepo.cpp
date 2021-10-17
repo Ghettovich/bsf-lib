@@ -38,7 +38,7 @@ std::unique_ptr<Recipe> RecipeRepository::getRecipe(int recipeId) {
   QSqlQuery query(db);
 
   QString queryString =
-      "SELECT r.id, r.title, r.description "
+      "SELECT r.id, r.title, r.description, r.integration_factor "
       "FROM recipe r "
       "WHERE r.id =:id ";
 
@@ -56,6 +56,7 @@ std::unique_ptr<Recipe> RecipeRepository::getRecipe(int recipeId) {
 
     recipe->setTitle(query.value("title").toString());
     recipe->setDescription(query.value("description").toString());
+    recipe->setIntegrationFactor(query.value("integration_factor").toDouble());
 
     auto materials = getMaterials(recipe->getId());
     recipe->setMaterials(materials);

@@ -21,6 +21,7 @@ class Mixture : public QWidget {
  public slots:
   void onChangeRecipeComboBox(int index);
   void onClickStartBatch();
+  void setStackedWidgetIndex(int index);
 
  private:
   Ui::Mixture *ui = nullptr;
@@ -30,6 +31,9 @@ class Mixture : public QWidget {
 
   void createRecipeComboBox();
   void fillRecipeGroupBox();
+
+ signals:
+  void stackedWidgetIndexChanged(int previousIndex);
 };
 
 #endif //BSF_LIB_SRC_UI_WIDGETS_MIXTURE_MIXTURE_H_

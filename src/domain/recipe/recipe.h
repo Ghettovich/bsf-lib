@@ -23,6 +23,8 @@ class Recipe {
   double calculateRecipeTotalWeight();
   double getErrorMargin() const;
   void setErrorMargin(double errorMargin);
+  void setIntegrationFactor(double factor);
+  double getIntegrationFactor() const;
 
   Material getMaterialByName(const QString &name);
   Component getComponentByName(const QString &name);
@@ -35,6 +37,7 @@ class Recipe {
   double errorMargin = 0.00;
   QString title;
   QString description;
+  double integrationFactor;
   QList<Material> materials;
   QList<Component> components;
 
