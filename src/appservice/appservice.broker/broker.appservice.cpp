@@ -28,3 +28,9 @@ void BrokerAppService::onToggleRelay(int id) {
 void BrokerAppService::configureRecipe(int recipeId, int componentId, int targetWeight) {
   brokerService->configureRecipe(recipeId, componentId, targetWeight);
 }
+void BrokerAppService::calibrateScale(int scaleId, bool confirm, double weight) {
+  brokerService->calibrateScale(scaleId, confirm, weight);
+}
+void BrokerAppService::tareScale(int scaleId) {
+  brokerService->tareScale(scaleId);
+}

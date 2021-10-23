@@ -44,14 +44,17 @@ void IODeviceService::onUpdateIODeviceState(int deviceId, IODevice::IO_DEVICE_HI
   }
 }
 
-void IODeviceService::onUpdateScaleDevice(int deviceId,
-                                          IODevice::IO_DEVICE_HIGH_LOW state,
-                                          int recipeId,
-                                          int componentId,
-                                          int weight) {
+void IODeviceService::onUpdateScaleDevice(int deviceId, double weight) {
+  if(!deviceMap.contains(deviceId)) {
+    qWarning() << "Could not find deviceId " << deviceId << " in device map";
+  }
+  else {
+    std::dynamic_pointer_cast<WeightSensor>(deviceMap.value(deviceId))->setCurrentWeight((int)weight);
+    emit scaleChanged(deviceId, std::dynamic_pointer_cast<WeightSensor>(deviceMap.value(deviceId))->getCurrentWeight());
+    qDebug() << "Received weight = " << std::dynamic_pointer_cast<WeightSensor>(deviceMap.value(deviceId))->getCurrentWeight();
 
+  }
   // ToDo implement and act on state change scale
-
   // ToDo update current weight and emit scale data changes
 }
 bool IODeviceService::isDeviceOn(int deviceId) {

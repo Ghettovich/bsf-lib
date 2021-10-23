@@ -36,7 +36,7 @@ class appservice::IODeviceAppService : public QObject {
   void updateIODeviceState(int deviceId, bool on);
 
   /// Emit a signal that the weight of a scale got updated.
-  void updateScale(int deviceId, bool on, int recipeId, int componentId, int weight);
+  void updateScale(int deviceId, int weight);
 };
 
 #endif //APPSERVICE_IODEVICES_H_

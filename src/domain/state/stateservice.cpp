@@ -9,7 +9,8 @@
 using namespace service;
 
 StateService::StateService(std::shared_ptr<service::BrokerService> &_brokerService,
-                           std::shared_ptr<IODeviceService> &_deviceService, QObject *parent) :
+                           std::shared_ptr<IODeviceService> &_deviceService,
+                           QObject *parent) :
     QObject(parent), brokerService(_brokerService), deviceService(_deviceService) {
 
   for (const auto &dev : deviceService->findAllDevices()) {
@@ -29,7 +30,7 @@ StateService::StateService(std::shared_ptr<service::BrokerService> &_brokerServi
 void StateService::createDeviceStateSubscriptions() {
   brokerService->addSubscription(relayStatesTopic);
   brokerService->addSubscription(proximityLiftTopic);
-  brokerService->addSubscription(recipeDataTopic);
+  brokerService->addSubscription(scaleDataTopic);
 }
 
 void StateService::parseRelayStates(const QByteArray &message) {
@@ -48,10 +49,8 @@ void StateService::parseIODevices(const QByteArray &payload) {
 
     if (jsonDocument["proximities"].isArray()) {
       ioDeviceArray = jsonDocument["proximities"].toArray();
-      //addProximitiesToArray(ioDeviceArray);
     } else if (jsonDocument["relays"].isArray()) {
       ioDeviceArray = jsonDocument["relays"].toArray();
-      //addRelaysToArray(ioDeviceArray);
     }
 
     updateIODevices(ioDeviceArray);
@@ -79,23 +78,11 @@ void StateService::updateScale(const QByteArray &message) {
   QJsonDocument jsonDocument(QJsonDocument::fromJson(message));
 
   if (validateJsonDocument(jsonDocument)) {
-    IODevice::IO_DEVICE_HIGH_LOW scaleState;
-    scaleState = jsonDocument["low"].toInt() == 0 ? IODevice::LOW : IODevice::HIGH;
+    int scaleId = jsonDocument["scaleId"].toInt();
+    double weight = jsonDocument["weight"].toDouble();
 
-    auto device = dynamic_cast<WeightSensor*>(deviceStateMap.value(jsonDocument["did"].toInt()));
-
-    if(device) {
-      device->setDeviceState(scaleState);
-      device->setRecipeId(jsonDocument["rid"].toInt());
-      device->setComponentId(jsonDocument["cid"].toInt());
-      device->setCurrentWeight(jsonDocument["weight"].toInt());
-
-      emit updateScaleDevice(device->getId(),
-                       device->getDeviceState(),
-                       device->getRecipeId(),
-                       device->getComponentId(),
-                       device->getCurrentWeight());
-    }
+    emit updateScaleDevice(scaleId, weight);
+    qDebug() << message;
   }
 }
 
@@ -122,7 +109,7 @@ void StateService::onNewIODeviceStates(const QByteArray &message, const QString 
     parseRelayStates(message);
   } else if (topic.compare(proximityLiftTopic) == 0) {
     parseProximityStates(message);
-  } else if (topic.compare(recipeDataTopic) == 0) {
+  } else if (topic.compare(scaleDataTopic) == 0) {
     updateScale(message);
   }
 }

@@ -53,4 +53,20 @@ void BrokerService::configureRecipe(int recipeId, int componentId, int targetWei
 
   m_client->publishMessage(doc.toJson(), configureRecipeTopic, qos);
 }
+void BrokerService::calibrateScale(int scaleId, bool confirm, double weight) {
+  QJsonObject jsonPayloadObject;
+  jsonPayloadObject["id"] = scaleId;
+  jsonPayloadObject["weight"] = weight;
+  jsonPayloadObject["confirm"] = confirm;
+
+  auto doc = QJsonDocument(jsonPayloadObject);
+  m_client->publishMessage(doc.toJson(), calibrateScaleTopic);
+}
+void BrokerService::tareScale(int scaleId) {
+  QJsonObject jsonPayloadObject;
+  jsonPayloadObject["id"] = scaleId;
+
+  auto doc = QJsonDocument(jsonPayloadObject);
+  m_client->publishMessage(doc.toJson(), tareScaleTopic);
+}
 

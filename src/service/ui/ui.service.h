@@ -20,6 +20,7 @@ class service::UiService : public QObject {
  public slots:
   void onUpdateWidgetState(int deviceId, bool on);
   void onToggleRelay(int relayId);
+  void onUpdateScale(int deviceId, int weight);
 
  private:
   QMap<int, SensorWidget *> widgetMap;

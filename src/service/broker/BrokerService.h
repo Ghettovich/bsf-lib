@@ -16,10 +16,14 @@ class service::BrokerService : public QObject {
   void connectToHost();
   void addSubscription(const QString &topic, quint8 qos = 1);
   void toggleRelay(int relayId);
+  void tareScale(int scaleId);
+  void calibrateScale(int scaleId, bool confirm, double weight);
   void configureRecipe(int recipeId, int componentId, int targetWeight);
 
  private:
   const QString toggleRelayTopic = "toggle/relay";
+  const QString tareScaleTopic = "scale/tare";
+  const QString calibrateScaleTopic = "scale/calibrate";
   const QString configureRecipeTopic = "/config/recipe";
 
   std::unique_ptr<MqttClient> m_client;

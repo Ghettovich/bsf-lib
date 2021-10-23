@@ -20,6 +20,7 @@ class appservice::UiAppService : public QObject {
 
  public slots:
   void onUpdateWidget(int deviceId, bool on);
+  void onUpdateScaleWidget(int deviceId, int weight);
 
  private:
   std::shared_ptr<service::UiService> uiService;

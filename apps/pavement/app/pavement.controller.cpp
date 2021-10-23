@@ -38,6 +38,9 @@ PavementController::PavementController(QObject *parent) : QObject(parent) {
   connect(deviceAppService.get(), &IODeviceAppService::updateIODeviceState,
           uiAppService.get(), &UiAppService::onUpdateWidget);
 
+  connect(deviceAppService.get(), &IODeviceAppService::updateScale,
+          uiAppService.get(), &UiAppService::onUpdateScaleWidget);
+
   connect(uiAppService.get(), &UiAppService::toggleRelay,
           brokerAppService.get(), &BrokerAppService::onToggleRelay);
 }
@@ -48,8 +51,9 @@ void PavementController::createStackedWidget(QLayout *layout) {
   auto home = new Home(deviceAppService, stackedWidget);
   stackedWidget->addWidget(home);
 
-  mixtureWidget = new Mixture(deviceAppService, recipeAppService, stackedWidget);
+  mixtureWidget = new Mixture(deviceAppService, recipeAppService, brokerAppService, stackedWidget);
   stackedWidget->addWidget(mixtureWidget);
+  uiAppService->addWidget(mixtureWidget->deviceWidgets());
 
   QObject::connect(mixtureWidget, &Mixture::stackedWidgetIndexChanged, [=](int previousIndex) {
     mixtureWidgetPreviousIndex = previousIndex;

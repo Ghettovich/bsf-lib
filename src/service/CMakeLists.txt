@@ -14,6 +14,8 @@ set(HEADER_LIST
         ui/button/relay.button.h
         # LABELS
         ui/label/proximity.label.h
+        # LCD Number
+        ui/scale/scale.lcdnumber.h
         # FONTS
         ui/fonts/MaterialRegular.h
         ui/fonts/QFontIcon.h
@@ -32,6 +34,8 @@ add_library(service SHARED
         ui/button/relay.button.cpp
         # LABELS
         ui/label/proximity.label.cpp
+        # LCD Number
+        ui/scale/scale.lcdnumber.cpp
         # FONTS
         ui/resource/theme.qrc
         ui/fonts/MaterialRegular.cpp

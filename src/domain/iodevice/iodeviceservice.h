@@ -33,8 +33,8 @@ class IODeviceService : public QObject {
   /// If a proximity (Pull-up) reports LOW its actually on. And, if a scale (digital) reports HIGH it is also on.
   void onUpdateIODeviceState(int deviceId, IODevice::IO_DEVICE_HIGH_LOW state);
 
- /// Update a scale device and their weight.
-  void onUpdateScaleDevice(int deviceId, IODevice::IO_DEVICE_HIGH_LOW state, int recipeId, int componentId, int weight);
+  /// Update a scale device and their weight.
+  void onUpdateScaleDevice(int deviceId, double weight);
 
  private:
   QMap<int, std::shared_ptr<IODevice>> deviceMap;
@@ -42,7 +42,7 @@ class IODeviceService : public QObject {
 
  signals:
   void stateChangdIODevice(int deviceId, bool on);
-  void scaleChanged(int deviceId, bool on, int recipeId, int componentId, int weight);
+  void scaleChanged(int deviceId, int weight);
 };
 
 #endif //BSF_IODEVICESERVICE_H_

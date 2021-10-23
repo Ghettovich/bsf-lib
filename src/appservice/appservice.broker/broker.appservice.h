@@ -26,6 +26,12 @@ class appservice::BrokerAppService : public QObject {
   /// @targetWeight is the amount of material needed to fulfill the recipe.
   void configureRecipe(int recipeId, int componentId, int targetWeight);
 
+  void tareScale(int scaleId);
+
+  /// Publish message to tare the scale. @scaleId is used to identify the scale.
+  /// @weight parameter is the calibration weight
+  void calibrateScale(int scaleId, bool confirm, double weight = 1000);
+
  public slots:
 
   /// Subscribe to broker. Topics hardcoded.

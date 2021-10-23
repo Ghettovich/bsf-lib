@@ -24,7 +24,7 @@ class StateService : public QObject {
  private:
   const QString proximityLiftTopic = "proximity/lift";
   const QString relayStatesTopic = "relay/states";
-  const QString recipeDataTopic = "recipe/data";
+  const QString scaleDataTopic = "recipe/data";
 
   QMap<int, IODevice *> deviceStateMap;
   std::shared_ptr<service::BrokerService> brokerService;
@@ -40,7 +40,7 @@ class StateService : public QObject {
 
  signals:
   void updateIODeviceState(int deviceId, IODevice::IO_DEVICE_HIGH_LOW state);
-  void updateScaleDevice(int deviceId, IODevice::IO_DEVICE_HIGH_LOW state, int recipeId, int componentId, int weight);
+  void updateScaleDevice(int deviceId, double weight);
 };
 
 #endif //BSF_STATESERVICE_H_

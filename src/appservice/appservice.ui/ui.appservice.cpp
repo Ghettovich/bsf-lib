@@ -18,3 +18,6 @@ void UiAppService::addWidget(const QList<QWidget *> &widgets) {
 void UiAppService::onUpdateWidget(int deviceId, bool on) {
   uiService->onUpdateWidgetState(deviceId, on);
 }
+void UiAppService::onUpdateScaleWidget(int deviceId, int weight) {
+  uiService->onUpdateScale(deviceId, weight);
+}

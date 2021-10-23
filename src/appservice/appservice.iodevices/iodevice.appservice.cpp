@@ -9,8 +9,8 @@ IODeviceAppService::IODeviceAppService(std::shared_ptr<IODeviceService> &_device
   connect(deviceService.get(), &IODeviceService::stateChangdIODevice, [=](int deviceId, bool on) {
     emit updateIODeviceState(deviceId, on);
   });
-  connect(deviceService.get(), &IODeviceService::scaleChanged, [=](int deviceId, bool on, int recipeId, int componentId, int weight) {
-    emit updateScale(deviceId, on, recipeId, componentId, weight);
+  connect(deviceService.get(), &IODeviceService::scaleChanged, [=](int deviceId, int weight) {
+    emit updateScale(deviceId, weight);
   });
 }
 

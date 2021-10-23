@@ -4,11 +4,12 @@
 #include "iodevice.h"
 #include <component/component.h>
 
+class IODevice;
+
 class WeightSensor : public IODevice {
 
  public:
-  explicit WeightSensor(int weightSensorId = 0, IO_DEVICE_HIGH_LOW state = LOW);
-  WeightSensor(int weightSensorId, int recipeId, int componentId, int currentWeight = 0, IO_DEVICE_HIGH_LOW state = LOW);
+  WeightSensor(int weightSensorId = 0, IO_DEVICE_HIGH_LOW state = LOW);
   int getRecipeId() const;
   void setRecipeId(int recipeId);
   int getComponentId() const;
