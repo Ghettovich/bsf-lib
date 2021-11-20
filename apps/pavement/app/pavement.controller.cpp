@@ -51,13 +51,8 @@ void PavementController::createStackedWidget(QLayout *layout) {
   auto home = new Home(deviceAppService, stackedWidget);
   stackedWidget->addWidget(home);
 
-  mixtureWidget = new Mixture(deviceAppService, recipeAppService, brokerAppService, statemachineAppService, stackedWidget);
-  stackedWidget->addWidget(mixtureWidget);
-  uiAppService->addWidget(mixtureWidget->deviceWidgets());
-
-  QObject::connect(mixtureWidget, &Mixture::stackedWidgetIndexChanged, [=](int previousIndex) {
-    mixtureWidgetPreviousIndex = previousIndex;
-  });
+  tabWidgetCreateBatch = new TabWidgetCreateBatch(stackedWidget);
+  stackedWidget->addWidget(tabWidgetCreateBatch);
 
   auto experimental = new Experimental(deviceAppService, statemachineAppService, stackedWidget);
   stackedWidget->addWidget(experimental);
@@ -70,7 +65,4 @@ void PavementController::createStackedWidget(QLayout *layout) {
 }
 void PavementController::updateCurrentWidget(int widgetNr) {
   stackedWidget->setCurrentIndex(widgetNr);
-}
-void PavementController::updateMixtureWidget() {
-  mixtureWidget->setStackedWidgetIndex(mixtureWidgetPreviousIndex);
 }

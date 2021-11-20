@@ -16,6 +16,8 @@ if (Qt5Widgets_FOUND)
             widgets/mixture/mixture.h
             widgets/recipe/RecipeWidget.h
             widgets/experimental/experimental.h
+            # TabWidget
+            widgets/tabwidget/TabwidgetCreateBatch.h
             )
 
     add_library(ui SHARED
@@ -28,6 +30,9 @@ if (Qt5Widgets_FOUND)
             widgets/recipe/recipewidget.ui
             widgets/experimental/experimental.cpp
             widgets/experimental/experimental.ui
+            # TabWidget
+            widgets/tabwidget/TabwidgetCreateBatch.cpp
+            widgets/tabwidget/tabwidgetcreatebatch.ui
             # HEADER LIST
             ${HEADER_LIST}
             )

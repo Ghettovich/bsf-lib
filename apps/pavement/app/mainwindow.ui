@@ -107,7 +107,7 @@
           </size>
          </property>
          <property name="text">
-          <string>New mix</string>
+          <string>Batch</string>
          </property>
         </widget>
        </item>
@@ -251,8 +251,11 @@
       <property name="frameShadow">
        <enum>QFrame::Plain</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
+      <layout class="QVBoxLayout" name="verticalLayout_8" stretch="4,3,2,2">
        <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -260,6 +263,12 @@
        </item>
        <item>
         <widget class="QListWidget" name="listWidgetProximities"/>
+       </item>
+       <item>
+        <widget class="QListWidget" name="listWidgetScale"/>
+       </item>
+       <item>
+        <widget class="QListWidget" name="listWidgetSonar"/>
        </item>
       </layout>
      </widget>
