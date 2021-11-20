@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file alias="settings.ini">settings.ini</file>
-    </qresource>
-</RCC>
