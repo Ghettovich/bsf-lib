@@ -5,6 +5,7 @@
 #include <appservice.iodevices/iodevice.appservice.h>
 #include <appservice.prepare.recipe/preparerecipeappservice.h>
 #include <appservice.broker/broker.appservice.h>
+#include <appservice.statemachine/statemachine.appservice.h>
 
 namespace Ui {
 class Mixture;
@@ -18,6 +19,7 @@ class Mixture : public QWidget {
   explicit Mixture(std::shared_ptr<appservice::IODeviceAppService> &deviceAppService,
                    std::shared_ptr<appservice::PrepareRecipeAppService> &recipeAppService,
                    std::shared_ptr<appservice::BrokerAppService> &brokerAppService,
+                   std::shared_ptr<appservice::StateMachineAppService> &stateMachineAppService,
                    QWidget *parent = nullptr);
  QList<QWidget *> deviceWidgets();
 
@@ -37,6 +39,7 @@ class Mixture : public QWidget {
   std::shared_ptr<appservice::IODeviceAppService> deviceAppService;
   std::shared_ptr<appservice::PrepareRecipeAppService> recipeAppservice;
   std::shared_ptr<appservice::BrokerAppService> brokerAppService;
+  std::shared_ptr<appservice::StateMachineAppService> stateMachineAppService;
 
   bool calibrationBinActive = false;
 

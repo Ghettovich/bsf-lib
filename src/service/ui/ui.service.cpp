@@ -45,7 +45,7 @@ void UiService::addWidget(const QList<QWidget *> &widgets) {
 
 void UiService::onUpdateWidgetState(int deviceId, bool on) {
   if (!widgetMap.contains(deviceId)) {
-    qWarning() << "Unable to find widget in device widget map.";
+    qWarning() << "Unable to find widget in device widget map." << "\nDevice id = " << deviceId;
   } else {
     widgetMap.value(deviceId)->updateWidgetState(on);
   }

@@ -22,6 +22,10 @@ void service::MachineService::proximityStatusChange(int deviceId, bool status) {
     emit proximityDropChanged(status);
   } else if (settings->value("binload").toInt() == deviceId) {
     emit proximityLoadChanged(status);
+  } else if (settings->value("lifttop").toInt() == deviceId) {
+    emit proximityLiftTopChanged(status);
+  } else if (settings->value("liftbottom").toInt() == deviceId) {
+    emit proximityLiftBottomChanged(status);
   } else {
     qWarning() << "Could not find proxmity to update";
   }
@@ -36,6 +40,12 @@ void service::MachineService::relayStatusChange(int deviceId, bool status) {
     emit relayLiftDownChanged(status);
   } else if (settings->value("liftup").toInt() == deviceId) {
     emit relayLiftUpChanged(status);
+  } else if (settings->value("hydraulic").toInt() == deviceId) {
+    emit hydraulicChanged(status);
+  } else if (settings->value("binload").toInt() == deviceId) {
+    emit relayBinLoadChanged(status);
+  } else if (settings->value("bindrop").toInt() == deviceId) {
+    emit relayBinDropChanged(status);
   } else {
     qWarning() << "Could not find relay to update";
   }

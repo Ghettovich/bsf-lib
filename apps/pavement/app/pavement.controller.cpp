@@ -51,7 +51,7 @@ void PavementController::createStackedWidget(QLayout *layout) {
   auto home = new Home(deviceAppService, stackedWidget);
   stackedWidget->addWidget(home);
 
-  mixtureWidget = new Mixture(deviceAppService, recipeAppService, brokerAppService, stackedWidget);
+  mixtureWidget = new Mixture(deviceAppService, recipeAppService, brokerAppService, statemachineAppService, stackedWidget);
   stackedWidget->addWidget(mixtureWidget);
   uiAppService->addWidget(mixtureWidget->deviceWidgets());
 

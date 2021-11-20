@@ -51,11 +51,7 @@ void IODeviceService::onUpdateScaleDevice(int deviceId, double weight) {
   else {
     std::dynamic_pointer_cast<WeightSensor>(deviceMap.value(deviceId))->setCurrentWeight((int)weight);
     emit scaleChanged(deviceId, std::dynamic_pointer_cast<WeightSensor>(deviceMap.value(deviceId))->getCurrentWeight());
-    qDebug() << "Received weight = " << std::dynamic_pointer_cast<WeightSensor>(deviceMap.value(deviceId))->getCurrentWeight();
-
   }
-  // ToDo implement and act on state change scale
-  // ToDo update current weight and emit scale data changes
 }
 bool IODeviceService::isDeviceOn(int deviceId) {
   if(!deviceMap.contains(deviceId)) {
@@ -64,4 +60,43 @@ bool IODeviceService::isDeviceOn(int deviceId) {
   }
 
   return deviceMap.value(deviceId)->isDeviceOn();
+}
+bool IODeviceService::isBinAtDrop() {
+  auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
+  settings->beginGroup("detectionsensor");
+
+  bool proximityBinDrop = isDeviceOn(settings->value("bindrop").toInt());
+  bool proximityBinLoad = isDeviceOn(settings->value("binload").toInt());
+
+  if(proximityBinDrop && !proximityBinLoad) {
+    return true;
+  }
+
+  return false;
+}
+bool IODeviceService::isBinAtLoad() {
+  auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
+  settings->beginGroup("detectionsensor");
+
+  bool proximityBinDrop = isDeviceOn(settings->value("bindrop").toInt());
+  bool proximityBinLoad = isDeviceOn(settings->value("binload").toInt());
+
+  if(!proximityBinDrop && proximityBinLoad) {
+    return true;
+  }
+
+  return false;
+}
+bool IODeviceService::isBinAtTop() {
+  auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
+  settings->beginGroup("detectionsensor");
+
+  bool proximityLiftTop = isDeviceOn(settings->value("lifttop").toInt());
+  bool proximityLiftBottom = isDeviceOn(settings->value("liftbottom").toInt());
+
+  if(proximityLiftTop && !proximityLiftBottom) {
+    return true;
+  }
+
+  return false;
 }

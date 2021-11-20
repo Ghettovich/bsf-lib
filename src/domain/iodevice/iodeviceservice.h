@@ -25,6 +25,9 @@ class IODeviceService : public QObject {
   QList<std::shared_ptr<IODevice>> findAllDevices();
   QList<std::shared_ptr<IODevice>> findAllDevices(IODeviceType::IO_DEVICE_TYPE deviceType);
   bool isDeviceOn(int deviceId);
+  bool isBinAtDrop();
+  bool isBinAtLoad();
+  bool isBinAtTop();
 
  public slots:
 

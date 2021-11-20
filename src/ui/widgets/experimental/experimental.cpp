@@ -43,7 +43,7 @@ Experimental::Experimental(std::shared_ptr<IODeviceAppService> &_deviceAppServic
   settings->endGroup();
 
   QObject::connect(ui->pushButtonEmptyTable, &QPushButton::clicked, [=](){
-    statemachineAppService->sendLiftToLoad();
+    statemachineAppService->sendLiftToBottom();
   });
 }
 

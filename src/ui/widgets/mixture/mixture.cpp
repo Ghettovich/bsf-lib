@@ -5,14 +5,16 @@
 
 using namespace appservice;
 
-Mixture::Mixture(std::shared_ptr<IODeviceAppService> &_deviceAppService,
-                 std::shared_ptr<PrepareRecipeAppService> &_recipeAppService,
-                 std::shared_ptr<appservice::BrokerAppService> &_brokerAppService,
+Mixture::Mixture(std::shared_ptr<appservice::IODeviceAppService> &deviceAppService,
+                 std::shared_ptr<appservice::PrepareRecipeAppService> &recipeAppService,
+                 std::shared_ptr<appservice::BrokerAppService> &brokerAppService,
+                 std::shared_ptr<appservice::StateMachineAppService> &stateMachineAppService,
                  QWidget *parent) :
     ui(new Ui::Mixture),
-    deviceAppService(_deviceAppService),
-    recipeAppservice(_recipeAppService),
-    brokerAppService(_brokerAppService),
+    deviceAppService(deviceAppService),
+    recipeAppservice(recipeAppService),
+    brokerAppService(brokerAppService),
+    stateMachineAppService(stateMachineAppService),
     QWidget(parent) {
 
   // Setup UI and fill fields
@@ -41,7 +43,6 @@ void Mixture::fillScaleGroupBoxes() {
   settings->beginGroup("scale");
   auto scaleBin = deviceAppService->findOne(settings->value("weightbinload").toInt());
 
-  qDebug() << "got id " << scaleBin->getId() << " for scale";
   ui->groupBoxScaleBin->setTitle(scaleBin->getDescription());
   ui->lcdNumberScaleBin->setProperty("deviceId", scaleBin->getId());
   ui->lcdNumberScaleBin->setProperty("sensor", "scale");
@@ -66,6 +67,8 @@ void Mixture::fillRecipeGroupBox() {
   ui->lineEditPigment->setText(QString::number(selectedRecipe->getComponentByName("pigment").getWeight(), 10, 2));
 }
 void Mixture::onClickStartBatch() {
+  stateMachineAppService->sendBinToLoad();
+
   ui->stackedWidget->setCurrentIndex(1);
   emit stackedWidgetIndexChanged(ui->stackedWidget->currentIndex() - 1);
 }
