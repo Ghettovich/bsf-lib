@@ -87,7 +87,7 @@ bool IODeviceService::isBinAtLoad() {
 
   return false;
 }
-bool IODeviceService::isBinAtTop() {
+bool IODeviceService::isLiftAtTop() {
   auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
   settings->beginGroup("detectionsensor");
 
@@ -95,6 +95,19 @@ bool IODeviceService::isBinAtTop() {
   bool proximityLiftBottom = isDeviceOn(settings->value("liftbottom").toInt());
 
   if(proximityLiftTop && !proximityLiftBottom) {
+    return true;
+  }
+
+  return false;
+}
+bool IODeviceService::isLiftAtBottom() {
+  auto settings = new QSettings(":settings.ini", QSettings::IniFormat, this);
+  settings->beginGroup("detectionsensor");
+
+  bool proximityLiftTop = isDeviceOn(settings->value("lifttop").toInt());
+  bool proximityLiftBottom = isDeviceOn(settings->value("liftbottom").toInt());
+
+  if(!proximityLiftTop && proximityLiftBottom) {
     return true;
   }
 

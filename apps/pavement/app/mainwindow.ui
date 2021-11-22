@@ -61,39 +61,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="pushButtonHome">
-         <property name="minimumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Home</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButtonBack">
-         <property name="minimumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Back</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButtonNewMixture">
+        <widget class="QPushButton" name="pushButtonBatch">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -251,7 +219,7 @@
       <property name="frameShadow">
        <enum>QFrame::Plain</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_8" stretch="4,3,2,2">
+      <layout class="QVBoxLayout" name="verticalLayout_8" stretch="7,4,2,2">
        <property name="topMargin">
         <number>0</number>
        </property>

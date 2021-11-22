@@ -27,7 +27,8 @@ class IODeviceService : public QObject {
   bool isDeviceOn(int deviceId);
   bool isBinAtDrop();
   bool isBinAtLoad();
-  bool isBinAtTop();
+  bool isLiftAtTop();
+  bool isLiftAtBottom();
 
  public slots:
 

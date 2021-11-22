@@ -218,14 +218,14 @@
           <item>
            <widget class="QPushButton" name="pushButtonLiftDown">
             <property name="text">
-             <string>Lift down</string>
+             <string>Text</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="pushButtonLiftUp">
             <property name="text">
-             <string>Lift up</string>
+             <string>Text</string>
             </property>
            </widget>
           </item>

@@ -12,7 +12,7 @@ class ProximityLabel : public SensorWidget {
   void updateWidgetState(bool on) override;
 
  private:
-  const int pxSize = 48;
+  const int pxSize = 64;
   QLabel *proximityLabel;
 };
 

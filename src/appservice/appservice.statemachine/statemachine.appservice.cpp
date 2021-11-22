@@ -62,7 +62,7 @@ void StateMachineAppService::sendBinToLoad() {
 
 void StateMachineAppService::sendLiftToBottom() {
 
-  if(deviceService->isBinAtTop()) {
+  if(deviceService->isLiftAtTop()) {
     auto *s1 = new QState(); // Inital state
     auto *s2 = new QFinalState();
 

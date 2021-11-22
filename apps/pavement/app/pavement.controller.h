@@ -7,8 +7,6 @@
 #include <QtWidgets/QStackedWidget>
 
 #include <appservice.iodevices/iodevice.appservice.h>
-#include <appservice.broker/broker.appservice.h>
-#include <appservice.statemachine/statemachine.appservice.h>
 #include <appservice.ui/ui.appservice.h>
 #include <appservice.prepare.recipe/preparerecipeappservice.h>
 
@@ -18,7 +16,10 @@ class PavementController : public QObject {
  Q_OBJECT
 
  public:
-  explicit PavementController(QObject *parent = nullptr);
+  explicit PavementController(std::shared_ptr<appservice::IODeviceAppService> &deviceAppService,
+                              std::shared_ptr<appservice::PrepareRecipeAppService> &recipeAppService,
+                              std::shared_ptr<appservice::UiAppService> &uiAppService,
+                              QObject *parent = nullptr);
   void createStackedWidget(QLayout *layout);
   void updateCurrentWidget(int widgetNr);
 
@@ -26,8 +27,6 @@ class PavementController : public QObject {
   QStackedWidget *stackedWidget = nullptr;
   TabWidgetCreateBatch *tabWidgetCreateBatch = nullptr;
   std::shared_ptr<appservice::IODeviceAppService> deviceAppService;
-  std::shared_ptr<appservice::BrokerAppService> brokerAppService;
-  std::shared_ptr<appservice::StateMachineAppService> statemachineAppService;
   std::shared_ptr<appservice::PrepareRecipeAppService> recipeAppService;
   std::shared_ptr<appservice::UiAppService> uiAppService;
 };

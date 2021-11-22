@@ -27,6 +27,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Add src directory
 add_subdirectory(src)
 add_subdirectory(apps/pavement)
-#add_subdirectory(apps/scale)
 
 #add_subdirectory(test)

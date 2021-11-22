@@ -27,6 +27,9 @@ class appservice::IODeviceAppService : public QObject {
   /// Get a list of all present devices with a given @deviceType
   QList<std::shared_ptr<IODevice>> findAll(IODeviceType::IO_DEVICE_TYPE type);
 
+  bool isLiftAtBottom();
+  bool isLiftAtTop();
+
  private:
   std::shared_ptr<IODeviceService> deviceService;
 

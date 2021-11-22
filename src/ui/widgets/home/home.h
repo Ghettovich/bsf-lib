@@ -16,10 +16,6 @@ class Home : public QWidget {
                 QWidget *parent = nullptr);
   virtual ~Home();
 
- public slots:
-  void onUpdateProximities(int deviceId, bool status);
-  void onUpdateRelays(int deviceId, bool status);
-
  private:
   Ui::Home *ui = nullptr;
   std::shared_ptr<appservice::IODeviceAppService> deviceAppService;

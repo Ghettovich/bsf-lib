@@ -8,11 +8,9 @@
 using namespace appservice;
 
 Experimental::Experimental(std::shared_ptr<IODeviceAppService> &_deviceAppService,
-                           std::shared_ptr<appservice::StateMachineAppService> &_statemachineAppService,
                            QWidget *parent) :
     ui(new Ui::Experimental),
     deviceAppService(_deviceAppService),
-    statemachineAppService(_statemachineAppService),
     QWidget(parent) {
   ui->setupUi(this);
 
@@ -42,9 +40,9 @@ Experimental::Experimental(std::shared_ptr<IODeviceAppService> &_deviceAppServic
 
   settings->endGroup();
 
-  QObject::connect(ui->pushButtonEmptyTable, &QPushButton::clicked, [=](){
-    statemachineAppService->sendLiftToBottom();
-  });
+//  QObject::connect(ui->pushButtonEmptyTable, &QPushButton::clicked, [=](){
+//    statemachineAppService->sendLiftToBottom();
+//  });
 }
 
 Experimental::~Experimental() {

@@ -24,3 +24,9 @@ QList<std::shared_ptr<IODevice>> IODeviceAppService::findAll() {
 QList<std::shared_ptr<IODevice>> IODeviceAppService::findAll(IODeviceType::IO_DEVICE_TYPE type) {
   return deviceService->findAllDevices(type);
 }
+bool IODeviceAppService::isLiftAtBottom() {
+  return deviceService->isLiftAtBottom();
+}
+bool IODeviceAppService::isLiftAtTop() {
+  return deviceService->isLiftAtTop();
+}
